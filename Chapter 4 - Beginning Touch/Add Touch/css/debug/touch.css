@@ -1,6 +1,8 @@
 .x-scroller-wrapper, .y-scroller-wrapper {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch;
+    -moz-overflow-scrolling:touch;
+    overflow-scrolling:touch;
     overflow-style: none;
     -ms-scroll-chaining: none;
     -ms-scroll-snap-type: proximity;
