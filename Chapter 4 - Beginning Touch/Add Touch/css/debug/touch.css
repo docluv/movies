@@ -13,7 +13,7 @@
     height: 100%;
 }
 
-@media (max-width:1024px) and (min-width:600px) {
+@media /*(max-width:1024px) and */ (min-width:600px) {
 
     .y-scroller-wrapper {
         overflow: hidden;
@@ -25,9 +25,9 @@
         height: 100%;
     }
 
-    .movie-poster-div {
+    /*.movie-poster-div {
         width: 3000px;
-    }
+    }*/
 }
 
 

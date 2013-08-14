@@ -6,26 +6,31 @@
     movieApp.fn.setMovieGridSize = function(){
         
         var that = this,
+            main = document.querySelector(".main-content")
+            grid = document.querySelector(".movie-poster-div"),
             posters = document.querySelectorAll(".movie-target"),
             l = posters.length,
+            pHeight = 170,
+            pWidth = 120,
             wBox = {
-                width: parseInt(window.innerWidth, 10),
-                height: parseInt(window.innerHeight, 10)
+                width: parseInt(main.clientWidth, 10),
+                height: parseInt(main.clientHeight, 10)
             },
-            rows = Math.floor(wBox.height / 145);
+            rows = Math.floor(wBox.height / pHeight);
 
-        if (wBox.width > 600) {//make it vertical
+        if (wBox.width > 600) {//make it horizontal
 
-            articleTiles.style.width = (100 * (l / rows)) + "px";
-            articleTiles.style.height = (rows * 145) + "px";
+            grid.style.width = (pWidth * (l / rows)) + "px";
+            grid.style.height = (rows * pHeight) + "px";
 
-        }else{//make it horizontal
+        }else{//make it vertical
 
-            articleTiles.style.width = (100 * (l / rows)) + "px";
-            articleTiles.style.height = "auto";
+            grid.style.width = (pWidth * (l / rows)) + "px";
+         //   articleTiles.style.height = "auto";
             
         }
 
     };
 
 }(window));
+

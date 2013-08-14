@@ -16,8 +16,6 @@
 
         init: function(customSettings) {
 
-            this.settings = $.extend({}, this.settings, customSettings);
-
             return this;
         },
 
@@ -40,7 +38,5 @@
 
 } (window));
 
-var movie = movieApp();
 
-movie.setMovieGridSize();
 
