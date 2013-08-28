@@ -1,0 +1,85 @@
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: 100%;
+}
+
+body {
+    -ms-content-zooming: none;
+    overflow-x: hidden;
+    background-color: #9930b0;
+    color: #FFF;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+    font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', sans-serif;
+    line-height: 1.231;
+    /*background-repeat: no-repeat;
+    background-image: url('../../img/movie-bkg-03.jpg');
+    /* 03 - http://www.layoutsparks.com/pictures/theme-0 */
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    -ms-content-zooming: none;
+    background-size: cover;*/
+}
+
+a, a:visited {
+    color: #eee;
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+.site-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    color: #3a1b48;
+    /*for initial testing*/
+    background-color: #d575ff;
+    vertical-align: middle;
+    line-height: 80px;
+}
+
+.site-header h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.main-content {
+    position: absolute;
+    overflow: hidden;
+    top: 80px;
+    left: 0;
+    right: 0;
+    bottom: 35px;
+}
+
+.footer {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 35px;
+    background-color: #3a1b48;
+    color: #fff;
+    /* for placeholder text */
+    text-align: center;
+}

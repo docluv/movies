@@ -1,0 +1,162 @@
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: 100%;
+}
+
+body {
+    -ms-content-zooming: none;
+    overflow-x: hidden;
+    background-color: #1C2420;
+    color: #fff;
+    letter-spacing: 0.02em;
+    font-size: 13px;
+    font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', sans-serif;
+    line-height: 1.231;
+    /*background-image: url('http://thumbs.dreamstime.com/x/film-strip-vector-background-31640511.jpg');*/
+    background-repeat: no-repeat;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+a, a:visited {
+    color: #eee;
+    text-decoration: none;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
+}
+
+.site-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+    /*for initial testing*/
+    /*background-color: #808080;*/
+}
+
+.site-header h1 {
+    width: 100%;
+    text-align: center;
+}
+
+.main-nav {
+    margin: auto;
+    width: 90%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.main-nav > a, .main-nav > a:visited {
+    margin: 5px 5px 20px 5px;
+    padding: 5px 10px;
+    background-color: #990000;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.25em;
+    display: inline-block;
+}
+
+.main-nav > a:active {
+    color: rgb(193,40,40);
+}
+
+.nav-text {
+    float: left;
+    height: 32px;
+}
+
+
+.nav-icon {
+    float: left;
+    width: 32px;
+    height: 32px;
+    background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
+    background-position-y: 0px;
+}
+
+.main-content {
+    position: absolute;
+    overflow: hidden;
+    left: 0;
+    right: 0;
+}
+
+.footer {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: #990000;
+    color: #fff;
+    height: 35px;
+    overflow: hidden;
+    /* for placeholder text */
+    text-align: center;
+}
+
+
+@media (min-width:601px){
+    .site-header {
+        height: 100px;
+    }
+
+    .site-header h1 {
+        font-size: 2.5em;
+    }
+
+    .main-content {
+        top: 100px;
+        bottom: 0;
+    }
+
+    .footer {
+        display: none;
+    }
+}
+
+@media (max-width:600px) {
+
+    .site-header {
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .main-nav {
+        display: none;
+    }
+
+    .main-content {
+        top: 60px;
+        bottom: 35px;
+    }
+}
+
+@media (max-width:480px) {
+
+    .site-header h1 {
+        font-size: 1.8em;
+    }
+}
