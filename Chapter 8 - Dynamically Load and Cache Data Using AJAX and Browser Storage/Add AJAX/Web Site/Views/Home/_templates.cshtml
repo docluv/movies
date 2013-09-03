@@ -7,3 +7,18 @@
         </div>
     {{/movies}}
 </script>
+
+<script id="movieDetailsPosterTemplate" type="text/x-mustache-template">
+    <span class="center"><img class="center full-movie-poster" alt="{{title}}" src="{{posters.detailed}}" /></span>
+</script>
+
+<script id="movieDetailsDescriptionTemplate" type="text/x-mustache-template">
+    <h3 class="panel-title">Description</h3>
+    <article class="movie-description">{{synopsis}}</article>
+</script>
+
+<script id="movieDetailsCastTemplate" type="text/x-mustache-template">
+    {{#abridged_cast}}
+    <li>{{name}}</li>
+    {{/abridged_cast}}
+</script>
