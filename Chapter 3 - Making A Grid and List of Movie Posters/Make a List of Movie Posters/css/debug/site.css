@@ -6,20 +6,24 @@ html {
 }
 
 body {
+    margin: 0;
+    padding: 0;
     -ms-content-zooming: none;
     overflow-x: hidden;
-    background-color: #1C2420;
+    background-color: #9930b0;
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
     font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', sans-serif;
     line-height: 1.231;
     /*background-image: url('http://thumbs.dreamstime.com/x/film-strip-vector-background-31640511.jpg');*/
-    background-repeat: no-repeat;
-    -moz-background-size: cover;
+    background-image: url('../../img/mochaGrunge.png');
+    /*-moz-background-size: cover;
     -o-background-size: cover;
-    -webkit-background-size: cover;
-    background-size: cover;
+    -webkit-background-size: auto 100%;
+    -ms-content-zooming: none;
+    background-size: cover;*/
+    background-repeat: repeat;
 }
 
 a, a:visited {
@@ -69,7 +73,7 @@ h3 {
 .main-nav > a, .main-nav > a:visited {
     margin: 5px 5px 20px 5px;
     padding: 5px 10px;
-    background-color: #990000;
+    background-color: #3a1b48;
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -109,7 +113,7 @@ h3 {
     bottom: 0px;
     left: 0px;
     z-index: 100;
-    background-color: #990000;
+    background-color: #3a1b48;
     color: #fff;
     height: 35px;
     overflow: hidden;

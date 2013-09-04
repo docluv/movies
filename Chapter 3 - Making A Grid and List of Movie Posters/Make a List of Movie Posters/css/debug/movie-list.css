@@ -34,3 +34,54 @@
     line-height: 60px;
     padding-left: 1em;
 }
+
+.movie-poster-list a {
+    width: 300px;
+    display: inline-block;
+    float: left;
+}
+
+.movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
+    font-size: 1.5em;
+    margin: 0 0 0 50px;
+    width: 100px;
+    line-height: 60px;
+    float: left;
+    display: inline-block;
+}
+
+.movie-poster-list .critics_rating {
+    width: 200px;
+    margin-left: 10px;
+}
+
+@media (max-width:600px) {
+
+
+    .movie-poster-list a {
+        width: 250px;
+        overflow: hidden;
+    }
+
+    .movie-poster-list .demo-photo-caption {
+        font-size: 1.3em;
+        padding-left: 15px;
+        width: 180px;
+        overflow: hidden;
+        text-align: left;
+    }
+
+    .movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
+        font-size: .75em;
+        margin: 0 0 0 10px;
+        width: 70px;
+        line-height: 20px;
+        float: none;
+        text-align: left;
+    }
+
+    .movie-poster-list .critics_rating {
+        width: 70px;
+        margin-left: 10px;
+    }
+}
