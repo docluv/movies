@@ -56,7 +56,6 @@
             var that = this,
                 routes = $.extend($.parseLocalStorage("routes") || {}, that.settings.routes),
                 i = 0, j = 0, rawPath, view, route, viewId,
-//                 rawPath, path, params, callback, unload, title, transition,
                 Views = document.querySelectorAll(that.settings.viewSelector);
 
             for (i = 0; i < Views.length; i++) {
@@ -66,32 +65,18 @@
                 if (view.hasAttributes() && view.hasAttribute("id")) {
 
                     viewId = view.getAttribute("id");
-                    rawPath = (view.hasAttribute("data-path") ? view.getAttribute("data-path") : "");
-                    //title = (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
-                    //            that.settings.defaultTitle);
-                 //   path = rawPath.split("\\:")[0];
-//                    callback = (view.hasAttribute("data-callback") ? view.getAttribute("data-callback") : "load" + viewId);
-//                    unload = (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : "unload" + viewId);
-               //     params = rawPath.split("\\:").slice(1);
-
-                    //transition = (view.hasAttribute("data-transition") ?
-                    //            view.getAttribute("data-transition") :
-                    //            ""); //need a nice way to define the default animation
-
+                    rawPath = $.data(view, "path");
 
                     //need to check for duplicate path
                     route = {
                         viewId: viewId,
                         path: rawPath.split("\\:")[0],
                         params: rawPath.split("\\:").slice(1),
-                        title: (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
-                                that.settings.defaultTitle),
-                        transition: (view.hasAttribute("data-transition") ?
-                                view.getAttribute("data-transition") :
-                                ""),
+                        title: $.data(view, "title", that.settings.defaultTitle),
+                        transition: $.data(view, "transition"),
                         paramValues: {},
-                        callback: (view.hasAttribute("data-callback") ? view.getAttribute("data-callback") : "load" + viewId),
-                        unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : "unload" + viewId)
+                        callback: $.data(view, "callback", "load" + viewId),
+                        unload: $.data(view, "unload", "unload" + viewId)
                     };
 
                     routes[route.path] = route;
@@ -237,7 +222,7 @@
         swapView: function () {
 
             var that = this,
-                route, callback, title, i, a, anim,
+                route, callback, title, i, a, anim, wrapper,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
@@ -248,7 +233,13 @@
             if (currentView.length) {
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
                 while (currentView.length > 1) {
-                    currentView[currentView.length - 1].parentNode.removeChild(currentView[currentView.length - 1]);
+
+                    wrapper = currentView[currentView.length - 1].parentNode;
+
+                    if(wrapper){
+                        wrapper.removeChild(currentView[currentView.length - 1]);
+                    }
+                    
                 }
 
             }
@@ -281,30 +272,11 @@
                                 that.endSwapAnimation.call(that, e, currentView, newView);
                             });
 
-                            //currentView.addEventListener("webkitAnimationEnd", function (e) {
-                            //    that.endSwapAnimation.call(that, e, currentView, newView);
-                            //});
-
                             $.addClass(currentView, "animated");
                             $.addClass(currentView, "out");
                             $.addClass(currentView, anim);
 
-                            if (currentView.classList) {
-
-                                currentView.classList.remove("in");
-                                //currentView.classList.add("animated");
-                                //currentView.classList.add(anim);
-                                //currentView.classList.add("out");
-
-                            } else {
-
-                                currentView.className.replace("in", " ");
-
-                                //currentView.className += " animated";
-                                //currentView.className += " " + anim;
-                                //currentView.className += " out";
-
-                            }
+                            $.removeClass(currentView, "in");
 
                         } else {
                             that.endSwapAnimation.call(that, undefined, currentView, newView);
@@ -317,26 +289,10 @@
                     $.addClass(newView, anim);
                     $.addClass(newView, "in");
 
-                    //if (newView.classList) {
-
-                    //    newView.classList.add(that.settings.currentClass);
-                    //    newView.classList.add("animated");
-                    //    newView.classList.add(anim);
-                    //    newView.classList.add("in");
-
-                    //} else {
-
-                    //    newView.className += " " + that.settings.currentClass;
-                    //    newView.className += " animated";
-                    //    newView.className += " " + anim;
-                    //    newView.className += " in";
-
-                    //}
-
                     that.setDocumentTitle(route);
 
                     if (route.callback) {
-                        that.makeCallback(route);
+                        that.callbackFromRoute(route);
                     }
 
                 }
@@ -366,24 +322,18 @@
             var that = this,
                 anim = that.animation;
 
-            if (currentView.classList) {
+            $.removeClass(currentView, that.settings.currentClass);
+            $.removeClass(currentView, anim);
+            $.removeClass(currentView, "out");
 
-                currentView.classList.remove(that.settings.currentClass);
-                currentView.classList.remove(anim);
-                currentView.classList.remove("out");
+            $.removeClass(newView, "in");
+            $.removeClass(newView, anim);
 
-                newView.classList.remove(anim);
-                newView.classList.remove("in");
+            if (currentView &&
+                $.data(currentView, "unload") != "" &&
+                $.data(currentView, "unload")) {
 
-            } else {
-
-                currentView.className.replace(that.settings.currentClass, " ");
-                currentView.className.replace(anim, " ");
-                currentView.className.replace("out", " ");
-
-                newView.className.replace(anim, " ");
-                newView.className.replace("in", " ");
-
+                that.makeCallback($.data(currentView, "unload"));
             }
 
             if (currentView && bp && currentView.parentNode) {
@@ -416,11 +366,9 @@
 
         },
 
-        makeCallback: function (route) {
+        makeCallback: function (callback, paramValues) {
 
             var a, that,
-                callback = route.callback,
-            //    unload = route.unload,
                 cbPaths = callback.split(".");
 
             if (!callback) {
@@ -438,11 +386,21 @@
                 callback = callback[cbPaths[a]];
             }
 
-            route.paramValues = route.paramValues || {};
+            paramValues = paramValues || {};
 
             if (callback) {
-                callback.call(that, route.paramValues);
+                callback.call(that, paramValues);
             }
+
+        },
+
+        callbackFromRoute: function (route) {
+            
+            if (!route.callback) {
+                return;
+            }
+
+            this.makeCallback(route.callback, route.paramValues || {});
 
         },
 
@@ -553,5 +511,5 @@
 
     return (window.spa = spa);
 
-})(window, MBP, backpack());
+})(window, $, backpack());
 

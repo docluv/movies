@@ -19,7 +19,7 @@
 
         init: function (customSettings) {
 
-            this.settings = MBP.extend({}, this.settings, customSettings);
+            this.settings = $.extend({}, this.settings, customSettings);
 
             return this;
         },
@@ -64,7 +64,7 @@
                 value,
                 hourstl = options.cacheTTL || 5,
                 ls = window.localStorage,
-
+                dataType = options.dataType || options.type,
                 cacheKey = options.cacheKey ||
                          options.url.replace(/jQuery.*/, '') + options.type +
                          (options.data ? that.serialize(options.data) : ""),
@@ -87,7 +87,7 @@
             if (value) {
                 //In the cache? So get it, apply success callback & abort the XHR request
                 // parse back to JSON if we can.
-                if (options.dataType.indexOf('json') === 0) {
+                if (dataType.indexOf('json') === 0 || dataType.indexOf('jsonp') === 0) {
                     value = JSON.parse(value);
                 }
 
@@ -119,7 +119,7 @@
 
                 var strdata = data;
 
-                if (this.dataType.indexOf('json') === 0) {
+                if (dataType.indexOf('json') === 0 || dataType.indexOf('jsonp') === 0) {
                     strdata = JSON.stringify(data);
                 }
 
@@ -157,7 +157,6 @@
 
              });
 
-
         },
 
         failCallback: function (data) {
@@ -176,9 +175,14 @@
 
         getData: function (url, cache, ajaxSettings) {
 
-            var ajaxOptions = MBP.extend({},
+            var ajaxOptions = $.extend({},
                                 this.ajaxSettings,
                                 ajaxSettings, { "url": url });
+
+            if (ajaxSettings.type === "jsonp") {
+                delete ajaxOptions.contentType;
+                delete ajaxOptions.dataType;
+            }
 
             return this.doAJAX(ajaxOptions);
 
@@ -186,7 +190,7 @@
 
         postData: function (options) {
 
-            var ajaxOptions = MBP.extend({},
+            var ajaxOptions = $.extend({},
                             this.ajaxSettings,
                             { type: "POST" },
                             options.ajaxSettings,
@@ -199,7 +203,7 @@
 
         putData: function (options) {
 
-            var ajaxOptions = MBP.extend({}, this.ajaxSettings,
+            var ajaxOptions = $.extend({}, this.ajaxSettings,
                             { type: "PUT" },
                             options.ajaxSettings,
                             { "url": options.url });
@@ -210,7 +214,7 @@
 
         deleteData: function (options) {
 
-            var ajaxOptions = MBP.extend({}, this.ajaxSettings,
+            var ajaxOptions = $.extend({}, this.ajaxSettings,
                             { type: "DELETE" },
                             options.ajaxSettings,
                             { "url": options.url });
