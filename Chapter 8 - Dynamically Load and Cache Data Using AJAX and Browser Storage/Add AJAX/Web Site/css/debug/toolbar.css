@@ -1,0 +1,139 @@
+
+
+.toolbar {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 100;
+    background-color: #990000;
+    color: #fff;
+    height: 35px;
+    overflow: hidden;
+    /* for placeholder text */
+    text-align: center;
+}
+
+.toolbar-top-menu {
+    float: left;
+    width: 100%;
+}
+
+.toolbar-item {
+    display: inline-block;
+    margin: 5px 0 0px 0;
+    width: 18%;
+    height: 42px;
+}
+
+.toolbar-item a, .toolbar-item a:visited {
+    color: #fff;
+}
+
+/* Set the background-image url to the image sprite for the specif application */
+.toolbar-item-icon {
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    width: 30px;
+    height: 26px;
+    background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
+    background-repeat: no-repeat;
+}
+
+.toolbar-item-landscape {
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.expand-toolbar {
+    display: inline-block;
+    float: right;
+    margin: 5px 5% 0px 5%;
+    width: 36px;
+    height: 42px;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+    line-height: 24px;
+}
+
+.toolbar-item figcaption {
+    display: block;
+    margin: 2px auto;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    font-weight: bold;
+    font-size: 9px;
+    line-height: 14px;
+}
+
+.toolbar-sub-menu {
+    display: block;
+    float: left;
+    width: 100%;
+}
+
+.toolbar-sub-menu-nav-list {
+    padding-left: 6px;
+}
+
+.toolbar-sub-menu-nav-item {
+    right: 0px;
+    left: 0px;
+    overflow: hidden;
+    margin: 5% 0;
+    padding-left: 6px;
+    height: 36px;
+    color: #fff;
+    font-size: 21px;
+    line-height: 36px;
+}
+
+@media (min-width:601px){
+    
+     .toolbar {
+        display: none;
+    }
+
+}
+
+@media (min-height:320px) and (orientation:landscape) {
+
+    .toolbar {
+        top: 0;
+        left: auto;
+        margin: 0;
+        width: 42px;
+        height: 100%;
+    }
+
+    .toolbar-top-menu {
+        margin: 0;
+        width: 42px;
+        height: 100%;
+    }
+
+    .toolbar-item {
+        margin: 15% auto;
+        width: 100%;
+    }
+
+    .toolbar-sub-menu {
+        float: none;
+    }
+
+}
+
+@media (max-height:240px) {
+
+    .toolbar {
+        display: none;
+    }
+
+}

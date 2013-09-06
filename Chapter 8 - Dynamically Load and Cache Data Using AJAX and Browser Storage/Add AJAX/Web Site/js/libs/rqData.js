@@ -19,7 +19,7 @@
 
         init: function (customSettings) {
 
-            this.settings = MBP.extend({}, this.settings, customSettings);
+            this.settings = $.extend({}, this.settings, customSettings);
 
             return this;
         },
@@ -175,7 +175,7 @@
 
         getData: function (url, cache, ajaxSettings) {
 
-            var ajaxOptions = MBP.extend({},
+            var ajaxOptions = $.extend({},
                                 this.ajaxSettings,
                                 ajaxSettings, { "url": url });
 
@@ -190,7 +190,7 @@
 
         postData: function (options) {
 
-            var ajaxOptions = MBP.extend({},
+            var ajaxOptions = $.extend({},
                             this.ajaxSettings,
                             { type: "POST" },
                             options.ajaxSettings,
@@ -203,7 +203,7 @@
 
         putData: function (options) {
 
-            var ajaxOptions = MBP.extend({}, this.ajaxSettings,
+            var ajaxOptions = $.extend({}, this.ajaxSettings,
                             { type: "PUT" },
                             options.ajaxSettings,
                             { "url": options.url });
@@ -214,7 +214,7 @@
 
         deleteData: function (options) {
 
-            var ajaxOptions = MBP.extend({}, this.ajaxSettings,
+            var ajaxOptions = $.extend({}, this.ajaxSettings,
                             { type: "DELETE" },
                             options.ajaxSettings,
                             { "url": options.url });

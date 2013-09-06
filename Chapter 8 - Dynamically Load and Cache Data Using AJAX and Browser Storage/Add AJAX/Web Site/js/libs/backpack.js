@@ -15,7 +15,7 @@
 
         init: function (customSettings) {
 
-            this.settings = MBP.extend({}, this.settings, customSettings);
+            this.settings = $.extend({}, this.settings, customSettings);
 
             return this;
         },
@@ -26,7 +26,7 @@
 
             var i, temp,
                 t = document.querySelectorAll("script[type='" + this.settings.templateType + "']"),
-                templates = MBP.parseLocalStorage("templates");
+                templates = $.parseLocalStorage("templates");
 
             for (i = 0; i < t.length; i++) {
 
@@ -148,7 +148,7 @@
         //keep
         storeViewInfo: function (viewInfo) {
 
-            viewInfo = MBP.extend({}, this.pageSettings, viewInfo);
+            viewInfo = $.extend({}, this.pageSettings, viewInfo);
 
             localStorage.setItem(viewInfo.pageId,
                             JSON.stringify(viewInfo));

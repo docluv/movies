@@ -2,24 +2,25 @@
 Extending the functionality of the Mobile Boilerplate helper object.
 */
 
-var _gaq = _gaq || undefined;
+var _gaq = _gaq || undefined,
+    $ = $ || {};
 
-(function (document) {
+(function (document, $) {
 
     "use strict";
 
-    window.MBP = window.MBP || {};
+    window.$ = $ || {};
 
     // If we split this up into two functions we can reuse
     // this function if we aren't doing full page reloads.
 
     // If we cache this we don't need to re-calibrate everytime we call
     // the hide url bar
-    MBP.BODY_SCROLL_TOP = false;
+    $.BODY_SCROLL_TOP = false;
 
     // So we don't redefine this function everytime we
     // we call hideUrlBar
-    MBP.getScrollTop = function () {
+    $.getScrollTop = function () {
         var win = window;
         var doc = document;
 
@@ -27,16 +28,16 @@ var _gaq = _gaq || undefined;
     };
 
     // It should be up to the mobile
-    MBP.hideUrlBar = function () {
+    $.hideUrlBar = function () {
         var win = window;
 
-        // if there is a hash, or MBP.BODY_SCROLL_TOP hasn't been set yet, wait till that happens
-        if (!location.hash && MBP.BODY_SCROLL_TOP !== false) {
-            win.scrollTo(0, MBP.BODY_SCROLL_TOP === 1 ? 0 : 1);
+        // if there is a hash, or $.BODY_SCROLL_TOP hasn't been set yet, wait till that happens
+        if (!location.hash && $.BODY_SCROLL_TOP !== false) {
+            win.scrollTo(0, $.BODY_SCROLL_TOP === 1 ? 0 : 1);
         }
     };
 
-    MBP.hideUrlBarOnLoad = function () {
+    $.hideUrlBarOnLoad = function () {
         var win = window;
         var doc = win.document;
         var bodycheck;
@@ -46,23 +47,23 @@ var _gaq = _gaq || undefined;
 
             // scroll to 1
             window.scrollTo(0, 1);
-            MBP.BODY_SCROLL_TOP = 1;
+            $.BODY_SCROLL_TOP = 1;
 
             // reset to 0 on bodyready, if needed
             bodycheck = setInterval(function () {
                 if (doc.body) {
                     clearInterval(bodycheck);
-                    MBP.BODY_SCROLL_TOP = MBP.getScrollTop();
-                    MBP.hideUrlBar();
+                    $.BODY_SCROLL_TOP = $.getScrollTop();
+                    $.hideUrlBar();
                 }
             }, 15);
 
             win.addEventListener('load', function () {
                 setTimeout(function () {
                     // at load, if user hasn't scrolled more than 20 or so...
-                    if (MBP.getScrollTop() < 20) {
+                    if ($.getScrollTop() < 20) {
                         // reset to hide addr bar at onload
-                        MBP.hideUrlBar();
+                        $.hideUrlBar();
                     }
                 }, 0);
             });
@@ -71,7 +72,7 @@ var _gaq = _gaq || undefined;
 
 
     //simple version of the jQuery function
-    MBP.extend = function () {
+    $.extend = function () {
 
         var target = arguments[0] || {},
             i = 1,
@@ -105,7 +106,7 @@ var _gaq = _gaq || undefined;
 
     };
 
-    MBP.loadScript = function (id, url, callback) {
+    $.loadScript = function (id, url, callback) {
 
         if (!document.getElementById(id)) {
 
@@ -142,7 +143,7 @@ var _gaq = _gaq || undefined;
         }
     };
 
-    MBP.getVendorPropertyName = function (prop) {
+    $.getVendorPropertyName = function (prop) {
 
         var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
                     vendorProp, i,
@@ -167,10 +168,10 @@ var _gaq = _gaq || undefined;
         this.div = null;
     };
 
-    MBP.checkTransform3dSupport = function () {
+    $.checkTransform3dSupport = function () {
 
         var div = document.createElement('div'),
-            transform = MBP.getVendorPropertyName('transform');
+            transform = $.getVendorPropertyName('transform');
 
         div.style[transform] = '';
         div.style[transform] = 'rotateY(90deg)';
@@ -178,15 +179,15 @@ var _gaq = _gaq || undefined;
 
     };
 
-    MBP.buildVendorNames = function () {
+    $.buildVendorNames = function () {
 
         return {
             // Check for the browser's transitions support.
-            transition: MBP.getVendorPropertyName('transition'),
-            transitionDelay: MBP.getVendorPropertyName('transitionDelay'),
-            transform: MBP.getVendorPropertyName('transform'),
-            transformOrigin: MBP.getVendorPropertyName('transformOrigin'),
-            transform3d: MBP.checkTransform3dSupport()
+            transition: $.getVendorPropertyName('transition'),
+            transitionDelay: $.getVendorPropertyName('transitionDelay'),
+            transform: $.getVendorPropertyName('transform'),
+            transformOrigin: $.getVendorPropertyName('transformOrigin'),
+            transform3d: $.checkTransform3dSupport()
 
         };
 
@@ -209,7 +210,7 @@ var _gaq = _gaq || undefined;
     };
 
     //helps with old Android and iOS web apps
-    MBP.parseLocalStorage = function (key) {
+    $.parseLocalStorage = function (key) {
 
         var value = localStorage.getItem(key);
 
@@ -221,18 +222,35 @@ var _gaq = _gaq || undefined;
 
     };
 
-    MBP.s4 = function () {
+    $.s4 = function () {
         return Math.floor((1 + Math.random()) * 0x10000)
                    .toString(16)
                    .substring(1);
     };
 
-    MBP.guid = function () {
-        return MBP.s4() + MBP.s4() + '-' + MBP.s4() + '-' + MBP.s4() + '-' +
-               MBP.s4() + '-' + MBP.s4() + MBP.s4() + MBP.s4();
+    $.guid = function () {
+        return $.s4() + $.s4() + '-' + $.s4() + '-' + $.s4() + '-' +
+               $.s4() + '-' + $.s4() + $.s4() + $.s4();
     };
 
-    MBP.addClass = function (view, cssClass) {
+    $.data = function (view, name, val) {
+
+        val = val || "";
+
+        return (view.hasAttribute("data-" + name) ? view.getAttribute("data-" + name) : val);
+
+    };
+
+    $.removeClass = function(view, cssClass){
+
+        view.className = view.className
+                            .replace(" " + cssClass + " ", " ")
+                            .replace(" " + cssClass, "")
+                            .replace(cssClass + " ", "");
+
+    };
+
+    $.addClass = function (view, cssClass) {
 
         if (!view || !cssClass) {
             return;
@@ -250,7 +268,7 @@ var _gaq = _gaq || undefined;
 
     };
 
-    MBP.attr = function (view, attr, value) {
+    $.attr = function (view, attr, value) {
 
         if (!view) {
             return;
@@ -270,4 +288,4 @@ var _gaq = _gaq || undefined;
     };
 
 
-})(document);
+})(document, $);
