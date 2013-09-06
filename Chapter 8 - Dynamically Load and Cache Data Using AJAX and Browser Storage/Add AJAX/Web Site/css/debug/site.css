@@ -39,17 +39,34 @@ h1, h2, h3 {
     margin: 0;
 }
 
-h1 {
-    font-size: 2.2em;
+
+h1, .view-title {
+    margin: 15px 0 0 0;
+    letter-spacing: 0;
+    font-weight: 200;
+    font-size: 26pt;
+    line-height: 1.1429;
 }
 
-h2 {
-    font-size: 1.5em;
+h2, .view-title-x-large, .page-title {
+    font-weight: 400;
+    font-size: 22pt;
+    line-height: 1.1429;
 }
 
-h3 {
-    font-size: 1em;
+h3, .view-title-large, .panel-title {
+    margin: 6px 12px 6px 0;
+    font-weight: 200;
+    font-size: 20pt;
+    line-height: 1.2;
 }
+
+h4, .panel-small-title {
+    font-weight: 400;
+    font-size: 18pt;
+    line-height: 1.1429;
+}
+
 
 .site-header {
     position: absolute;
@@ -124,6 +141,13 @@ h3 {
     width: 100%;
     height: 100%;
 }
+
+.vertical-list, .horizontal-list {
+    list-style-type: none;
+    margin: 0 6px 0 0;
+    padding: 0;
+}
+
 
 @media (max-width:800px) {
 

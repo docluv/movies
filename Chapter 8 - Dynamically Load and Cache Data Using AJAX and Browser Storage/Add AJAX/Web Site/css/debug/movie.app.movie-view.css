@@ -1,1 +1,15 @@
 ﻿
+.movie-description-panel {
+    margin-right: 24px;
+}
+
+.movie-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cast-name-list
+{
+    margin-left: 6px;
+}

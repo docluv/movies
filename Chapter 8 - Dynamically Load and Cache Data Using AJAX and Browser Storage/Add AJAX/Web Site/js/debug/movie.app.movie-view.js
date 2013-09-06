@@ -36,6 +36,7 @@
             this.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
                             this.mergeInFakeShowtimes(data));
 
+            this.setupPanorama();
         }
 
     };

@@ -122,6 +122,7 @@
     <Content Include="css\debug\animations.css" />
     <Content Include="css\debug\movie-grid.css" />
     <Content Include="css\debug\movie.app.account-view.css" />
+    <Content Include="css\debug\movie.app.forms.css" />
     <Content Include="css\debug\movie.app.home-view.css" />
     <Content Include="css\debug\movie.app.login-view.css" />
     <Content Include="css\debug\movie.app.maps-view.css" />
@@ -131,6 +132,7 @@
     <Content Include="css\debug\movie.app.profile-view.css" />
     <Content Include="css\debug\movie.app.search-view.css" />
     <Content Include="css\debug\movie.app.theaters-view.css" />
+    <Content Include="css\debug\panorama.css" />
     <Content Include="css\debug\site.css" />
     <Content Include="css\debug\toolbar.css" />
     <Content Include="css\debug\touch.css" />
@@ -151,6 +153,7 @@
     <Content Include="js\debug\movie.app.theaters-view.js" />
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deep-tissue.min.js" />
+    <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\mbp.js" />
     <Content Include="js\libs\mustache.js" />
     <Content Include="js\libs\panorama.js" />

@@ -7,6 +7,8 @@
 
     movieApp.fn.unloadHomeView = function () {
         delete this.resizeEvents["manageHomeView"];
+
+        console.info("unloading the home view");
     };
 
     movieApp.fn.loadHomeView = function () {
