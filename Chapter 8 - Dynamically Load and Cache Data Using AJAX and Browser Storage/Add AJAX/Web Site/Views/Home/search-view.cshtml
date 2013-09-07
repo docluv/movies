@@ -4,7 +4,17 @@
     data-callback="movie.loadSearchView"
     data-path="search\:term">
 
+    <div class="searchBox">
+        <input id="searchTerm" class="search" autocapitalize="off"
+            autofocus name="searchTerm" placeholder="search term"
+            results="5" type="search" />
+        <span class="search-clear">X</span>
+        <span class="search-icon"></span>
+    </div>
 
-    <h2>Search</h2>
+    <div id="searchResults">
+        <ul class="grid-list search-results-list">
+        </ul>
+    </div>
 
 </section>

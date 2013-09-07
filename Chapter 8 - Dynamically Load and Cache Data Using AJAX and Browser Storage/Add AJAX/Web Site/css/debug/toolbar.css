@@ -93,6 +93,7 @@
     color: #fff;
     font-size: 21px;
     line-height: 36px;
+    text-align: left;
 }
 
 @media (min-width:601px){

@@ -8,8 +8,6 @@
         console.log("loadMovieView");
 
         var that = this;
-
-    //    this.showLoading(".movie-poster-div");
         
         that.loadMovieDetails(params.id, function (data) {
 
@@ -20,9 +18,7 @@
             that.renderMovieDetails(data);
 
         });
-
-    //    that.setMovieGridSize();
-
+        
     };
 
 

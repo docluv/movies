@@ -4,7 +4,36 @@
     data-callback="movie.loadMoviesView"
     data-path="movies">
 
-
-    <h2>Movies</h2>
+   <div class="pxs_container home-page-panorama panorama-container">
+        <ul class="panorama-panels">
+            <li class="single-panel">
+                <h3 class="panel-title">opening movies</h3>
+                <div id="opening-movies-scroll" class="scroll-wrapper">
+                    <div class="vertical-container">
+                        <ul class="opening-movie-list big-movie-list"></ul>
+                    </div>
+                </div>
+            </li>
+            <li class="comming-soon-movie-list single-panel">
+                <h3 class="panel-title">top box office</h3>
+                <div id="top-box-movies-scroll" class="scroll-wrapper">
+                    <div class="vertical-container">
+                        <ul class="top-box-list big-movie-list"></ul>
+                    </div>
+                </div>
+            </li>
+            <li class="movies-near-me-panel single-panel">
+                <h3 class="panel-title">near me</h3>
+                <div id="movies-near-me-scroll" class="scroll-wrapper">
+                    <div class="vertical-container">
+                        <ul class="movies-near-me-list big-movie-list"></ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="pxs_navigation">
+            <span class="pxs_next"></span><span class="pxs_prev"></span>
+        </div>
+    </div>
 
 </section>

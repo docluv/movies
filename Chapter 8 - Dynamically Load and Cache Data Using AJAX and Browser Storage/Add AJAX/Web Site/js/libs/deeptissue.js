@@ -7,7 +7,6 @@
     HTMLElement.prototype.ha = HTMLElement.prototype.hasAttribute;
 
     var querySelector = document.querySelector,
-        foo = foo,
 
 
     deeptissue = function (node, customSettings) {
@@ -31,10 +30,9 @@
                 this.node = [node];
             }
 
-            this["settings"] = $.extend({}, 
-                                                this["settings"], 
-                                                        customSettings);
-            this.buildVendorNames();
+            this["settings"] = $.extend({}, this["settings"], customSettings);
+
+            $.buildVendorNames();
 
             this.touchType = window.navigator.msPointerEnabled ? "pointer" :
                                 "ontouchstart" in window ? "touch" : "mouse";
@@ -93,7 +91,6 @@
 
                     });
 
-
                     el.addEventListener("gesturechange", function (evt) {
 
                         that.gestureChange.call(that, evt);
@@ -150,6 +147,7 @@
                         ///Double Tap functionality
                         el.addEventListener("MSGestureEnd", function (evt) {
                             console.info("MSGestureEnd");
+                            that.endGesture();
                         });
 
                     }
@@ -162,17 +160,26 @@
 
         },
 
-        swipeRightCallback: foo,
-        swipeLeftCallback: foo,
-        swipeUpCallback: foo,
-        swipeDownCallback: foo,
-        moveCallback: foo,
-        moveHorizontalCallback: foo,
-        moveVerticalCallback: foo,
-        rotateCallback: foo,
-        scaleCallback: foo,
-        tapCallback: foo,
-        doubleTapCallback: foo,
+        endGesture: function () {
+
+            this.swippingRight = false;
+            this.swippingLeft = false;
+            this.swippingUp = false;
+            this.swippingDown = false;
+
+        },
+
+        swipeRightCallback: $.noop,
+        swipeLeftCallback: $.noop,
+        swipeUpCallback: $.noop,
+        swipeDownCallback: $.noop,
+        moveCallback: $.noop,
+        moveHorizontalCallback: $.noop,
+        moveVerticalCallback: $.noop,
+        rotateCallback: $.noop,
+        scaleCallback: $.noop,
+        tapCallback: $.noop,
+        doubleTapCallback: $.noop,
 
         processGestureChange: function (e, m) {
 
@@ -234,17 +241,24 @@
                     e.translationX > 0 && //need to add the threshold check here
                     e.translationX > settings.swipeRightThreshold) {
 
-                console.info("swipeRight");
-                that.swipeRightCallback(e, m);
+                if (!that.swippingRight) {
+                    console.info("swipeRight");
+                    that.swippingRight = true;
+                    that.swipeRightCallback(e, m);
+                }
 
             }
 
             if (el.ha(settings.swipeLeft) &&
                     e.translationX < 0 &&
-                    Math.abs(e.translationX) > settings.swipeLeftThreshold) {
+                    e.translationX < settings.swipeLeftThreshold) {
 
-                console.info("swipeLeft");
-                that.swipeLeftCallback(e, m);
+
+                if (!that.swippingLeft) {
+                    console.info("swipeLeft");
+                    that.swippingLeft = true;
+                    that.swipeLeftCallback(e, m);
+                }
 
             }
 
@@ -252,18 +266,29 @@
             if (el.ha(settings.swipeUp) && e.translationY < 0 &&
                     Math.abs(e.translationY) > settings.swipeUpThreshold) {
 
-                that.swipeUpCallback(e, m);
+                if (!that.swippingUp) {
+                    that.swippingUp = true;
+                    that.swipeUpCallback(e, m);
+                }
 
             }
 
             if (el.ha(settings.swipeDown) && e.translationY > 0 &&
                     e.translationY > settings.swipeDownThreshold) {
 
-                that.swipeDownCallback(e, m);
+                if (!that.swippingDown) {
+                    that.swippingDown = true;
+                    that.swipeDownCallback(e, m);
+                }
 
             }
 
         },
+
+        swippingRight: false,
+        swippingLeft: false,
+        swippingUp: false,
+        swippingDown: false,
 
         gestureChange: function (e) {
 
@@ -274,7 +299,6 @@
 
             console.info("gesture Change \r\n" +
                             el.ha(settings.rotateIndicator) + "\r\n");
-
 
             if (el.ha(settings.rotateIndicator) &&
                     Math.abs(e.rotation) > settings.rotateThreshold) {
@@ -372,50 +396,6 @@
 
         div: undefined,
         support: {},
-
-        buildVendorNames: function () {
-
-            this.div = document.createElement('div');
-
-            // Check for the browser's transitions support.
-            this.support.transition = this.getVendorPropertyName('transition');
-            this.support.transitionDelay = this.getVendorPropertyName('transitionDelay');
-            this.support.transform = this.getVendorPropertyName('transform');
-            this.support.transformOrigin = this.getVendorPropertyName('transformOrigin');
-            this.support.transform3d = this.checkTransform3dSupport();
-
-            // Avoid memory leak in IE.
-            this.div = null;
-
-        },
-
-        getVendorPropertyName: function (prop) {
-            var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-                vendorProp, i,
-                prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
-
-            if (prop in this.div.style) {
-                return prop;
-            }
-
-            for (i = 0; i < prefixes.length; ++i) {
-
-                vendorProp = prefixes[i] + prop_;
-
-                if (vendorProp in this.div.style) {
-                    return vendorProp;
-                }
-
-            }
-        },
-
-        // Helper function to check if transform3D is supported.
-        // Should return true for Webkits and Firefox 10+.
-        checkTransform3dSupport: function () {
-            this.div.style[this.support.transform] = '';
-            this.div.style[this.support.transform] = 'rotateY(90deg)';
-            return this.div.style[this.support.transform] !== '';
-        },
 
         //DoubleTap Handler
         doDoubleTap: function (evt, el, settings) {
@@ -549,7 +529,7 @@
 
             evt.preventDefault();
 
-            console.log("touch start");
+            console.info("touch start");
 
             if (el.ha(settings.moveIndicator)) {
 
@@ -611,32 +591,33 @@
 
             if (el.ha(settings.moveTouchInitial)) {
                 el.setAttribute(settings.moveTouchEnded, "true");
-                //el.removeAttribute(settings.moveTouchInitial);
             }
 
             if (el.ha(settings.horizontalIndicator)) {
                 el.setAttribute(settings.horizontalTouchEnd, "true");
-                //  el.removeAttribute(settings.horizontalTouchInit);
             }
 
             if (el.ha(settings.verticalIndicator)) {
                 el.setAttribute(settings.verticalTouchEnd, "true");
-                //   el.removeAttribute(settings.verticalTouchInit);
             }
 
             if (el.ha(settings.swipeRight)) {
+                that.swippingRight = false;
                 el.setAttribute(settings.swipeRightEnd, "true");
             }
 
             if (el.ha(settings.swipeLeft)) {
+                that.swippingLeft = false;
                 el.setAttribute(settings.swipeLeftEnd, "true");
             }
 
             if (el.ha(settings.swipeUp)) {
+                that.swippingUp = false;
                 el.setAttribute(settings.swipeUpEnd, "true");
             }
 
             if (el.ha(settings.swipeDown)) {
+                that.swippingDown = false;
                 el.setAttribute(settings.swipeDownEnd, "true");
             }
 
@@ -721,9 +702,12 @@
             if (el.ha(settings.swipeRight)) {
 
                 if (!el.ha(settings.swipeRightEnd) &&
-                            el.ha(settings.swipeRightInit)) {
+                        el.ha(settings.swipeRightInit) &&
+                        !that.swippingRight) {
 
-                    console.log("should swipe right");
+                    that.swippingRight = true;
+
+                    console.info("should swipe right");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeRightInit)),
                                 end = that.getTouchPoints(evt),
@@ -745,9 +729,11 @@
             if (el.ha(settings.swipeLeft)) {
 
                 if (!el.ha(settings.swipeLeftEnd) &&
-                            el.ha(settings.swipeLeftInit)) {
+                        el.ha(settings.swipeLeftInit) &&
+                        !that.swippingLeft) {
 
-                    console.log("should swipe left");
+                    that.swippingLeft = true;
+                    console.info("should swipe left");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeLeftInit)),
                                 end = that.getTouchPoints(evt),
@@ -770,9 +756,11 @@
             if (el.ha(settings.swipeUp)) {
 
                 if (!el.ha(settings.swipeUpEnd) &&
-                            el.ha(settings.swipeUpInit)) {
+                            el.ha(settings.swipeUpInit) &&
+                        !that.swippingUp) {
 
-                    console.log("should swipe up");
+                    that.swippingUp = true;
+                    console.info("should swipe up");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeUpInit)),
                                 end = that.getTouchPoints(evt),
@@ -794,8 +782,10 @@
             if (el.ha(settings.swipeDown)) {
 
                 if (!el.ha(settings.swipeDownEnd) &&
-                            el.ha(settings.swipeDownInit)) {
+                            el.ha(settings.swipeDownInit) &&
+                        !that.swippingDown) {
 
+                    that.swippingDown = true;
                     console.log("should swipe down");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeDownInit)),
@@ -814,24 +804,6 @@
                 }
 
             }
-
-            /*
-            if (el.ha("data-rotate") && Math.abs(0.0019) > this.settings.rotateThreshold) {
-
-            console.log("do touch rotate");
-            //el.style.transform = m.rotate(e.rotation * 180 / Math.PI); // Apply Rotation
-
-            //this.rotateCallback(e, m);
-            }
-
-            if (el.ha("data-scale") && Math.abs(e.scale) > this.settings.scaleThreshold) {
-
-            console.log("do touch scale");
-
-            //el.style.transform = m.scale(e.scale); // Apply Rotation
-            //this.scaleCallback(e, m);
-            }
-            */
 
         },
 
@@ -911,7 +883,7 @@
             var that = this;
 
             if (!callback) {
-                callback = foo;
+                callback = $.noop;
             }
 
             if (that.hasmsGesture) {
@@ -1026,9 +998,9 @@
 
         },
 
-        tapHoldBeginCallback : foo,
-        tapHoldEndCallback : foo,
-        tapHoldCancelCallback : foo,
+        tapHoldBeginCallback : $.noop,
+        tapHoldEndCallback : $.noop,
+        tapHoldCancelCallback : $.noop,
 
         tapHoldCallback : function (evt) {
 

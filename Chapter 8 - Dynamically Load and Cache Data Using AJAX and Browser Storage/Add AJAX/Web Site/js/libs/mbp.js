@@ -287,5 +287,6 @@ var _gaq = _gaq || undefined,
 
     };
 
+    $.noop = function () { };
 
 })(document, $);

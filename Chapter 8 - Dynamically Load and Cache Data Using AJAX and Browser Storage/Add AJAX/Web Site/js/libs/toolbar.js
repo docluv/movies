@@ -53,7 +53,7 @@ callback: function(){} //gets executed when the item is selected
 
             that.setupToolbarElements(node, settings);
             that.applyTransitionEnd();
-
+            that.setupOritentationChange();
             that.setToolbarMenu(settings.menuItems);
 
             return this;
@@ -320,11 +320,11 @@ callback: function(){} //gets executed when the item is selected
 
             if (toolbar.expanded) {
 
-                if (toolbar.orientation === "portrait") {
-                    toolbar.style.height = settings.minHeight + "px";
-                } else {
-                    toolbar.style.width = settings.minWidth + "px";
-                }
+                //if (toolbar.orientation === "portrait") {
+                //    toolbar.style.height = settings.minHeight + "px";
+                //} else {
+                //    toolbar.style.width = settings.minWidth + "px";
+                //}
 
                 toolbar.expanded = false;
 
@@ -351,7 +351,42 @@ callback: function(){} //gets executed when the item is selected
             }
 
         },
-        
+
+        setupOritentationChange: function () {
+
+            var that = this,
+                toolbar = that.toolbar,
+                supportsOrientationChange = "onorientationchange" in window,
+                orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
+
+            toolbar.orientation = (window.innerWidth > window.innerHeight) ?
+                                "landscape" : "portrait";
+
+            window.addEventListener(orientationEvent, function () {
+
+                toolbar.orientation = (window.innerWidth > window.innerHeight) ?
+                                "landscape" : "portrait";
+
+                if (toolbar.expanded === true) {
+                    toolbar.expanded = false;
+                    toolbar.style.width = "";
+                    toolbar.style.height = "";
+                }
+
+                //if (toolbar.orientation === "landscape") {
+                //    toolbar.style.height = window.innerHeight + "px";
+                //    toolbar.style.width = "42px";
+                //} else {
+                //    toolbar.style.height = "35px";
+                //    toolbar.style.width = window.innerWidth + "px";
+
+                //    that.setIconWidth(that.settings.menuItems.topMenu.length + 1);
+                //}
+
+            }, false);
+
+        },
+
         settings: {
 
             minHeight: 35,
