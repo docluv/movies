@@ -83,7 +83,7 @@
 
             try {
 
-                [ ].forEach.call(this.node, function (el) {
+                [].forEach.call(this.node, function (el) {
 
                     el.addEventListener("gesturestart", function (evt) {
 
@@ -118,7 +118,7 @@
 
             try {
 
-                [ ].forEach.call(this.node, function (el) {
+                [].forEach.call(this.node, function (el) {
 
                     var t = new MSGesture();
 
@@ -162,10 +162,10 @@
 
         endGesture: function () {
 
-            this.swippingRight = false;
-            this.swippingLeft = false;
-            this.swippingUp = false;
-            this.swippingDown = false;
+            this.swipping = false;
+
+            this.swipeX = null;
+            this.swipeY = null;
 
         },
 
@@ -189,17 +189,17 @@
 
             if (el.ha(settings.rotateIndicator) &&
                 Math.abs(e.rotation) > settings.rotateThreshold) {
-                
-                if(settings.autoRotate){
+
+                if (settings.autoRotate) {
                     el.style.transform = m.rotate(e.rotation * 180 / Math.PI); // Apply Rotation    
                 }
-                
+
                 this.rotateCallback(e, m);
             }
 
             if (el.ha(settings.scaleIndicator) && Math.abs(e.scale) > settings.scaleThreshold) {
-                
-                if(settings.autoScale){
+
+                if (settings.autoScale) {
                     el.style.transform = m.scale(e.scale); // Apply Rotation
                 }
 
@@ -210,17 +210,17 @@
                     (Math.abs(e.translationX) > settings.moveThreshold ||
                      Math.abs(e.translationY) > settings.moveThreshold)) {
 
-                if(settings.autoMove){
+                if (settings.autoMove) {
                     el.style.transform = m.translate(e.translationX, e.translationY, 0); // Apply Translation;
                 }
-                
+
                 this.moveCallback(e, m);
             }
 
             if (el.ha(settings.horizontalIndicator) &&
                     Math.abs(e.translationX) > settings.moveThreshold) {
 
-                if(settings.autoHorizontalMove){
+                if (settings.autoHorizontalMove) {
                     e.target.style.transform = m.translate(e.translationX, 0, 0); // Apply Translation;
                 }
 
@@ -230,65 +230,120 @@
             if (el.ha(settings.verticalIndicator) &&
                     Math.abs(e.translationY) > settings.moveThreshold) {
 
-                if(settings.autoVerticalMove){
+                if (settings.autoVerticalMove) {
                     e.target.style.transform = m.translate(0, e.translationY, 0); // Apply Translation;
                 }
-                
+
                 this.moveVerticalCallback(e, m);
             }
 
-            if (el.ha(settings.swipeRight) &&
-                    e.translationX > 0 && //need to add the threshold check here
-                    e.translationX > settings.swipeRightThreshold) {
+            var horizontal = false,
+                vertical = false;
 
-                if (!that.swippingRight) {
-                    console.info("swipeRight");
-                    that.swippingRight = true;
-                    that.swipeRightCallback(e, m);
+            if (that.swipeX !== null || that.swipeY !== null) {
+                horizontal = Math.abs((e.clientX - that.swipeX)) >
+                            Math.abs((e.clientY - that.swipeY));
+                vertical = !horizontal;
+            }
+
+            if (el.ha(settings.swipeRight) && !that.swipping) {
+
+                if (that.swipeX === null) {
+                    that.swipeX = e.clientX;
+                } else if ((e.clientX > that.swipeX) &&
+                    (e.clientX - that.swipeX) > settings.swipeRightThreshold) {
+
+                    if (!that.swipping) {
+                        console.info("swipeRight");
+
+                        that.swipping = true;
+
+                        that.swipeX = null;
+                        that.swipeY = null;
+                        that.swipeRightCallback(e, m);
+                    }
+
                 }
 
             }
 
-            if (el.ha(settings.swipeLeft) &&
-                    e.translationX < 0 &&
-                    e.translationX < settings.swipeLeftThreshold) {
+            if (el.ha(settings.swipeLeft) && !that.swipping) {
 
+                if (that.swipeX === null) {
+                    that.swipeX = e.clientX;
+                } else if ((e.clientX < that.swipeX) &&
+                        (e.clientX - that.swipeX) < settings.swipeLeftThreshold) {
 
-                if (!that.swippingLeft) {
-                    console.info("swipeLeft");
-                    that.swippingLeft = true;
-                    that.swipeLeftCallback(e, m);
+                    if (!that.swipping) {
+                        console.info("swipe Left");
+
+                        that.swipping = true;
+
+                        that.swipeX = null;
+                        that.swipeY = null;
+
+                        that.swipeLeftCallback(e, m);
+                    }
+
                 }
 
             }
 
-            //I know the < 0 && > 0 seem counter intuitive, but that seems to be how it works
-            if (el.ha(settings.swipeUp) && e.translationY < 0 &&
-                    Math.abs(e.translationY) > settings.swipeUpThreshold) {
 
-                if (!that.swippingUp) {
-                    that.swippingUp = true;
-                    that.swipeUpCallback(e, m);
+            if (el.ha(settings.swipeUp) && !that.swipping) {
+
+                if (that.swipeY === null) {
+                    that.swipeY = e.clientY;
+                } else {
+
+                    //can get a negative value if the finger goes above the window
+                    var clientY = (e.clientY >= 0) ? e.clientY : 0;
+
+                    if ((e.clientY < that.swipeY) &&
+                        (clientY - that.swipeY) < settings.swipeUpThreshold) {
+
+                        if (!that.swipping) {
+                            console.info("swipeUp");
+
+                            that.swipping = true;
+
+                            that.swipeX = null;
+                            that.swipeY = null;
+
+                            that.swipeUpCallback(e, m);
+                        }
+                    }
+
                 }
 
             }
 
-            if (el.ha(settings.swipeDown) && e.translationY > 0 &&
-                    e.translationY > settings.swipeDownThreshold) {
+            if (el.ha(settings.swipeDown) && !that.swipping) {
 
-                if (!that.swippingDown) {
-                    that.swippingDown = true;
-                    that.swipeDownCallback(e, m);
+                if (that.swipeY === null) {
+                    that.swipeY = e.clientY;
+                } else if ((e.clientY > that.swipeY) &&
+                    (e.clientY - that.swipeY) > settings.swipeDownThreshold) {
+
+                    if (!that.swipping) {
+                        console.info("swipe Down");
+                        that.swipping = true;
+
+                        that.swipeY = null;
+                        that.swipeX = null;
+                        that.swipeDownCallback(e, m);
+                    }
+
                 }
 
             }
+
 
         },
 
-        swippingRight: false,
-        swippingLeft: false,
-        swippingUp: false,
-        swippingDown: false,
+        swipping: false,
+        swipeX: null,
+        swipeY: null,
 
         gestureChange: function (e) {
 
@@ -348,7 +403,7 @@
                 that.settings[threshholdName] = threshold;
             }
 
-            [ ].forEach.call(that.node, function (el) {
+            [].forEach.call(that.node, function (el) {
                 el.setAttribute(settings[indicator], "true");
             });
 
@@ -488,7 +543,7 @@
             var that = this,
                 settings = this.settings;
 
-            [ ].forEach.call(this.node, function (el) {
+            [].forEach.call(this.node, function (el) {
 
                 var moveHandler = function (evt) {
 
@@ -602,22 +657,22 @@
             }
 
             if (el.ha(settings.swipeRight)) {
-                that.swippingRight = false;
+                that.swipping = false;
                 el.setAttribute(settings.swipeRightEnd, "true");
             }
 
             if (el.ha(settings.swipeLeft)) {
-                that.swippingLeft = false;
+                that.swipping = false;
                 el.setAttribute(settings.swipeLeftEnd, "true");
             }
 
             if (el.ha(settings.swipeUp)) {
-                that.swippingUp = false;
+                that.swipping = false;
                 el.setAttribute(settings.swipeUpEnd, "true");
             }
 
             if (el.ha(settings.swipeDown)) {
-                that.swippingDown = false;
+                that.swipping = false;
                 el.setAttribute(settings.swipeDownEnd, "true");
             }
 
@@ -703,9 +758,9 @@
 
                 if (!el.ha(settings.swipeRightEnd) &&
                         el.ha(settings.swipeRightInit) &&
-                        !that.swippingRight) {
+                        !that.swipping) {
 
-                    that.swippingRight = true;
+                    that.swipping = true;
 
                     console.info("should swipe right");
 
@@ -730,9 +785,9 @@
 
                 if (!el.ha(settings.swipeLeftEnd) &&
                         el.ha(settings.swipeLeftInit) &&
-                        !that.swippingLeft) {
+                        !that.swipping) {
 
-                    that.swippingLeft = true;
+                    that.swipping = true;
                     console.info("should swipe left");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeLeftInit)),
@@ -757,9 +812,9 @@
 
                 if (!el.ha(settings.swipeUpEnd) &&
                             el.ha(settings.swipeUpInit) &&
-                        !that.swippingUp) {
+                        !that.swipping) {
 
-                    that.swippingUp = true;
+                    that.swipping = true;
                     console.info("should swipe up");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeUpInit)),
@@ -783,9 +838,9 @@
 
                 if (!el.ha(settings.swipeDownEnd) &&
                             el.ha(settings.swipeDownInit) &&
-                        !that.swippingDown) {
+                        !that.swipping) {
 
-                    that.swippingDown = true;
+                    that.swipping = true;
                     console.log("should swipe down");
 
                     var start = JSON.parse(el.getAttribute(settings.swipeDownInit)),
@@ -835,7 +890,7 @@
 
         //move
         //may add a threshold value, but for now just assume it should always fire.
-        move : function (callback) {
+        move: function (callback) {
 
             this.setupIndicator(callback, "moveCallback", 0,
                                     "", "moveIndicator");
@@ -843,7 +898,7 @@
 
         },
 
-        horizontalMove : function (callback) {
+        horizontalMove: function (callback) {
 
             this.setupIndicator(callback, "moveHorizontalCallback", 0,
                                     "", "horizontalIndicator");
@@ -851,7 +906,7 @@
 
         },
 
-        verticalMove : function (callback) {
+        verticalMove: function (callback) {
 
             this.setupIndicator(callback, "moveVerticalCallback", 0,
                                     "", "verticalIndicator");
@@ -860,7 +915,7 @@
         },
 
         //rotate
-        rotate : function (callback) {
+        rotate: function (callback) {
 
             this.setupIndicator(callback, "rotateCallback", 0,
                                     "", "rotateIndicator");
@@ -869,16 +924,16 @@
         },
 
         //scale
-        scale : function (callback) {
+        scale: function (callback) {
 
             this.setupIndicator(callback, "scaleCallback", 0,
                                     "", "scaleIndicator");
             return this;
 
         },
-    
+
         //Tap
-        tap : function (callback) {
+        tap: function (callback) {
 
             var that = this;
 
@@ -888,7 +943,7 @@
 
             if (that.hasmsGesture) {
 
-                [ ].forEach.call(this.node, function (el) {
+                [].forEach.call(this.node, function (el) {
                     el.addEventListener("MSGestureTap", callback, false);
                 });
 
@@ -905,7 +960,7 @@
 
         //Double Tap Members
 
-        dblTap : function (callback) {
+        dblTap: function (callback) {
 
             var that = this,
                 settings = this.settings,
@@ -923,7 +978,7 @@
         },
 
         //Tap Hold Members
-        tapHold : function (callback, endcallback, cancelcallback) {
+        tapHold: function (callback, endcallback, cancelcallback) {
 
             var that = this;
 
@@ -937,7 +992,7 @@
                 that.tapHoldEndCallback = endcallback;
                 that.tapHoldCancelCallback = cancelcallback;
 
-                [ ].forEach.call(this.node, function (el) {
+                [].forEach.call(this.node, function (el) {
 
                     that.preventTapHoldContext(el);
 
@@ -949,7 +1004,7 @@
 
             } else {
 
-                [ ].forEach.call(this.node, function (el) {
+                [].forEach.call(this.node, function (el) {
 
                     that.preventTapHoldContext(el);
 
@@ -970,15 +1025,15 @@
             return this;
         },
 
-        preventTapHoldContext: function(elm){
-          
-          elm.addEventListener("contextmenu", function (e) {
-              e.preventDefault();    // Disables system menu
+        preventTapHoldContext: function (elm) {
+
+            elm.addEventListener("contextmenu", function (e) {
+                e.preventDefault();    // Disables system menu
             }, false);
-  
+
         },
 
-        setupTapHold : function (el, evt) {
+        setupTapHold: function (el, evt) {
 
             var that = this,
                 tht;
@@ -998,17 +1053,17 @@
 
         },
 
-        tapHoldBeginCallback : $.noop,
-        tapHoldEndCallback : $.noop,
-        tapHoldCancelCallback : $.noop,
+        tapHoldBeginCallback: $.noop,
+        tapHoldEndCallback: $.noop,
+        tapHoldCancelCallback: $.noop,
 
-        tapHoldCallback : function (evt) {
+        tapHoldCallback: function (evt) {
 
             var that = this;
 
             evt.preventDefault();
 
-           // console.info("evt.detail - " + evt.detail);
+            // console.info("evt.detail - " + evt.detail);
 
             if (evt.detail & evt.MSGESTURE_FLAG_BEGIN) {
 
@@ -1035,7 +1090,7 @@
             logging: false,
             swipeRightThreshold: 25,
             swipeLeftThreshold: -25,
-            swipeUpThreshold: 25,
+            swipeUpThreshold: -25,
             swipeDownThreshold: 25,
             moveThreshold: 0,
             rotateThreshold: 0,
@@ -1105,4 +1160,4 @@
 
     return (window.deeptissue = deeptissue);
 
-} (window, $));
+}(window, $));

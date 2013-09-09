@@ -152,7 +152,6 @@
     <Content Include="js\debug\movie.app.search-view.js" />
     <Content Include="js\debug\movie.app.theaters-view.js" />
     <Content Include="js\libs\backpack.js" />
-    <Content Include="js\libs\deep-tissue.min.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\mbp.js" />
     <Content Include="js\libs\mustache.js" />

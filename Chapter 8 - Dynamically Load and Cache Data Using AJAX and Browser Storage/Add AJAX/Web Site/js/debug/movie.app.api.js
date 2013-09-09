@@ -12,7 +12,18 @@
 
     movieApp.fn.InTheatersMovies = function (pageLimit, page, callback) {
 
-        return this.getRottenTomatoes("in_theaters", pageLimit, page, callback);
+        var that = this,
+            MoviesCallback = function (data) {
+
+            if (callback) {
+                callback.call(that, data);
+            }
+
+            that.storeMoviesInStorage(data.movies);
+
+        };
+
+        return this.getRottenTomatoes("in_theaters", pageLimit, page, MoviesCallback);
     };
 
     movieApp.fn.CommingSoonMovies = function (pageLimit, page, callback) {
@@ -45,6 +56,41 @@
             type: "jsonp",
             success: callback
         });
+
+    };
+
+    /*
+    storeMoviesInStorage is a helper method to take advantage of the Flixster API returning
+    each movies full profile when a list of movies is requested. This will eliminate the need
+    to make another round trip to the server to collect information we have already recieved.
+    */
+    movieApp.fn.storeMoviesInStorage = function (movies) {
+
+        if (!movies || !movies.length) {
+            return;
+        }
+
+        var movie,
+            that = this,
+            i = 0,
+            cacheKey = "",
+            ls = window.localStorage;
+
+        for (i = 0; i < movies.length; i++) {
+
+            movie = movies[i];
+
+            //build the cacheKey to reference in localStorage. Must add jsonp as the preFilter does this when it stored the result
+            cacheKey = that.rtRoot + "movies/" + movie.id + ".json?apikey=" +
+                        that.apiKey + "jsonp";
+
+            ls.setItem(cacheKey, JSON.stringify(movie));
+            ls.setItem(cacheKey + 'cachettl', +new Date() //forces it to return ticks
+                        + 1000 * 60 * 60 * 72); //ms * seconds * minutes * hours to add to current time in ticks
+            //72 represents 3 days, which is a magic #
+            //you can adjust this number to suit your needs, but movie information rarely changes so a long
+            //period is more desireable. 
+        }
 
     };
 
