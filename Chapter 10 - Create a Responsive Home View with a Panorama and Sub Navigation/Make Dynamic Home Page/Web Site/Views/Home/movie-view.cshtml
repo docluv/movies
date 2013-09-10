@@ -1,0 +1,38 @@
+﻿<section id="movieview" class="content-pane"
+    data-title=""
+    data-transition="flip"
+    data-callback="movie.loadMovieView"
+    data-path="movie\:id\:title">
+
+  <div class="pxs_container panorama-container">
+        <ul class="panorama-panels">
+            <li class="single-panel movie-details-panel"></li>
+            <li class="single-panel movie-description-panel">
+
+            </li>
+            <li class="single-panel movie-cast-panel"><h3 class="panel-title">Cast</h3>
+                <ul class="vertical-list cast-name-list"></ul>
+            </li>
+            <li class="single-panel movie-showtimes-panel"><h3 class="panel-title">Showtimes</h3>
+                <ul class="vertical-list movie-showtime-list"></ul>
+            </li>
+            <li class="single-panel movie-review-panel">
+                <h3 class="panel-title">Leave A Review</h3>
+                <form>
+                    <ul class="vertical-list form-inputs">
+                        <li><input placeholder="Your Name" id="ReviewerName" tabindex="1" 
+                            autocomplete="off" autocorrect="off" required/></li>
+                        <li><input type="email" placeholder="Your E-Mail" id="ReviewerEMail" tabindex="2" 
+                            autocomplete="off" autocorrect="off" title="Please Enter Your E-Mail"/></li>
+                        <li><input type="tel" placeholder="Phone Number" id="ReviewerPhone" tabindex="3" 
+                            autocomplete="off" autocorrect="off" pattern="^d{3}-d{3}-d{4}$" title="###-###-####"/></li>
+                        <li><textarea placeholder="Enter Your Review" tabindex="4" id="MovieReview" 
+                            autocorrect="on" required></textarea></li>
+                        <li><input type="submit" id="reviewSubmit" class="btn" tabindex="5"/></li>
+                    </ul>
+                </form>
+            </li>
+        </ul>
+    </div>
+
+</section>

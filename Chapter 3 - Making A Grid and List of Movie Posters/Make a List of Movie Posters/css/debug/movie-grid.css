@@ -19,7 +19,7 @@
     border: none;
 }
 
-.movie-poster-grid .demo-photo-caption {
+.movie-poster-grid .photo-caption {
     position: relative;
     top: -12px;
     float: left;
