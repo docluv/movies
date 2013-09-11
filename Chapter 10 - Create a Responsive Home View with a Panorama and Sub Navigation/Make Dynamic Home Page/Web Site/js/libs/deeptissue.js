@@ -32,7 +32,7 @@
 
             this["settings"] = $.extend({}, this["settings"], customSettings);
 
-            $.buildVendorNames();
+            this.support = $.buildVendorNames();
 
             this.touchType = window.navigator.msPointerEnabled ? "pointer" :
                                 "ontouchstart" in window ? "touch" : "mouse";

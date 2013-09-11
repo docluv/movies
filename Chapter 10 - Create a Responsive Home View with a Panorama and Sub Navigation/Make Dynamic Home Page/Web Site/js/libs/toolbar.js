@@ -373,15 +373,15 @@ callback: function(){} //gets executed when the item is selected
                     toolbar.style.height = "";
                 }
 
-                //if (toolbar.orientation === "landscape") {
+                if (toolbar.orientation != "landscape") {
                 //    toolbar.style.height = window.innerHeight + "px";
                 //    toolbar.style.width = "42px";
                 //} else {
                 //    toolbar.style.height = "35px";
                 //    toolbar.style.width = window.innerWidth + "px";
 
-                //    that.setIconWidth(that.settings.menuItems.topMenu.length + 1);
-                //}
+                    that.setIconWidth(that.settings.menuItems.topMenu.length + 1);
+                }
 
             }, false);
 
