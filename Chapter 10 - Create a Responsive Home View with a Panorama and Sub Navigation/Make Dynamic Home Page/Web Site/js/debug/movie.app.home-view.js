@@ -15,7 +15,8 @@
 
         var that = this;
 
-        this.setupPanorama();
+        that.setupPanorama();
+        that.setMainTitle("Mobile Movies");
 
         //        this.showLoading(".article-tiles");
         //MoviePosterGridTemplate

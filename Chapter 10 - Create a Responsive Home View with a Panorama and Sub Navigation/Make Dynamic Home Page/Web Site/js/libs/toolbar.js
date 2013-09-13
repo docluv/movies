@@ -405,7 +405,7 @@ callback: function(){} //gets executed when the item is selected
                 subMenu: []
             },
             toolbarItemTemplate: "<div class='toolbar-item'><a href='{{url}}'><div class='toolbar-item-icon {{iconClass}}'></div><figcaption>{{title}}</figcaption></a></div>",
-            subMenuItemTemplate: "<div class='toolbar-sub-menu-nav-item {{iconClass}}'>{{title}}</div>",
+            subMenuItemTemplate: "<div class='toolbar-sub-menu-nav-item {{iconClass}}'><a href='{{url}}'>{{title}}</a></div>",
 
             topLevelItems: [],
             secondLevelItems: [],

@@ -103,12 +103,42 @@ var menuItems = {
 
             });
 
+            that.bindBackButton();
+
             return this;
         },
 
         version: "0.0.1",
 
         bp: undefined,
+
+        mainTitle: document.querySelector(".view-title"),
+
+        movieTypes: {
+            "Opening": "Opening",
+            "TopBoxOffice": "Top Box Office",
+            "CommingSoon": "Comming Soon",
+            "InTheaters": "In Theaters"
+        },
+
+        setMainTitle: function(title){
+
+//            var mainTitle = document.querySelector(".view-title");
+
+            this.mainTitle.textContent = title;
+        },
+
+
+        bindBackButton: function () {
+
+            deeptissue(document.querySelector(".win-backbutton"))
+                .tap(function () {
+
+                    window.history.back(1);
+
+                });
+
+        },
 
         templates: {},
         compileTemplates: function () {

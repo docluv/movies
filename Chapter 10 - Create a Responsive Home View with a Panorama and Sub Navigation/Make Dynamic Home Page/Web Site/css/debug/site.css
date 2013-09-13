@@ -46,7 +46,7 @@ h1, .view-title {
     letter-spacing: 0;
     font-weight: 200;
     font-size: 26pt;
-    line-height: 1.1429;
+    line-height: 26pt;
     width: 400px;
     text-align: left;
     float: left;
@@ -144,6 +144,7 @@ h4, .panel-small-title {
     height: 32px;
     background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
     background-position-y: 0px;
+    margin: 15px 0 0 0;
 }
 
 
@@ -174,6 +175,21 @@ h4, .panel-small-title {
     padding: 0;
 }
 
+@media (max-width:480px) {
+
+    .content-pane{
+        left:0;
+    }
+
+}
+
+@media (min-width:481px) and (max-width:600px) {
+
+    .content-pane {
+        left: 10px;
+    }
+
+}
 
 @media (max-width:600px) {
 
@@ -181,6 +197,10 @@ h4, .panel-small-title {
         height: 80px;
     }
 
+    h1, .view-title{
+        width:70%;
+    }
+    
     .main-nav {
         display: none;
     }
@@ -191,9 +211,6 @@ h4, .panel-small-title {
         left: 0;
     }
 
-    .content-pane {
-        left: 20px;
-    }
 }
 
 
@@ -237,7 +254,7 @@ h4, .panel-small-title {
 
     .main-content {
         left: 10px;
-        bottom: 50px;
+        bottom: 40px;
     }
 
 

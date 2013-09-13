@@ -33,6 +33,7 @@
                             this.mergeInFakeShowtimes(data));
 
             this.setupPanorama();
+            this.setMainTitle(data.title);
         }
 
     };

@@ -78,6 +78,8 @@
 
         that.searchForMovies(params.term);
 
+        that.setMainTitle("Search");
+
     }
 
 

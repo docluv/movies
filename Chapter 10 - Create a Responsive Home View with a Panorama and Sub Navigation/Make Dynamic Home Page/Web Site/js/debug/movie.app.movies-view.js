@@ -22,7 +22,7 @@
 
         });
 
-
+        that.setMainTitle(that.movieTypes[movieType]);
 
     };
 
