@@ -16,7 +16,8 @@ body {
     user-select: none;
     -ms-content-zooming: none;
     overflow-x: hidden;
-    background-color: #1C2420;
+    /*background-color: #1C2420;*/
+    background-color: #7b359a;
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
@@ -41,11 +42,16 @@ h1, h2, h3 {
 
 
 h1, .view-title {
-    margin: 15px 0 0 0;
+    margin: 15px 0 0 40px;
     letter-spacing: 0;
     font-weight: 200;
     font-size: 26pt;
     line-height: 1.1429;
+    width: 400px;
+    text-align: left;
+    float: left;
+    height: 1.15em;
+    overflow: hidden;
 }
 
 h2, .view-title-x-large, .page-title {
@@ -67,6 +73,26 @@ h4, .panel-small-title {
     line-height: 1.1429;
 }
 
+.win-backbutton {
+    float: left;
+    margin: 20px 0 0 20px;
+    line-height: 1.75em;
+    border: solid 2px #fff;
+    border-radius: 1.75em;
+    display: inline-block;
+    height: 1.75em;
+    width: 1.75em;
+    text-align: center;
+}
+
+    .win-backbutton::before {
+        font-family: "Segoe UI Symbol";
+        font-weight: normal;
+        content: "\E0D5"; /* Can Only be used with ::before & ::after */
+        vertical-align: 50%;
+    }
+
+
 
 .site-header {
     position: absolute;
@@ -78,10 +104,6 @@ h4, .panel-small-title {
     /*background-color: #808080;*/
 }
 
-.site-header h1 {
-    width: 100%;
-    text-align: center;
-}
 
 .main-nav {
     margin: auto;
@@ -91,25 +113,29 @@ h4, .panel-small-title {
     text-align: center;
 }
 
-.main-nav > a, .main-nav > a:visited {
-    margin: 5px 5px 20px 5px;
-    padding: 5px 10px;
-    background-color: #990000;
-    color: #fff;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.25em;
-    display: inline-block;
-}
+    .main-nav > a, .main-nav > a:visited {
+        margin: 5px 5px 20px 5px;
+        padding: 5px 10px;
+        background-color: transparent;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.25em;
+        display: inline-block;
+    }
 
-.main-nav > a:active {
-    color: rgb(193,40,40);
-}
+        .main-nav > a:active {
+            /*color: rgb(193,40,40);*/
+            border-bottom: solid 2px #fff;
+        }
 
 .nav-text {
     float: left;
     height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    margin: 15px 0 0 0;
 }
 
 .nav-icon {
@@ -149,28 +175,8 @@ h4, .panel-small-title {
 }
 
 
-@media (max-width:800px) {
-
-    .nav-icon {
-        display: none;
-    }
-}
-
-@media (min-width:601px) {
-    
-    .site-header {
-        height: 100px;
-    }
-
-    .main-content {
-        top: 100px;
-        bottom: 0;
-    }
-
-}
-
 @media (max-width:600px) {
-    
+
     .site-header {
         height: 80px;
     }
@@ -182,6 +188,60 @@ h4, .panel-small-title {
     .main-content {
         top: 80px;
         bottom: 35px;
+        left: 0;
     }
 
+    .content-pane {
+        left: 20px;
+    }
+}
+
+
+@media (min-width:601px) {
+
+    .site-header {
+        height: 100px;
+    }
+
+    .main-content {
+        top: 110px;
+        bottom: 0;
+        left: 5px;
+    }
+
+    .content-pane {
+        left: 30px;
+    }
+}
+
+@media (max-width:800px) {
+
+    .nav-icon {
+        display: none;
+    }
+
+    .main-content {
+        left: 10px;
+    }
+}
+
+@media (min-width:600px) and (min-width:800px) {
+
+    .content-pane {
+        left: 60px;
+    }
+}
+
+
+@media (min-width:801px) {
+
+    .main-content {
+        left: 10px;
+        bottom: 50px;
+    }
+
+
+    .content-pane {
+        left: 0px;
+    }
 }

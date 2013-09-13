@@ -51,7 +51,6 @@
 
         });
 
-
         that.CommingSoonMovies(50, 1, function (data) {
 
             if (!data) {

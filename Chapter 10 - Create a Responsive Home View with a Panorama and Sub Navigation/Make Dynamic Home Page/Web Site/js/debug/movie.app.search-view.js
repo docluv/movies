@@ -5,10 +5,10 @@
     "use strict";
 
 
-    movieApp.fn.searchForMovies = function () {
+    movieApp.fn.searchForMovies = function (term) {
 
         var that = this,
-            value = document.getElementById("searchTerm").value;
+            value = term || document.getElementById("searchTerm").value;
 
         if (value !== "") {
 
@@ -27,6 +27,10 @@
     };
 
     movieApp.fn.searchKeyCheck = function (e) {
+
+        if (!e) {
+            return;
+        }
 
         var that = this,
             searchEle = e.target,
@@ -56,14 +60,12 @@
 
     };
 
-    movieApp.fn.loadSearchView = function () {
+    movieApp.fn.loadSearchView = function (params) {
 
         var that = this,
             searchField = document.getElementById("searchTerm"),
             showToolbar = false;
-        //function (e) {
-        //        that.toolBar.show();
-        //    };
+
 
         searchField.value = "";
 
@@ -74,7 +76,7 @@
 
    //     that.setBaseToolbar();
 
-        that.searchKeyCheck();
+        that.searchForMovies(params.term);
 
     }
 

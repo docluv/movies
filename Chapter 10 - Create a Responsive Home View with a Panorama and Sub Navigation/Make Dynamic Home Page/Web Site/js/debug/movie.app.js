@@ -1,3 +1,4 @@
+/// <reference path="movie.app.js" />
 
 ;
 
@@ -14,9 +15,9 @@ var menuItems = {
                 url: "#!"
             }
                 ,{
-                title: "location",
-                iconClass: "go-location",
-                url:  "#!mapView"
+                title: "map",
+                iconClass: "go-map",
+                url:  "#!maps"
             }
                 ,{
                 title: "showtimes",
@@ -35,24 +36,37 @@ var menuItems = {
                         iconClass: "go-news",
                         url: "#!news"
                     }
+
+                     , {
+                         title: "opening this week",
+                         icon: undefined,
+                         iconClass: "go-opening",
+                         url: "#!movies/Opening"
+                     }
+                     , {
+                         title: "in theaters",
+                         icon: undefined,
+                         iconClass: "go-in-theaters",
+                         url: "#!movies/InTheaters"
+                     }
+                     , {
+                         title: "top box office",
+                         icon: undefined,
+                         iconClass: "go-top-box-office",
+                         url: "#!movies/TopBoxOffice"
+                     }
                     , {
                         title: "comming soon",
                         icon: undefined,
                         iconClass: "go-movie-soon",
-                        url: "#!commingsoon"
+                        url: "#!movies/CommingSoon"
                     }
                     , {
-                        title: "favorites",
+                        title: "account",
                         icon: undefined,
-                        iconClass: "go-favorites",
-                        url: "#!favorites"
-                    }
-                     , {
-                         title: "share",
-                         icon: undefined,
-                         iconClass: "go-share",
-                         url: "#!share"
-                     }]
+                        iconClass: "go-account",
+                        url: "#!account"
+                    }]
             };
 
     
@@ -144,6 +158,34 @@ var menuItems = {
         data: undefined,
 
         resizeEvents: {},
+
+        viewWidth: 0,
+
+        setMoviePanelWidth: function (target, length) {
+
+            target = target || ".movie-poster-div";
+            length = length || 10;
+
+            var grid = document.querySelector(target),
+                width = window.innerWidth,
+                bigWidth = 473,//added 3 because it seemed like IE needed that to make the width work correctly
+                square = 203;
+
+            if (width > 1024) {
+
+                width = (bigWidth + Math.floor(length / 2) * square);
+
+                grid.style.width = width + "px";
+
+            } else if (width > 600) {
+
+                width = Math.ceil(length / 2) * square;
+
+                grid.style.width = width + "px";
+
+            }
+
+        },
 
         panorama: undefined,
         _panoramaSetup: false,

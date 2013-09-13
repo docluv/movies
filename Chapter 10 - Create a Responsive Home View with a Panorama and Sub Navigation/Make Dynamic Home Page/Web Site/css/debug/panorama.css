@@ -4,9 +4,9 @@
     height: 620px;
     position: relative;
     overflow: hidden;
-    -moz-box-shadow: 0 0 7px #000;
+    /*-moz-box-shadow: 0 0 7px #000;
     -webkit-box-shadow: 0 0 7px #000;
-    box-shadow: 0 0 7px #000;
+    box-shadow: 0 0 7px #000;*/
     -ms-touch-action: none;
 
 }

@@ -49,11 +49,18 @@
     movieApp.fn.loadMovieDetails = function (id, callback) {
 
         var that = this,
-            url = that.rtRoot + "movies/" + id + ".json?apikey=" + that.apiKey;
+            url = that.rtRoot + "movies/" + id + ".json?apikey=" + that.apiKey,
+            _callback = function (data) {
 
+                if (callback) {
+                    callback(that.setMoviePoster(data)[0]);
+                }
+
+            };
+        
         return this.data.getData(url, false, {
             type: "jsonp",
-            success: callback
+            success: _callback
         });
 
     };
@@ -131,9 +138,9 @@
 
     movieApp.fn.setMoviePoster = function (movies) {
 
-        if ("length" in movies) {  //rude detection for nodeList
-            movies = movies;
-        } else {
+        if (!movies.length) {  //rude detection for nodeList
+        //    movies = movies;
+        //} else {
             movies = [movies];
         }
 

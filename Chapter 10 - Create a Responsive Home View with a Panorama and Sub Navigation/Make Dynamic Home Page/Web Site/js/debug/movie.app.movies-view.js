@@ -1,65 +1,28 @@
 ﻿
 (function (window, undefined) {
 
-    movieApp.fn.loadmoviesView = function () {
+    movieApp.fn.loadMoviesView = function (params) {
 
-        var that = this;
+        var that = this,
+            movieType = params.movieType || "TopBoxOffice";
 
-        //that.setBaseToolbar();
-        //that.hideHeader();
+        that[movieType + "Movies"](50, 1, function (data) {
 
-        //        $("div.pxs_container").panorama()
-        //            .on("scrollNext", function(e, data) {
+            if (!data) {
+                return;
+            }
 
-        //                e.preventDefault();
+            that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
 
-        ////                    that.setMainTitle(data.title, -data.width / 4);
+            window.addEventListener("resize", function () {
+                that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+            });
+
+            that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
+
+        });
 
 
-        //            })
-        //            .on("scrollPrevious", function(e, data) {
-
-        //                e.preventDefault();
-
-        ////                  that.setMainTitle(data.title, data.width / 4);
-
-        //            });
-
-        /*
-        that.data.OpeningMovies(20)
-                .done(function (data) {
-
-                    $(".opening-movie-list").empty();
-                    $(that.bp.getTemplate("movieThumbsGridTemplate"))
-                        .tmpl(data.movies).appendTo(".opening-movie-list");
-                    //$(".opening-movie-list .movie-target").tap(that.tapToMovie);
-
-                });
-
-        that.data.BoxOfficeMovies(20)
-                .done(function (data) {
-
-                    $(".top-box-list").empty();
-                    $(that.bp.getTemplate("movieThumbsGridTemplate"))
-                        .tmpl(data.movies).appendTo(".top-box-list");
-                    //   $(".top-box-list .movie-target").tap(that.tapToMovie);
-
-                });
-
-        that.data.InTheatersMovies(20)
-                .done(function (data) {
-
-                    $(".movies-near-me-list").empty();
-
-                    $(that.bp.getTemplate("movieThumbsGridTemplate"))
-                        .tmpl(data.movies).appendTo(".movies-near-me-list");
-                    //  $(".movies-near-me-list .movie-target").tap(that.tapToMovie);
-
-                });
-
-        that.setupPanorama();
-
-        */
 
     };
 

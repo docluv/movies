@@ -1,4 +1,9 @@
-﻿
+﻿.movie-poster-div {
+    margin-left: 110px;
+}
+
+
+
 .movie-description-panel {
     margin-right: 24px;
 }
@@ -9,8 +14,7 @@
     text-align: center;
 }
 
-.cast-name-list
-{
+.cast-name-list {
     margin-left: 6px;
 }
 
@@ -53,4 +57,14 @@ span.center, img.center {
 
 .movie-showtime-scroll {
     margin-bottom: 54px;
+}
+
+
+@media (min-width:1024px) {
+
+    .full-movie-poster {
+        width: 440px;
+        height: 677px;
+    }
+
 }

@@ -4,7 +4,7 @@
     -moz-overflow-scrolling: touch;
     overflow-scrolling: touch;
     overflow-style: none;
-    -ms-scroll-chaining: none;
+    -ms-scroll-chaining:none;
     -ms-scroll-snap-type: proximity;
     -ms-scroll-translation: vertical-to-horizontal;
     overflow: auto;
@@ -27,18 +27,6 @@
     ms-touch-action: pan-x;
 }
 
-@media /*(max-width:1024px) and */ (min-width:600px) {
-
-    .xy-scroller-wrapper {
-        overflow: hidden;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        width: auto;
-        padding-right: 0;
-        height: 100%;
-    }
-}
-
 
 @media (max-width:600px) {
 
@@ -51,3 +39,17 @@
         height: 100%;
     }
 }
+
+@media (min-width:600px) {
+
+    .xy-scroller-wrapper {
+        overflow: hidden;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: auto;
+        padding-right: 0;
+        height: 100%;
+    }
+}
+
+
