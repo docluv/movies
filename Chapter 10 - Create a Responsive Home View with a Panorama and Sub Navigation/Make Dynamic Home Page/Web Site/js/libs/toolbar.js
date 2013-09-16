@@ -80,6 +80,24 @@ callback: function(){} //gets executed when the item is selected
             'transition': 'transitionend'
         },
 
+        bindMenuItems: function (menuItems, menuType, templateName) {
+
+            var menuMarkup = "", i;
+
+            if (menuItems[menuType]) {
+
+                //will replace this with a forEach soon....
+                for (i = 0; i < menuItems[menuType].length; i++) {
+                    menuMarkup += this.parseMenuItem(menuItems[menuType][i],
+                                    this.settings[templateName]);
+                }
+
+            }
+
+            return menuMarkup;
+
+        },
+
         /*
         Use this method to configure or change the items displayed in the toolbar.
         There are two arrays in the menuItems object, topMenu and subMenu. They
@@ -99,24 +117,27 @@ callback: function(){} //gets executed when the item is selected
             that.topMenu.innerHTML = "";
             that.subMenu.innerHTML = "";
 
-            if (menuItems.topMenu) {
+            topHTML = that.bindMenuItems(menuItems, "topMenu", "toolbarItemTemplate");
+            subHTML = that.bindMenuItems(menuItems, "subMenu", "subMenuItemTemplate");
 
-                //will replace this with a forEach soon....
-                for (i = 0; i < menuItems.topMenu.length; i++) {
-                    topHTML += that.parseMenuItem(menuItems.topMenu[i],
-                                    settings.toolbarItemTemplate);
-                }
+            //if (menuItems.topMenu) {
 
-            }
+            //    //will replace this with a forEach soon....
+            //    for (i = 0; i < menuItems.topMenu.length; i++) {
+            //        topHTML += that.parseMenuItem(menuItems.topMenu[i],
+            //                        settings.toolbarItemTemplate);
+            //    }
 
-            if (menuItems.subMenu) {
+            //}
 
-                for (i = 0; i < menuItems.subMenu.length; i++) {
-                    subHTML += that.parseMenuItem(menuItems.subMenu[i],
-                                    settings.subMenuItemTemplate);
-                }
+            //if (menuItems.subMenu) {
 
-            }
+            //    for (i = 0; i < menuItems.subMenu.length; i++) {
+            //        subHTML += that.parseMenuItem(menuItems.subMenu[i],
+            //                        settings.subMenuItemTemplate);
+            //    }
+
+            //}
 
             i = menuItems.topMenu.length;
 
@@ -320,11 +341,11 @@ callback: function(){} //gets executed when the item is selected
 
             if (toolbar.expanded) {
 
-                //if (toolbar.orientation === "portrait") {
-                //    toolbar.style.height = settings.minHeight + "px";
-                //} else {
-                //    toolbar.style.width = settings.minWidth + "px";
-                //}
+                if (toolbar.orientation === "portrait") {
+                    toolbar.style.height = settings.minHeight + "px";
+                } else {
+                    toolbar.style.width = settings.minWidth + "px";
+                }
 
                 toolbar.expanded = false;
 

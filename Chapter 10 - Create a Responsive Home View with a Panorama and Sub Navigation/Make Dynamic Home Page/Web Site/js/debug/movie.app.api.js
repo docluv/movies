@@ -35,13 +35,25 @@
         page = page || 1;
         pageLimit = pageLimit || that.defaultPageLimit;
 
-        var url = that.rtRoot + "movies.json?apikey=" + this.apiKey +
+        var that = this,
+            url = that.rtRoot + "movies.json?apikey=" + this.apiKey +
                     "&q=" + q + "&page_limit=" +
-                    pageLimit + "&page=" + page;
+                    pageLimit + "&page=" + page,
+            MoviesCallback = function (data) {
+
+                data.movies = that.setMoviePoster(data.movies);
+
+                if (callback) {
+                    callback.call(that, data);
+                }
+
+                that.storeMoviesInStorage(data.movies);
+
+            };
 
         return this.data.getData(url, false, {
             type: "jsonp",
-            success: callback
+            success: MoviesCallback
         });
 
     };

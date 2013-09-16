@@ -16,7 +16,7 @@
 
                 if (data && data.movies) {
 
-                    this.mergeData(".search-results-list", "movieThumbsGridTemplate", data);
+                    that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
                 }
 
@@ -37,26 +37,13 @@
             searchClear = document.querySelector(".search-clear"),
             searchIcon = document.querySelector(".search-icon");
 
-        if (key === 13) {
+        if (e.which === 13) {
 
             e.preventDefault();
 
             that.searchForMovies();
 
-            //dealing with the way Android does the keypad overlay
-         //   that.toolBar.show();
-
-        } //else {
-
-            //if (searchEle.value !== "") {
-            //    searchClear.show();
-            //    searchIcon.hide();
-            //} else {
-            //    searchClear.hide();
-            //    searchIcon.show();
-            //}
-
-    //    }
+        }
 
     };
 
@@ -66,15 +53,12 @@
             searchField = document.getElementById("searchTerm"),
             showToolbar = false;
 
-
         searchField.value = "";
 
     //    searchField.addEventListener("blur", showToolbar);
-        searchField.addEventListener("keyup", that.searchKeyCheck);
-
-    //    that.hideHeader();
-
-   //     that.setBaseToolbar();
+        searchField.addEventListener("keyup", function(e){
+            that.searchKeyCheck.call(that, e);
+        });
 
         that.searchForMovies(params.term);
 

@@ -201,6 +201,10 @@ var menuItems = {
                 bigWidth = 473,//added 3 because it seemed like IE needed that to make the width work correctly
                 square = 203;
 
+            if (!grid) {
+                return;
+            }
+
             if (width > 1024) {
 
                 width = (bigWidth + Math.floor(length / 2) * square);
