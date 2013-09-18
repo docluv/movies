@@ -37,9 +37,27 @@
     margin: auto;
     width: 30px;
     height: 26px;
-    background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
+    /*background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");*/
     background-repeat: no-repeat;
 }
+
+
+.go-map {
+    background-image: url("http://images.professionalaspnet.com/movie/map.png");
+}
+
+.go-showtimes {
+    background-image: url("http://images.professionalaspnet.com/movie/camera.png");
+}
+
+.go-search {
+    background-image: url("http://images.professionalaspnet.com/movie/search.png");
+}
+
+.go-home {
+    background-image: url("http://images.professionalaspnet.com/movie/home.png");
+}
+
 
 .toolbar-item-landscape {
     -moz-transform: rotate(90deg);

@@ -137,6 +137,13 @@
     <Content Include="css\debug\toolbar.css" />
     <Content Include="css\debug\touch.css" />
     <Content Include="Global.asax" />
+    <Content Include="img\back.png" />
+    <Content Include="img\camera.png" />
+    <Content Include="img\map.png" />
+    <Content Include="img\overflow.png" />
+    <Content Include="img\rate.png" />
+    <Content Include="img\refresh.png" />
+    <Content Include="img\search.png" />
     <Content Include="js\debug\movie.app.account-view.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
     <Content Include="js\debug\movie.app.api.js" />
@@ -172,7 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="img\" />
     <Folder Include="js\specs\" />
     <Folder Include="Models\" />
   </ItemGroup>
