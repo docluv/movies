@@ -11,618 +11,636 @@
 
 (function (window, $, undefined) {
 
-	"use strict";
+    "use strict";
 
-	var panorama = function (container, customSettings) {
+    var panorama = function (container, customSettings) {
 
-		return new panorama.fn.init(container, customSettings);
-	};
+        return new panorama.fn.init(container, customSettings);
+    };
 
-	panorama.fn = panorama.prototype = {
+    panorama.fn = panorama.prototype = {
 
-		constructor: panorama,
+        constructor: panorama,
 
-		init: function (container, customSettings) {
+        init: function (container, customSettings) {
 
-			this.settings = $.extend({}, this.settings, customSettings);
-			this.setupElements(container);
-			this.setPanoramaDimensions();
-			this.buildTransitionValue();
-			this.buildVendorNames();
-			this.support.transitionEnd =
-								this.eventNames[this.support.transition] || null;
+            this.settings = $.extend({}, this.settings, customSettings);
+            this.setupElements(container);
+            this.setPanoramaDimensions();
+            this.buildTransitionValue();
+            this.buildVendorNames();
+            this.support.transitionEnd =
+                                this.eventNames[this.support.transition] || null;
 
-			this.bindEvents();
+            this.bindEvents();
 
-			this.moveRightCallback();
+            this.moveRightCallback();
 
-			this.currentPanel = 2;
+            this.currentPanel = 2;
 
-			return this;
-		},
+            return this;
+        },
 
-		version: "0.0.2",
+        version: "0.0.2",
 
-		div: undefined,
-		currentPanel: 1,
-		leftPanel: 1,
-		totalPanels: 1,
-		support: {},
-		eventNames: {
-			'MozTransition': 'transitionend',
-			'OTransition': 'oTransitionEnd',
-			'WebkitTransition': 'webkitTransitionEnd',
-			'msTransition': 'MSTransitionEnd',
-			'transition': 'transitionend'
-		},
+        div: undefined,
+        currentPanel: 1,
+        leftPanel: 1,
+        totalPanels: 1,
+        support: {},
+        eventNames: {
+            'MozTransition': 'transitionend',
+            'OTransition': 'oTransitionEnd',
+            'WebkitTransition': 'webkitTransitionEnd',
+            'msTransition': 'MSTransitionEnd',
+            'transition': 'transitionend'
+        },
 
-		headerTransitionValue: "all 1000ms ease-in-out",
-		transitionValue: "all 1000ms ease-in-out",
-		fastTransition: "all 0ms",
+        headerTransitionValue: "all 1000ms ease-in-out",
+        transitionValue: "all 1000ms ease-in-out",
+        fastTransition: "all 0ms",
 
-		buildTransitionValue: function () {
+        buildTransitionValue: function () {
 
-			this.transitionValue = "all " +
-				this.settings.speed + "ms " +
-				this.settings.easing;
+            this.transitionValue = "all " +
+                this.settings.speed + "ms " +
+                this.settings.easing;
 
-			this.headerTransitionValue = "all " +
-				(this.settings.speed - 100) + "ms " +
-				this.settings.easing;
+            this.headerTransitionValue = "all " +
+                (this.settings.speed - 100) + "ms " +
+                this.settings.easing;
 
-			return this; //why not make it chainable LOL
-		},
+            return this; //why not make it chainable LOL
+        },
 
-		buildVendorNames: function () {
+        buildVendorNames: function () {
 
-			this.div = document.createElement('div');
+            this.div = document.createElement('div');
 
-			// Check for the browser's transitions support.
-			this.support.transition = $.getVendorPropertyName('transition');
-			this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
-			this.support.transform = $.getVendorPropertyName('transform');
-			this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
-			this.support.transform3d = $.checkTransform3dSupport();
+            // Check for the browser's transitions support.
+            this.support.transition = $.getVendorPropertyName('transition');
+            this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
+            this.support.transform = $.getVendorPropertyName('transform');
+            this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
+            this.support.transform3d = $.checkTransform3dSupport();
 
-			// Avoid memory leak in IE.
-			this.div = null;
+            // Avoid memory leak in IE.
+            this.div = null;
 
-		},
+        },
 
-		setPanoramaDimensions: function () {
+        
 
-			//should not need to set each panel as the content will determin their height.
-			//if they need to be scrolled we will leave that to the developer to handle.
+        setPanoramaDimensions: function () {
 
-			var pw = this.settings.panelWidth - this.settings.peekWidth,
-				headerHeight = this.settings.headerHeight,
-				headerWidth = this.settings.panelWidth * 3,
-				i = 0;
+            //should not need to set each panel as the content will determin their height.
+            //if they need to be scrolled we will leave that to the developer to handle.
 
-			this.container.style.height = this.settings.panelHeight + "px";
-			this.panelbody.style.height = (this.settings.panelHeight - headerHeight) + "px";
-			this.panelbody.style.top = headerHeight + "px";
-			this.panelbody.style.width = (this.totalPanels * pw) + "px";
-			this.panelbody.style.left = -pw + "px";
+            var settings = this.settings,
+                pw = settings.panelWidth - settings.peekWidth,
+                headerHeight = settings.headerHeight,
+                headerWidth = settings.panelWidth * 3,
+                pbs = this.panelbody.style,
+                i = 0,
+                header = this.header;
 
-			for (i = 0; i < this.panels.length; i++) {
-				this.panels[i].style.width = pw + "px";
-				this.panels[i].style.minHeight = this.panelbody.style.height;
-			}
+            this.container.style.height = (settings.panelHeight - settings.footerHeight - settings.headerHeight) + "px";
+            pbs.height = this.container.style.height; //(this.settings.panelHeight - headerHeight) + "px";
+            //this.panelbody.style.top = headerHeight + "px";
+            pbs.width = (this.totalPanels * pw) + "px";
+            pbs.left = -pw + "px";
 
-			if (this.headerPanels.length > 1) {
+            for (i = 0; i < this.panels.length; i++) {
+                this.panels[i].style.width = pw + "px";
+                this.panels[i].style.minHeight = pbs.height; //this.panelbody.style.height;
+            }
 
-				headerWidth = 0;
+            if (this.headerPanels.length > 1) {
 
-				for (var i = 0; i < this.headerPanels.length; i++) {
-					headerWidth += this.headerPanels[i].offsetWidth;
-				}
+                headerWidth = 0;
 
-				headerWidth = headerWidth * 1.35; //add some width to make sure we cover the width we need
+                for (var i = 0; i < this.headerPanels.length; i++) {
+                    headerWidth += this.headerPanels[i].offsetWidth;
+                }
 
-			}
+                headerWidth = headerWidth * 1.35; //add some width to make sure we cover the width we need
 
-			if (this.header) {
+            }
 
-				if (this.headerPanels && this.headerPanels.length > 0) {
-					this.header.style.width = headerWidth + "px";
-					this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
-				} else {
-					this.header.style.width = headerWidth + "px";
-					this.header.style.paddingLeft =
-					this.header.style.paddingRight = this.settings.panelWidth + "px";
-					this.header.style.left =
-						this.settings.bigHeaderLeft = -this.settings.panelWidth + "px";
-				}
-			}
+            if (header) {
 
-		},
+                var hs = header.style;
 
-		clearPanoramaSettings: function () {
+                if (this.headerPanels && this.headerPanels.length > 0) {
+                    hs.width = headerWidth + "px";
+                    hs.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
+                } else {
+                    hs.width = headerWidth + "px";
+                    hs.paddingLeft =
+                    hs.paddingRight = settings.panelWidth + "px";
+                    hs.left =
+                        settings.bigHeaderLeft = -settings.panelWidth + "px";
+                }
+            }
 
-			var i = 0,
-				panelbody = this.panelbody;
+            if (settings.contentResize && typeof settings.contentResize === "function") {
+                settings.contentResize();
+            }
 
-			panelbody.style.height =
-			panelbody.style.top =
-			panelbody.style.width =
-			panelbody.style.left =
-				this.container.style.height = "";
+        },
 
-			for (i = 0; i < this.panels.length; i++) {
-				this.panels[i].style.minHeight = this.panels[i].style.width = "";
-			}
+        clearPanoramaSettings: function () {
 
-			if (this.header) {
+            var i = 0,
+                panelbody = this.panelbody;
 
-				if (this.headerPanels && this.headerPanels.length > 0) {
-					this.header.style.width =
-						this.header.style.left = "";
-				} else {
-					this.header.style.width =
-						this.header.style.paddingLeft =
-						this.header.style.paddingRight =
-						this.header.style.left =
-						this.settings.bigHeaderLeft = "";
-				}
-			}
+            panelbody.style.height =
+            panelbody.style.top =
+            panelbody.style.width =
+            panelbody.style.left =
+                this.container.style.height = "";
 
-		},
+            for (i = 0; i < this.panels.length; i++) {
+                this.panels[i].style.minHeight = this.panels[i].style.width = "";
+            }
 
+            if (this.header) {
 
-		setupElements: function (container) {
-			//The wrapping element
-			if (!container) {
-				this.container = document.querySelector(this.settings.container);
-			} else {
-				this.container = container;
-			}
-			//The main element
-			this.panelbody = document.querySelector(
-									this.settings.container + "  " +
-									this.settings.panoramaSelector);
-			//the panels
-			this.panels = document.querySelectorAll(
-									this.settings.container + "  " +
-									this.settings.panoramaSelector + "  " +
-									this.settings.singleColumnSelector);
+                if (this.headerPanels && this.headerPanels.length > 0) {
+                    this.header.style.width =
+                        this.header.style.left = "";
+                } else {
+                    this.header.style.width =
+                        this.header.style.paddingLeft =
+                        this.header.style.paddingRight =
+                        this.header.style.left =
+                        this.settings.bigHeaderLeft = "";
+                }
+            }
 
-			this.totalPanels = this.panels.length;
+        },
 
-			this.header = document.querySelector(this.settings.headerStyle);
 
-			this.headerPanels = document.querySelectorAll(this.settings.headerPanelStyle);
+        setupElements: function (container) {
+            //The wrapping element
+            if (!container) {
+                this.container = document.querySelector(this.settings.container);
+            } else {
+                this.container = container;
+            }
+            //The main element
+            this.panelbody = document.querySelector(
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector);
+            //the panels
+            this.panels = document.querySelectorAll(
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector + "  " +
+                                    this.settings.singleColumnSelector);
 
-		},
+            this.totalPanels = this.panels.length;
 
-		bindEvents: function () {
+            this.header = document.querySelector(this.settings.headerStyle);
 
-			var that = this;
+            this.headerPanels = document.querySelectorAll(this.settings.headerPanelStyle);
 
-			//This gets called when the animation is complete
-			this.panelbody.addEventListener(this.support.transitionEnd, function (e) {
+        },
 
-				if (that.tEndCB !== undefined) {
-					that.tEndCB();
-				}
+        bindEvents: function () {
 
-				if (that.tHeaderEndCB !== undefined) {
-					that.tHeaderEndCB();
-				}
+            var that = this;
 
-			});
+            //This gets called when the animation is complete
+            this.panelbody.addEventListener(this.support.transitionEnd, function (e) {
 
-			window.addEventListener("orientationchange", function (e) {
-				that.resizePanorama(e);
-			});
+                if (that.tEndCB !== undefined) {
+                    that.tEndCB();
+                }
 
-			window.addEventListener("resize", function (e) {
-				that.resizePanorama(e);
-			});
+                if (that.tHeaderEndCB !== undefined) {
+                    that.tHeaderEndCB();
+                }
 
-		},
+            });
 
-		resizePanorama: function (e) {
+            window.addEventListener("orientationchange", function (e) {
+                that.resizePanorama(e);
+            });
 
-			this.settings.windowWidth = window.innerWidth;
-			this.settings.panelWidth = window.innerWidth;
-			this.settings.panelHeight = window.innerHeight;
+            window.addEventListener("resize", function (e) {
+                that.resizePanorama(e);
+            });
 
-			if (this.settings.maxWidth <= window.innerWidth ||
-				this.settings.maxHeight <= window.innerHeight) {
+        },
 
-				this.settings.canMove = false;
-				this.clearPanoramaSettings();
+        resizePanorama: function (e) {
 
-			} else {
+            this.settings.windowWidth = window.innerWidth;
+            this.settings.panelWidth = window.innerWidth;
+            this.settings.panelHeight = window.innerHeight;
 
-				this.settings.canMove = true;
-				this.setPanoramaDimensions();
-			}
+            if ((this.settings.maxWidth <= window.innerWidth ||
+                this.settings.maxHeight <= window.innerHeight) &&
+                this.isApplied){
 
-		},
+                this.isApplied = false;
+                this.settings.canMove = false;
+                this.clearPanoramaSettings();
 
-		tEndCB: undefined,
-		tHeaderEndCB: undefined,
+            } else {
 
-		moveQue: [],
-		moving: false,
+                this.isApplied = true;
+                this.settings.canMove = true;
+                this.setPanoramaDimensions();
+            }
 
-		executeMove: function () {
+        },
 
-			var move = this.moveQue.shift();
+        isApplied: false,
+        tEndCB: undefined,
+        tHeaderEndCB: undefined,
 
-			if (move !== undefined) {
+        moveQue: [],
+        moving: false,
 
-				this.moving = true;
+        executeMove: function () {
 
-				this.tEndCB = move.cb;
+            var move = this.moveQue.shift();
 
-				this.panelbody.style[this.support.transition] = this.transitionValue;
+            if (move !== undefined) {
 
-				this.panelbody.style[this.support.transform] = this.support.transform3d ?
-												'translate3D(' + move.value + 'px, 0, 0)' :
-												'translateX(' + move.value + 'px)';
+                this.moving = true;
 
-			} else {
-				this.moving = false;
-			}
+                this.tEndCB = move.cb;
 
-		},
+                this.panelbody.style[this.support.transition] = this.transitionValue;
 
-		movePanels: function (value, cb) {
+                this.panelbody.style[this.support.transform] = this.support.transform3d ?
+                                                'translate3D(' + move.value + 'px, 0, 0)' :
+                                                'translateX(' + move.value + 'px)';
 
-			var move = {
-				cb: cb,
-				value: value
-			};
+            } else {
+                this.moving = false;
+            }
 
-			if (this.moving) {
-				return;
-			}
+        },
 
-			this.moveQue.push(move);
+        movePanels: function (value, cb) {
 
-			if (!this.moving) {
-				this.executeMove();
-			}
+            var move = {
+                cb: cb,
+                value: value
+            };
 
-		},
+            if (this.moving) {
+                return;
+            }
 
-		_movePrevCB: [],
-		_moveNextCB: [],
+            this.moveQue.push(move);
 
-		moveHeader: function (moveLeft) {
+            if (!this.moving) {
+                this.executeMove();
+            }
 
-			var that = this,
-				activeWidth = 0;
+        },
 
-			if (moveLeft === undefined) {
-				moveLeft = true; //assume moving to the left
-			}
+        _movePrevCB: [],
+        _moveNextCB: [],
 
-			if (that.header) {
+        moveHeader: function (moveLeft) {
 
-				if (that.headerPanels && that.headerPanels.length > 1) {
-					//move the width of the 2nd panel in the list then move the farthest to the r || l to the other end
+            var that = this,
+                activeWidth = 0;
 
-					if (moveLeft) {
-						activeWidth = -parseInt(that.headerPanels[1].offsetWidth, 10);
-					} else {
-						activeWidth = parseInt(that.headerPanels[0].offsetWidth, 10);
-					}
+            if (moveLeft === undefined) {
+                moveLeft = true; //assume moving to the left
+            }
 
-					that.header.style[that.support.transition] = that.headerTransitionValue;
+            if (that.header) {
 
-					that.header.style[that.support.transform] = that.support.transform3d ?
-												'translate3D(' + activeWidth + 'px, 0, 0)' :
-												'translateX(' + activeWidth + 'px)';
+                if (that.headerPanels && that.headerPanels.length > 1) {
+                    //move the width of the 2nd panel in the list then move the farthest to the r || l to the other end
 
-				} else {//just move a % to the left or right
+                    if (moveLeft) {
+                        activeWidth = -parseInt(that.headerPanels[1].offsetWidth, 10);
+                    } else {
+                        activeWidth = parseInt(that.headerPanels[0].offsetWidth, 10);
+                    }
 
-					if (this.currentPanel == 2) {
-						this.bigHeaderTrans = 0;
-					} else {
+                    that.header.style[that.support.transition] = that.headerTransitionValue;
 
-						if (moveLeft) {
-							this.bigHeaderTrans -=
-									(that.settings.panelWidth * that.settings.headerSlide);
+                    that.header.style[that.support.transform] = that.support.transform3d ?
+                                                'translate3D(' + activeWidth + 'px, 0, 0)' :
+                                                'translateX(' + activeWidth + 'px)';
 
-						} else {
-							this.bigHeaderTrans +=
-									(that.settings.panelWidth * that.settings.headerSlide);
+                } else {//just move a % to the left or right
 
-						}
+                    if (this.currentPanel == 2) {
+                        this.bigHeaderTrans = 0;
+                    } else {
 
-					}
+                        if (moveLeft) {
+                            this.bigHeaderTrans -=
+                                    (that.settings.panelWidth * that.settings.headerSlide);
 
-					var bigHeader = document.querySelector(".big-header");
+                        } else {
+                            this.bigHeaderTrans +=
+                                    (that.settings.panelWidth * that.settings.headerSlide);
 
-					bigHeader.style[that.support.transition] = that.headerTransitionValue;
+                        }
 
-					bigHeader.style[that.support.transform] = that.support.transform3d ?
-												'translate3D(' + this.bigHeaderTrans + 'px, 0, 0)' :
-												'translateX(' + this.bigHeaderTrans + 'px)';
+                    }
 
-				}
+                    var bigHeader = document.querySelector(".big-header");
 
+                    bigHeader.style[that.support.transition] = that.headerTransitionValue;
 
-				if (!moveLeft) {
-					that.tHeaderEndCB = (that.headerPanels.length > 1) ?
-											that.endHeaderRight :
-											function () {
-												that.endBigHeaderRight(activeWidth);
-											};
-				} else {
-					that.tHeaderEndCB = (that.headerPanels.length > 1) ?
-											that.endHeaderLeft :
-											function () {
-												that.endBigHeaderLeft(activeWidth);
-											};
-				}
+                    bigHeader.style[that.support.transform] = that.support.transform3d ?
+                                                'translate3D(' + this.bigHeaderTrans + 'px, 0, 0)' :
+                                                'translateX(' + this.bigHeaderTrans + 'px)';
 
-			}
+                }
 
-		},
 
-		endBigHeaderLeft: function (shift) {
+                if (!moveLeft) {
+                    that.tHeaderEndCB = (that.headerPanels.length > 1) ?
+                                            that.endHeaderRight :
+                                            function () {
+                                                that.endBigHeaderRight(activeWidth);
+                                            };
+                } else {
+                    that.tHeaderEndCB = (that.headerPanels.length > 1) ?
+                                            that.endHeaderLeft :
+                                            function () {
+                                                that.endBigHeaderLeft(activeWidth);
+                                            };
+                }
 
-			var that = this;
+            }
 
-			//that.header.style[that.support.transition] = that.fastTransition;
-			//that.header.style[that.support.transform] = "";
+        },
 
-			//if (this.currentPanel == 2) {
-			//    that.header.style.left = that.settings.bigHeaderLeft + "px";
-			//} else {
-			//    that.header.style.left = parseInt(that.header.style.left, 10) + shift + "px";
-			//}
+        endBigHeaderLeft: function (shift) {
 
-		},
+            var that = this;
 
-		endBigHeaderRight: function (shift) {
+            //that.header.style[that.support.transition] = that.fastTransition;
+            //that.header.style[that.support.transform] = "";
 
-			var that = this;
+            //if (this.currentPanel == 2) {
+            //    that.header.style.left = that.settings.bigHeaderLeft + "px";
+            //} else {
+            //    that.header.style.left = parseInt(that.header.style.left, 10) + shift + "px";
+            //}
 
-			//that.header.style[that.support.transition] = that.fastTransition;
-			//that.header.style[that.support.transform] = "";
+        },
 
-			//if (this.currentPanel == 2) {
-			//    that.header.style.left = that.settings.bigHeaderLeft + "px";
-			//} else {
-			//    that.header.style.left = parseInt(that.header.style.left, 10) + shift + "px";
-			//}
+        endBigHeaderRight: function (shift) {
 
-		},
+            var that = this;
 
-		endHeaderLeft: function () {
+            //that.header.style[that.support.transition] = that.fastTransition;
+            //that.header.style[that.support.transform] = "";
 
-			var that = this;
+            //if (this.currentPanel == 2) {
+            //    that.header.style.left = that.settings.bigHeaderLeft + "px";
+            //} else {
+            //    that.header.style.left = parseInt(that.header.style.left, 10) + shift + "px";
+            //}
 
-			var childNodes = that.headerPanels;
+        },
 
-			that.header.style[that.support.transition] = that.fastTransition;
-			that.header.appendChild(this.getFirstPanel(childNodes));
-			that.header.style[that.support.transform] = "";
-			that.headerPanels = document.querySelectorAll(that.settings.headerPanelStyle);
+        endHeaderLeft: function () {
 
-			this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
+            var that = this;
 
-		},
+            var childNodes = that.headerPanels;
 
-		endHeaderRight: function () {
+            that.header.style[that.support.transition] = that.fastTransition;
+            that.header.appendChild(this.getFirstPanel(childNodes));
+            that.header.style[that.support.transform] = "";
+            that.headerPanels = document.querySelectorAll(that.settings.headerPanelStyle);
 
-			var that = this;
+            this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
 
-			var childNodes = that.headerPanels;
+        },
 
-			that.header.style[that.support.transition] = that.fastTransition;
-			that.header.insertBefore(that.getLastPanel(childNodes), that.header.firstChild);
-			that.header.style[that.support.transform] = "";
-			that.headerPanels = document.querySelectorAll(that.settings.headerPanelStyle);
+        endHeaderRight: function () {
 
-			this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
+            var that = this;
 
-		},
+            var childNodes = that.headerPanels;
 
-		movePrevious: function (cb) {
+            that.header.style[that.support.transition] = that.fastTransition;
+            that.header.insertBefore(that.getLastPanel(childNodes), that.header.firstChild);
+            that.header.style[that.support.transform] = "";
+            that.headerPanels = document.querySelectorAll(that.settings.headerPanelStyle);
 
-			if (cb) {
-				this._movePrevCB.push(cb);
-			}
+            this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
 
-			return this;
-		},
+        },
 
-		moveNext: function (cb) {
+        movePrevious: function (cb) {
 
-			if (cb) {
-				this._moveNextCB.push(cb);
-			}
+            if (cb) {
+                this._movePrevCB.push(cb);
+            }
 
-			return this;
-		},
+            return this;
+        },
 
-		moveLeft: function (e, x) {
+        moveNext: function (cb) {
 
-			if (!this.settings.canMove) {
-				return;
-			}
+            if (cb) {
+                this._moveNextCB.push(cb);
+            }
 
-			var target = e.target,
-				i = 0;
+            return this;
+        },
 
-			x = x || this.settings.panelWidth - this.settings.peekWidth;
+        moveLeft: function (e, x) {
 
-			this.currentPanel += 1;
+            if (!this.settings.canMove) {
+                return;
+            }
 
-			if (this.currentPanel > this.totalPanels) {
-				this.currentPanel = 1;
-			}
+            var target = e.target,
+                i = 0;
 
-			this.moveHeader(true);
-			this.movePanels(-x, this.moveLeftCallback);
+            x = x || this.settings.panelWidth - this.settings.peekWidth;
 
-			for (i = 0; i < this._moveNextCB.length; i++) {
+            this.currentPanel += 1;
 
-				if (this._moveNextCB[i]) {
-					this._moveNextCB[i].call(this.currentPanel);
-				}
+            if (this.currentPanel > this.totalPanels) {
+                this.currentPanel = 1;
+            }
 
-			}
+            this.moveHeader(true);
+            this.movePanels(-x, this.moveLeftCallback);
 
-		},
+            for (i = 0; i < this._moveNextCB.length; i++) {
 
-		moveRight: function (e, x) {
+                if (this._moveNextCB[i]) {
+                    this._moveNextCB[i].call(this.currentPanel);
+                }
 
-			if (!this.settings.canMove) {
-				return;
-			}
+            }
 
-			var target = e.target,
-				i = 0;
+        },
 
-			x = x || this.settings.panelWidth - this.settings.peekWidth;
+        moveRight: function (e, x) {
 
-			this.currentPanel -= 1;
+            if (!this.settings.canMove) {
+                return;
+            }
 
-			if (this.currentPanel < 1) {
-				this.currentPanel = this.totalPanels;
-			}
+            var target = e.target,
+                i = 0;
 
-			this.moveHeader(false);
-			this.movePanels(x, this.moveRightCallback);
+            x = x || this.settings.panelWidth - this.settings.peekWidth;
 
-			for (i = 0; i < this._movePrevCB.length; i++) {
+            this.currentPanel -= 1;
 
-				if (this._movePrevCB[i]) {
-					this._movePrevCB[i].call(this.currentPanel);
-				}
+            if (this.currentPanel < 1) {
+                this.currentPanel = this.totalPanels;
+            }
 
-			}
+            this.moveHeader(false);
+            this.movePanels(x, this.moveRightCallback);
 
-		},
+            for (i = 0; i < this._movePrevCB.length; i++) {
 
-		moveLastPanel: function () {
+                if (this._movePrevCB[i]) {
+                    this._movePrevCB[i].call(this.currentPanel);
+                }
 
-			var parentNode = this.panelbody,
-					childNodes = parentNode.childNodes;
+            }
 
-			parentNode.style[this.support.transition] = this.fastTransition;
-			parentNode.appendChild(this.getFirstPanel(childNodes));
-			parentNode.style[this.support.transform] = "";
+        },
 
-		},
+        moveLastPanel: function () {
 
-		moveLeftCallback: function (parentNode) {
+            var parentNode = this.panelbody,
+                    childNodes = parentNode.childNodes;
 
-			parentNode = parentNode || this.panelbody;
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.appendChild(this.getFirstPanel(childNodes));
+            parentNode.style[this.support.transform] = "";
 
-			var childNodes = parentNode.childNodes;
+        },
 
-			parentNode.style[this.support.transition] = this.fastTransition;
-			parentNode.appendChild(this.getFirstPanel(childNodes));
-			parentNode.style[this.support.transform] = "";
+        moveLeftCallback: function (parentNode) {
 
-			this.moving = false;
+            parentNode = parentNode || this.panelbody;
 
-			this.executeMove();
+            var childNodes = parentNode.childNodes;
 
-		},
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.appendChild(this.getFirstPanel(childNodes));
+            parentNode.style[this.support.transform] = "";
 
-		moveRightCallback: function (parentNode) {
+            this.moving = false;
 
-			parentNode = parentNode || this.panelbody;
+            this.executeMove();
 
-			var childNodes = parentNode.childNodes;
+        },
 
-			parentNode.style[this.support.transition] = this.fastTransition;
-			parentNode.insertBefore(this.getLastPanel(childNodes), parentNode.firstChild);
-			parentNode.style[this.support.transform] = "";
+        moveRightCallback: function (parentNode) {
 
-			this.moving = false;
-			this.executeMove();
+            parentNode = parentNode || this.panelbody;
 
-		},
+            var childNodes = parentNode.childNodes;
 
-		getFirstPanel: function (childNodes) {
-			var j;
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.insertBefore(this.getLastPanel(childNodes), parentNode.firstChild);
+            parentNode.style[this.support.transform] = "";
 
-			for (j = 0; j < childNodes.length; j++) {
-				if (childNodes[j].nodeType === 1) {
-					return childNodes[j];
-				}
-			}
+            this.moving = false;
+            this.executeMove();
 
-		},
+        },
 
-		getLastPanel: function (childNodes) {
-			var j;
+        getFirstPanel: function (childNodes) {
+            var j;
 
-			for (j = childNodes.length - 1; j !== 0; j--) {
-				if (childNodes[j].nodeType === 1) {
-					return childNodes[j];
-				}
-			}
+            for (j = 0; j < childNodes.length; j++) {
+                if (childNodes[j].nodeType === 1) {
+                    return childNodes[j];
+                }
+            }
 
-		},
+        },
 
-		moveCallback: function (e, x) {
+        getLastPanel: function (childNodes) {
+            var j;
 
-			this.movePanels(x, this.moveLeftCallback);
+            for (j = childNodes.length - 1; j !== 0; j--) {
+                if (childNodes[j].nodeType === 1) {
+                    return childNodes[j];
+                }
+            }
 
-		},
+        },
 
-		container: undefined,
-		panelbody: undefined,
-		panels: undefined,
-		header: undefined,
-		headerPanels: undefined,
+        moveCallback: function (e, x) {
 
-		bigHeaderTrans: 0,
+            this.movePanels(x, this.moveLeftCallback);
 
-		settings: {
-			panoramaSelector: ".panorama-panels",
-			container: ".panorama-container",
-			singleColumnSelector: ".single-panel",
-			doubleColumnSelector: ".double-panel",
-			speed: 150,     //speed of each slide animation
-			//    easing: 'swing', //easing effect for the slide animation
+        },
 
-			windowWidth: window.innerWidth,
-			panelWidth: window.innerWidth,
-			panelHeight: window.innerHeight,
+        container: undefined,
+        panelbody: undefined,
+        panels: undefined,
+        header: undefined,
+        headerPanels: undefined,
 
-			maxWidth: Math.ceil(),
-			maxHeight: Math.ceil(),
-			canMove: true,
+        bigHeaderTrans: 0,
 
-			peekWidth: 35,
+        settings: {
+            panoramaSelector: ".panorama-panels",
+            container: ".panorama-container",
+            singleColumnSelector: ".single-panel",
+            doubleColumnSelector: ".double-panel",
+            speed: 150,     //speed of each slide animation
+            //    easing: 'swing', //easing effect for the slide animation
 
-			easing: "ease-in-out",
+            windowWidth: window.innerWidth,
+            panelWidth: window.innerWidth,
+            panelHeight: window.innerHeight,
 
-			// This are for wings - To Come later
-			nextScroll: ".panorama-next",
-			prevScroll: ".panorama-prev",
-			navWrapper: ".panorama-navigation",
-			showPrevNext: false, //do this when no touch available
+            contentResize: $.noop(),
 
-			headerSlide: .2,
-			bigHeaderLeft: 0,
+            maxWidth: Math.ceil(),
+            maxHeight: Math.ceil(),
+            canMove: true,
 
-			headerStyle: ".panorama-header",
-			headerPanelStyle: ".panorama-panel-header",
-			headerHeight: 40
+            peekWidth: 35,
 
-		}
+            easing: "ease-in-out",
 
-	};
+            // This are for wings - To Come later
+            nextScroll: ".panorama-next",
+            prevScroll: ".panorama-prev",
+            navWrapper: ".panorama-navigation",
+            showPrevNext: false, //do this when no touch available
 
-	// Give the init function the panoram prototype for later instantiation
-	panorama.fn.init.prototype = panorama.fn;
+            headerSlide: .2,
+            bigHeaderLeft: 0,
 
+            headerStyle: ".panorama-header",
+            headerPanelStyle: ".panorama-panel-header",
+            headerHeight: 40,
+            footerHeight: 35
 
-	return (window.panorama = panorama);
+        }
+
+    };
+
+    // Give the init function the panoram prototype for later instantiation
+    panorama.fn.init.prototype = panorama.fn;
+
+
+    return (window.panorama = panorama);
 
 }(window, $));
 

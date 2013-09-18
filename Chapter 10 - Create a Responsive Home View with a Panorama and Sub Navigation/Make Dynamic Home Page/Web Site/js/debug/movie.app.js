@@ -225,18 +225,30 @@ var menuItems = {
         _panoramaSetup: false,
         hasTouch: (window.navigator.msPointerEnabled || "ontouchstart" in window),
 
-        setupPanorama: function (target) {
+        setupPanorama: function (target, settings) {
 
             target = target || ".panorama-container";
+            settings = settings || {};
 
             var that = this,
                 pCont = document.querySelector(target);
 
             that.panorama = panorama(pCont,
-                    {
+                    $.extend(settings, {
                         speed: 600,
-                        headerHeight: 0
-                    });
+                        headerHeight: 80,
+                        contentResize: function () {
+
+                            var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
+
+                            for (; i < posterWrappers.length; i++) {
+                                posterWrappers[i].style.height = 
+                                    (window.innerHeight - 115 - 32) + "px";
+                            }
+
+                        }
+                    }));
+
             //.moveNext()
             //.movePrevious();
 

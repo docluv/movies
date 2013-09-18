@@ -24,7 +24,23 @@
 
 .panorama-panels
 {
+    ms-touch-action: pan-y;
+}
+
+.panel-v-scroll{
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+    overflow-style: none;
+    -ms-scroll-chaining:none;
+    -ms-scroll-snap-type: proximity;
+    -ms-scroll-translation: vertical-to-horizontal;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     ms-touch-action: pan-x;
+
 }
 
 

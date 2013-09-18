@@ -32,7 +32,7 @@
             this.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
                             this.mergeInFakeShowtimes(data));
 
-            this.setupPanorama();
+            this.setupPanorama(".panorama-container", { maxWidth: 960 });
             this.setMainTitle(data.title);
         }
 
