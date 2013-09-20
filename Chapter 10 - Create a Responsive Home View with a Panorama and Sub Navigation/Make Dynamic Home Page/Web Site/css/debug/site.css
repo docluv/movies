@@ -134,6 +134,15 @@ h4, .panel-small-title {
     padding: 0;
 }
 
+.title-view{
+    display:none;
+    margin: 0 3px;
+    line-height: 1em;
+    height: 1em;
+    width: 1em;
+    text-align: center;
+}
+
 @media (min-width:481px) and (max-width:800px) {
 
     .content-pane {
@@ -184,6 +193,25 @@ h4, .panel-small-title {
         height: 26pt;
         line-height: 26pt;
     }
+
+    .panel-title{
+        font-size:14pt;
+        text-align:center;
+        width:100%;
+    }
+
+    .panel-title.selected{
+        font-weight:bold;
+    }
+
+    .title-view{
+        display:inline-block;
+    }
+
+    .panel-title.selected > .title-view{
+        display:none;
+    }
+
 }
 
 

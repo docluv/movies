@@ -18,10 +18,6 @@
         that.setupPanorama();
         that.setMainTitle("Mobile Movies");
 
-        //        this.showLoading(".article-tiles");
-        //MoviePosterGridTemplate
-        //movie-poster-div
-
         that.InTheatersMovies(50, 1, function (data) {
 
             if (!data) {
@@ -61,18 +57,6 @@
             that.mergeData(".comming-soon-list", "MoviePosterGridTemplate", data);
 
         });
-
-        //that.setMovieGridSize();
-
-        //that.resizeEvents["manageHomeView"] = function () {
-
-        //    if (window.innerWidth < 600 && 
-        //            Math.abs(window.innerWidth - movieApp.fn.viewWidth) > 10) {
-        //        console.log("loadHomeView");
-        //        movieApp.fn.viewWidth = window.innerWidth;
-        //    }
-
-        //};
 
     };
 

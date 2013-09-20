@@ -241,6 +241,20 @@ var _gaq = _gaq || undefined,
 
     };
 
+    Node.prototype.removeClass = function (cssClass) {
+
+        //only reset the className if the target class exist, keeps brosers from auto repainting the document.
+        if (this.hasClass(cssClass)) {
+
+            this.className = this.className
+                                .replace(" " + cssClass + " ", " ")
+                                .replace(" " + cssClass, "")
+                                .replace(cssClass + " ", "");
+
+        }
+
+    };
+
     $.removeClass = function (view, cssClass) {
 
         //only reset the className if the target class exist, keeps brosers from auto repainting the document.
@@ -254,6 +268,18 @@ var _gaq = _gaq || undefined,
         }
 
     };
+
+
+    Node.prototype.addClass = function (cssClass) {
+
+        if (!cssClass || typeof cssClass !== "string") {
+            return;
+        }
+
+        this.className += " " + cssClass;
+
+    };
+
 
     $.addClass = function (view, cssClass) {
 
@@ -273,6 +299,26 @@ var _gaq = _gaq || undefined,
 
     };
 
+    Node.prototype.hasClass = function (cssClass) {
+
+        if (!cssClass || typeof cssClass !== "string") {
+            return;
+        }
+
+        cssClass = " " + cssClass + " ";
+
+        var rclass = /[\t\r\n]/g;//stole from jQuery ;)
+
+            if (this.nodeType === 1 &&
+                (" " + this.className + " ")
+                    .replace(rclass, " ").indexOf(cssClass) >= 0) {
+                return true;
+            }
+
+        return false;
+
+    };
+
     $.hasClass = function (ele, cssClass) {
 
         cssClass = " " + cssClass + " ";
@@ -287,7 +333,7 @@ var _gaq = _gaq || undefined,
 
         for (; i < l; i++) {
             if (ele[i].nodeType === 1 &&
-                (" " + ele[i].cssClass + " ")
+                (" " + ele[i].className + " ")
                     .replace(rclass, " ").indexOf(cssClass) >= 0) {
                 return true;
             }
@@ -316,6 +362,27 @@ var _gaq = _gaq || undefined,
             ele.style.display = "none";
         }
 
+    };
+
+    $.show = function (ele, style) {
+        style = style || "block";
+
+        ele.style.display = style;
+    };
+
+
+    $.hide = function (ele) {
+        ele.style.display = "";
+    };
+
+    Node.prototype.show = function (style) {
+        style = style || "block";
+        this.style.display = style;
+    };
+
+
+    Node.prototype.hide = function () {
+        this.style.display = "";
     };
 
     $.attr = function (view, attr, value) {

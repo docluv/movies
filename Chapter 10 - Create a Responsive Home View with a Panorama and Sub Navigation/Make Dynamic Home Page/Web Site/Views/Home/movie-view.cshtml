@@ -2,18 +2,23 @@
     data-title=""
     data-transition="flip"
     data-callback="movie.loadMovieView"
+    data-unload="movie.unloadMovieView"
     data-path="movie\:id\:title">
 
     <div class="pxs_container panorama-container">
         <div class="panorama-panels">
             <div class="single-panel movie-details-panel"></div>
-            <div class="single-panel movie-description-panel"></div>
+            <div class="single-panel movie-description-panel">
+                <h3 class="panel-title selected">Description<span class="title-view">></span></h3>
+                <article class="movie-description">
+                </article>
+            </div>
             <div class="single-panel movie-cast-panel">
-                <h3 class="panel-title">Cast</h3>
+                <h3 class="panel-title">Cast<span class="title-view">></span></h3>
                 <ul class="vertical-list cast-name-list"></ul>
             </div>
             <div class="single-panel movie-showtimes-panel">
-                <h3 class="panel-title">Showtimes</h3>
+                <h3 class="panel-title">Showtimes<span class="title-view">></span></h3>
                 <ul class="vertical-list movie-showtime-list"></ul>
                 <div id="showReview">Leave A Review</div>
             </div>
