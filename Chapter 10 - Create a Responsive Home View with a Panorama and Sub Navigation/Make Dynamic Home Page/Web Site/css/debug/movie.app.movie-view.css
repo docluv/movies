@@ -21,7 +21,7 @@ span.center, img.center {
 }
 
 .full-movie-poster {
-    width: 250px;
+    /*width: 250px;*/
     border: none;
 }
 
@@ -55,12 +55,90 @@ span.center, img.center {
     margin-bottom: 54px;
 }
 
+#showReview {
+
+    width:80%;
+    margin: 10px auto;
+    border: solid 1px #fff;
+    color:#fff;
+    font-size:20px;
+    text-align:center;
+    height:40px;
+    line-height:40px;
+    display:none;
+
+}
+
+
+@media (min-width:700px) {
+
+    /*.full-movie-poster {
+        width: 300px;
+        height: 461px;
+    }*/
+
+    .movie-details-panel{
+        margin: 0 20px 0 0;
+    }
+
+    .movie-review-panel{
+        display:none;
+    }
+
+    .movie-description-panel{
+        width:200px;
+    }
+
+    .movie-cast-panel,
+    .movie-showtimes-panel
+    {
+        width:200px;
+        height:200px;
+    }
+
+    .movie-poster-centered{
+        display:none;
+    }
+
+    #showReview{
+        display:block;
+    }
+
+}
+
 
 @media (min-width:1024px) {
 
     .full-movie-poster {
         width: 440px;
         height: 677px;
+    }
+
+    .movie-review-panel{
+        display:none;
+    }
+
+    .movie-details-panel{
+        width:460px;
+    }
+
+    .movie-description-panel{
+        width:200px;
+    }
+
+    .movie-cast-panel,
+    .movie-showtimes-panel
+    {
+        width:200px;
+        height:200px;
+    }
+
+    .movie-poster-centered{
+        display:none;
+    }
+
+    #showReview{
+        display:block;
     }
 
 }

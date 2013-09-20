@@ -73,6 +73,16 @@ h4, .panel-small-title {
     line-height: 1.1429;
 }
 
+
+.site-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px;
+}
+
+
 .win-backbutton {
     float: left;
     margin: 20px 0 0 20px;
@@ -85,6 +95,7 @@ h4, .panel-small-title {
     text-align: center;
 }
 
+    /* neat trick, but only works on windows wink wink wink*/
     .win-backbutton::before {
         font-family: "Segoe UI Symbol";
         font-weight: normal;
@@ -93,72 +104,20 @@ h4, .panel-small-title {
     }
 
 
-
-.site-header {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 80px;
-    /*for initial testing*/
-    /*background-color: #808080;*/
-}
-
-
-.main-nav {
-    margin: auto;
-    width: 90%;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-}
-
-    .main-nav > a, .main-nav > a:visited {
-        margin: 5px 5px 20px 5px;
-        padding: 5px 10px;
-        background-color: transparent;
-        color: #fff;
-        text-align: center;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1.25em;
-        display: inline-block;
-    }
-
-        .main-nav > a:active {
-            /*color: rgb(193,40,40);*/
-            border-bottom: solid 2px #fff;
-        }
-
-.nav-text {
-    float: left;
-    height: 32px;
-    line-height: 32px;
-    vertical-align: middle;
-    margin: 15px 0 0 0;
-}
-
-.nav-icon {
-    float: left;
-    width: 32px;
-    height: 32px;
-    background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
-    background-position-y: 0px;
-    margin: 15px 0 0 0;
-}
-
-
 .main-content {
     position: absolute;
     overflow: hidden;
     left: 0;
     right: 0;
+    top: 80px;
+    bottom: 35px;
 }
 
 
 .content-pane {
     position: absolute;
     top: 0px;
+    left: 0;
     display: none;
 }
 
@@ -175,46 +134,15 @@ h4, .panel-small-title {
     padding: 0;
 }
 
-@media (max-width:480px) {
-
-    .content-pane{
-        left:0;
-    }
-
-}
-
-@media (min-width:481px) and (max-width:600px) {
+@media (min-width:481px) and (max-width:800px) {
 
     .content-pane {
         left: 10px;
     }
-
-}
-
-@media (max-width:600px) {
-
-    .site-header {
-        height: 80px;
-    }
-
-    h1, .view-title{
-        width:70%;
-    }
-    
-    .main-nav {
-        display: none;
-    }
-
-    .main-content {
-        top: 80px;
-        bottom: 35px;
-        left: 0;
-    }
-
 }
 
 
-@media (min-width:601px) {
+/*@media (min-width:601px) {
 
     .site-header {
         height: 100px;
@@ -225,30 +153,15 @@ h4, .panel-small-title {
         bottom: 0;
         left: 5px;
     }
-
-    .content-pane {
-        left: 30px;
-    }
 }
 
 @media (max-width:800px) {
-
-    .nav-icon {
-        display: none;
-    }
 
     .main-content {
         left: 10px;
     }
 }
-
-@media (min-width:600px) and (min-width:800px) {
-
-    .content-pane {
-        left: 60px;
-    }
-}
-
+*/
 
 @media (min-width:801px) {
 
@@ -257,8 +170,33 @@ h4, .panel-small-title {
         bottom: 40px;
     }
 
-
     .content-pane {
         left: 0px;
+    }
+}
+
+
+@media (min-width: 600px) and (max-width:820px) {
+
+    .view-title {
+        width: 300px;
+        font-size: 1.5em;
+        height: 26pt;
+        line-height: 26pt;
+    }
+}
+
+
+@media (min-width:1024px) {
+
+    .view-title {
+        width: 300px;
+    }
+}
+
+@media (min-width:1100px) {
+
+    .nav-icon {
+        display: inline-block;
     }
 }

@@ -2,75 +2,75 @@
 
 ;
 
-(function(window, tmpl, undefined) {
+(function (window, tmpl, undefined) {
 
     "use strict";
 
 
-var menuItems = {
-                topMenu: [
-                {
-                title: "home",
-                iconClass: "go-home",
-                url: "#!"
+    var menuItems = {
+        topMenu: [
+        {
+            title: "home",
+            iconClass: "go-home",
+            url: "#!"
+        }
+        , {
+            title: "map",
+            iconClass: "go-map",
+            url: "#!maps"
+        }
+        , {
+            title: "showtimes",
+            iconClass: "go-showtimes",
+            url: "#!showtimes"
+        }
+        , {
+            title: "search",
+            iconClass: "go-search",
+            url: "#!search"
+        }],
+        subMenu: [
+            {
+                title: "news",
+                icon: undefined,
+                iconClass: "go-news",
+                url: "#!news"
             }
-                ,{
-                title: "map",
-                iconClass: "go-map",
-                url:  "#!maps"
-            }
-                ,{
-                title: "showtimes",
-                iconClass: "go-showtimes",
-                url:  "#!showtimes"
-            }
-                ,{
-                title: "search",
-                iconClass: "go-search",
-                url:  "#!search"
-            }],
-                subMenu: [
-                    {
-                        title: "news",
-                        icon: undefined,
-                        iconClass: "go-news",
-                        url: "#!news"
-                    }
 
-                     , {
-                         title: "opening this week",
-                         icon: undefined,
-                         iconClass: "go-opening",
-                         url: "#!movies/Opening"
-                     }
-                     , {
-                         title: "in theaters",
-                         icon: undefined,
-                         iconClass: "go-in-theaters",
-                         url: "#!movies/InTheaters"
-                     }
-                     , {
-                         title: "top box office",
-                         icon: undefined,
-                         iconClass: "go-top-box-office",
-                         url: "#!movies/TopBoxOffice"
-                     }
-                    , {
-                        title: "comming soon",
-                        icon: undefined,
-                        iconClass: "go-movie-soon",
-                        url: "#!movies/CommingSoon"
-                    }
-                    , {
-                        title: "account",
-                        icon: undefined,
-                        iconClass: "go-account",
-                        url: "#!account"
-                    }]
-            };
+             , {
+                 title: "opening this week",
+                 icon: undefined,
+                 iconClass: "go-opening",
+                 url: "#!movies/Opening"
+             }
+             , {
+                 title: "in theaters",
+                 icon: undefined,
+                 iconClass: "go-in-theaters",
+                 url: "#!movies/InTheaters"
+             }
+             , {
+                 title: "top box office",
+                 icon: undefined,
+                 iconClass: "go-top-box-office",
+                 url: "#!movies/TopBoxOffice"
+             }
+            , {
+                title: "comming soon",
+                icon: undefined,
+                iconClass: "go-movie-soon",
+                url: "#!movies/CommingSoon"
+            }
+            , {
+                title: "account",
+                icon: undefined,
+                iconClass: "go-account",
+                url: "#!account"
+            }]
+    };
 
-    
-    var movieApp = function(customSettings) {
+
+    var movieApp = function (customSettings) {
 
         return new movieApp.fn.init(customSettings);
     };
@@ -91,6 +91,19 @@ var menuItems = {
 
             toolbar(".toolbar", {
                 menuItems: menuItems
+            });
+
+            deeptissue(".hamburger-nav").tap(function () {
+
+                $.toggle(document.querySelector(".main-nav"));
+//                document.querySelector(".main-nav").style.display = "block";
+                
+            });
+
+            deeptissue(".main-nav > a").tap(function () {
+
+                that.hideBurgerMenu();
+
             });
 
             window.addEventListener("resize", function (e) {
@@ -114,6 +127,16 @@ var menuItems = {
 
         mainTitle: document.querySelector(".view-title"),
 
+        hideBurgerMenu: function () {
+
+            var width = window.innerWidth;
+
+            if (width > 601 && width < 720) {
+                document.querySelector(".main-nav").style.display = "";
+            }
+
+        },
+
         movieTypes: {
             "Opening": "Opening",
             "TopBoxOffice": "Top Box Office",
@@ -121,9 +144,9 @@ var menuItems = {
             "InTheaters": "In Theaters"
         },
 
-        setMainTitle: function(title){
+        setMainTitle: function (title) {
 
-//            var mainTitle = document.querySelector(".view-title");
+            //            var mainTitle = document.querySelector(".view-title");
 
             this.mainTitle.textContent = title;
         },
@@ -182,7 +205,7 @@ var menuItems = {
             if (this.templates[templateName]) {
                 t.innerHTML = this.templates[templateName](data);
             }
-            
+
         },
 
         data: undefined,
@@ -233,40 +256,46 @@ var menuItems = {
             var that = this,
                 pCont = document.querySelector(target);
 
-            that.panorama = panorama(pCont,
-                    $.extend(settings, {
-                        speed: 600,
-                        headerHeight: 80,
-                        contentResize: function () {
+            if ((settings.maxWidth && settings.maxHeight) &&
+                (settings.maxWidth >= window.innerWidth ||
+                    settings.maxHeight >= window.innerHeight) ||
+                (!settings.maxWidth && !settings.maxHeight)) {
 
-                            var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
+                that.panorama = panorama(pCont,
+                                    $.extend(settings, {
+                                        speed: 600,
+                                        headerHeight: 80,
+                                        peekWidth: 50,
+                                        contentResize: function () {
 
-                            for (; i < posterWrappers.length; i++) {
-                                posterWrappers[i].style.height = 
-                                    (window.innerHeight - 115 - 32) + "px";
-                            }
+                                            var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
 
-                        }
-                    }));
+                                            for (; i < posterWrappers.length; i++) {
+                                                posterWrappers[i].style.height =
+                                                    (window.innerHeight - 115 - 32) + "px";
+                                            }
 
-            //.moveNext()
-            //.movePrevious();
+                                        }
+                                    }));
 
-            var dt = deeptissue(pCont,
-                        {
-                            swipeRightThreshold: 35,
-                            swipeLeftThreshold: -35,
-                            swipeUpThreshold: 35,
-                            swipeDownThreshold: 35
-                        });
 
-            dt.swipeRight(function (evt, m, translate) {
-                that.panorama.moveRight(evt);
-            })
+                var dt = deeptissue(pCont,
+                            {
+                                swipeRightThreshold: 35,
+                                swipeLeftThreshold: -35,
+                                swipeUpThreshold: 35,
+                                swipeDownThreshold: 35
+                            });
 
-            .swipeLeft(function (evt, m, translate) {
-                that.panorama.moveLeft(evt);
-            });
+                dt.swipeRight(function (evt, m, translate) {
+                    that.panorama.moveRight(evt);
+                })
+
+                .swipeLeft(function (evt, m, translate) {
+                    that.panorama.moveLeft(evt);
+                });
+
+            }
 
             if (!that._panoramaSetup) {
 
@@ -323,7 +352,7 @@ var menuItems = {
 
     return (window.movieApp = movieApp);
 
-} (window, Mustache));
+}(window, Mustache));
 
 
 

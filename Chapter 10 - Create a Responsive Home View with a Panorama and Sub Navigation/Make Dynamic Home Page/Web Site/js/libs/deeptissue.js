@@ -24,6 +24,10 @@
                 return node;
             }
 
+            if (typeof node === "string") {
+                node = document.querySelectorAll(node);
+            }
+
             if ("length" in node) {  //rude detection for nodeList
                 this.node = node;
             } else {

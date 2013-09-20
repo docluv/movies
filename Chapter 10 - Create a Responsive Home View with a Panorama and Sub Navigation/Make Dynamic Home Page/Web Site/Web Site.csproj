@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Glimpse.Core">
+      <HintPath>..\..\Movie Web\packages\Glimpse.1.6.1\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -128,6 +131,7 @@
     <Content Include="css\debug\movie.app.maps-view.css" />
     <Content Include="css\debug\movie.app.movie-view.css" />
     <Content Include="css\debug\movie.app.movies-view.css" />
+    <Content Include="css\debug\movie.app.nav.css" />
     <Content Include="css\debug\movie.app.news-view.css" />
     <Content Include="css\debug\movie.app.profile-view.css" />
     <Content Include="css\debug\movie.app.search-view.css" />
@@ -139,6 +143,7 @@
     <Content Include="Global.asax" />
     <Content Include="img\back.png" />
     <Content Include="img\camera.png" />
+    <Content Include="img\home.png" />
     <Content Include="img\map.png" />
     <Content Include="img\overflow.png" />
     <Content Include="img\rate.png" />

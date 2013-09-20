@@ -66,6 +66,13 @@
         padding-right: 0;
         height: 100%;
     }
+
+    .panel-v-scroll {
+        -ms-overflow-style: none;
+        overflow-style: none;
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        ms-touch-action: none;
+    }
 }
-
-

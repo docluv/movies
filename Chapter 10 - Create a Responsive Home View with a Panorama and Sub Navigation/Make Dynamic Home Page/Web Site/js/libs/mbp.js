@@ -241,7 +241,7 @@ var _gaq = _gaq || undefined,
 
     };
 
-    $.removeClass = function(view, cssClass){
+    $.removeClass = function (view, cssClass) {
 
         //only reset the className if the target class exist, keeps brosers from auto repainting the document.
         if (view.className.indexOf(cssClass) > -1) {
@@ -269,6 +269,51 @@ var _gaq = _gaq || undefined,
 
             view.className += " " + cssClass;
 
+        }
+
+    };
+
+    $.hasClass = function (ele, cssClass) {
+
+        cssClass = " " + cssClass + " ";
+
+        if (!ele.length) {
+            ele = [ele];
+        }
+
+        var rclass = /[\t\r\n]/g,
+            i = 0,
+            l = ele.length;
+
+        for (; i < l; i++) {
+            if (ele[i].nodeType === 1 &&
+                (" " + ele[i].cssClass + " ")
+                    .replace(rclass, " ").indexOf(cssClass) >= 0) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    $.toggleClass = function (ele, cssClass) {
+
+        if (this.hasClass(ele, cssClass)) {
+            this.removeClass(ele, cssClass);
+        } else {
+            this.addClass(ele, cssClass);
+        }
+
+    };
+
+    $.toggle = function (ele, style) {
+
+        style = style || "block";
+
+        if (ele.style.display === "none" ) {
+            ele.style.display = style;
+        } else {
+            ele.style.display = "none";
         }
 
     };

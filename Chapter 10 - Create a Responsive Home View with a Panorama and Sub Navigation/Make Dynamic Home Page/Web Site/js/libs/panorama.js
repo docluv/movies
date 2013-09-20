@@ -26,7 +26,14 @@
 
             this.settings = $.extend({}, this.settings, customSettings);
             this.setupElements(container);
-            this.setPanoramaDimensions();
+
+            if (this.settings.maxWidth >= window.innerWidth ||
+                this.settings.maxHeight >= window.innerHeight){
+
+                this.setPanoramaDimensions();
+
+            }
+
             this.buildTransitionValue();
             this.buildVendorNames();
             this.support.transitionEnd =
@@ -88,8 +95,6 @@
             this.div = null;
 
         },
-
-        
 
         setPanoramaDimensions: function () {
 

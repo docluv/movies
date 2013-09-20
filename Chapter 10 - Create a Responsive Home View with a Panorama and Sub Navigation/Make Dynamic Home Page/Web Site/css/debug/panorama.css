@@ -42,7 +42,8 @@
     background-repeat:repeat-x;
 }
 */
-.pxs_container > ul {
+.pxs_container > ul,
+.panorama-panels {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -52,11 +53,11 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 420px;
 }
 
-ul.panorama-panels > li, ul.pxs_slider > li {
-    height: 420px;
+ul.panorama-panels > li, 
+ul.pxs_slider > li,
+.single-panel {
     float: left;
     position: relative;
     display: inline-block;
