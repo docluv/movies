@@ -7,7 +7,36 @@
     // Define a local copy of deferred
     var spa = function (customSettings) {
 
-        return new spa.fn.init(customSettings);
+        var that = new spa.fn.init(customSettings);
+
+        that.bp = bp || backpack();
+
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        that.titleElement = document.querySelector(that.settings.titleSelector);
+
+        if (that.settings.parseDOM) {
+
+            that.setupRoutes(that.settings.viewSelector);
+
+            //if (that.bp) {
+            //    that.bp.updateViews();
+            //}
+
+        }
+
+        window.addEventListener("hashchange", function (e) {
+
+            that.swapView();
+
+        });
+
+        if (that.settings.initView) {
+            that.swapView();
+        }
+
+        return that;
+
     };
 
     spa.fn = spa.prototype = {
@@ -15,34 +44,6 @@
         constructor: spa,
 
         init: function (customSettings) {
-
-            var that = this;
-
-            that.bp = bp || backpack();
-
-            that.settings = $.extend({}, that.settings, customSettings);
-
-            that.titleElement = document.querySelector(that.settings.titleSelector);
-
-            if (that.settings.parseDOM) {
-
-                that.setupRoutes(that.settings.viewSelector);
-
-                //if (that.bp) {
-                //    that.bp.updateViews();
-                //}
-
-            }
-
-            window.addEventListener("hashchange", function (e) {
-
-                that.swapView();
-
-            });
-
-            if (that.settings.initView) {
-                that.swapView();
-            }
 
             return this;
         },

@@ -20,8 +20,7 @@
         });
         
     };
-
-
+    
     movieApp.fn.renderMovieDetails = function (data) {
 
         if (data) {
@@ -35,14 +34,14 @@
             this.setupPanorama(".panorama-container", { maxWidth: 700 });
             this.setMainTitle(data.title);
 
-            this.bindPanelTitles();
+            this.bindMovieDetailPanelTitles();
 
             this.resizeEvents["manageMovieView"] = this.manageMovieView;
         }
 
     };
 
-    movieApp.fn.bindPanelTitles = function () {
+    movieApp.fn.bindMovieDetailPanelTitles = function () {
 
         var showTimes = document.querySelector(".movie-showtime-list"),
             castNames = document.querySelector(".cast-name-list"),

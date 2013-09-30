@@ -4,8 +4,6 @@
 (function(window, undefined) {
 
     "use strict";
-
-
 var menuItems = {
                 topMenu: [
                 {
@@ -54,9 +52,12 @@ var menuItems = {
                          url: "#!share"
                      }]
             };
-
     
     var movieApp = function(customSettings) {
+
+        toolbar(".toolbar", {
+            menuItems: menuItems
+        });
 
         return new movieApp.fn.init(customSettings);
     };
@@ -66,10 +67,6 @@ var menuItems = {
         constructor: movieApp,
 
         init: function(customSettings) {
-
-            toolbar(".toolbar", {
-                menuItems: menuItems
-            });
 
             return this;
         },

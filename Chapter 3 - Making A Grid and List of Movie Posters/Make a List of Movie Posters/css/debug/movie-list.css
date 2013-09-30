@@ -23,65 +23,65 @@
     float: left;
 }
 
-.movie-poster-list .demo-photo-caption {
-    display: block;
-    float: left;
+.movie-poster-list .photo-caption {
+    line-height: 60px;
+    text-align: left;
+    margin-left: 15px;
+    display: inline-block;
+    width: 180px;
+    font-size: 1.2em;
     overflow: hidden;
     padding-right: 6px;
     color: white;
-    text-align: right;
-    font-size: 2em;
-    line-height: 60px;
-    padding-left: 1em;
 }
 
 .movie-poster-list a {
-    width: 300px;
     display: inline-block;
     float: left;
+    width: 250px;
+    overflow: hidden;
 }
 
 .movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
-    font-size: 1.5em;
-    margin: 0 0 0 50px;
-    width: 100px;
-    line-height: 60px;
-    float: left;
-    display: inline-block;
+    font-size: .75em;
+    margin: 0 0 0 10px;
+    width: 70px;
+    line-height: 20px;
+    float: none;
+    text-align: left;
 }
 
 .movie-poster-list .critics_rating {
-    width: 200px;
+    width: 70px;
     margin-left: 10px;
 }
 
-@media (max-width:600px) {
+@media (min-width:600px) {
 
+    .movie-poster-list .photo-caption {
+        width: 200px;
+        font-size: 1.5em;
+    }
+}
+
+@media (min-width:800px) {
 
     .movie-poster-list a {
-        width: 250px;
-        overflow: hidden;
-    }
-
-    .movie-poster-list .demo-photo-caption {
-        font-size: 1.3em;
-        padding-left: 15px;
-        width: 180px;
-        overflow: hidden;
-        text-align: left;
+        width: 300px;
     }
 
     .movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
-        font-size: .75em;
-        margin: 0 0 0 10px;
-        width: 70px;
-        line-height: 20px;
-        float: none;
-        text-align: left;
+        font-size: 1.5em;
+        margin: 0 0 0 50px;
+        width: 100px;
+        line-height: 60px;
+        float: left;
+        display: inline-block;
     }
 
     .movie-poster-list .critics_rating {
-        width: 70px;
+        width: 200px;
         margin-left: 10px;
     }
 }
+

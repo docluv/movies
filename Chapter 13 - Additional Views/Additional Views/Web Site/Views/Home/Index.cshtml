@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Modern Web Movies</title>
+    <link href="css/debug/site.css?v=.2" rel="stylesheet">
+    <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
+    <link href="css/debug/animations.css?v=.2" rel="stylesheet">
+    <link href="css/debug/touch.css?v=.2" rel="stylesheet">
+    <link href="css/debug/panorama.css?v=.2" rel="stylesheet">
+    <link href="css/debug/toolbar.css?v=.2" rel="stylesheet">
+    <link href="css/debug/movie.app.forms.css?v=.2" rel="stylesheet">
+    <link href="css/debug/movie.app.nav.css?v=.2" rel="stylesheet">
+
+    <link href="css/debug/movie.app.account-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.login-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.home-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.movie-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.movies-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.news-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.profile-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.theaters-view.css?v=.1" rel="stylesheet">
+    <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header" role="banner">
+        <span class="win-backbutton"></span>
+        <h1 class="view-title">Modern Web Movies</h1>
+        <nav class="main-nav" role="navigation">
+            <a href="#!" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
+            <a href="#!theaters" role="menuitem" class="theaters-nav"><span class="nav-icon theaters-icon"></span><span class="nav-text">Theaters</span></a>
+            <a href="#!maps" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
+            <a href="#!news" role="menuitem" class="news-nav"><span class="nav-icon news-icon"></span><span class="nav-text">News</span></a>
+            <a href="#!search" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
+        </nav>
+        <span class="hamburger-nav"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></span>
+    </header>
+    <section id="main" class="main-content" role="main">
+
+        @{
+                
+            DateTime dtNow = DateTime.Now;
+            TimeSpan tsMinute = new TimeSpan(0, 0, 5, 0);
+            long lastLoad = DateTime.MinValue.ToUniversalTime().Ticks;
+            var cookie = Request.Cookies["dt"];
+
+            if (cookie == null)
+            {
+
+                cookie = new HttpCookie("dt");
+
+                //Set the cookies value
+                cookie.Value = DateTime.Now.ToUniversalTime().Ticks.ToString();
+
+                cookie.Expires = dtNow + tsMinute;
+
+                //Add the cookie
+                Response.Cookies.Add(cookie);
+
+            }
+            else
+            {
+                lastLoad = long.Parse(cookie.Value);
+            }
+
+            //Set the cookies value
+            cookie.Value = DateTime.Now.ToUniversalTime().Ticks.ToString();
+
+            //Set the cookie to expire in 1 minute
+
+            cookie.Expires = dtNow + tsMinute;
+
+            var fileTime = File.GetLastWriteTimeUtc(
+                                Server.MapPath(@"Views\Home\home-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("home-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                Server.MapPath(@"Views\Home\account-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("account-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\login-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("login-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\maps-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("maps-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\movie-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("movie-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\movies-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("movies-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\news-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("news-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\profile-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("profile-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\search-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("search-view.cshtml")
+            }
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\theaters-view.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("theaters-view.cshtml")
+            }
+            
+
+            fileTime = File.GetLastWriteTimeUtc(
+                                        Server.MapPath(@"Views\Home\_templates.cshtml")).Ticks;
+
+            if (lastLoad < fileTime)
+            {
+            @RenderPage("_templates.cshtml")
+            }
+        
+        }
+
+
+    </section>
+    <footer class="toolbar">
+        <nav class="toolbar-top-menu"></nav>
+        <nav class="toolbar-sub-menu"></nav>
+    </footer>
+
+    <script src="@Href("~/js/libs/mbp.js?v=.01")"></script>
+    <script src="@Href("~/js/libs/backpack.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/mustache.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/spa.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/reqwest.min.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/rqdata.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/deeptissue.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/panorama.js?v=.1")"></script>
+    <script src="@Href("~/js/libs/toolbar.js?v=.1")"></script>
+
+    <script src="@Href("~/js/debug/movie.app.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.api.js?v=.1")"></script>
+
+    <script src="@Href("~/js/debug/movie.app.account-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.home-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.login-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.maps-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.news-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.profile-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.search-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.theaters-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.movie-view.js?v=.1")"></script>
+    <script src="@Href("~/js/debug/movie.app.movies-view.js?v=.1")"></script>
+
+    <script src="@Href("~/js/debug/movie.app.bootstrap.js?v=.1")"></script>
+
+</body>
+</html>

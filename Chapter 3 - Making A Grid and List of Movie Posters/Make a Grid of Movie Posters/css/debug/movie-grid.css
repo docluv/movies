@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+.movie-poster-grid .mpaa_rating,
+.movie-poster-grid .critics_rating{
+    display: none;
+}
+
 .movie-poster-grid .movie-target {
     display: inline-block;
     list-style-type: none;

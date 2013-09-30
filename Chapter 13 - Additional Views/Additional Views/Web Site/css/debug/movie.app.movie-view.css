@@ -1,0 +1,174 @@
+﻿
+
+.movie-description-panel {
+    margin-right: 24px;
+}
+
+.movie-title {
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cast-name-list {
+    margin-left: 6px;
+}
+
+
+span.center, img.center {
+    display: block;
+    margin: auto;
+}
+
+.full-movie-poster {
+    /*width: 250px;*/
+    border: none;
+}
+
+
+.theater-title {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.movie-poster-centered {
+    text-align: center;
+}
+
+.movie-showtime-theater {
+    font-size: 1.25em;
+}
+
+.theater-name {
+    font: 12pt bold;
+}
+
+.theater-address {
+    font-size: 11pt;
+}
+
+.showtime-list {
+    line-height: 24px;
+}
+
+.movie-showtime-scroll {
+    margin-bottom: 54px;
+}
+
+#showReview {
+    width: 200px;
+    margin: 10px auto;
+    border: solid 1px #fff;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    display: none;
+}
+
+@media (min-width:601px) and (max-width:720px) {
+
+    .movie-description-panel,
+    .movie-cast-panel,
+    .movie-showtimes-panel {
+        width: 120px;
+    }
+
+    .movie-description,
+    .cast-name-list,
+    .movie-showtime-list {
+        width: 400px;
+    }
+
+    .movie-poster-centered,
+    .movie-description,
+    .movie-review-panel,
+    .cast-name-list,
+    .movie-showtime-list {
+        display: none;
+    }
+
+    .movie-details-panel {
+        margin: 0 10px;
+    }
+
+    .movie-review-panel {
+        padding: 20px;
+        left: 0;
+        top: 0px;
+        right: 0;
+        position: absolute;
+        background-color: rgb(123, 53, 154);
+    }
+
+}
+
+@media (min-width:700px) {
+
+    /*.full-movie-poster {
+        width: 300px;
+        height: 461px;
+    }*/
+
+    .movie-details-panel {
+        margin: 0 20px 0 0;
+    }
+
+    .movie-review-panel {
+        display: none;
+    }
+
+    .movie-description-panel {
+        width: 200px;
+    }
+
+    .movie-cast-panel,
+    .movie-showtimes-panel {
+        width: 200px;
+        height: 200px;
+    }
+
+    .movie-poster-centered {
+        display: none;
+    }
+
+    #showReview {
+        display: block;
+    }
+}
+
+
+@media (min-width:1024px) {
+
+    .full-movie-poster {
+        width: 440px;
+        height: 677px;
+    }
+
+    .movie-review-panel {
+        display: none;
+    }
+
+    .movie-details-panel {
+        width: 460px;
+    }
+
+    .movie-description-panel {
+        width: 200px;
+    }
+
+    .movie-cast-panel,
+    .movie-showtimes-panel {
+        width: 200px;
+        height: 200px;
+    }
+
+    .movie-poster-centered {
+        display: none;
+    }
+
+    #showReview {
+        display: block;
+    }
+}

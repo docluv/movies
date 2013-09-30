@@ -9,4 +9,4 @@ var movie = movieApp(),
 
 
 //causes the Android and iPhone browser to scroll up to claim more real estate
-MBP.hideUrlBar();
+//MBP.hideUrlBar();

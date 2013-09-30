@@ -1,0 +1,153 @@
+﻿
+.main-nav {
+    margin: auto;
+    height: 50px;
+    text-align: center;
+    display: none;
+}
+
+.home-nav,
+.theaters.nav,
+.maps-nav,
+.news-nav,
+.account-nav {
+    display: none;
+}
+
+
+.hamburger-nav {
+    display: none;
+    width: 40px;
+    height: 40px;
+    margin: 10px 5px;
+    line-height: 26pt;
+    padding: 10px 0 0 0;
+    float: right;
+}
+
+.hamburger-bar {
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px;
+    margin: 3px auto;
+    width: 30px;
+    display: block;
+}
+
+.main-nav > a, .main-nav > a:visited {
+    margin: 5px 5px 20px 5px;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.25em;
+    display: inline-block;
+}
+
+    .main-nav > a:active {
+        /*color: rgb(193,40,40);*/
+        border-bottom: solid 2px #fff;
+    }
+
+.nav-text {
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    vertical-align: middle;
+    margin: 15px 0 0 0;
+    display: none;
+}
+
+.nav-icon {
+    float: left;
+    width: 32px;
+    height: 32px;
+    background-image: url("http://images.professionalaspnet.com/nav-icons-32.png");
+    background-position-y: 0px;
+    margin: 15px 0 0 0;
+    display: none;
+}
+
+@media (min-width:601px) and (max-width:720px) {
+
+    .hamburger-nav {
+        display: inline-block;
+    }
+
+    .main-nav {
+        z-index: 1000;
+        position: absolute;
+        right: 10px;
+        top: 50px;
+        width: 200px;
+        background-color: #48195c;
+        height: 190px;
+    }
+
+        .main-nav > a, .main-nav > a:visited {
+            margin: 5px 5px 20px 5px;
+            padding: 5px 5px;
+            background-color: transparent;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.25em;
+            display: block;
+            width: 180px;
+        }
+
+    .nav-text, .nav-icon {
+        display: inline-block;
+        float: left;
+        text-align: left;
+    }
+
+    .nav-icon {
+        margin:0;
+    }
+
+    .nav-text{
+        width:130px;
+        margin: 0 5px 0 0;
+    }
+
+}
+
+
+@media (min-width:720px) {
+
+    .main-nav,
+    .nav-icon {
+        display: inline-block;
+    }
+}
+
+/*
+@media (min-width:601px) and (max-width:900px){
+    
+    .hamburger-nav{
+        display:inline-block;
+    }
+
+}
+
+@media (min-width: 860px){
+
+    .main-nav {
+        display: inline-block;
+    }
+
+}
+
+@media (max-width:900px) {
+
+    .main-nav > a.account-nav {
+        display: none;
+    }
+
+}
+
+*/

@@ -16,7 +16,7 @@ body {
     user-select: none;
     -ms-content-zooming: none;
     overflow-x: hidden;
-    background-color: #1C2420;
+    background-color: #7b359a;
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
@@ -77,7 +77,7 @@ h3 {
 .main-nav > a, .main-nav > a:visited {
     margin: 5px 5px 20px 5px;
     padding: 5px 10px;
-    background-color: #990000;
+    background-color: #3a1b48;
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -86,9 +86,6 @@ h3 {
     display: inline-block;
 }
 
-.main-nav > a:active {
-    color: rgb(193,40,40);
-}
 
 .nav-text {
     float: left;

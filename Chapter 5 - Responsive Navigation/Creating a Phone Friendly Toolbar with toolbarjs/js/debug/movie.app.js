@@ -20,7 +20,7 @@ var menuItems = {
             }
                 ,{
                 title: "showtimes",
-                iconClass: "go-showtimes",
+                iconClass: "go-current",
                 url:  "#!showtimes"
             }
                 ,{
