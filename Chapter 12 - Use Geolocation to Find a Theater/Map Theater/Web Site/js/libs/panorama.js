@@ -15,36 +15,38 @@
 
     var panorama = function (container, customSettings) {
 
-        return new panorama.fn.init(container, customSettings);
+        var that = new panorama.fn.init();
+
+        that.settings = $.extend({}, that.settings, customSettings);
+        that.setupElements(container);
+
+        if (that.settings.maxWidth >= window.innerWidth ||
+            that.settings.maxHeight >= window.innerHeight) {
+
+            that.setPanoramaDimensions();
+
+        }
+
+        that.buildTransitionValue();
+        that.buildVendorNames();
+        that.support.transitionEnd =
+                            that.eventNames[that.support.transition] || null;
+
+        that.bindEvents();
+
+        that.moveRightCallback();
+
+        that.currentPanel = 2;
+
+        return that;
+
     };
 
     panorama.fn = panorama.prototype = {
 
         constructor: panorama,
 
-        init: function (container, customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
-            this.setupElements(container);
-
-            if (this.settings.maxWidth >= window.innerWidth ||
-                this.settings.maxHeight >= window.innerHeight){
-
-                this.setPanoramaDimensions();
-
-            }
-
-            this.buildTransitionValue();
-            this.buildVendorNames();
-            this.support.transitionEnd =
-                                this.eventNames[this.support.transition] || null;
-
-            this.bindEvents();
-
-            this.moveRightCallback();
-
-            this.currentPanel = 2;
-
+        init: function () {
             return this;
         },
 
@@ -246,7 +248,7 @@
 
             if ((this.settings.maxWidth <= window.innerWidth ||
                 this.settings.maxHeight <= window.innerHeight) &&
-                this.isApplied){
+                this.isApplied) {
 
                 this.isApplied = false;
                 this.settings.canMove = false;

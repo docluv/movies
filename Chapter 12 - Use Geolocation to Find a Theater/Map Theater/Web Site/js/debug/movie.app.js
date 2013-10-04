@@ -6,7 +6,6 @@
 
     "use strict";
 
-
     var menuItems = {
         topMenu: [
         {
@@ -69,10 +68,46 @@
             }]
     };
 
-
     var movieApp = function (customSettings) {
 
-        return new movieApp.fn.init(customSettings);
+        var that = new movieApp.fn.init(customSettings);
+
+        that.bp = backpack();
+
+        that.data = rqData();
+
+        that.compileTemplates();
+
+        toolbar(".toolbar", {
+            menuItems: menuItems
+        });
+
+        deeptissue(".hamburger-nav").tap(function () {
+
+            $.toggle(document.querySelector(".main-nav"));
+            //                document.querySelector(".main-nav").style.display = "block";
+
+        });
+
+        deeptissue(".main-nav > a").tap(function () {
+
+            that.hideBurgerMenu();
+
+        });
+
+        window.addEventListener("resize", function (e) {
+
+            for (var key in that.resizeEvents) {
+                if (that.resizeEvents.hasOwnProperty(key)) {
+                    that.resizeEvents[key].call(that);
+                }
+            }
+
+        });
+
+        that.bindBackButton();
+
+        return that;
     };
 
     movieApp.fn = movieApp.prototype = {
@@ -80,44 +115,6 @@
         constructor: movieApp,
 
         init: function (customSettings) {
-
-            var that = this;
-
-            that.bp = backpack();
-
-            that.data = rqData();
-
-            that.compileTemplates();
-
-            toolbar(".toolbar", {
-                menuItems: menuItems
-            });
-
-            deeptissue(".hamburger-nav").tap(function () {
-
-                $.toggle(document.querySelector(".main-nav"));
-//                document.querySelector(".main-nav").style.display = "block";
-                
-            });
-
-            deeptissue(".main-nav > a").tap(function () {
-
-                that.hideBurgerMenu();
-
-            });
-
-            window.addEventListener("resize", function (e) {
-
-                for (var key in that.resizeEvents) {
-                    if (that.resizeEvents.hasOwnProperty(key)) {
-                        that.resizeEvents[key].call(that);
-                    }
-                }
-
-            });
-
-            that.bindBackButton();
-
             return this;
         },
 

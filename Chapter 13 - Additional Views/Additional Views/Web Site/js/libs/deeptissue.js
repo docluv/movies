@@ -11,7 +11,54 @@
 
     deeptissue = function (node, customSettings) {
 
-        return new deeptissue.fn.init(node, customSettings);
+        if (!node) {
+            return node;
+        }
+
+        if (typeof node === "string") {
+            node = document.querySelectorAll(node);
+        }
+
+        var that = new deeptissue.fn.init(node, customSettings);
+
+        if ("length" in node) {  //rude detection for nodeList
+            that.node = node;
+        } else {
+            that.node = [node];
+        }
+
+        that["settings"] = $.extend({}, that["settings"], customSettings);
+
+        that.support = $.buildVendorNames();
+
+        that.touchType = window.navigator.msPointerEnabled ? "pointer" :
+                            "ontouchstart" in window ? "touch" : "mouse";
+
+        that.hasMouse = ("ontouchstart" in window && "onmousedown" in window);
+
+        that.touchStart = that.touchType === "pointer" ? "MSPointerDown" :
+                        that.touchType === "touch" ? "touchstart" : "mousedown";
+
+        that.touchEnd = that.touchType === "pointer" ? "MSPointerUp" :
+                        that.touchType === "touch" ? "touchend" : "mouseup";
+
+        that.touchOut = that.touchType === "pointer" ? "MSPointerOut" :
+                        that.touchType === "touch" ? "touchcancel" : "mouseout";
+
+        that.touchMove = that.touchType === "pointer" ? "MSPointerMove" :
+                        that.touchType === "touch" ? "touchmove" : "mousemove";
+
+        that.touchCancel = that.touchType === "pointer" ? "MSPointerCancel" :
+                        that.touchType === "touch" ? "touchcancel" : "mouseout";
+
+        if (that.hasmsGesture) {
+            that.setupMSGesture();
+        } else {
+            that.setUpTouchGestures();
+            that.setupTouch();
+        }
+
+        return that;
     };
 
     deeptissue.fn = deeptissue.prototype = {
@@ -19,51 +66,6 @@
         constructor: deeptissue,
 
         init: function (node, customSettings) {
-
-            if (!node) {
-                return node;
-            }
-
-            if (typeof node === "string") {
-                node = document.querySelectorAll(node);
-            }
-
-            if ("length" in node) {  //rude detection for nodeList
-                this.node = node;
-            } else {
-                this.node = [node];
-            }
-
-            this["settings"] = $.extend({}, this["settings"], customSettings);
-
-            this.support = $.buildVendorNames();
-
-            this.touchType = window.navigator.msPointerEnabled ? "pointer" :
-                                "ontouchstart" in window ? "touch" : "mouse";
-
-            this.hasMouse = ("ontouchstart" in window && "onmousedown" in window);
-
-            this.touchStart = this.touchType === "pointer" ? "MSPointerDown" :
-                            this.touchType === "touch" ? "touchstart" : "mousedown";
-
-            this.touchEnd = this.touchType === "pointer" ? "MSPointerUp" :
-                            this.touchType === "touch" ? "touchend" : "mouseup";
-
-            this.touchOut = this.touchType === "pointer" ? "MSPointerOut" :
-                            this.touchType === "touch" ? "touchcancel" : "mouseout";
-
-            this.touchMove = this.touchType === "pointer" ? "MSPointerMove" :
-                            this.touchType === "touch" ? "touchmove" : "mousemove";
-
-            this.touchCancel = this.touchType === "pointer" ? "MSPointerCancel" :
-                            this.touchType === "touch" ? "touchcancel" : "mouseout";
-
-            if (this.hasmsGesture) {
-                this.setupMSGesture();
-            } else {
-                this.setUpTouchGestures();
-                this.setupTouch();
-            }
 
             return this;
         },
@@ -244,7 +246,7 @@
             that.processSwipe(el, e, settings, m);
 
         },
-        
+
         processSwipe: function (el, e, settings, m) {
 
             var that = this,

@@ -6,7 +6,11 @@
 
     var backpack = function (customSettings) {
 
-        return new backpack.fn.init(customSettings);
+        var that = new backpack.fn.init(customSettings);
+
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        return that;
     };
 
     backpack.fn = backpack.prototype = {
@@ -14,9 +18,6 @@
         constructor: backpack,
 
         init: function (customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
-
             return this;
         },
 

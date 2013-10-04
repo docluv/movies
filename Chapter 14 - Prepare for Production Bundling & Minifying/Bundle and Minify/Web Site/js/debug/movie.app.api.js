@@ -186,11 +186,10 @@
 
     movieApp.fn.getNews = function (callback) {
 
-        return this.data.getData("js/fixtures/news.json", false, { success: callback });
+        return this.data.getData("js/mocks/news.json", false, { success: callback });
 
     };
-
-
+    
     movieApp.fn.mergeInFakeShowtimes = function (movie) {
 
         var showtimes = [{ "theater": "The Mystic", "showtimes": ["12:20", "3:05", "5:45", "7:50", "10:10"] },

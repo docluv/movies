@@ -10,17 +10,19 @@
 
     var rqData = function (customSettings) {
 
-        return new rqData.fn.init(customSettings);
+        var that = new rqData.fn.init();
+        
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        return that;
+
     };
 
     rqData.fn = rqData.prototype = {
 
         constructor: rqData,
 
-        init: function (customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
-
+        init: function () {
             return this;
         },
 
