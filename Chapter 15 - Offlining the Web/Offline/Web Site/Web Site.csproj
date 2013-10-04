@@ -115,6 +115,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SPAHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <Content Include="css\debug\toolbar.css" />
     <Content Include="css\debug\touch.css" />
     <Content Include="Global.asax" />
+    <Content Include="Gruntfile.js" />
     <Content Include="img\back.png" />
     <Content Include="img\camera.png" />
     <Content Include="img\home.png" />
@@ -186,7 +188,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="js\specs\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -233,6 +234,12 @@
   <ItemGroup>
     <Content Include="app.cache" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="package.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\mocks\news.json" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -261,6 +268,9 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <PropertyGroup>
+    <PostBuildEvent>grunt.cmd</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

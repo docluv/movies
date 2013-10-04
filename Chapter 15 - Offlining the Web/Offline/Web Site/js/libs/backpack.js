@@ -1,21 +1,23 @@
 ;
 //Backpack is a deferred content managment library with single page and mobile applications in mind
-(function (window, undefined) {
+(function (window, $, undefined) {
 
     "use strict";
 
     var backpack = function (customSettings) {
 
-        return new backpack.fn.init(customSettings);
+        var that = new backpack.fn.init(customSettings);
+
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        return that;
     };
 
     backpack.fn = backpack.prototype = {
 
         constructor: backpack,
 
-        init: function (customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
+        init: function () {
 
             return this;
         },
@@ -203,6 +205,6 @@
 
     return (window.backpack = backpack);
 
-})(window);
+})(window, $);
 
 

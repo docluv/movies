@@ -38,9 +38,10 @@ var _gaq = _gaq || undefined,
     };
 
     $.hideUrlBarOnLoad = function () {
-        var win = window;
-        var doc = win.document;
-        var bodycheck;
+
+        var win = window,
+            doc = win.document,
+            bodycheck;
 
         // If there's a hash, or addEventListener is undefined, stop here
         if (!location.hash && win.addEventListener) {
@@ -356,7 +357,7 @@ var _gaq = _gaq || undefined,
 
         style = style || "block";
 
-        if (ele.style.display === "none" ) {
+        if (ele.style.display === "" || ele.style.display === "none" ) {
             ele.style.display = style;
         } else {
             ele.style.display = "none";
@@ -369,17 +370,15 @@ var _gaq = _gaq || undefined,
 
         ele.style.display = style;
     };
-
-
+    
     $.hide = function (ele) {
-        ele.style.display = "";
+        ele.style.display = "none";
     };
 
     Node.prototype.show = function (style) {
         style = style || "block";
         this.style.display = style;
     };
-
 
     Node.prototype.hide = function () {
         this.style.display = "";

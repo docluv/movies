@@ -6,21 +6,22 @@
 (function (window, reqwest, undefined) {
 
     "use strict";
-
-
+    
     var rqData = function (customSettings) {
 
-        return new rqData.fn.init(customSettings);
+        var that = new rqData.fn.init();
+
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        return that;
+
     };
 
     rqData.fn = rqData.prototype = {
 
         constructor: rqData,
 
-        init: function (customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
-
+        init: function () {
             return this;
         },
 
@@ -70,19 +71,11 @@
                          (options.data ? that.serialize(options.data) : ""),
                 ttl = ls.getItem(cacheKey + 'cachettl');
 
-            // isCacheValid is a function to validate cache
-            if (options.isCacheValid && !options.isCacheValid()) {
-                ls.removeItem(cacheKey);
-            }
-
-            // if there's a TTL that's expired, flush this item
-            if (ttl && ttl < +new Date()) {
-                ls.removeItem(cacheKey);
-                ls.removeItem(cacheKey + 'cachettl');
-                ttl = 'expired';
-            }
-
-            value = ls.getItem(cacheKey);
+            value = that.getExistingData({
+                isCacheValid: options.isCacheValid,
+                ttl : ttl,
+                cacheKey: cacheKey
+            });
 
             if (value) {
                 //In the cache? So get it, apply success callback & abort the XHR request
@@ -156,6 +149,27 @@
                  that.failCallback(e);
 
              });
+
+        },
+
+        getExistingData: function(options){
+
+            var ttl = options.ttl,
+                cacheKey = options.cacheKey;
+
+            // isCacheValid is a function to validate cache
+            if (options.isCacheValid && !options.isCacheValid()) {
+                localStorage.removeItem(cacheKey);
+            }
+
+            // if there's a TTL that's expired, flush this item
+            if (ttl && ttl < +new Date()) {
+                localStorage.removeItem(cacheKey);
+                localStorage.removeItem(cacheKey + 'cachettl');
+                ttl = 'expired';
+            }
+
+            return localStorage.getItem(cacheKey);
 
         },
 

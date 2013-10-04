@@ -16,7 +16,40 @@ callback: function(){} //gets executed when the item is selected
     "use strict";
 
     var toolbar = function (node, customSettings) {
-        return new toolbar.fn.init(node, customSettings);
+
+        if (!node) {
+            return node;
+        }
+
+        if (typeof node === "string") { //assume selector
+
+            node = document.querySelector(node);
+
+            if (!node) {
+                return node;
+            }
+
+        }
+
+        if ("length" in node) {  //rude detection for nodeList
+            node = node[0]; //limit the toolbar application to a single node for now, just makes sense
+        }
+
+        var that = new toolbar.fn.init(node, customSettings),
+            settings = that.settings =
+                        $.extend({}, that.settings, customSettings);
+
+        that.support = $.buildVendorNames();
+        that.support.transitionEnd =
+                            that.eventNames[that.support.transition] || null;
+
+        that.setupToolbarElements(node, settings);
+        that.applyTransitionEnd();
+        that.setupOritentationChange();
+        that.setToolbarMenu(settings.menuItems);
+
+        return that;
+
     };
 
     toolbar.fn = toolbar.prototype = {
@@ -24,38 +57,6 @@ callback: function(){} //gets executed when the item is selected
         constructor: toolbar,
 
         init: function (node, customSettings) {
-
-            if (!node) {
-                return node;
-            }
-
-            if (typeof node === "string") { //assume selector
-
-                node = document.querySelector(node);
-
-                if (!node) {
-                    return node;
-                }
-
-            }
-
-            if ("length" in node) {  //rude detection for nodeList
-                node = node[0]; //limit the toolbar application to a single node for now, just makes sense
-            }
-
-            var that = this,
-                settings = that.settings =
-                            $.extend({}, that.settings, customSettings);
-
-            that.support = $.buildVendorNames();
-            that.support.transitionEnd =
-                                that.eventNames[that.support.transition] || null;
-
-            that.setupToolbarElements(node, settings);
-            that.applyTransitionEnd();
-            that.setupOritentationChange();
-            that.setToolbarMenu(settings.menuItems);
-
             return this;
         },
 
