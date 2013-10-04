@@ -165,6 +165,7 @@
     <Content Include="js\debug\movie.app.news-view.js" />
     <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
+    <Content Include="js\debug\movie.app.setup.js" />
     <Content Include="js\debug\movie.app.theaters-view.js" />
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deeptissue.js" />
@@ -176,6 +177,23 @@
     <Content Include="js\libs\rqData.js" />
     <Content Include="js\libs\spa.js" />
     <Content Include="js\libs\toolbar.js" />
+    <Content Include="js\specs\beautify-html.js" />
+    <Content Include="js\specs\core\moveiApp.core.html" />
+    <Content Include="js\specs\core\moveiApp.core.Tests.js" />
+    <Content Include="js\specs\home-view\moveiApp.home-view.html" />
+    <Content Include="js\specs\home-view\moveiApp.home-view.Tests.js" />
+    <Content Include="js\specs\jquery.min.js" />
+    <Content Include="js\specs\map-view\moveiApp.map-view.html" />
+    <Content Include="js\specs\map-view\moveiApp.map-view.Tests.js" />
+    <Content Include="js\specs\movie-view\moveiApp.movie-view.html" />
+    <Content Include="js\specs\movie-view\moveiApp.movie-view.Tests.js" />
+    <Content Include="js\specs\movies-view\moveiApp.movies-view.html" />
+    <Content Include="js\specs\movies-view\moveiApp.movies-view.Tests.js" />
+    <Content Include="js\specs\qunit.css" />
+    <Content Include="js\specs\qunit.js" />
+    <Content Include="js\specs\search-view\moveiApp.search-view.html" />
+    <Content Include="js\specs\search-view\moveiApp.search-view.Tests.js" />
+    <Content Include="js\specs\sinon.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -187,7 +205,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="js\specs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

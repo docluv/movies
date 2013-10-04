@@ -53,7 +53,6 @@
             return str.join("&");
         },
 
-
         ajaxPrefilter: function (options, jqXHR) {
 
             // Cache it ?
@@ -116,26 +115,7 @@
                     strdata = JSON.stringify(data);
                 }
 
-                // Save the data to localStorage catching exceptions (possibly QUOTA_EXCEEDED_ERR)
-                try {
-                    ls.setItem(cacheKey, strdata);
-
-                    // store timestamp
-                    if (!ttl || ttl === 'expired') {
-                        ls.setItem(cacheKey + 'cachettl', +new Date() + 1000 * 60 * 60 * hourstl);
-                    }
-
-                } catch (e) {
-
-                    // Remove any incomplete data that may have been saved before the exception was caught
-                    ls.removeItem(cacheKey);
-                    ls.removeItem(cacheKey + 'cachettl');
-
-                    if (options.cacheError) {
-                        options.cacheError(e, cacheKey, strdata);
-                    }
-
-                }
+                that.saveResultToStorage(cacheKey, strdata, ttl, hourstl);
 
                 if (options.realsuccess) {
                     options.realsuccess(data);
@@ -149,6 +129,33 @@
                  that.failCallback(e);
 
              });
+
+        },
+
+        saveResultToStorage: function (cacheKey, strdata, ttl, hourstl) {
+
+            var ls = window.localStorage;
+
+            // Save the data to localStorage catching exceptions (possibly QUOTA_EXCEEDED_ERR)
+            try {
+                ls.setItem(cacheKey, strdata);
+
+                // store timestamp
+                if (!ttl || ttl === 'expired') {
+                    ls.setItem(cacheKey + 'cachettl', +new Date() + 1000 * 60 * 60 * hourstl);
+                }
+
+            } catch (e) {
+
+                // Remove any incomplete data that may have been saved before the exception was caught
+                ls.removeItem(cacheKey);
+                ls.removeItem(cacheKey + 'cachettl');
+
+                if (options.cacheError) {
+                    options.cacheError(e, cacheKey, strdata);
+                }
+
+            }
 
         },
 
@@ -210,9 +217,13 @@
                             options.ajaxSettings,
                             { "url": options.url });
 
-            return this.doAJAX(ajaxOptions);
+            return reqwest(ajaxOptions)
+             .fail(function (e) {
 
+                 that.failCallback(e);
 
+             });
+            
         },
 
         putData: function (options) {
@@ -222,7 +233,12 @@
                             options.ajaxSettings,
                             { "url": options.url });
 
-            return this.doAJAX(ajaxOptions);
+            return reqwest(ajaxOptions)
+             .fail(function (e) {
+
+                 that.failCallback(e);
+
+             });
 
         },
 
@@ -233,7 +249,12 @@
                             options.ajaxSettings,
                             { "url": options.url });
 
-            return this.doAJAX(ajaxOptions);
+            return reqwest(ajaxOptions)
+            .fail(function (e) {
+
+                that.failCallback(e);
+
+            });
 
         }
 
