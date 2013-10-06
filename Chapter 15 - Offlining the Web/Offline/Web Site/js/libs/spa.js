@@ -1,17 +1,17 @@
 ;
 
-(function (window, $, bp, undefined) {
+(function (window, $, undefined) {
 
     "use strict";
 
     // Define a local copy of deferred
     var spa = function (customSettings) {
 
-        var that = new spa.fn.init(customSettings);
-
-        that.bp = bp || backpack();
+        var that = new spa.fn.init();
 
         that.settings = $.extend({}, that.settings, customSettings);
+
+        that.bp = that.settings.bp || backpack();
 
         that.titleElement = document.querySelector(that.settings.titleSelector);
 
@@ -39,11 +39,11 @@
 
         constructor: spa,
 
-        init: function (customSettings) {
+        init: function () {
             return this;
         },
 
-        version: "0.0.3",
+        version: "0.0.4",
 
         bp: undefined,
 
@@ -54,27 +54,16 @@
                 i = 0, j = 0, rawPath, view, route, viewId,
                 Views = document.querySelectorAll(that.settings.viewSelector);
 
-            for (i = 0; i < Views.length; i++) {
+            for (; i < Views.length; i++) {
 
                 view = Views[i];
 
                 if (view.hasAttributes() && view.hasAttribute("id")) {
 
                     viewId = view.getAttribute("id");
-                    rawPath = $.data(view, "path");
+                    rawPath = (view.hasAttribute("data-path") ? view.getAttribute("data-path") : "");
 
-                    //need to check for duplicate path
-                    route = {
-                        viewId: viewId,
-                        path: rawPath.split("\\:")[0],
-                        params: rawPath.split("\\:").slice(1),
-                        title: $.data(view, "title", that.settings.defaultTitle),
-                        transition: $.data(view, "transition"),
-                        paramValues: {},
-                        callback: $.data(view, "callback", "load" + viewId),
-                        unload: $.data(view, "unload", "unload" + viewId)
-                    };
-
+                    route = that.createRoute(viewId, rawPath, view);
                     routes[route.path] = route;
 
                 }
@@ -85,9 +74,28 @@
 
             localStorage.setItem("routes", JSON.stringify(routes));
 
-            if (this.bp && (that.getParameterByName("_escaped_fragment_") === "")) {
-                this.bp.updateViews(that.settings.viewSelector);
+            if (that.bp && (that.getParameterByName("_escaped_fragment_") === "")) {
+                that.bp.updateViews(that.settings.viewSelector);
             }
+
+        },
+
+        createRoute: function (viewId, rawPath, view) {
+
+            //need to check for duplicate path
+            return {
+                viewId: viewId,
+                path: rawPath.split("\\:")[0],
+                params: rawPath.split("\\:").slice(1),
+                title: (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
+                        that.settings.defaultTitle),
+                transition: (view.hasAttribute("data-transition") ?
+                        view.getAttribute("data-transition") :
+                        ""),
+                paramValues: {},
+                callback: (view.hasAttribute("data-callback") ? view.getAttribute("data-callback") : "load" + viewId),
+                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : "unload" + viewId)
+            };
 
         },
 
@@ -101,10 +109,9 @@
                     paramValues = {},
                     search;
 
+            //routes is an object so we can match the path to the route as it will be a property name.
             if (routes.hasOwnProperty(path)) {
-
                 return routes[path];
-
             }
 
             for (key in routes) {
@@ -173,13 +180,13 @@
             }
         },
 
-        transitionend : {
+        transitionend: {
             'animation': 'animationend',
             'webkitAnimation': 'webkitAnimationEnd',
             'MozAnimation': 'animationend',
             'OAnimation': 'oAnimationEnd'
         },
-        
+
         // repurposed helper
         cssPrefix: function (suffix) {
 
@@ -190,35 +197,35 @@
 
             if (suffix.indexOf('-') >= 0) {
 
-                parts = (''+suffix).split('-');
+                parts = ('' + suffix).split('-');
 
-                for (i=1, len=parts.length; i<len; i++) {
-                    parts[i] = parts[i].substr(0, 1).toUpperCase()+parts[i].substr(1);
+                for (i = 1, len = parts.length; i < len; i++) {
+                    parts[i] = parts[i].substr(0, 1).toUpperCase() + parts[i].substr(1);
                 }
-                suffix =  parts.join('');
+                suffix = parts.join('');
             }
 
             if (suffix in bodyStyle) {
                 return suffix;
             }
 
-            suffix = suffix.substr(0, 1).toUpperCase()+suffix.substr(1);
+            suffix = suffix.substr(0, 1).toUpperCase() + suffix.substr(1);
 
             prefixes = ['webkit', 'Moz', 'ms', 'O'];
 
-            for (i=0, len=prefixes.length; i<len; i++) {
-                if (prefixes[i]+suffix in bodyStyle) {
-                    return prefixes[i]+suffix;
+            for (i = 0, len = prefixes.length; i < len; i++) {
+                if (prefixes[i] + suffix in bodyStyle) {
+                    return prefixes[i] + suffix;
                 }
             }
 
-            return '';
+            return "";
         },
 
         swapView: function () {
 
             var that = this,
-                route, callback, title, i, a, anim, wrapper,
+                route, callback, title, i, a, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
@@ -229,13 +236,8 @@
             if (currentView.length) {
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
                 while (currentView.length > 1) {
-
-                    wrapper = currentView[currentView.length - 1].parentNode;
-
-                    if(wrapper){
-                        wrapper.removeChild(currentView[currentView.length - 1]);
-                    }
-                    
+                    currentView[currentView.length - 1]
+                            .parentNode.removeChild(currentView[currentView.length - 1]);
                 }
 
             }
@@ -272,7 +274,15 @@
                             $.addClass(currentView, "out");
                             $.addClass(currentView, anim);
 
-                            $.removeClass(currentView, "in");
+                            if (currentView.classList) {
+
+                                currentView.classList.remove("in");
+
+                            } else {
+
+                                currentView.className.replace("in", " ");
+
+                            }
 
                         } else {
                             that.endSwapAnimation.call(that, undefined, currentView, newView);
@@ -288,7 +298,7 @@
                     that.setDocumentTitle(route);
 
                     if (route.callback) {
-                        that.callbackFromRoute(route);
+                        that.makeCallback(route);
                     }
 
                 }
@@ -318,18 +328,24 @@
             var that = this,
                 anim = that.animation;
 
-            $.removeClass(currentView, that.settings.currentClass);
-            $.removeClass(currentView, anim);
-            $.removeClass(currentView, "out");
+            if (currentView.classList) {
 
-            $.removeClass(newView, "in");
-            $.removeClass(newView, anim);
+                currentView.classList.remove(that.settings.currentClass);
+                currentView.classList.remove(anim);
+                currentView.classList.remove("out");
 
-            if (currentView &&
-                $.data(currentView, "unload") != "" &&
-                $.data(currentView, "unload")) {
+                newView.classList.remove(anim);
+                newView.classList.remove("in");
 
-                that.makeCallback($.data(currentView, "unload"));
+            } else {
+
+                currentView.className.replace(that.settings.currentClass, " ");
+                currentView.className.replace(anim, " ");
+                currentView.className.replace("out", " ");
+
+                newView.className.replace(anim, " ");
+                newView.className.replace("in", " ");
+
             }
 
             if (currentView && bp && currentView.parentNode) {
@@ -339,7 +355,6 @@
             }
 
         },
-
 
         //make sure the view is actually available, this relies on backpack to supply the markup and inject it into the DOM
         ensureViewAvailable: function (currentView, newViewId) {
@@ -362,9 +377,11 @@
 
         },
 
-        makeCallback: function (callback, paramValues) {
+        makeCallback: function (route) {
 
             var a, that,
+                callback = route.callback,
+            //    unload = route.unload,
                 cbPaths = callback.split(".");
 
             if (!callback) {
@@ -382,21 +399,11 @@
                 callback = callback[cbPaths[a]];
             }
 
-            paramValues = paramValues || {};
+            route.paramValues = route.paramValues || {};
 
             if (callback) {
-                callback.call(that, paramValues);
+                callback.call(that, route.paramValues);
             }
-
-        },
-
-        callbackFromRoute: function (route) {
-            
-            if (!route.callback) {
-                return;
-            }
-
-            this.makeCallback(route.callback, route.paramValues || {});
 
         },
 
@@ -416,24 +423,6 @@
             }
 
             document.title = title;
-
-            that.setMainTitle(title);
-
-        },
-
-        titleElement: undefined,
-
-        setMainTitle: function (title) {
-
-            if (this.titleElement && this.settings.autoSetTitle) {
-
-                if (this.titleElement.textContent) {
-                    this.titleElement.textContent = title;
-                } else {
-                    this.titleElement.innerText = title;
-                }
-
-            }
 
         },
 
@@ -507,5 +496,4 @@
 
     return (window.spa = spa);
 
-})(window, $, backpack());
-
+})(window, $);

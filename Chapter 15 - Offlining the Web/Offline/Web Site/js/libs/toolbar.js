@@ -35,7 +35,7 @@ callback: function(){} //gets executed when the item is selected
             node = node[0]; //limit the toolbar application to a single node for now, just makes sense
         }
 
-        var that = new toolbar.fn.init(node, customSettings),
+        var that = new toolbar.fn.init(),
             settings = that.settings =
                         $.extend({}, that.settings, customSettings);
 
@@ -45,22 +45,21 @@ callback: function(){} //gets executed when the item is selected
 
         that.setupToolbarElements(node, settings);
         that.applyTransitionEnd();
-        that.setupOritentationChange();
+        //     that.setupOritentationChange();
         that.setToolbarMenu(settings.menuItems);
 
         return that;
-
     };
 
     toolbar.fn = toolbar.prototype = {
 
         constructor: toolbar,
 
-        init: function (node, customSettings) {
+        init: function () {
             return this;
         },
 
-        version: "0.0.3",
+        version: "0.0.4",
 
         toolbar: undefined,
         topMenu: undefined,
@@ -79,24 +78,6 @@ callback: function(){} //gets executed when the item is selected
             'WebkitTransition': 'webkitTransitionEnd',
             'msTransition': 'MSTransitionEnd',
             'transition': 'transitionend'
-        },
-
-        bindMenuItems: function (menuItems, menuType, templateName) {
-
-            var menuMarkup = "", i;
-
-            if (menuItems[menuType]) {
-
-                //will replace this with a forEach soon....
-                for (i = 0; i < menuItems[menuType].length; i++) {
-                    menuMarkup += this.parseMenuItem(menuItems[menuType][i],
-                                    this.settings[templateName]);
-                }
-
-            }
-
-            return menuMarkup;
-
         },
 
         /*
@@ -118,27 +99,24 @@ callback: function(){} //gets executed when the item is selected
             that.topMenu.innerHTML = "";
             that.subMenu.innerHTML = "";
 
-            topHTML = that.bindMenuItems(menuItems, "topMenu", "toolbarItemTemplate");
-            subHTML = that.bindMenuItems(menuItems, "subMenu", "subMenuItemTemplate");
+            if (menuItems.topMenu) {
 
-            //if (menuItems.topMenu) {
+                //will replace this with a forEach soon....
+                for (i = 0; i < menuItems.topMenu.length; i++) {
+                    topHTML += that.parseMenuItem(menuItems.topMenu[i],
+                                    settings.toolbarItemTemplate);
+                }
 
-            //    //will replace this with a forEach soon....
-            //    for (i = 0; i < menuItems.topMenu.length; i++) {
-            //        topHTML += that.parseMenuItem(menuItems.topMenu[i],
-            //                        settings.toolbarItemTemplate);
-            //    }
+            }
 
-            //}
+            if (menuItems.subMenu) {
 
-            //if (menuItems.subMenu) {
+                for (i = 0; i < menuItems.subMenu.length; i++) {
+                    subHTML += that.parseMenuItem(menuItems.subMenu[i],
+                                    settings.subMenuItemTemplate);
+                }
 
-            //    for (i = 0; i < menuItems.subMenu.length; i++) {
-            //        subHTML += that.parseMenuItem(menuItems.subMenu[i],
-            //                        settings.subMenuItemTemplate);
-            //    }
-
-            //}
+            }
 
             i = menuItems.topMenu.length;
 
@@ -153,6 +131,10 @@ callback: function(){} //gets executed when the item is selected
                 that.subMenu.innerHTML = subHTML;
 
                 that.setIconWidth(i);
+
+                window.addEventListener("resize", function (e) {
+                    that.setIconWidth(i);
+                });
 
                 that.expandTarget = that.toolbar.querySelector(settings.expandTargetSelector);
 
@@ -374,41 +356,6 @@ callback: function(){} //gets executed when the item is selected
 
         },
 
-        setupOritentationChange: function () {
-
-            var that = this,
-                toolbar = that.toolbar,
-                supportsOrientationChange = "onorientationchange" in window,
-                orientationEvent = supportsOrientationChange ? "orientationchange" : "resize";
-
-            toolbar.orientation = (window.innerWidth > window.innerHeight) ?
-                                "landscape" : "portrait";
-
-            window.addEventListener(orientationEvent, function () {
-
-                toolbar.orientation = (window.innerWidth > window.innerHeight) ?
-                                "landscape" : "portrait";
-
-                if (toolbar.expanded === true) {
-                    toolbar.expanded = false;
-                    toolbar.style.width = "";
-                    toolbar.style.height = "";
-                }
-
-                if (toolbar.orientation != "landscape") {
-                //    toolbar.style.height = window.innerHeight + "px";
-                //    toolbar.style.width = "42px";
-                //} else {
-                //    toolbar.style.height = "35px";
-                //    toolbar.style.width = window.innerWidth + "px";
-
-                    that.setIconWidth(that.settings.menuItems.topMenu.length + 1);
-                }
-
-            }, false);
-
-        },
-
         settings: {
 
             minHeight: 35,
@@ -427,7 +374,7 @@ callback: function(){} //gets executed when the item is selected
                 subMenu: []
             },
             toolbarItemTemplate: "<div class='toolbar-item'><a href='{{url}}'><div class='toolbar-item-icon {{iconClass}}'></div><figcaption>{{title}}</figcaption></a></div>",
-            subMenuItemTemplate: "<div class='toolbar-sub-menu-nav-item {{iconClass}}'><a href='{{url}}'>{{title}}</a></div>",
+            subMenuItemTemplate: "<div class='toolbar-sub-menu-nav-item {{iconClass}}'>{{title}}</div>",
 
             topLevelItems: [],
             secondLevelItems: [],

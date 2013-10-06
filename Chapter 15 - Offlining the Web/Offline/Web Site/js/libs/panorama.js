@@ -16,21 +16,14 @@
     var panorama = function (container, customSettings) {
 
         var that = new panorama.fn.init(container, customSettings);
-        
+
         that.settings = $.extend({}, that.settings, customSettings);
         that.setupElements(container);
-
-        if (that.settings.maxWidth >= window.innerWidth ||
-            that.settings.maxHeight >= window.innerHeight) {
-
-            that.setPanoramaDimensions();
-
-        }
-
+        that.setPanoramaDimensions();
         that.buildTransitionValue();
-        that.buildVendorNames();
+        $.buildVendorNames();
         that.support.transitionEnd =
-                            that.eventNames[that.support.transition] || null;
+                        that.eventNames[that.support.transition] || null;
 
         that.bindEvents();
 
@@ -47,6 +40,7 @@
         constructor: panorama,
 
         init: function (container, customSettings) {
+
             return this;
         },
 
@@ -82,44 +76,24 @@
             return this; //why not make it chainable LOL
         },
 
-        buildVendorNames: function () {
-
-            this.div = document.createElement('div');
-
-            // Check for the browser's transitions support.
-            this.support.transition = $.getVendorPropertyName('transition');
-            this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
-            this.support.transform = $.getVendorPropertyName('transform');
-            this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
-            this.support.transform3d = $.checkTransform3dSupport();
-
-            // Avoid memory leak in IE.
-            this.div = null;
-
-        },
-
         setPanoramaDimensions: function () {
 
             //should not need to set each panel as the content will determin their height.
             //if they need to be scrolled we will leave that to the developer to handle.
 
-            var settings = this.settings,
-                pw = settings.panelWidth - settings.peekWidth,
-                headerHeight = settings.headerHeight,
-                headerWidth = settings.panelWidth * 3,
-                pbs = this.panelbody.style,
-                i = 0,
-                header = this.header;
+            var pw = this.settings.panelWidth - this.settings.peekWidth,
+                headerHeight = this.settings.headerHeight,
+                headerWidth = this.settings.panelWidth * 3;
 
-            this.container.style.height = (settings.panelHeight - settings.footerHeight - settings.headerHeight) + "px";
-            pbs.height = this.container.style.height; //(this.settings.panelHeight - headerHeight) + "px";
-            //this.panelbody.style.top = headerHeight + "px";
-            pbs.width = (this.totalPanels * pw) + "px";
-            pbs.left = -pw + "px";
+            this.container.style.height = this.settings.panelHeight + "px";
+            this.panelbody.style.height = (this.settings.panelHeight - headerHeight) + "px";
+        //    this.panelbody.style.top = headerHeight + "px";
+            this.panelbody.style.width = (this.totalPanels * pw) + "px";
+            this.panelbody.style.left = -pw + "px";
 
-            for (i = 0; i < this.panels.length; i++) {
+            for (var i = 0; i < this.panels.length; i++) {
                 this.panels[i].style.width = pw + "px";
-                this.panels[i].style.minHeight = pbs.height; //this.panelbody.style.height;
+                this.panels[i].style.minHeight = this.panelbody.style.height;
             }
 
             if (this.headerPanels.length > 1) {
@@ -134,59 +108,22 @@
 
             }
 
-            if (header) {
-
-                var hs = header.style;
-
-                if (this.headerPanels && this.headerPanels.length > 0) {
-                    hs.width = headerWidth + "px";
-                    hs.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
-                } else {
-                    hs.width = headerWidth + "px";
-                    hs.paddingLeft =
-                    hs.paddingRight = settings.panelWidth + "px";
-                    hs.left =
-                        settings.bigHeaderLeft = -settings.panelWidth + "px";
-                }
-            }
-
-            if (settings.contentResize && typeof settings.contentResize === "function") {
-                settings.contentResize();
-            }
-
-        },
-
-        clearPanoramaSettings: function () {
-
-            var i = 0,
-                panelbody = this.panelbody;
-
-            panelbody.style.height =
-            panelbody.style.top =
-            panelbody.style.width =
-            panelbody.style.left =
-                this.container.style.height = "";
-
-            for (i = 0; i < this.panels.length; i++) {
-                this.panels[i].style.minHeight = this.panels[i].style.width = "";
-            }
-
             if (this.header) {
 
                 if (this.headerPanels && this.headerPanels.length > 0) {
-                    this.header.style.width =
-                        this.header.style.left = "";
+                    this.header.style.width = headerWidth + "px"
+                    this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
                 } else {
-                    this.header.style.width =
-                        this.header.style.paddingLeft =
-                        this.header.style.paddingRight =
-                        this.header.style.left =
-                        this.settings.bigHeaderLeft = "";
+                    this.header.style.width = headerWidth + "px";
+                    this.header.style.paddingLeft =
+                    this.header.style.paddingRight = this.settings.panelWidth + "px";
+                    this.header.style.left =
+                        this.settings.bigHeaderLeft =
+                        -this.settings.panelWidth + "px";
                 }
             }
 
         },
-
 
         setupElements: function (container) {
             //The wrapping element
@@ -230,9 +167,9 @@
 
             });
 
-            window.addEventListener("orientationchange", function (e) {
-                that.resizePanorama(e);
-            });
+            //window.addEventListener("orientationchange", function (e) {
+            //    that.resizePanorama(e);
+            //});
 
             window.addEventListener("resize", function (e) {
                 that.resizePanorama(e);
@@ -246,24 +183,9 @@
             this.settings.panelWidth = window.innerWidth;
             this.settings.panelHeight = window.innerHeight;
 
-            if ((this.settings.maxWidth <= window.innerWidth ||
-                this.settings.maxHeight <= window.innerHeight) &&
-                this.isApplied){
-
-                this.isApplied = false;
-                this.settings.canMove = false;
-                this.clearPanoramaSettings();
-
-            } else {
-
-                this.isApplied = true;
-                this.settings.canMove = true;
-                this.setPanoramaDimensions();
-            }
-
+            this.setPanoramaDimensions();
         },
 
-        isApplied: false,
         tEndCB: undefined,
         tHeaderEndCB: undefined,
 
@@ -467,10 +389,6 @@
 
         moveLeft: function (e, x) {
 
-            if (!this.settings.canMove) {
-                return;
-            }
-
             var target = e.target,
                 i = 0;
 
@@ -496,10 +414,6 @@
         },
 
         moveRight: function (e, x) {
-
-            if (!this.settings.canMove) {
-                return;
-            }
 
             var target = e.target,
                 i = 0;
@@ -615,12 +529,6 @@
             panelWidth: window.innerWidth,
             panelHeight: window.innerHeight,
 
-            contentResize: $.noop(),
-
-            maxWidth: Math.ceil(),
-            maxHeight: Math.ceil(),
-            canMove: true,
-
             peekWidth: 35,
 
             easing: "ease-in-out",
@@ -636,8 +544,7 @@
 
             headerStyle: ".panorama-header",
             headerPanelStyle: ".panorama-panel-header",
-            headerHeight: 40,
-            footerHeight: 35
+            headerHeight: 40
 
         }
 
