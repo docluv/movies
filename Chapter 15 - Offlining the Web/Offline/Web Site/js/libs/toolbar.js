@@ -131,9 +131,11 @@ callback: function(){} //gets executed when the item is selected
                 that.subMenu.innerHTML = subHTML;
 
                 that.setIconWidth(i);
+                that.setOrientation();
 
                 window.addEventListener("resize", function (e) {
                     that.setIconWidth(i);
+                    that.setOrientation();
                 });
 
                 that.expandTarget = that.toolbar.querySelector(settings.expandTargetSelector);
@@ -170,6 +172,16 @@ callback: function(){} //gets executed when the item is selected
             if (exp) {
                 exp.style.marginRight = mWidth + "%";
                 exp.style.marginLeft = mWidth + "%";
+            }
+
+        },
+
+        setOrientation: function () {
+
+            if (window.innerWidth < window.innerHeight) {
+                this.toolbar.orientation = "portrait";
+            } else {
+                this.toolbar.orientation = "landscape";
             }
 
         },
@@ -343,14 +355,15 @@ callback: function(){} //gets executed when the item is selected
 
                     toolbar.style.height = (top.height + sub.height) + "px";
 
-                } else {
+                }
+                else {
 
                     if (settings.menuItems.subMenu.length > 0) {
                         toolbar.style.width = settings.expandWidth + "px";
                     }
 
                 }
-
+                
                 toolbar.expanded = true;
             }
 

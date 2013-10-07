@@ -21,7 +21,7 @@
         that.setupElements(container);
         that.setPanoramaDimensions();
         that.buildTransitionValue();
-        $.buildVendorNames();
+        that.buildVendorNames();
         that.support.transitionEnd =
                         that.eventNames[that.support.transition] || null;
 
@@ -39,8 +39,7 @@
 
         constructor: panorama,
 
-        init: function (container, customSettings) {
-
+        init: function () {
             return this;
         },
 
@@ -76,24 +75,42 @@
             return this; //why not make it chainable LOL
         },
 
+        buildVendorNames: function () {
+
+            this.div = document.createElement('div');
+
+            // Check for the browser's transitions support.
+            this.support.transition = $.getVendorPropertyName('transition');
+            this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
+            this.support.transform = $.getVendorPropertyName('transform');
+            this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
+            this.support.transform3d = $.checkTransform3dSupport();
+
+            // Avoid memory leak in IE.
+            this.div = null;
+
+        },
+
         setPanoramaDimensions: function () {
 
             //should not need to set each panel as the content will determin their height.
             //if they need to be scrolled we will leave that to the developer to handle.
 
-            var pw = this.settings.panelWidth - this.settings.peekWidth,
-                headerHeight = this.settings.headerHeight,
-                headerWidth = this.settings.panelWidth * 3;
+            var settings = this.settings,
+                pw = settings.panelWidth - settings.peekWidth,
+                headerHeight = settings.headerHeight,
+                headerWidth = settings.panelWidth * 3,
+                panelHeight = settings.panelHeight - settings.headerHeight - settings.bottomMargin;
 
-            this.container.style.height = this.settings.panelHeight + "px";
-            this.panelbody.style.height = (this.settings.panelHeight - headerHeight) + "px";
+            this.container.style.height = panelHeight + "px";
+            this.panelbody.style.height = panelHeight + "px";
         //    this.panelbody.style.top = headerHeight + "px";
             this.panelbody.style.width = (this.totalPanels * pw) + "px";
             this.panelbody.style.left = -pw + "px";
 
             for (var i = 0; i < this.panels.length; i++) {
                 this.panels[i].style.width = pw + "px";
-                this.panels[i].style.minHeight = this.panelbody.style.height;
+               // this.panels[i].style.minHeight = this.panelbody.style.height;
             }
 
             if (this.headerPanels.length > 1) {
@@ -110,14 +127,16 @@
 
             if (this.header) {
 
+                var style = this.header.style;
+
                 if (this.headerPanels && this.headerPanels.length > 0) {
-                    this.header.style.width = headerWidth + "px"
-                    this.header.style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
+                    style.width = headerWidth + "px"
+                    style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
                 } else {
-                    this.header.style.width = headerWidth + "px";
-                    this.header.style.paddingLeft =
-                    this.header.style.paddingRight = this.settings.panelWidth + "px";
-                    this.header.style.left =
+                    style.width = headerWidth + "px";
+                    style.paddingLeft =
+                    style.paddingRight = settings.panelWidth + "px";
+                    style.left =
                         this.settings.bigHeaderLeft =
                         -this.settings.panelWidth + "px";
                 }
@@ -544,8 +563,9 @@
 
             headerStyle: ".panorama-header",
             headerPanelStyle: ".panorama-panel-header",
-            headerHeight: 40
+            headerHeight: 40,
 
+            bottomMargin: 35
         }
 
     };

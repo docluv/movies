@@ -258,6 +258,10 @@ var _gaq = _gaq || undefined,
 
     $.removeClass = function (view, cssClass) {
 
+        if ((!view || !cssClass) && typeof cssClass != "string") {
+            return;
+        }
+
         //only reset the className if the target class exist, keeps brosers from auto repainting the document.
         if (view.className.indexOf(cssClass) > -1) {
 
@@ -284,19 +288,11 @@ var _gaq = _gaq || undefined,
 
     $.addClass = function (view, cssClass) {
 
-        if (!view || !cssClass) {
+        if ((!view || !cssClass) && typeof cssClass != "string") {
             return;
         }
 
-        if (view.classList) {
-
-            view.classList.add(cssClass);
-
-        } else {
-
-            view.className += " " + cssClass;
-
-        }
+        view.className += " " + cssClass;
 
     };
 

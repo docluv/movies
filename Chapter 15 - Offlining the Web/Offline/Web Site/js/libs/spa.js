@@ -159,27 +159,6 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
 
-        getVendorPropertyName: function (prop) {
-
-            var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-                vendorProp, i,
-                prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
-
-            if (prop in this.div.style) {
-                return prop;
-            }
-
-            for (i = 0; i < prefixes.length; ++i) {
-
-                vendorProp = prefixes[i] + prop_;
-
-                if (vendorProp in this.div.style) {
-                    return vendorProp;
-                }
-
-            }
-        },
-
         transitionend: {
             'animation': 'animationend',
             'webkitAnimation': 'webkitAnimationEnd',
@@ -225,7 +204,7 @@
         swapView: function () {
 
             var that = this,
-                route, callback, title, i, a, anim,
+                route, callback, i, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
@@ -266,23 +245,15 @@
 
                         if (that.hasAnimations() && anim) {
 
-                            currentView.addEventListener(that.transitionend[that.cssPrefix("animation")], function (e) {
-                                that.endSwapAnimation.call(that, e, currentView, newView);
-                            });
+                            currentView.addEventListener(
+                                that.transitionend[that.cssPrefix("animation")],
+                                function (e) {
+                                    that.endSwapAnimation.call(that, e, currentView, newView);
+                                });
 
-                            $.addClass(currentView, "animated");
-                            $.addClass(currentView, "out");
-                            $.addClass(currentView, anim);
+                            $.addClass(currentView, "animated out " + anim);
 
-                            if (currentView.classList) {
-
-                                currentView.classList.remove("in");
-
-                            } else {
-
-                                currentView.className.replace("in", " ");
-
-                            }
+                            $.removeClass(currentView, "in");
 
                         } else {
                             that.endSwapAnimation.call(that, undefined, currentView, newView);
