@@ -257,6 +257,9 @@
   <ItemGroup>
     <Content Include="js\mocks\news.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\mocks\theaters.json" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
