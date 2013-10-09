@@ -1,0 +1,39 @@
+﻿CACHE MANIFEST
+# version 0.01
+
+/deferred 
+
+#images
+
+/favicon.ico
+img/l/apple-touch-icon.png
+img/l/apple-touch-icon-precomposed.png
+img/l/splash.png
+img/m/apple-touch-icon.png
+img/h/apple-touch-icon.png
+
+img/bullets.png
+img/next.png
+img/prev.png  
+img/movie-ticket.png
+img/movies-icon.png
+icons/search.png 
+img/back-32.png 
+
+#css
+css/site.css?v=.1
+
+#js
+
+js/applib.js
+
+
+NETWORK:
+#http://example.com/api/
+*
+
+FALLBACK:
+
+http://content9.flixster.com/movie/*.jpg /img/offline-poster.png
+
+
