@@ -6,9 +6,6 @@
 //The swipe experience is continuous so the user could swipe to the right or left and the 
 //panorama would seamlessly continue without interruption.
 
-//For the panel movement I Borrowed form jQUery Transit
-//https://github.com/rstacruz/jquery.transit
-
 (function (window, $, undefined) {
 
     "use strict";
@@ -19,7 +16,7 @@
 
         that.settings = $.extend({}, that.settings, customSettings);
         that.setupElements(container);
-        that.setPanoramaDimensions();
+        that.resizePanorama();
         that.buildTransitionValue();
         that.buildVendorNames();
         that.support.transitionEnd =
@@ -144,6 +141,37 @@
 
         },
 
+        clearPanoramaSettings: function () {
+
+            var i = 0,
+                panelbody = this.panelbody;
+
+            panelbody.style.height =
+            panelbody.style.top =
+            panelbody.style.width =
+            panelbody.style.left =
+                this.container.style.height = "";
+
+            for (i = 0; i < this.panels.length; i++) {
+                this.panels[i].style.minHeight = this.panels[i].style.width = "";
+            }
+
+            if (this.header) {
+
+                if (this.headerPanels && this.headerPanels.length > 0) {
+                    this.header.style.width =
+                        this.header.style.left = "";
+                } else {
+                    this.header.style.width =
+                        this.header.style.paddingLeft =
+                        this.header.style.paddingRight =
+                        this.header.style.left =
+                        this.settings.bigHeaderLeft = "";
+                }
+            }
+
+        },
+
         setupElements: function (container) {
             //The wrapping element
             if (!container) {
@@ -196,13 +224,32 @@
 
         },
 
+    //    isApplied: false,
+
         resizePanorama: function (e) {
 
-            this.settings.windowWidth = window.innerWidth;
-            this.settings.panelWidth = window.innerWidth;
-            this.settings.panelHeight = window.innerHeight;
+            var settings = this.settings;
 
-            this.setPanoramaDimensions();
+            settings.windowWidth = window.innerWidth;
+            settings.panelWidth = window.innerWidth;
+            settings.panelHeight = window.innerHeight;
+
+            if ((settings.maxWidth <= window.innerWidth ||
+                settings.maxHeight <= window.innerHeight)
+                // && this.isApplied
+                ) {
+
+//                this.isApplied = false;
+                settings.canMove = false;
+                this.clearPanoramaSettings();
+
+            } else {
+
+  //              this.isApplied = true;
+                settings.canMove = true;
+                this.setPanoramaDimensions();
+            }
+
         },
 
         tEndCB: undefined,
