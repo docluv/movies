@@ -118,18 +118,17 @@
 
 @media (min-width:720px) {
 
-    /*.main-nav{
-        display: inline-block;
-    }*/
-
-    .view-title {
-        width: 300px;
-    }
-}
-
-@media (min-width:840px) {
     .view-title {
         width: 400px;
+    }
+
+}
+
+@media (min-width:900px) {
+
+    .view-title {
+        /*font-size:1.75em;*/
+        width: 500px;
     }
 
 }

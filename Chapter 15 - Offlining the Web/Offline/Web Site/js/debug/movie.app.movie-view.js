@@ -144,7 +144,7 @@
 
         var width = window.innerWidth;
 
-        if (width < 600 && width > 820) {
+        if (width < 610 && width > 820) {
         
             var showTimes = document.querySelector(".movie-showtime-list"),
                 castNames = document.querySelector(".cast-name-list");
