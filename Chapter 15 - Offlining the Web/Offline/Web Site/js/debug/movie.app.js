@@ -2,8 +2,6 @@
 
 ;
 
-
-
 (function (window, undefined) {
 
     "use strict";
@@ -119,7 +117,7 @@
 
         constructor: movieApp,
 
-        init: function (customSettings) {
+        init: function () {
             return this;
         },
 
@@ -136,7 +134,7 @@
             var width = window.innerWidth;
 
             if (width > 601 && width < 720) {
-                document.querySelector(".main-nav").style.display = "";
+                document.querySelector(".main-nav").style.display = "none";
             }
 
         },
@@ -260,10 +258,10 @@
             var that = this,
                 pCont = document.querySelector(target);
 
-            if ((settings.maxWidth && settings.maxHeight) &&
-                (settings.maxWidth >= window.innerWidth ||
+            if (/*(*/settings.maxWidth /*&& settings.maxHeight)*/ &&
+                /*(*/settings.maxWidth >= window.innerWidth /*||
                     settings.maxHeight >= window.innerHeight) ||
-                (!settings.maxWidth && !settings.maxHeight)) {
+                (!settings.maxWidth && !settings.maxHeight)*/) {
 
                 that.panorama = panorama(pCont,
                                     $.extend(settings, {
@@ -293,8 +291,8 @@
 
                 dt.swipeRight(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ||
-                        settings.maxHeight >= window.innerHeight) {
+                    if (settings.maxWidth >= window.innerWidth /*||
+                        settings.maxHeight >= window.innerHeight*/) {
                         that.panorama.moveRight(evt);
                     }
                     
@@ -302,8 +300,8 @@
 
                 .swipeLeft(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ||
-                        settings.maxHeight >= window.innerHeight) {
+                    if (settings.maxWidth >= window.innerWidth /*||
+                        settings.maxHeight >= window.innerHeight*/) {
                         that.panorama.moveLeft(evt);
                     }
                     

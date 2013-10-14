@@ -3,6 +3,10 @@
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        qunit: {
+            all: ['js/specs/**/*.html']
+        },
+
         jshint: {
             options: {
                 browser: true

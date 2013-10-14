@@ -377,7 +377,7 @@ var _gaq = _gaq || undefined,
     };
 
     Node.prototype.hide = function () {
-        this.style.display = "";
+        this.style.display = "none";
     };
 
     $.attr = function (view, attr, value) {

@@ -1,5 +1,5 @@
 
-module("Dollar Bill Unit Tests", {
+module("MovieApp Core module Unit Tests", {
     setup: function () {
 
         
@@ -18,86 +18,50 @@ test("Verify We Have movieApp with expected members", function () {
     ok(movieApp, "movieApp object should exist");
     ok(movieApp.fn.init, "init function should exist");
     ok(movieApp.fn.version, "version should exist");
-    equal(movieApp.fn.length, 0, "length should exist");
-    ok(movieApp.fn.rclass, "rclass should exist");
-    equal(movieApp.fn.selector, "", "selector should exist");
-    ok(movieApp.fn.trim, "trim function should exist");
-    ok(movieApp.fn.isArray, "isArray function should exist");
-    ok(movieApp.fn.extend, "extend function should exist");
-    ok(movieApp.fn.merge, "merge function should exist");
-    ok(movieApp.fn.each, "each function should exist");
-    ok(movieApp.fn.map, "map function should exist");
-    ok(movieApp.fn.grep, "grep function should exist");
-    ok(movieApp.fn.noop, "dblTap function should exist");
-    ok(movieApp.fn.loadScript, "loadScript function should exist");
-});
-
-test("Verify can a new movieApp instance and the 1st element is the target element", function () {
-
-    var selector = ".operation-body",
-        $ob = $(selector);
-
-    equal(typeof $ob, "object", "movieApp object should exist");
-    equal($ob.length, 1, "movieApp.length should be 1");
-    equal($ob.selector, selector, "movieApp.selector should be " + selector);
-    equal($ob[0], document.querySelector(selector), "should be the target node");
+    equal(movieApp.fn.bp, undefined, "bp should exist");
+    equal(movieApp.fn.data, undefined, "data should exist");
+    equal(movieApp.fn.tmpl, undefined, "tmpl should exist");
+    ok(movieApp.fn.mainTitle, "mainTitle should exist");
+    ok(movieApp.fn.hideBurgerMenu, "hideBurgerMenu function should exist");
+    ok(movieApp.fn.movieTypes, "movieTypes function should exist");
+    ok(movieApp.fn.setMainTitle, "setMainTitle function should exist");
+    ok(movieApp.fn.bindBackButton, "bindBackButton function should exist");
+    ok(movieApp.fn.templates, "templates should exist");
+    ok(movieApp.fn.compileTemplates, "compileTemplates function should exist");
+    ok(movieApp.fn.showLoading, "showLoading function should exist");
+    ok(movieApp.fn.mergeData, "mergeData function should exist");
+    ok(movieApp.fn.resizeEvents, "resizeEvents should exist");
+    ok(movieApp.fn.viewWidth, "viewWidth should exist");
+    ok(movieApp.fn.setMoviePanelWidth, "setMoviePanelWidth function should exist");
+    equal(movieApp.fn.panorama, undefined, "panorama should exist");
+    ok(movieApp.fn.hasTouch, "hasTouch function should exist");
+    ok(movieApp.fn.setupPanorama, "setupPanorama function should exist");
+    ok(movieApp.fn.setPanoramaWings, "setPanoramaWings function should exist");
+    ok(movieApp.fn.settings, "settings should exist");
 
 });
 
-test("Verify can a movieApp.trim can trim leading and trailing spaces", function () {
+test("Verify can a new mainTitle points to the desired element", function () {
 
-    var testString = " test ",
-        expect = "test",
-        $ob = $(),
-        result = $ob.trim(testString);
+    var selector = ".view-title",
+        expect = document.querySelector(selector),
+        movie = movieApp();
 
-    equal(result, expect, "trim should remove leading and trailing spaces");
-
-});
-
-test("Verify can a movieApp.trim can trim leading space", function () {
-
-    var testString = " test",
-        expect = "test",
-        $ob = $(),
-        result = $ob.trim(testString);
-
-    equal(result, expect, "trim should remove leading space");
+    equal(movie.mainTitle, expect, "mainTitle should equal test DIV");
 
 });
 
 
-test("Verify can a movieApp.trim can trim trailing space", function () {
+test("Verify can a new hide burger menu sets dosplay to none if window width between 610 & 720", function () {
 
-    var testString = "test ",
-        expect = "test",
-        $ob = $(),
-        result = $ob.trim(testString);
+    var selector = ".main-nav",
+        mainNav = document.querySelector(selector),
+        width = window.innerWidth,
+        expect = (width > 601 && width < 720) ? "none" : "block",
+        movie = movieApp();
 
-    equal(result, expect, "trim should remove trailing space");
+    movie.hideBurgerMenu();
 
-});
-
-test("Verify can a movieApp.isArray can identify an array", function () {
-
-    var testArray = [],
-        expect = true,
-        $ob = $(),
-        result = $ob.isArray(testArray);
-
-    equal(result, expect, "trim should be true");
+    equal(mainNav.style.display, expect, "should equal " + expect);
 
 });
-
-test("Verify can a movieApp.isArray won't identify an object as an array", function () {
-
-    var testArray = {},
-        expect = false,
-        $ob = $(),
-        result = $ob.isArray(testArray);
-
-    equal(result, expect, "trim should be false");
-
-});
-
-

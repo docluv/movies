@@ -203,9 +203,18 @@ h4, .panel-small-title {
     .content-pane {
         left: 0px;
     }
+
+    .title-view{
+        display:none;
+    }
+
+    .panel-title{
+        font-weight:bold;
+    }
+
 }
 
-@media (min-width:820px) {
+@media (min-width:720px) {
 
     .view-title {
         font-size: 26pt;

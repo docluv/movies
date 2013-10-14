@@ -4,9 +4,6 @@
     height:100%;
     position: relative;
     overflow: hidden;
-    /*-moz-box-shadow: 0 0 7px #000;
-    -webkit-box-shadow: 0 0 7px #000;
-    box-shadow: 0 0 7px #000;*/
     -ms-touch-action: none;
 
 }
@@ -15,9 +12,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
+    position:relative;
 }
 
     .panorama-panels.slide {

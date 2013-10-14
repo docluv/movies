@@ -20,6 +20,8 @@
             that.renderMovieDetails(data);
 
         });
+
+        prevWidth = window.width;
         
     };
     
@@ -129,6 +131,21 @@
         deeptissue(showReview).tap(function (e) {
 
             document.querySelector(".movie-review-panel").show();
+            document.querySelector(".movie-details-panel").hide();
+            document.querySelector(".movie-cast-panel").hide();
+            document.querySelector(".movie-showtimes-panel").hide();
+            document.querySelector(".movie-description-panel").hide();
+            
+
+        });
+
+        deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
+
+            document.querySelector(".movie-review-panel").hide();
+            document.querySelector(".movie-details-panel").show();
+            document.querySelector(".movie-cast-panel").show();
+            document.querySelector(".movie-showtimes-panel").show();
+            document.querySelector(".movie-description-panel").show();
 
         });
 
@@ -140,11 +157,13 @@
 
     };
 
+    var prevWidth = 0;
+
     movieApp.fn.manageMovieView = function () {
 
         var width = window.innerWidth;
 
-        if (width < 610 && width > 820) {
+        if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
         
             var showTimes = document.querySelector(".movie-showtime-list"),
                 castNames = document.querySelector(".cast-name-list");
@@ -157,6 +176,11 @@
             showReview.style.top = "";
 
         }
+
+        //need a routine to reset the order of panels since they may have been swiped
+
+
+        prevWidth = width;
 
     };
 

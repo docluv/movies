@@ -3,7 +3,7 @@
 //navigator.onLine = navigator.onLine || true; //does not support application cache most likely, so assume online
 
 
-(function (window, reqwest, undefined) {
+(function (window, undefined) {
 
     "use strict";
     
@@ -265,5 +265,5 @@
 
     return (window.rqData = rqData);
 
-}(window, reqwest));
+}(window));
 

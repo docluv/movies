@@ -119,15 +119,6 @@
 @media (min-width:720px) {
 
     .view-title {
-        width: 400px;
-    }
-
-}
-
-@media (min-width:900px) {
-
-    .view-title {
-        /*font-size:1.75em;*/
         width: 500px;
     }
 
@@ -148,10 +139,6 @@
     .nav-text {
         display: block;
     }
-
-}
-
-@media (min-width:1024px) {
 
     .view-title {
         width: 500px;

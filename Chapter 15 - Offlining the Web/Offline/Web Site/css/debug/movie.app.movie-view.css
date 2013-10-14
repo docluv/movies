@@ -19,7 +19,7 @@ span.center, img.center {
 .full-movie-poster {
     /*width: 250px;*/
     border: none;
-    width:180px;
+    width: 180px;
 }
 
 
@@ -164,6 +164,12 @@ span.center, img.center {
 
     .movie-review-panel {
         display: none;
+        position: absolute;
+        top: 5%;
+        left: 5%;
+        right: 5%;
+        bottom: 5%;
+        z-index: 1000;
     }
 
     .movie-details-panel {
@@ -193,10 +199,9 @@ span.center, img.center {
     }
 }
 
-@media (min-width:1095px){
+@media (min-width:1095px) {
 
     .movie-cast-panel {
         width: 200px;
     }
-
 }

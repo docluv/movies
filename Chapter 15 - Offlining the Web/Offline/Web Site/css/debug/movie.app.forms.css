@@ -21,8 +21,8 @@ input, textarea {
     margin: auto;
     width: 92%;
     height: 24px;
-    border: 1px solid #fff;
-    background-color: #808080;
+    border: 1px solid #808080;
+    background-color: #fff;
 }
 
 textarea {
@@ -120,4 +120,15 @@ textarea {
         width: 400px;
         float: right;
     }
+}
+
+@media (min-width:1090px){
+
+    .btn {
+        margin: 5px 10%;
+        width: 100px;
+        float: none;
+    }
+
+
 }
