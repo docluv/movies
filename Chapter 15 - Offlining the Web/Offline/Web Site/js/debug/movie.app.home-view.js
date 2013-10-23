@@ -9,8 +9,8 @@
         delete this.resizeEvents["manageHomeView"];
         this.panorama.clearPanoramaSettings();
         this.panorama = undefined;
-      //  this.panoramaDt.clear();
-        this.panoramaDt = undefined;
+      ////  this.panoramaDt.clear();
+      //  this.panoramaDt = undefined;
     };
 
     movieApp.fn.loadHomeView = function () {
@@ -89,10 +89,6 @@
         if (panoramaWrapper) {
             panoramaWrapper.style.width = (panels.length * panelWidth) + "px";
         }
-
-        //for (i = 0; i < movieGrids.length; i++) {
-        //    movieGrids[i].style.height = gridHeight + "px";
-        //}
 
         that.panorama.resizePanorama();
 

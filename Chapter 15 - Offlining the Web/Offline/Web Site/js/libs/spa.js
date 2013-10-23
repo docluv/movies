@@ -11,6 +11,7 @@
 
         that.settings = $.extend({}, that.settings, customSettings);
 
+        that.appContext = that.settings.appContext || {};
         that.bp = that.settings.bp || backpack();
 
         that.titleElement = document.querySelector(that.settings.titleSelector);
@@ -46,6 +47,7 @@
         version: "0.0.4",
 
         bp: undefined,
+        appContext: undefined,
 
         currentView: undefined,
         newView: undefined,
@@ -204,7 +206,8 @@
             return "";
         },
 
-        currenUnLoad: undefined,
+        currentUnLoad: undefined,
+        newUnLoad: undefined,
 
         swapView: function () {
 
@@ -253,6 +256,8 @@
 
                     if (currentView) {
 
+                        that.currentUnLoad = that.newUnLoad;
+
                         if (that.hasAnimations() && anim) {
 
                             currentView.addEventListener(
@@ -285,7 +290,7 @@
                     that.currenUnLoad = undefined;
 
                     if (route.unload) {
-                        that.currenUnLoad = that.getCallbackMethod(route.unload);
+                        that.newUnLoad = that.getCallbackMethod(route.unload);
                     }
 
                 }
@@ -315,25 +320,25 @@
             var that = this,
                 anim = that.animation;
 
-            if (currentView.classList) {
+//            if (currentView.classList) {
 
-                currentView.classList.remove(that.settings.currentClass);
-                currentView.classList.remove(anim);
-                currentView.classList.remove("out");
+                $.removeClass(currentView, that.settings.currentClass);
+                $.removeClass(currentView, anim);
+                $.removeClass(currentView, "out");
 
-                newView.classList.remove(anim);
-                newView.classList.remove("in");
+                $.removeClass(newView, anim);
+                $.removeClass(newView, "in");
 
-            } else {
+            //} else {
 
-                currentView.className.replace(that.settings.currentClass, " ");
-                currentView.className.replace(anim, " ");
-                currentView.className.replace("out", " ");
+            //    currentView.className.replace(that.settings.currentClass, " ");
+            //    currentView.className.replace(anim, " ");
+            //    currentView.className.replace("out", " ");
 
-                newView.className.replace(anim, " ");
-                newView.className.replace("in", " ");
+            //    newView.className.replace(anim, " ");
+            //    newView.className.replace("in", " ");
 
-            }
+            //}
 
             if (currentView && bp && currentView.parentNode) {
 
@@ -341,8 +346,8 @@
 
             }
 
-            if (that.currenUnLoad && that.currenUnLoad.callback) {
-                that.currenUnLoad.callback.call(that.currenUnLoad.that);
+            if (that.currentUnLoad && that.currentUnLoad.callback) {
+                that.currentUnLoad.callback.call(that.appContext);
             }
 
             that.currentView = currentView = undefined;
@@ -491,6 +496,7 @@
 
         settings: {
             routes: [],
+            appContext: undefined,
             viewSelector: ".content-pane",
             currentClass: "current",
             mainWrappperSelector: "#main",

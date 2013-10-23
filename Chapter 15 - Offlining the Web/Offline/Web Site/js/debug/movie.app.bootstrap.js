@@ -9,6 +9,7 @@ var bp = backpack(),
 
  //data = jqData(),
     _spa = spa({
+        appContext: movie,
         "bp": bp,
         "defaultPage": "homeview", "viewWrapper": "#main",
         "viewTransition": "slide", "defaultTitle": "Modern Web Movies"

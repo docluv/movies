@@ -264,10 +264,8 @@
             var that = this, dt,
                 pCont = document.querySelector(target);
 
-            if (/*(*/settings.maxWidth /*&& settings.maxHeight)*/ &&
-                /*(*/settings.maxWidth >= window.innerWidth /*||
-                    settings.maxHeight >= window.innerHeight) ||
-                (!settings.maxWidth && !settings.maxHeight)*/) {
+            if (settings.maxWidth &&
+                settings.maxWidth >= window.innerWidth) {
 
                 that.panorama = panorama(pCont,
                                     $.extend(settings, {
@@ -287,6 +285,7 @@
                                     }));
 
                 //that.panoramaDt = 
+/*
                 dt = deeptissue(pCont,
                             {
                                 swipeRightThreshold: 35,
@@ -310,7 +309,7 @@
                     }
 
                 });
-                
+                */
                 //pCont.addEventListener("MSManipulationStateChanged", function (e) {
                 //    console.log(e.currentState);
                 //});

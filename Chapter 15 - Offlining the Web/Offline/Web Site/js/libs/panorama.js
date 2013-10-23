@@ -171,7 +171,11 @@
             }
 
             //this.panelbody.removeEventListener(this.support.transitionEnd, transitionEnd);
-
+            this.container = undefined;
+            this.panelbody = undefined;
+            this.panels = undefined;
+            this.header = undefined;
+            this.headerPanels = undefined;
         },
 
         setupElements: function (container) {
