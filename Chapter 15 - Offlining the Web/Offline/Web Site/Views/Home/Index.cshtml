@@ -1,4 +1,4 @@
-﻿@using Web_Site.Models
+﻿@using SPAHelper
 
 <!DOCTYPE html>
 @{
@@ -6,13 +6,8 @@
     if (HttpContext.Current.IsDebuggingEnabled) {
         @:<html lang="en">
     }
-    else { 
-
-        var appcacheFileTime = File.GetLastWriteTime(
-                                Server.MapPath(@"default.appcache")).Ticks;
-        var appCache = Href("~/default.appcache") + "?v=" + appcacheFileTime.ToString();
-        @:<html lang="en" manifest="@appCache">
-    
+    else {
+        Html.TickVersionLink("default.appcache");
     }
         
         }
@@ -68,6 +63,9 @@
     <link href="img/l/splash.png" rel="apple-touch-startup-image">
     <meta content="on" http-equiv="cleartype">
 
+
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
     <link href="css/debug/site.css?v=.2" rel="stylesheet">
     <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
     <link href="css/debug/animations.css?v=.2" rel="stylesheet">
@@ -87,17 +85,22 @@
     <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
     <link href="css/debug/movie.app.theaters-view.css?v=.1" rel="stylesheet">
     <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
+        
+    }
+    else { 
+    <link href="css/debug/site.min.css?v=.2" rel="stylesheet">
+    }
 </head>
 <body>
     <header class="site-header" role="banner">
         <span class="win-backbutton"></span>
         <h1 class="view-title">Modern Web Movies</h1>
         <nav class="main-nav" role="navigation">
-            <a href="#!" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
-            <a href="#!theaters" role="menuitem" class="theaters-nav"><span class="nav-icon theaters-icon"></span><span class="nav-text">Theaters</span></a>
-            <a href="#!maps" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-            <a href="#!news" role="menuitem" class="news-nav"><span class="nav-icon news-icon"></span><span class="nav-text">News</span></a>
-            <a href="#!search" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
+            <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
+            <a href="@Html.SPALink("theaters")" role="menuitem" class="theaters-nav"><span class="nav-icon theaters-icon"></span><span class="nav-text">Theaters</span></a>
+            <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
+            <a href="@Html.SPALink("news")" role="menuitem" class="news-nav"><span class="nav-icon news-icon"></span><span class="nav-text">News</span></a>
+            <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
         </nav>
         <span class="hamburger-nav"><span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span></span>
     </header>
@@ -107,73 +110,26 @@
         <nav class="toolbar-sub-menu"></nav>
     </footer>
 
-        @{
-                
-            DateTime dtNow = DateTime.Now;
-            var cookieTTLMin = 0;
-            var cookieTTLDay = 0;
-
-            if (HttpContext.Current.IsDebuggingEnabled)
-            {
-                cookieTTLMin = 5;
-            }
-            else {
-                cookieTTLDay = 30;
-            }
-
-            TimeSpan tsMinute = new TimeSpan(cookieTTLDay, 0, cookieTTLMin, 0);
-            long lastLoad = DateTime.MinValue.ToUniversalTime().Ticks;
-            var cookie = Request.Cookies["dt"];
-
-            if (cookie == null)
-            {
-
-                cookie = new HttpCookie("dt");
-
-                //Set the cookies value
-                cookie.Value = DateTime.Now.ToUniversalTime().Ticks.ToString();
-
-                cookie.Expires = dtNow + tsMinute;
-
-                //Add the cookie
-                Response.Cookies.Add(cookie);
-
-            }
-            else
-            {
-                lastLoad = long.Parse(cookie.Value);
-            }
-
-            //Set the cookies value
-            cookie.Value = DateTime.Now.ToUniversalTime().Ticks.ToString();
-
-            //Set the cookie to expire in 1 minute
-
-            cookie.Expires = dtNow + tsMinute;
+        @if (!Html.HasEscapeFragment())
+        {
+            long lastLoad = Html.LastUpdated();
             
-            var serverPath = Server.MapPath("");
-            
-            var views = new string[] {
-                    serverPath + @"\Views\Home\home-view.cshtml",
-                    serverPath + @"\Views\Home\account-view.cshtml",
-                    serverPath + @"\Views\Home\login-view.cshtml",
-                    serverPath + @"\Views\Home\maps-view.cshtml",
-                    serverPath + @"\Views\Home\movie-view.cshtml",
-                    serverPath + @"\Views\Home\movies-view.cshtml",
-                    serverPath + @"\Views\Home\news-view.cshtml",
-                    serverPath + @"\Views\Home\profile-view.cshtml",
-                    serverPath + @"\Views\Home\search-view.cshtml",
-                    serverPath + @"\Views\Home\theaters-view.cshtml",
-                    serverPath + @"\Views\Home\_templates.cshtml"
-            };
-            
-            @Html.RenderRequiredViews(lastLoad, views);
-        
+            @RenderPage(lastLoad, "home-view.cshtml")
+            @RenderPage(lastLoad, "movies-view.cshtml")
+            @RenderPage(lastLoad, "movie-view.cshtml")
+            @RenderPage(lastLoad, "maps-view.cshtml")
+            @RenderPage(lastLoad, "news-view.cshtml")
+            @RenderPage(lastLoad, "search-view.cshtml")
+            @RenderPage(lastLoad, "theaters-view.cshtml")
+
+            @RenderPage(lastLoad, "_templates.cshtml")
+
         }
 
         <script id="bing-map-script"  src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
-
+        @if (HttpContext.Current.IsDebuggingEnabled)
+        {
     <script src="@Href("~/js/libs/mbp.js?v=.01")"></script>
     <script src="@Href("~/js/libs/backpack.js?v=.1")"></script>
     <script src="@Href("~/js/libs/reqwest.min.js?v=.1")"></script>
@@ -199,6 +155,11 @@
     <script src="@Href("~/js/debug/movie.app.movies-view.js?v=.1")"></script>
 
     <script src="@Href("~/js/debug/movie.app.bootstrap.js?v=.1")"></script>
+            
+        }
+        else { 
+        <script src="@Href("~/js/applib.js?v=.1")"></script>
+        }
 
 </body>
 </html>

@@ -121,7 +121,6 @@
     .view-title {
         width: 500px;
     }
-
 }
 
 
@@ -129,11 +128,10 @@
 
     .main-nav {
         display: block;
-    
     }
 
-    .nav-icon{
-        display:none;
+    .nav-icon {
+        display: none;
     }
 
     .nav-text {
@@ -145,12 +143,11 @@
     }
 }
 
-@media (min-width:1180px){
+@media (min-width:1180px) {
 
-    .nav-icon{
-        display:inline-block;
+    .nav-icon {
+        display: inline-block;
     }
-
 }
 
 /*

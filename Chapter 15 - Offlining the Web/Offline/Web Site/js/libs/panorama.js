@@ -170,6 +170,8 @@
                 }
             }
 
+            //this.panelbody.removeEventListener(this.support.transitionEnd, transitionEnd);
+
         },
 
         setupElements: function (container) {
@@ -202,7 +204,7 @@
             var that = this;
 
             //This gets called when the animation is complete
-            this.panelbody.addEventListener(this.support.transitionEnd, function (e) {
+            this.panelbody.addEventListener(this.support.transitionEnd, function transitionEnd(e) {
 
                 if (that.tEndCB !== undefined) {
                     that.tEndCB();
@@ -226,7 +228,7 @@
 
     //    isApplied: false,
 
-        resizePanorama: function (e) {
+        resizePanorama: function () {
 
             var settings = this.settings;
 

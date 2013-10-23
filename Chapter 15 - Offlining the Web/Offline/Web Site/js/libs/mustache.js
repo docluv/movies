@@ -198,7 +198,8 @@
   };
 
   Writer.prototype.compileTokens = function (tokens, template) {
-    var self = this;
+      var self = this;
+
     return function (view, partials) {
       if (partials) {
         if (typeof partials === 'function') {

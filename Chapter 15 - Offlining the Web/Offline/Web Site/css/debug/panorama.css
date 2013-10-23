@@ -4,6 +4,7 @@
     height:100%;
     position: relative;
     overflow: hidden;
+    touch-action: none;
     -ms-touch-action: none;
 
 }
@@ -28,6 +29,7 @@
     display: inline-block;
     margin:0;
     padding:0;
+    height:100%;
 }
 
 .pxs_navigation {
@@ -54,6 +56,7 @@
     opacity: 0.9;
 }
 
+/*
 .pxs_navigation span.pxs_prev {
     background: #000 url(../../../img/prev.png) no-repeat center center;
 }
@@ -62,7 +65,7 @@
     background: #000 url(../../../img/next.png) no-repeat center center;
     right: 0;
 }
-
+*/
 
 /* End Panorama Styles */
 /*@media (min-width:820px){

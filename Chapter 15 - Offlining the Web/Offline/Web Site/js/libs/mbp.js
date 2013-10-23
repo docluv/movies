@@ -241,7 +241,7 @@ var _gaq = _gaq || undefined,
         return (view.hasAttribute("data-" + name) ? view.getAttribute("data-" + name) : val);
 
     };
-
+/*
     Node.prototype.removeClass = function (cssClass) {
 
         //only reset the className if the target class exist, keeps brosers from auto repainting the document.
@@ -255,7 +255,7 @@ var _gaq = _gaq || undefined,
         }
 
     };
-
+    */
     $.removeClass = function (view, cssClass) {
 
         if ((!view || !cssClass) && typeof cssClass != "string") {
@@ -274,7 +274,7 @@ var _gaq = _gaq || undefined,
 
     };
 
-
+    /*
     Node.prototype.addClass = function (cssClass) {
 
         if (!cssClass || typeof cssClass !== "string") {
@@ -284,7 +284,7 @@ var _gaq = _gaq || undefined,
         this.className += " " + cssClass;
 
     };
-
+    */
 
     $.addClass = function (view, cssClass) {
 
@@ -295,7 +295,7 @@ var _gaq = _gaq || undefined,
         view.className += " " + cssClass;
 
     };
-
+    /*
     Node.prototype.hasClass = function (cssClass) {
 
         if (!cssClass || typeof cssClass !== "string") {
@@ -315,7 +315,7 @@ var _gaq = _gaq || undefined,
         return false;
 
     };
-
+    */
     $.hasClass = function (ele, cssClass) {
 
         cssClass = " " + cssClass + " ";
@@ -370,7 +370,7 @@ var _gaq = _gaq || undefined,
     $.hide = function (ele) {
         ele.style.display = "none";
     };
-
+    /*
     Node.prototype.show = function (style) {
         style = style || "block";
         this.style.display = style;
@@ -379,7 +379,7 @@ var _gaq = _gaq || undefined,
     Node.prototype.hide = function () {
         this.style.display = "none";
     };
-
+    */
     $.attr = function (view, attr, value) {
 
         if (!view) {

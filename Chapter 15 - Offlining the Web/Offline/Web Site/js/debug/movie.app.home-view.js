@@ -7,6 +7,10 @@
 
     movieApp.fn.unloadHomeView = function () {
         delete this.resizeEvents["manageHomeView"];
+        this.panorama.clearPanoramaSettings();
+        this.panorama = undefined;
+      //  this.panoramaDt.clear();
+        this.panoramaDt = undefined;
     };
 
     movieApp.fn.loadHomeView = function () {
@@ -56,17 +60,10 @@
 
         });
 
-    //    that.setPanoramaWidth();
+        that.setPanoramaWidth();
 
         var i = 0,
             vPanels = document.querySelectorAll(".panel-v-scroll");
-
-        for (; i < vPanels.length; i++) {
-            //vPanels[i].style.position = "absolute";
-            //vPanels[i].style.top = "100px";
-            //vPanels[i].style.bottom = "35px";
-            vPanels[i].style.height = "390px";
-        }
 
         that.resizeEvents["manageHomeView"] = that.setPanoramaWidth;
 
@@ -81,13 +78,23 @@
             peekWidth = (that.viewWidth > 600) ? 50 : 30,
             panelWidth = (that.viewWidth - peekWidth),
             panoramaWrapper = document.querySelector(".panorama-panels"),
-            panels = document.querySelectorAll(".single-panel");
+            panels = document.querySelectorAll(".single-panel"),
+            movieGrids = document.querySelectorAll(".movie-poster-grid"),
+            gridHeight = getGridHeight(parseInt(panoramaWrapper.style.height, 10));
 
         for (; i < panels.length; i++) {
             panels[i].style.width = panelWidth + "px";
         }
 
-        panoramaWrapper.style.width = (panels.length * panelWidth) + "px";
+        if (panoramaWrapper) {
+            panoramaWrapper.style.width = (panels.length * panelWidth) + "px";
+        }
+
+        //for (i = 0; i < movieGrids.length; i++) {
+        //    movieGrids[i].style.height = gridHeight + "px";
+        //}
+
+        that.panorama.resizePanorama();
 
     };
 
@@ -120,6 +127,21 @@
             grid.style.height = "";
 
         }
+
+    };
+
+    function getGridHeight (baseHeight) {
+
+        var wWidth = window.innerWidth;
+
+        if (wWidth <= 600) {
+            return baseHeight - 32;
+        } else if (wWidth > 600 && wWidth <= 1024) {
+            return Math.floor(baseHeight /200) * 200;
+        } else if (wWidth > 1024) {
+            return (Math.floor(baseHeight / 200) * 200) + 20 ;
+        }
+
 
     };
 

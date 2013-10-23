@@ -123,10 +123,11 @@
 
                 this.storeViewInfo(this.parseViewInfo(e));
 
-                if (e.parentNode && !this.hasClass(e, "current")) {
+                if (e.parentNode && !this.hasClass(e, this.settings.currentClass)) {
                     e.parentNode.removeChild(e);
                 }
 
+                e = undefined;
             }
 
         },
@@ -184,7 +185,8 @@
             viewSelector: ".content-pane",
             defaultTitle: "A Really Cool SPA App",
             deferredTimeKey: "lastDeferredTime",
-            templateType: "text/x-mustache-template"
+            templateType: "text/x-mustache-template",
+            currentClass: "current"
         },
 
         pageSettings: {
