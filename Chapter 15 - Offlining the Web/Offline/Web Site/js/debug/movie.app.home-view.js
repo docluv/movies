@@ -9,8 +9,7 @@
         delete this.resizeEvents["manageHomeView"];
     //    this.panorama.clearPanoramaSettings();
      //   this.panorama = undefined;
-      ////  this.panoramaDt.clear();
-      //  this.panoramaDt = undefined;
+
     };
 
     movieApp.fn.loadHomeView = function () {

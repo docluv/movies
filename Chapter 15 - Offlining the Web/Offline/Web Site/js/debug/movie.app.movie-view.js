@@ -155,8 +155,7 @@
         delete this.resizeEvents["manageMovieView"];
      //   this.panorama.clearPanoramaSettings();
       //  this.panorama = undefined;
-    //    this.panoramaDt.clear();
-        this.panoramaDt = undefined;
+
     };
 
     var prevWidth = 0;

@@ -207,10 +207,10 @@
             }
 
             if (that.templates[templateName]) {
+                //going to assume the polyfil was executed
                 requestAnimationFrame(function () {
                     t.innerHTML = that.templates[templateName](data);
                 });
-                //t.innerHTML = that.templates[templateName](data);
             }
 
         },
@@ -262,57 +262,46 @@
 
             var that = this, dt;
 
-            //if (settings.maxWidth &&
-            //    settings.maxWidth >= window.innerWidth) {
+            that.panorama = panorama(
+                                $.extend(settings, {
+                                    speed: 600,
+                                    headerHeight: 80,
+                                    peekWidth: 50,
+                                    contentResize: function () {
 
-                that.panorama = panorama(
-                                    $.extend(settings, {
-                                        speed: 600,
-                                        headerHeight: 80,
-                                        peekWidth: 50,
-                                        contentResize: function () {
+                                        var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
 
-                                            var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
-
-                                            for (; i < posterWrappers.length; i++) {
-                                                posterWrappers[i].style.height =
-                                                    (window.innerHeight - 115 - 32) + "px";
-                                            }
-
+                                        for (; i < posterWrappers.length; i++) {
+                                            posterWrappers[i].style.height =
+                                                (window.innerHeight - 115 - 32) + "px";
                                         }
-                                    }));
 
-                //that.panoramaDt = 
+                                    }
+                                }));
 
-                dt = deeptissue(that.panorama.settings.container,
-                            {
-                                swipeRightThreshold: 35,
-                                swipeLeftThreshold: -35,
-                                swipeUpThreshold: 35,
-                                swipeDownThreshold: 35
-                            });
+            dt = deeptissue(that.panorama.settings.container,
+                        {
+                            swipeRightThreshold: 35,
+                            swipeLeftThreshold: -35,
+                            swipeUpThreshold: 35,
+                            swipeDownThreshold: 35
+                        });
 
-                dt.swipeRight(function (evt, m, translate) {
+            dt.swipeRight(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ) {
-                        that.panorama.moveRight(evt);
-                    }
+                if (settings.maxWidth >= window.innerWidth) {
+                    that.panorama.moveRight(evt);
+                }
 
-                })
+            })
 
-                .swipeLeft(function (evt, m, translate) {
+            .swipeLeft(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ) {
-                        that.panorama.moveLeft(evt);
-                    }
+                if (settings.maxWidth >= window.innerWidth) {
+                    that.panorama.moveLeft(evt);
+                }
 
-                });
-
-                //pCont.addEventListener("MSManipulationStateChanged", function (e) {
-                //    console.log(e.currentState);
-                //});
-
-         //   }
+            });
 
             if (!that._panoramaSetup) {
 
@@ -346,8 +335,6 @@
             }
 
         },
-
-        panoramaDt: undefined,
 
         setPanoramaWings: function () {
 

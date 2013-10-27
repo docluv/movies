@@ -170,6 +170,7 @@
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\mbp.js" />
     <Content Include="js\libs\mustache.js" />
+    <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
     <Content Include="js\libs\reqwest.min.js" />
