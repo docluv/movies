@@ -253,21 +253,19 @@
         _panoramaSetup: false,
         hasTouch: (window.navigator.msPointerEnabled || "ontouchstart" in window),
 
-        setupPanorama: function (target, settings) {
+        setupPanorama: function (settings) {
 
-            target = target || ".panorama-container";
             settings = $.extend({
                 maxHeight: Number.MAX_VALUE,
                 maxWidth: Number.MAX_VALUE
             }, settings);
 
-            var that = this, dt,
-                pCont = document.querySelector(target);
+            var that = this, dt;
 
-            if (settings.maxWidth &&
-                settings.maxWidth >= window.innerWidth) {
+            //if (settings.maxWidth &&
+            //    settings.maxWidth >= window.innerWidth) {
 
-                that.panorama = panorama(pCont,
+                that.panorama = panorama(
                                     $.extend(settings, {
                                         speed: 600,
                                         headerHeight: 80,
@@ -285,8 +283,8 @@
                                     }));
 
                 //that.panoramaDt = 
-/*
-                dt = deeptissue(pCont,
+
+                dt = deeptissue(that.panorama.settings.container,
                             {
                                 swipeRightThreshold: 35,
                                 swipeLeftThreshold: -35,
@@ -309,12 +307,12 @@
                     }
 
                 });
-                */
+
                 //pCont.addEventListener("MSManipulationStateChanged", function (e) {
                 //    console.log(e.currentState);
                 //});
 
-            }
+         //   }
 
             if (!that._panoramaSetup) {
 

@@ -64,6 +64,8 @@
 
         that.setMainTitle("Search");
 
+        this.panorama = undefined;
+
     }
 
 

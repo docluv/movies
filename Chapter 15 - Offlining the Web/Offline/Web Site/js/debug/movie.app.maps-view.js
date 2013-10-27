@@ -11,6 +11,7 @@ movieApp.fn.loadMapsView = function () {
 
     }, "head");
 
+    this.panorama = undefined;
 };
 
 movieApp.fn.loadNearbyTheaters = function () {

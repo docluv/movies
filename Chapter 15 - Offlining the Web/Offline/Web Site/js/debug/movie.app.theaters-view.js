@@ -8,7 +8,7 @@
     movieApp.fn.loadTheatersView = function () {
 
         this.setMainTitle("Theaters");
-
+        this.panorama = undefined;
     }
 
 }());

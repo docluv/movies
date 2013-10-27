@@ -7,8 +7,8 @@
 
     movieApp.fn.unloadHomeView = function () {
         delete this.resizeEvents["manageHomeView"];
-        this.panorama.clearPanoramaSettings();
-        this.panorama = undefined;
+    //    this.panorama.clearPanoramaSettings();
+     //   this.panorama = undefined;
       ////  this.panoramaDt.clear();
       //  this.panoramaDt = undefined;
     };

@@ -10,12 +10,12 @@
 
     "use strict";
 
-    var panorama = function (container, customSettings) {
+    var panorama = function (customSettings) {
 
-        var that = new panorama.fn.init(container, customSettings);
+        var that = new panorama.fn.init();
 
         that.settings = $.extend({}, that.settings, customSettings);
-        that.setupElements(container);
+     //   that.setupElements(container);
         that.resizePanorama();
         that.buildTransitionValue();
         that.buildVendorNames();
@@ -40,7 +40,7 @@
             return this;
         },
 
-        version: "0.0.2",
+        version: "0.0.3",
 
         div: undefined,
         currentPanel: 1,
@@ -94,48 +94,51 @@
             //if they need to be scrolled we will leave that to the developer to handle.
 
             var settings = this.settings,
+                container = this.container(),
+                panelbody = this.panelbody(),
+                headerPanels = this.headerPanels(),
+                header = this.header(),
+                panels = this.panels(),
                 pw = settings.panelWidth - settings.peekWidth,
                 headerHeight = settings.headerHeight,
                 headerWidth = settings.panelWidth * 3,
                 panelHeight = settings.panelHeight - settings.headerHeight - settings.bottomMargin;
 
-            this.container.style.height = panelHeight + "px";
-            this.panelbody.style.height = panelHeight + "px";
-        //    this.panelbody.style.top = headerHeight + "px";
-            this.panelbody.style.width = (this.totalPanels * pw) + "px";
-            this.panelbody.style.left = -pw + "px";
+            container.style.height = panelHeight + "px";
+            panelbody.style.height = panelHeight + "px";
+            panelbody.style.width = (this.totalPanels * pw) + "px";
+            panelbody.style.left = -pw + "px";
 
-            for (var i = 0; i < this.panels.length; i++) {
-                this.panels[i].style.width = pw + "px";
-               // this.panels[i].style.minHeight = this.panelbody.style.height;
+            for (var i = 0; i < panels.length; i++) {
+                panels[i].style.width = pw + "px";
             }
 
-            if (this.headerPanels.length > 1) {
+            if (headerPanels.length > 1) {
 
                 headerWidth = 0;
 
-                for (var i = 0; i < this.headerPanels.length; i++) {
-                    headerWidth += this.headerPanels[i].offsetWidth;
+                for (var i = 0; i < headerPanels.length; i++) {
+                    headerWidth += headerPanels[i].offsetWidth;
                 }
 
                 headerWidth = headerWidth * 1.35; //add some width to make sure we cover the width we need
 
             }
 
-            if (this.header) {
+            if (header) {
 
-                var style = this.header.style;
+                var style = header.style;
 
-                if (this.headerPanels && this.headerPanels.length > 0) {
+                if (headerPanels && headerPanels.length > 0) {
                     style.width = headerWidth + "px"
-                    style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
+                    style.left = -parseInt(headerPanels[0].offsetWidth, 10) + "px";
                 } else {
                     style.width = headerWidth + "px";
-                    style.paddingLeft =
+               //     style.paddingLeft =
                     style.paddingRight = settings.panelWidth + "px";
                     style.left =
-                        this.settings.bigHeaderLeft =
-                        -this.settings.panelWidth + "px";
+                        settings.bigHeaderLeft =
+                        -settings.panelWidth + "px";
                 }
             }
 
@@ -144,38 +147,62 @@
         clearPanoramaSettings: function () {
 
             var i = 0,
-                panelbody = this.panelbody;
+                container = this.container(),
+                panelbody = this.panelbody(),
+                panels = this.panels(),
+                headerPanels = this.headerPanels(),
+                header = this.header();
 
             panelbody.style.height =
             panelbody.style.top =
             panelbody.style.width =
             panelbody.style.left =
-                this.container.style.height = "";
+                container.style.height = "";
 
-            for (i = 0; i < this.panels.length; i++) {
-                this.panels[i].style.minHeight = this.panels[i].style.width = "";
+            for (i = 0; i < panels.length; i++) {
+                panels[i].style.minHeight = panels[i].style.width = "";
             }
 
-            if (this.header) {
+            if (header) {
 
-                if (this.headerPanels && this.headerPanels.length > 0) {
-                    this.header.style.width =
-                        this.header.style.left = "";
+                if (headerPanels && headerPanels.length > 0) {
+                    header.style.width =
+                        header.style.left = "";
                 } else {
-                    this.header.style.width =
-                        this.header.style.paddingLeft =
-                        this.header.style.paddingRight =
-                        this.header.style.left =
+                    header.style.width =
+                        header.style.paddingLeft =
+                        header.style.paddingRight =
+                        header.style.left =
                         this.settings.bigHeaderLeft = "";
                 }
             }
 
-            //this.panelbody.removeEventListener(this.support.transitionEnd, transitionEnd);
-            this.container = undefined;
-            this.panelbody = undefined;
-            this.panels = undefined;
-            this.header = undefined;
-            this.headerPanels = undefined;
+        },
+        
+
+        container: function () {
+            return document.querySelector(this.settings.container);
+        },
+        panelbody: function () {
+            return document.querySelector(
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector);
+        },
+        panels: function () {
+            var p = document.querySelectorAll(
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector + "  " +
+                                    this.settings.singleColumnSelector);
+
+            this.totalPanels = p.length;
+            
+            return p;
+        },
+        header: function () {
+            return document.querySelector(this.settings.headerStyle);
+        },
+        headerPanels: function () {
+            return document.querySelectorAll(this.settings.headerPanelStyle);
         },
 
         setupElements: function (container) {
@@ -208,7 +235,8 @@
             var that = this;
 
             //This gets called when the animation is complete
-            this.panelbody.addEventListener(this.support.transitionEnd, function transitionEnd(e) {
+            this.panelbody().addEventListener(this.support.transitionEnd,
+                function transitionEnd(e) {
 
                 if (that.tEndCB !== undefined) {
                     that.tEndCB();
@@ -266,7 +294,8 @@
 
         executeMove: function () {
 
-            var move = this.moveQue.shift();
+            var move = this.moveQue.shift(),
+                pbStyle = this.panelbody().style;
 
             if (move !== undefined) {
 
@@ -274,9 +303,9 @@
 
                 this.tEndCB = move.cb;
 
-                this.panelbody.style[this.support.transition] = this.transitionValue;
+                pbStyle[this.support.transition] = this.transitionValue;
 
-                this.panelbody.style[this.support.transform] = this.support.transform3d ?
+                pbStyle[this.support.transform] = this.support.transform3d ?
                                                 'translate3D(' + move.value + 'px, 0, 0)' :
                                                 'translateX(' + move.value + 'px)';
 
@@ -354,12 +383,15 @@
 
                     var bigHeader = document.querySelector(".big-header");
 
-                    bigHeader.style[that.support.transition] = that.headerTransitionValue;
+                    if (bigHeader) {
 
-                    bigHeader.style[that.support.transform] = that.support.transform3d ?
-                                                'translate3D(' + this.bigHeaderTrans + 'px, 0, 0)' :
-                                                'translateX(' + this.bigHeaderTrans + 'px)';
+                        bigHeader.style[that.support.transition] = that.headerTransitionValue;
 
+                        bigHeader.style[that.support.transform] = that.support.transform3d ?
+                                                    'translate3D(' + this.bigHeaderTrans + 'px, 0, 0)' :
+                                                    'translateX(' + this.bigHeaderTrans + 'px)';
+
+                    }
                 }
 
 
@@ -513,7 +545,7 @@
 
         moveLastPanel: function () {
 
-            var parentNode = this.panelbody,
+            var parentNode = this.panelbody(),
                     childNodes = parentNode.childNodes;
 
             parentNode.style[this.support.transition] = this.fastTransition;
@@ -524,7 +556,7 @@
 
         moveLeftCallback: function (parentNode) {
 
-            parentNode = parentNode || this.panelbody;
+            parentNode = parentNode || this.panelbody();
 
             var childNodes = parentNode.childNodes;
 
@@ -540,7 +572,7 @@
 
         moveRightCallback: function (parentNode) {
 
-            parentNode = parentNode || this.panelbody;
+            parentNode = parentNode || this.panelbody();
 
             var childNodes = parentNode.childNodes;
 
@@ -580,12 +612,6 @@
             this.movePanels(x, this.moveLeftCallback);
 
         },
-
-        container: undefined,
-        panelbody: undefined,
-        panels: undefined,
-        header: undefined,
-        headerPanels: undefined,
 
         bigHeaderTrans: 0,
 

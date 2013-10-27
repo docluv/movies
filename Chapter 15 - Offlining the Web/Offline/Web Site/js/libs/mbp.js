@@ -241,21 +241,7 @@ var _gaq = _gaq || undefined,
         return (view.hasAttribute("data-" + name) ? view.getAttribute("data-" + name) : val);
 
     };
-/*
-    Node.prototype.removeClass = function (cssClass) {
 
-        //only reset the className if the target class exist, keeps brosers from auto repainting the document.
-        if (this.hasClass(cssClass)) {
-
-            this.className = this.className
-                                .replace(" " + cssClass + " ", " ")
-                                .replace(" " + cssClass, "")
-                                .replace(cssClass + " ", "");
-
-        }
-
-    };
-    */
     $.removeClass = function (view, cssClass) {
 
         if ((!view || !cssClass) && typeof cssClass != "string") {
@@ -274,18 +260,6 @@ var _gaq = _gaq || undefined,
 
     };
 
-    /*
-    Node.prototype.addClass = function (cssClass) {
-
-        if (!cssClass || typeof cssClass !== "string") {
-            return;
-        }
-
-        this.className += " " + cssClass;
-
-    };
-    */
-
     $.addClass = function (view, cssClass) {
 
         if ((!view || !cssClass) && typeof cssClass != "string") {
@@ -295,27 +269,7 @@ var _gaq = _gaq || undefined,
         view.className += " " + cssClass;
 
     };
-    /*
-    Node.prototype.hasClass = function (cssClass) {
 
-        if (!cssClass || typeof cssClass !== "string") {
-            return;
-        }
-
-        cssClass = " " + cssClass + " ";
-
-        var rclass = /[\t\r\n]/g;//stole from jQuery ;)
-
-            if (this.nodeType === 1 &&
-                (" " + this.className + " ")
-                    .replace(rclass, " ").indexOf(cssClass) >= 0) {
-                return true;
-            }
-
-        return false;
-
-    };
-    */
     $.hasClass = function (ele, cssClass) {
 
         cssClass = " " + cssClass + " ";
@@ -370,16 +324,7 @@ var _gaq = _gaq || undefined,
     $.hide = function (ele) {
         ele.style.display = "none";
     };
-    /*
-    Node.prototype.show = function (style) {
-        style = style || "block";
-        this.style.display = style;
-    };
 
-    Node.prototype.hide = function () {
-        this.style.display = "none";
-    };
-    */
     $.attr = function (view, attr, value) {
 
         if (!view) {
