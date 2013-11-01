@@ -1,10 +1,47 @@
 ﻿<script id="MoviePosterGridTemplate" type="text/x-mustache-template">
     {{#movies}}
-        <div class="movie-target">
-            <a href="#!movie/{{id}}/{{title}}">
-                <img alt="{{title}}" src="{{poster}}" class="movie-grid-poster">
-                <figcaption class="demo-photo-caption">{{title}}</figcaption></a>
+    <div class="movie-target">
+        <a href="#!movie/{{id}}/{{title}}">
+            <img alt="{{title}}" src="{{poster}}" class="movie-grid-poster">
+            <figcaption class="demo-photo-caption">{{title}}</figcaption>
+        </a>
+    </div>
+    {{/movies}}
+</script>
+
+<script id="MovieStartTimesTemplate" type="text/x-mustache-template">
+    {{#movies}}
+    <div class="movie-showtime-list-item">
+        <a href="#!movie/{{id}}/{{title}}" class="movie-showtime-poster">
+            <img alt="{{title}}" src="{{poster}}" class="movie-list-poster">
+        </a>
+        <div class="movie-start-times">
+            <h3>{{title}}</h3>
+            <div class="movie-showtime-details">
+                <ul class="horizontal-list">
+                    <li class="movie-showtime-detail movie-showtime-detail-rating">Rating: {{mpaa_rating}}</li>
+                    <li class="movie-showtime-detail movie-showtime-detail-release">
+                        Released: {{year}}</li>
+                    <li class="movie-showtime-detail movie-showtime-detail-release-runtime">
+                        {{runtime}} minutes
+                    </li>
+
+                </ul>
+            </div>
+            <ul class="movie-showtimes-list vertical-list">
+                <li class="movie-showtime">11:45 AM</li>
+                <li class="movie-showtime">1:25 PM</li>
+                <li class="movie-showtime">3:30 PM</li>
+                <li class="movie-showtime">4:55 PM</li>
+                <li class="movie-showtime">5:10 PM</li>
+                <li class="movie-showtime">6:35 PM</li>
+                <li class="movie-showtime">7:20 PM</li>
+                <li class="movie-showtime">8:35 PM</li>
+                <li class="movie-showtime">9:45 PM</li>
+                <li class="movie-showtime">10:10 PM</li>
+            </ul>
         </div>
+    </div>
     {{/movies}}
 </script>
 
@@ -28,13 +65,17 @@
 
 <script id="MovieShowtimeTemplate" type="text/x-mustache-template">
     <li class="movie-showtime-item">
-        <ul class = "vertical-list" >
-            <li class="movie-poster-centered"><img alt="{{title}}" border="0" src="{{posters.profile}}"/></li>
+        <ul class="vertical-list">
+            <li class="movie-poster-centered"><img alt="{{title}}" border="0" src="{{posters.profile}}" /></li>
             {{#showtimes}}
-                <li class="movie-showtime-theater"><span class="theater-title">{{theater}}</span>
-                    <div class="showtime-list">{{#showtimes}}
-                            {{.}}&nbsp;
-               {{/showtimes}}</div></li>
+            <li class="movie-showtime-theater">
+                <span class="theater-title">{{theater}}</span>
+                <div class="showtime-list">
+                    {{#showtimes}}
+                    {{.}}&nbsp;
+                    {{/showtimes}}
+                </div>
+            </li>
             {{/showtimes}}
         </ul>
     </li>

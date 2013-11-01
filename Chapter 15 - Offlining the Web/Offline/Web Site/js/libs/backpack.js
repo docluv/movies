@@ -6,22 +6,23 @@
 
     var backpack = function (customSettings) {
 
-        return new backpack.fn.init(customSettings);
+        var that = new backpack.fn.init(customSettings);
 
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        return that;
     };
 
     backpack.fn = backpack.prototype = {
 
         constructor: backpack,
 
-        init: function (customSettings) {
-
-            this.settings = $.extend({}, this.settings, customSettings);
+        init: function () {
 
             return this;
         },
 
-        version: "0.0.3",
+        version: "0.0.2",
 
         getTemplates: function (remove) {
 
@@ -51,6 +52,49 @@
         },
 
         //keep
+        storeTemplates: function () {
+
+            var i, //templates,
+                scripts = document.querySelectorAll("script[type='" +
+                                                      this.settings.templateType + "']");
+
+            for (i = 0; i < scripts.length; i++) {
+
+                this.saveTemplateToStorage(scripts[i]);
+
+            }
+
+        },
+
+        //keep
+        saveTemplateToStorage: function (s) {
+
+            if (typeof s === "string") { //assume this is the element id
+                s = document.getElementById(s);
+            }
+
+            if (s) {
+
+                localStorage.setItem(s.id, s.innerHTML.replace(/(\r\n|\n|\r)/gm, ""));
+
+                if (s.parentNode) {
+                    s.parentNode.removeChild(s);
+                }
+
+            }
+
+        },
+
+        //keep
+        getTemplate: function (id) {
+
+            return "<script type='" +
+                        this.settings.templateType
+                        + "'>" + localStorage.getItem(id) + "</script>";
+
+        },
+
+        //keep
         updateViews: function (selector) {
 
             var i, views = document.querySelectorAll(selector);
@@ -58,6 +102,13 @@
             for (i = 0; i < views.length; i++) {
                 this.saveViewToStorage(views[i]);
             }
+
+        },
+
+        //keep
+        hasClass: function (e, className) {
+
+            return (e.className.search(className) > -1);
 
         },
 
@@ -72,7 +123,7 @@
 
                 this.storeViewInfo(this.parseViewInfo(e));
 
-                if (e.parentNode && !e.classList.contains(this.settings.currentClass)) {
+                if (e.parentNode && !this.hasClass(e, this.settings.currentClass)) {
                     e.parentNode.removeChild(e);
                 }
 
@@ -133,7 +184,7 @@
         settings: {
             viewSelector: ".content-pane",
             defaultTitle: "A Really Cool SPA App",
-       //     deferredTimeKey: "lastDeferredTime",
+            deferredTimeKey: "lastDeferredTime",
             templateType: "text/x-mustache-template",
             currentClass: "current"
         },

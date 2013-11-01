@@ -10,12 +10,12 @@
 
     "use strict";
 
-    var panorama = function (customSettings) {
+    var panorama = function (container, customSettings) {
 
-        var that = new panorama.fn.init();
+        var that = new panorama.fn.init(container, customSettings);
 
         that.settings = $.extend({}, that.settings, customSettings);
-
+        that.setupElements(container);
         that.resizePanorama();
         that.buildTransitionValue();
         that.buildVendorNames();
@@ -37,14 +37,10 @@
         constructor: panorama,
 
         init: function () {
-            var that = this;
-
-            that.moveHeader = that.moveHeader || undefined;
-            
-            return that;
+            return this;
         },
 
-        version: "0.0.3",
+        version: "0.0.2",
 
         div: undefined,
         currentPanel: 1,
@@ -59,7 +55,6 @@
             'transition': 'transitionend'
         },
 
-        //default values
         headerTransitionValue: "all 1000ms ease-in-out",
         transitionValue: "all 1000ms ease-in-out",
         fastTransition: "all 0ms",
@@ -74,19 +69,22 @@
                 (this.settings.speed - 100) + "ms " +
                 this.settings.easing;
 
-  //          return this; //why not make it chainable LOL
+            return this; //why not make it chainable LOL
         },
 
         buildVendorNames: function () {
 
-            var vNames = $.buildVendorNames();
+            this.div = document.createElement('div');
 
             // Check for the browser's transitions support.
-            this.support.transition = vNames.transition;
-            this.support.transitionDelay = vNames.transitionDelay;
-            this.support.transform = vNames.transform;
-            this.support.transformOrigin = vNames.transformOrigin;
-            this.support.transform3d = vNames.transform3d;
+            this.support.transition = $.getVendorPropertyName('transition');
+            this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
+            this.support.transform = $.getVendorPropertyName('transform');
+            this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
+            this.support.transform3d = $.checkTransform3dSupport();
+
+            // Avoid memory leak in IE.
+            this.div = null;
 
         },
 
@@ -96,51 +94,48 @@
             //if they need to be scrolled we will leave that to the developer to handle.
 
             var settings = this.settings,
-                i,
-                container = this.container(),
-                panelbody = this.panelbody(),
-                headerPanels = this.headerPanels(),
-                header = this.header(),
-                panels = this.panels(),
                 pw = settings.panelWidth - settings.peekWidth,
                 headerHeight = settings.headerHeight,
                 headerWidth = settings.panelWidth * 3,
                 panelHeight = settings.panelHeight - settings.headerHeight - settings.bottomMargin;
 
-            container.style.height = panelHeight + "px";
-            panelbody.style.height = panelHeight + "px";
-            panelbody.style.width = (this.totalPanels * pw) + "px";
-            panelbody.style.left = -pw + "px";
+            this.container.style.height = panelHeight + "px";
+            this.panelbody.style.height = panelHeight + "px";
+        //    this.panelbody.style.top = headerHeight + "px";
+            this.panelbody.style.width = (this.totalPanels * pw) + "px";
+            this.panelbody.style.left = -pw + "px";
 
-            for (i = 0; i < panels.length; i++) {
-                panels[i].style.width = pw + "px";
+            for (var i = 0; i < this.panels.length; i++) {
+                this.panels[i].style.width = pw + "px";
+               // this.panels[i].style.minHeight = this.panelbody.style.height;
             }
 
-            if (headerPanels.length > 1) {
+            if (this.headerPanels.length > 1) {
 
                 headerWidth = 0;
 
-                for (i = 0; i < headerPanels.length; i++) {
-                    headerWidth += headerPanels[i].offsetWidth;
+                for (var i = 0; i < this.headerPanels.length; i++) {
+                    headerWidth += this.headerPanels[i].offsetWidth;
                 }
 
                 headerWidth = headerWidth * 1.35; //add some width to make sure we cover the width we need
 
             }
 
-            if (header) {
+            if (this.header) {
 
-                var style = header.style;
+                var style = this.header.style;
 
-                if (headerPanels && headerPanels.length > 0) {
+                if (this.headerPanels && this.headerPanels.length > 0) {
                     style.width = headerWidth + "px"
-                    style.left = -parseInt(headerPanels[0].offsetWidth, 10) + "px";
+                    style.left = -parseInt(this.headerPanels[0].offsetWidth, 10) + "px";
                 } else {
                     style.width = headerWidth + "px";
+                    style.paddingLeft =
                     style.paddingRight = settings.panelWidth + "px";
                     style.left =
-                        settings.bigHeaderLeft =
-                        -settings.panelWidth + "px";
+                        this.settings.bigHeaderLeft =
+                        -this.settings.panelWidth + "px";
                 }
             }
 
@@ -149,68 +144,41 @@
         clearPanoramaSettings: function () {
 
             var i = 0,
-                container = this.container(),
-                panelbody = this.panelbody(),
-                panels = this.panels(),
-                headerPanels = this.headerPanels(),
-                header = this.header();
+                panelbody = this.panelbody;
 
             panelbody.style.height =
             panelbody.style.top =
             panelbody.style.width =
             panelbody.style.left =
-                container.style.height = "";
+                this.container.style.height = "";
 
-            for (i = 0; i < panels.length; i++) {
-                panels[i].style.minHeight = panels[i].style.width = "";
+            for (i = 0; i < this.panels.length; i++) {
+                this.panels[i].style.minHeight = this.panels[i].style.width = "";
             }
 
-            if (header) {
+            if (this.header) {
 
-                if (headerPanels && headerPanels.length > 0) {
-                    header.style.width =
-                        header.style.left = "";
+                if (this.headerPanels && this.headerPanels.length > 0) {
+                    this.header.style.width =
+                        this.header.style.left = "";
                 } else {
-                    header.style.width =
-                        header.style.paddingLeft =
-                        header.style.paddingRight =
-                        header.style.left =
+                    this.header.style.width =
+                        this.header.style.paddingLeft =
+                        this.header.style.paddingRight =
+                        this.header.style.left =
                         this.settings.bigHeaderLeft = "";
                 }
             }
 
-        },
-
-
-        container: function () {
-            return document.querySelector(this.settings.container);
-        },
-        panelbody: function () {
-            return document.querySelector(
-                                    this.settings.container + "  " +
-                                    this.settings.panoramaSelector);
-        },
-        panels: function () {
-            var p = document.querySelectorAll(
-                                    this.settings.container + "  " +
-                                    this.settings.panoramaSelector + "  " +
-                                    this.settings.singleColumnSelector);
-
-            this.totalPanels = p.length;
-
-            return p;
-        },
-        header: function () {
-            return document.querySelector(this.settings.headerStyle);
-        },
-        headerPanels: function () {
-            return document.querySelectorAll(this.settings.headerPanelStyle);
+            //this.panelbody.removeEventListener(this.support.transitionEnd, transitionEnd);
+            this.container = undefined;
+            this.panelbody = undefined;
+            this.panels = undefined;
+            this.header = undefined;
+            this.headerPanels = undefined;
         },
 
         setupElements: function (container) {
-
-            var settings = this.settings;
-
             //The wrapping element
             if (!container) {
                 this.container = document.querySelector(this.settings.container);
@@ -219,19 +187,19 @@
             }
             //The main element
             this.panelbody = document.querySelector(
-                                    settings.container + "  " +
-                                    settings.panoramaSelector);
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector);
             //the panels
             this.panels = document.querySelectorAll(
-                                    settings.container + "  " +
-                                    settings.panoramaSelector + "  " +
-                                    settings.singleColumnSelector);
+                                    this.settings.container + "  " +
+                                    this.settings.panoramaSelector + "  " +
+                                    this.settings.singleColumnSelector);
 
             this.totalPanels = this.panels.length;
 
-            this.header = document.querySelector(settings.headerStyle);
+            this.header = document.querySelector(this.settings.headerStyle);
 
-            this.headerPanels = document.querySelectorAll(settings.headerPanelStyle);
+            this.headerPanels = document.querySelectorAll(this.settings.headerPanelStyle);
 
         },
 
@@ -240,24 +208,29 @@
             var that = this;
 
             //This gets called when the animation is complete
-            this.panelbody().addEventListener(this.support.transitionEnd,
-                function transitionEnd(e) {
+            this.panelbody.addEventListener(this.support.transitionEnd, function transitionEnd(e) {
 
-                    if (that.tEndCB !== undefined) {
-                        that.tEndCB();
-                    }
+                if (that.tEndCB !== undefined) {
+                    that.tEndCB();
+                }
 
-                    if (that.tHeaderEndCB !== undefined) {
-                        that.tHeaderEndCB();
-                    }
+                if (that.tHeaderEndCB !== undefined) {
+                    that.tHeaderEndCB();
+                }
 
-                });
+            });
+
+            //window.addEventListener("orientationchange", function (e) {
+            //    that.resizePanorama(e);
+            //});
 
             window.addEventListener("resize", function (e) {
                 that.resizePanorama(e);
             });
 
         },
+
+    //    isApplied: false,
 
         resizePanorama: function () {
 
@@ -268,13 +241,17 @@
             settings.panelHeight = window.innerHeight;
 
             if ((settings.maxWidth <= window.innerWidth ||
-                settings.maxHeight <= window.innerHeight)) {
+                settings.maxHeight <= window.innerHeight)
+                // && this.isApplied
+                ) {
 
+//                this.isApplied = false;
                 settings.canMove = false;
                 this.clearPanoramaSettings();
 
             } else {
 
+  //              this.isApplied = true;
                 settings.canMove = true;
                 this.setPanoramaDimensions();
             }
@@ -289,8 +266,7 @@
 
         executeMove: function () {
 
-            var move = this.moveQue.shift(),
-                pbStyle = this.panelbody().style;
+            var move = this.moveQue.shift();
 
             if (move !== undefined) {
 
@@ -298,9 +274,9 @@
 
                 this.tEndCB = move.cb;
 
-                pbStyle[this.support.transition] = this.transitionValue;
+                this.panelbody.style[this.support.transition] = this.transitionValue;
 
-                pbStyle[this.support.transform] = this.support.transform3d ?
+                this.panelbody.style[this.support.transform] = this.support.transform3d ?
                                                 'translate3D(' + move.value + 'px, 0, 0)' :
                                                 'translateX(' + move.value + 'px)';
 
@@ -332,6 +308,24 @@
         _movePrevCB: [],
         _moveNextCB: [],
 
+        movePrevious: function (cb) {
+
+            if (cb) {
+                this._movePrevCB.push(cb);
+            }
+
+            return this;
+        },
+
+        moveNext: function (cb) {
+
+            if (cb) {
+                this._moveNextCB.push(cb);
+            }
+
+            return this;
+        },
+
         moveLeft: function (e, x) {
 
             var target = e.target,
@@ -348,7 +342,7 @@
             if (this.moveHeader) {
                 this.moveHeader(true);
             }
-
+            
             this.movePanels(-x, this.moveLeftCallback);
 
             for (i = 0; i < this._moveNextCB.length; i++) {
@@ -374,7 +368,10 @@
                 this.currentPanel = this.totalPanels;
             }
 
-            this.moveHeader(false);
+            if (this.moveHeader) {
+                this.moveHeader(true);
+            }
+            
             this.movePanels(x, this.moveRightCallback);
 
             for (i = 0; i < this._movePrevCB.length; i++) {
@@ -387,43 +384,46 @@
 
         },
 
+        moveLastPanel: function () {
+
+            var parentNode = this.panelbody,
+                    childNodes = parentNode.childNodes;
+
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.appendChild(this.getFirstPanel(childNodes));
+            parentNode.style[this.support.transform] = "";
+
+        },
+
         moveLeftCallback: function (parentNode) {
 
-            parentNode = parentNode || this.panelbody();
+            parentNode = parentNode || this.panelbody;
 
-            var that = this,
-                childNodes = parentNode.childNodes,
-                transition = that.support.transition,
-                transform = that.support.transform;
+            var childNodes = parentNode.childNodes;
 
-            requestAnimationFrame(function () {
-                parentNode.style[transition] = that.fastTransition;
-                parentNode.appendChild(that.getFirstPanel.call(that, childNodes));
-                parentNode.style[transform] = "";
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.appendChild(this.getFirstPanel(childNodes));
+            parentNode.style[this.support.transform] = "";
 
-                that.moving = false;
+            this.moving = false;
 
-                that.executeMove.call(that);
-            });
+            this.executeMove();
+
         },
 
         moveRightCallback: function (parentNode) {
 
-            parentNode = parentNode || this.panelbody();
+            parentNode = parentNode || this.panelbody;
 
-            var that = this,
-                childNodes = parentNode.childNodes,
-                transition = that.support.transition,
-                transform = that.support.transform;
+            var childNodes = parentNode.childNodes;
 
-            requestAnimationFrame(function () {
-                parentNode.style[transition] = that.fastTransition;
-                parentNode.insertBefore(that.getLastPanel.call(that, childNodes), parentNode.firstChild);
-                parentNode.style[transform] = "";
+            parentNode.style[this.support.transition] = this.fastTransition;
+            parentNode.insertBefore(this.getLastPanel(childNodes), parentNode.firstChild);
+            parentNode.style[this.support.transform] = "";
 
-                that.moving = false;
-                that.executeMove();
-            });
+            this.moving = false;
+            this.executeMove();
+
         },
 
         getFirstPanel: function (childNodes) {
@@ -453,6 +453,12 @@
             this.movePanels(x, this.moveLeftCallback);
 
         },
+
+        container: undefined,
+        panelbody: undefined,
+        panels: undefined,
+        header: undefined,
+        headerPanels: undefined,
 
         bigHeaderTrans: 0,
 

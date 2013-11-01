@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="movie.app.js" />
+/// <reference path="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0" />
 
 movieApp.fn.loadMapsView = function () {
 
@@ -11,7 +12,6 @@ movieApp.fn.loadMapsView = function () {
 
     }, "head");
 
-    this.panorama = undefined;
 };
 
 movieApp.fn.loadNearbyTheaters = function () {

@@ -1,5 +1,7 @@
 ﻿module.exports = function (grunt) {
 
+    require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
+
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -84,9 +86,9 @@
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    //grunt.loadnpmtasks('grunt-contrib-uglify');
+    //grunt.loadnpmtasks('grunt-contrib-cssmin');
+    //grunt.loadnpmtasks('grunt-contrib-jshint');
 
     // Default task.
     grunt.registerTask('default', [/*'jshint', */'uglify', 'cssmin']);

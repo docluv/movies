@@ -1,5 +1,4 @@
 
-
 var bp = backpack(),
     data = rqData(),
     movie = movieApp({
@@ -8,13 +7,12 @@ var bp = backpack(),
         tmpl: Mustache
     }),
 
+ //data = jqData(),
     _spa = spa({
         appContext: movie,
         "bp": bp,
-        "defaultPage": "homeview",
-        "viewWrapper": "#main",
-        "viewTransition": "slide",
-        "defaultTitle": "Modern Web Movies"
+        "defaultPage": "homeview", "viewWrapper": "#main",
+        "viewTransition": "slide", "defaultTitle": "Modern Web Movies"
     });
 
 

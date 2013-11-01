@@ -1,4 +1,5 @@
-﻿
+﻿/// <reference path="love2dev.app.js" />
+/// <reference path="love2dev.app.api.js" />
 
 
 (function (window, undefined) {
@@ -7,9 +8,10 @@
 
     movieApp.fn.unloadHomeView = function () {
         delete this.resizeEvents["manageHomeView"];
-    //    this.panorama.clearPanoramaSettings();
-     //   this.panorama = undefined;
-
+      //  this.panorama.clearPanoramaSettings();
+        this.panorama = undefined;
+      ////  this.panoramaDt.clear();
+      //  this.panoramaDt = undefined;
     };
 
     movieApp.fn.loadHomeView = function () {

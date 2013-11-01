@@ -17,7 +17,6 @@ body {
     user-select: none;
     -ms-content-zooming: none;
     overflow-x: hidden;
-    /*background-color: #1C2420;*/
     background-color: #7b359a;
     color: #fff;
     letter-spacing: 0.02em;
@@ -205,21 +204,20 @@ h4, .panel-small-title {
         left: 0px;
     }
 
-    .title-view{
-        display:none;
+    .title-view {
+        display: none;
     }
 
-    .panel-title{
-        font-weight:bold;
+    .panel-title {
+        font-weight: bold;
     }
-
 }
 
 @media (min-width:720px) {
 
     .view-title {
         font-size: 26pt;
-        height:32pt;
+        height: 32pt;
         line-height: 32pt;
     }
 }

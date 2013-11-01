@@ -5,17 +5,6 @@ Extending the functionality of the Mobile Boilerplate helper object.
 var _gaq = _gaq || undefined,
     $ = $ || {};
 
-window.requestAnimFrame = (function () {
-    return window.requestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (/* function */ callback, /* DOMElement */ element) {
-          window.setTimeout(callback, 1000 / 60);
-      };
-})();
-
 (function (document, $) {
 
     "use strict";
@@ -259,14 +248,10 @@ window.requestAnimFrame = (function () {
             return;
         }
 
-        //only reset the className if the target class exist, keeps brosers from auto repainting the document.
-        if (view.className.indexOf(cssClass) > -1) {
+        var j, classes = cssClass.split(" ");
 
-            view.className = view.className
-                                .replace(" " + cssClass + " ", " ")
-                                .replace(" " + cssClass, "")
-                                .replace(cssClass + " ", "");
-
+        for (j = 0; j < classes.length; j++) {
+            view.classList.remove(classes[j]);
         }
 
     };
@@ -277,7 +262,11 @@ window.requestAnimFrame = (function () {
             return;
         }
 
-        view.className += " " + cssClass;
+        var j, classes = cssClass.split(" ");
+
+        for (j = 0; j < classes.length; j++) {
+            view.classList.add(classes[j]);
+        }
 
     };
 

@@ -1,8 +1,12 @@
+/// <reference path="backack.js" />
+/// <reference path="helper.extensions.js" />
 ;
 
 (function (window, $, undefined) {
 
     "use strict";
+
+    var _gaq = _gaq || undefined;
 
     // Define a local copy of deferred
     var spa = function (customSettings) {
@@ -11,7 +15,6 @@
 
         that.settings = $.extend({}, that.settings, customSettings);
 
-        that.appContext = that.settings.appContext || {};
         that.bp = that.settings.bp || backpack();
 
         that.titleElement = document.querySelector(that.settings.titleSelector);
@@ -28,8 +31,24 @@
 
         });
 
-        if (that.settings.initView) {
+        if (that.getParameterByName(that.settings.forceReload)) {
+
+            window.location.replace(window.location.href.split("?")[0] + "#!" +
+                    that.getParameterByName(that.settings.forceReload));
+            return that;
+
+        } else if (that.settings.initView) {
             that.swapView();
+        }
+
+        if (that.settings.asyncUrl && typeof that.settings.asyncUrl === "string") {
+
+            document.addEventListener("DOMContentLoaded", function (event) {
+
+                e.target.removeEventListener(e.type, arguments.callee);
+
+                that.loadAsyncContent.call(that, that.settings.asyncUrl);
+            });
         }
 
         return that;
@@ -47,10 +66,6 @@
         version: "0.0.4",
 
         bp: undefined,
-        appContext: undefined,
-
-        currentView: undefined,
-        newView: undefined,
 
         setupRoutes: function () {
 
@@ -164,6 +179,27 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         },
 
+        getVendorPropertyName: function (prop) {
+
+            var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
+                vendorProp, i,
+                prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+
+            if (prop in this.div.style) {
+                return prop;
+            }
+
+            for (i = 0; i < prefixes.length; ++i) {
+
+                vendorProp = prefixes[i] + prop_;
+
+                if (vendorProp in this.div.style) {
+                    return vendorProp;
+                }
+
+            }
+        },
+
         transitionend: {
             'animation': 'animationend',
             'webkitAnimation': 'webkitAnimationEnd',
@@ -206,32 +242,36 @@
             return "";
         },
 
-        currentUnLoad: undefined,
-        newUnLoad: undefined,
+        removeExtraViews: function (currentView) {
+
+            while (currentView.length > 1) {
+                currentView[currentView.length - 1]
+                        .parentNode.removeChild(currentView[currentView.length - 1]);
+            }
+        },
+
+        pushGA: function (path) {
+
+            //if Google Analytics available, then push the path
+            if (_gaq !== undefined) {
+                _gaq.push(['_trackPageview', path]);
+            }
+        },
 
         swapView: function () {
 
             var that = this,
-                route, callback, i, anim,
+                route, callback, title, i, a, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
-                params = hashFragment.split(":").slice(1),
+          //      params = hashFragment.split(":").slice(1),
                 path = hashFragment.split(":")[0],
                 currentView = document.querySelectorAll("." + this.settings.currentClass);
 
-            that.currentView = currentView;
-
             if (currentView.length) {
-
-                var cv;
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
-                while (currentView.length > 1) {
-                    cv = currentView[currentView.length - 1]
-                            .parentNode.removeChild(currentView[currentView.length - 1]);
-                    cv = null;
-                }
-
+                that.removeExtraViews(currentView);
             }
 
             //convert nodelist to a single node
@@ -243,29 +283,23 @@
 
             if (route !== undefined) {
 
-                //if Google Analytics available, then push the path
-                if (_gaq !== undefined) {
-                    _gaq.push(['_trackPageview', path]);
-                }
+                that.pushGA(path);
 
                 that.ensureViewAvailable(currentView, route.viewId);
 
-                that.newView = newView = document.getElementById(route.viewId);
+                newView = document.getElementById(route.viewId);
 
                 if (newView) {
 
                     if (currentView) {
 
-                        that.currentUnLoad = that.newUnLoad;
-
                         if (that.hasAnimations() && anim) {
 
-                            currentView.addEventListener(
-                                that.transitionend[that.cssPrefix("animation")],
-                                function (e) {
-                                    that.endSwapAnimation.call(that, e, currentView, newView);
-                                });
+                            currentView.addEventListener(that.transitionend[that.cssPrefix("animation")], function (e) {
+                                that.endSwapAnimation.call(that, e, currentView, newView);
+                            });
 
+                            //modify once addClass supports array of classes
                             $.addClass(currentView, "animated out " + anim);
 
                             $.removeClass(currentView, "in");
@@ -276,21 +310,13 @@
 
                     }
 
-                    $.addClass(newView, that.settings.currentClass);
-                    $.addClass(newView, "animated");
-                    $.addClass(newView, anim);
-                    $.addClass(newView, "in");
+                    $.addClass(newView, that.settings.currentClass +
+                                        " animated " + anim + " in");
 
                     that.setDocumentTitle(route);
- 
+
                     if (route.callback) {
                         that.makeCallback(route);
-                    }
-
-                    that.currenUnLoad = undefined;
-
-                    if (route.unload) {
-                        that.newUnLoad = that.getCallbackMethod(route.unload);
                     }
 
                 }
@@ -300,7 +326,8 @@
                 window.location.hash = "#!" + this.settings.NotFoundRoute;
 
             } else {//should only get here is this is an escapefragemented url for the spiders
-                newView = $.addClass(this.settings.viewSelector, that.settings.currentClass);
+                newView = $.addClass(this.settings.viewSelector,
+                                    that.settings.currentClass);
             }
 
         },
@@ -320,38 +347,17 @@
             var that = this,
                 anim = that.animation;
 
-//            if (currentView.classList) {
+            $.removeClass(currentView, that.settings.currentClass + " " +
+                                        anim + " out ");
 
-                $.removeClass(currentView, that.settings.currentClass);
-                $.removeClass(currentView, anim);
-                $.removeClass(currentView, "out");
+            $.removeClass(newView, anim + " in");
 
-                $.removeClass(newView, anim);
-                $.removeClass(newView, "in");
-
-            //} else {
-
-            //    currentView.className.replace(that.settings.currentClass, " ");
-            //    currentView.className.replace(anim, " ");
-            //    currentView.className.replace("out", " ");
-
-            //    newView.className.replace(anim, " ");
-            //    newView.className.replace("in", " ");
-
-            //}
 
             if (currentView && bp && currentView.parentNode) {
 
                 currentView.parentNode.removeChild(currentView);
 
             }
-
-            if (that.currentUnLoad && that.currentUnLoad.callback) {
-                that.currentUnLoad.callback.call(that.appContext);
-            }
-
-            that.currentView = currentView = undefined;
-            that.newView = newView = undefined;
 
         },
 
@@ -361,7 +367,15 @@
             if (this.bp) {
 
                 var view = this.bp.getViewData(newViewId),
-                    newView = this.createFragment(view.content);
+                    newView, loc;
+
+                if (view) {
+                    newView = this.createFragment(view.content)
+                } else {
+                    loc = window.location.href.split("#!");
+                    window.location.replace(loc[0] + "?" +
+                        this.settings.forceReload + "=" + loc[1]);
+                }
 
                 if (currentView) {
                     currentView.parentNode
@@ -376,11 +390,16 @@
 
         },
 
-        getCallbackMethod: function(name){
+        makeCallback: function (route) {
 
             var a, that,
-                callback = undefined,
-                cbPaths = name.split(".");
+                callback = route.callback,
+            //    unload = route.unload,
+                cbPaths = callback.split(".");
+
+            if (!callback) {
+                return;
+            }
 
             callback = window[cbPaths[0]];
 
@@ -391,22 +410,6 @@
                 }
 
                 callback = callback[cbPaths[a]];
-            }
-
-            return {
-                that: that,
-                callback: callback
-            };
-        },
-
-        makeCallback: function (route) {
-
-            var cb = this.getCallbackMethod(route.callback),
-                callback = cb.callback,
-                that = cb.that;
-
-            if (!callback) {
-                return;
             }
 
             route.paramValues = route.paramValues || {};
@@ -452,14 +455,6 @@
 
         hasAnimations: function () {
 
-            if (document.body.hasAttribute("data-hasAnimations")) {
-                if (document.body.getAttribute("data-hasAnimations") === "true") {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
             var animation = false,
                 elm = document.createElement("div"),
                 animationstring = 'animation',
@@ -481,10 +476,24 @@
                 }
             }
 
-            document.body.setAttribute("data-hasAnimations", animation);
-
             return animation;
 
+        },
+
+        storeAsyncContent: function (content) {
+
+            this.bp.updateViewsFromFragment(this.settings.viewSelector, content);
+        },
+
+        loadAsyncContent: function (url, callback) {
+
+            callback = callback || this.storeAsyncContent;
+
+            var oReq = new XMLHttpRequest();
+
+            oReq.onload = callback;
+            oReq.open("get", url, true);
+            oReq.send();
         },
 
         //array of animations. The names match the CSS class so make sure you have the CSS for this animation or you will be dissapointed.
@@ -496,7 +505,6 @@
 
         settings: {
             routes: [],
-            appContext: undefined,
             viewSelector: ".content-pane",
             currentClass: "current",
             mainWrappperSelector: "#main",
@@ -504,10 +512,12 @@
             NotFoundRoute: "404",
             defaultTitle: "A Single Page Site with Routes",
             titleSelector: ".view-title",
+            forceReload: "_force_reload_",
             autoSetTitle: true,
             parseDOM: true,
             initView: true,
-            viewTransition: "slide"
+            viewTransition: "slide",
+            asyncUrl: undefined
         }
 
     };

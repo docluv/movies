@@ -1,7 +1,18 @@
-﻿
+﻿/// <reference path="movie.app.js" />
+/// 
 (function (window, undefined) {
 
     "use strict";
+
+    movieApp.fn.movie = {
+        Items: {
+            reviewPanel: ".movie-review-panel",
+            detailPanel: ".movie-details-panel",
+            castPanel: ".movie-cast-panel",
+            showtimesPanel: ".movie-showtimes-panel",
+            descPanel: ".movie-description-panel"
+        }
+    };
 
     movieApp.fn.loadMovieView = function (params) {
 
@@ -10,7 +21,7 @@
         }
 
         var that = this;
-        
+
         that.loadMovieDetails(params.id, function (data) {
 
             if (!data) {
@@ -22,9 +33,9 @@
         });
 
         prevWidth = window.width;
-        
+
     };
-    
+
     movieApp.fn.renderMovieDetails = function (data) {
 
         if (data) {
@@ -37,13 +48,13 @@
             that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
                             that.mergeInFakeShowtimes(data));
 
-            that.setupPanorama({ maxWidth: 610 });
+            that.setupPanorama(".panorama-container", { maxWidth: 610 });
             that.setMainTitle(data.title);
-            
+
             that.bindPanelTitles();
 
             that.manageMovieView();
-            
+
             that.resizeEvents["manageMovieView"] = that.manageMovieView;
         }
 
@@ -57,7 +68,8 @@
             showTimesTitle = document.querySelector(".movie-showtimes-panel > .panel-title"),
             castNamesTitle = document.querySelector(".movie-cast-panel > .panel-title"),
             movieDescTitle = document.querySelector(".movie-description-panel > .panel-title"),
-            showReview = document.getElementById("showReview");
+            showReview = document.getElementById("showReview"),
+            selectors = this.movie.Items;
 
         $.show(movieDesc);
 
@@ -72,9 +84,9 @@
                 $.hide(castNames);
                 $.show(movieDesc);
 
-                $.removeClass(showTimesTitle, "selected");
-                $.removeClass(castNamesTitle, "selected");
-                $.addClass(movieDescTitle, "selected");
+                showTimesTitle.removeClass("selected");
+                castNamesTitle.removeClass("selected");
+                movieDescTitle.addClass("selected");
 
             }
 
@@ -94,9 +106,9 @@
                 castNames.style.position = "relative";
                 castNames.style.left = "-130px";
 
-                $.removeClass(showTimesTitle, "selected");
-                $.addClass(castNamesTitle, "selected");
-                $.removeClass(movieDescTitle, "selected");
+                showTimesTitle.removeClass("selected");
+                castNamesTitle.addClass("selected");
+                movieDescTitle.removeClass("selected");
 
             }
 
@@ -120,9 +132,9 @@
                 showReview.style.left = "-200px";
                 showReview.style.top = "30px";
 
-                $.addClass(showTimesTitle, "selected");
-                $.removeClass(castNamesTitle, "selected");
-                $.removeClass(movieDescTitle, "selected");
+                showTimesTitle.addClass("selected");
+                castNamesTitle.removeClass("selected");
+                movieDescTitle.removeClass("selected");
 
             }
 
@@ -130,21 +142,21 @@
 
         deeptissue(showReview).tap(function (e) {
 
-            $.show(document.querySelector(".movie-review-panel"));
-            $.hide(document.querySelector(".movie-details-panel"));
-            $.hide(document.querySelector(".movie-cast-panel"));
-            $.hide(document.querySelector(".movie-showtimes-panel"));
-            $.hide(document.querySelector(".movie-description-panel"));
-            
+            $.show(document.querySelector(selectors.reviewPanel));
+            $.hide(document.querySelector(selectors.detailPanel));
+            $.hide(document.querySelector(selectors.castPanel));
+            $.hide(document.querySelector(selectors.showtimesPanel));
+            $.hide(document.querySelector(selectors.descPanel));
+
         });
 
         deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
 
-            $.hide(document.querySelector(".movie-review-panel"));
-            $.show(document.querySelector(".movie-details-panel"));
-            $.show(document.querySelector(".movie-cast-panel"));
-            $.show(document.querySelector(".movie-showtimes-panel"));
-            $.show(document.querySelector(".movie-description-panel"));
+            $.hide(document.querySelector(selectors.reviewPanel));
+            $.show(document.querySelector(selectors.detailPanel));
+            $.show(document.querySelector(selectors.castPanel));
+            $.show(document.querySelector(selectors.showtimesPanel));
+            $.show(document.querySelector(selectors.descPanel));
 
         });
 
@@ -153,8 +165,8 @@
     movieApp.fn.unloadMovieView = function () {
 
         delete this.resizeEvents["manageMovieView"];
-     //   this.panorama.clearPanoramaSettings();
-      //  this.panorama = undefined;
+        this.panorama.clearPanoramaSettings();
+        this.panorama = undefined;
 
     };
 
@@ -164,11 +176,11 @@
 
         var width = window.innerWidth;
 
-        if (width < 610 && prevWidth > 610) {
-        
+        if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
+
             var showTimes = document.querySelector(".movie-showtime-list"),
                 castNames = document.querySelector(".cast-name-list");
-            
+
             showTimes.style.position = "";
             showTimes.style.left = "";
 
@@ -179,7 +191,7 @@
         }
 
         //need a routine to reset the order of panels since they may have been swiped
-        this.panorama.resizePanorama();
+
 
         prevWidth = width;
 

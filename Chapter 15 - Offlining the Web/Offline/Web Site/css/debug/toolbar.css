@@ -132,7 +132,8 @@
 
 }
 
-@media (min-height:320) and (orientation:landscape) {
+
+@media all and (orientation:landscape) {
 
     .toolbar {
         top: 0;
@@ -157,12 +158,19 @@
         float: none;
     }
 
+    /*.main-content {
+        right:45px;
+    }*/
+
+    .blog-post h1 {
+        margin: 0;
+    }
 }
 
-@media (max-height:240) {
+@media (max-height:240px) {
 
     .toolbar {
         display: none;
     }
-
 }
+

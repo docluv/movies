@@ -135,7 +135,7 @@
     <Content Include="css\debug\movie.app.news-view.css" />
     <Content Include="css\debug\movie.app.profile-view.css" />
     <Content Include="css\debug\movie.app.search-view.css" />
-    <Content Include="css\debug\movie.app.theaters-view.css" />
+    <Content Include="css\debug\movie.app.theater-view.css" />
     <Content Include="css\debug\panorama.css" />
     <Content Include="css\debug\site.css" />
     <Content Include="css\debug\toolbar.css" />
@@ -164,8 +164,7 @@
     <Content Include="js\debug\movie.app.news-view.js" />
     <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
-    <Content Include="js\debug\movie.app.setup.js" />
-    <Content Include="js\debug\movie.app.theaters-view.js" />
+    <Content Include="js\debug\movie.app.theater-view.js" />
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\mbp.js" />
@@ -238,7 +237,7 @@
     <Content Include="Views\Home\search-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\theaters-view.cshtml" />
+    <Content Include="Views\Home\theater-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\movie-view.cshtml" />

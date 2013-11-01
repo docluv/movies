@@ -13,8 +13,6 @@
 
         that.getNews(that.renderNews);
 
-        this.panorama = undefined;
-
     };
 
     movieApp.fn.renderNews = function (results) {
