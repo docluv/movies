@@ -19,14 +19,12 @@
         that.setMainTitle(decodeURIComponent(params.theaterName));
 
         that.InTheatersMovies(50, 1, function (data) {
-
             if (!data) {
                 return;
             }
 
-            that.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate",
-                that.cleanFirstPoster(data));
-
+            this.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate",
+                this.cleanFirstPoster(data));
         });
 
     }

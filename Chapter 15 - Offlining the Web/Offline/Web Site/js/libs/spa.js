@@ -507,7 +507,7 @@
             routes: [],
             viewSelector: ".content-pane",
             currentClass: "current",
-            mainWrappperSelector: "#main",
+            mainWrappperSelector: "main",
             NotFoundView: "NotFound",
             NotFoundRoute: "404",
             defaultTitle: "A Single Page Site with Routes",

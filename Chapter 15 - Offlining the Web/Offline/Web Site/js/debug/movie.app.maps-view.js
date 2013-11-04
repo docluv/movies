@@ -1,6 +1,19 @@
 ﻿/// <reference path="movie.app.js" />
 /// <reference path="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0" />
 
+
+var fakeTheaters = ["The Mystic",
+                    "The Marquee",
+                    "The Pantagees",
+                    "Regal 22",
+                    "Rialto 16",
+                    "AMC Stadium 20",
+                    "AMC Loews Universal Cineplex 20",
+                    "Regal Pointe Stadium 20 & IMAX",
+                    "Touchstar Cinemas Southchase 7",
+                    "Cinemark Festival Bay Mall"
+                    ];
+
 movieApp.fn.loadMapsView = function () {
 
     var that = this,
@@ -36,7 +49,7 @@ movieApp.fn.loadNearbyTheaters = function () {
 
             //loop thorugh and place 10 random pushpins to represent theaters on the map
             for (i = 0; i < 10; i++) {
-                that.AddPushpin.call(that, position, map);
+                that.AddPushpin.call(that, position, map, fakeTheaters[i]);
             }
 
         });
@@ -45,15 +58,24 @@ movieApp.fn.loadNearbyTheaters = function () {
 
 };
 
-movieApp.fn.AddPushpin = function (position, map) {
+movieApp.fn.AddPushpin = function (position, map, theaterName) {
 
     var that = this,
           shape,
           coords = that.getRandomPoistion(position),
-          pin = new Microsoft.Maps.Pushpin(coords, { text: 'Movie Theater' });
+          pin = new Microsoft.Maps.Pushpin(coords /*, { text: theaterName }*/);
+
+    // Add a handler to the pushpin drag
+    Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+        that.goToTheaterFromMap(theaterName);
+    });
 
     map.entities.push(pin);
 };
+
+movieApp.fn.goToTheaterFromMap = function (theaterName) {
+    window.location.hash = "#!theater/" + theaterName;
+}
 
 movieApp.fn.getRandomPoistion = function (position) {
 

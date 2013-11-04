@@ -30,6 +30,11 @@ body {
     background-size: cover;
 }
 
+/*http://www.sitepoint.com/html5-main-element/*/
+main{
+    display:block;
+}
+
 a, a:visited {
     color: #eee;
     text-decoration: none;

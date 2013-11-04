@@ -1,7 +1,7 @@
 ﻿
 ;
 
-(function (window, undefined) {
+(function () {
 
     "use strict";
 
@@ -11,20 +11,20 @@
 
         var that = this;
 
-        that.getNews(that.renderNews);
+        that.renderNews(that.getNews());
 
     };
 
     movieApp.fn.renderNews = function (results) {
 
-        if (results && results.length > 0) {
+//        if (results && results.articles && results.articles.length > 0) {
             this.mergeData(".new-article-list", "NewsHeadlineTemplate", results);
 
-        } else {
+        //} else {
 
-            document.querySelector(".new-article-list")
-                        .innerHTML = "<h2>Sorry No News Available</h2>";
-        }
+        //    document.querySelector(".new-article-list")
+        //                .innerHTML = "<h2>Sorry No News Available</h2>";
+  //      }
 
     }
 

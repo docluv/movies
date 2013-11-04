@@ -9,6 +9,7 @@
     {{/movies}}
 </script>
 
+
 <script id="MovieStartTimesTemplate" type="text/x-mustache-template">
     {{#movies}}
     <div class="movie-showtime-list-item">
@@ -79,4 +80,14 @@
             {{/showtimes}}
         </ul>
     </li>
+</script>
+
+<script id="NewsHeadlineTemplate" type="text/x-mustache-template">
+    {{#articles}}
+    <div>
+        <a href="{{link}}"><h3>{{title}}</h3></a>
+    </div>
+   
+    {{/articles}}
+    {{^articles}}<h2>Sorry No News Available</h2>{{/articles}}
 </script>

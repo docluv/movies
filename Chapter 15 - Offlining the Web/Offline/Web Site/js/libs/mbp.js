@@ -251,7 +251,9 @@ var _gaq = _gaq || undefined,
         var j, classes = cssClass.split(" ");
 
         for (j = 0; j < classes.length; j++) {
-            view.classList.remove(classes[j]);
+            if (classes[j] !== "") {
+                view.classList.remove(classes[j]);
+            }            
         }
 
     };
@@ -265,7 +267,9 @@ var _gaq = _gaq || undefined,
         var j, classes = cssClass.split(" ");
 
         for (j = 0; j < classes.length; j++) {
-            view.classList.add(classes[j]);
+            if (classes[j] !== "") {
+                view.classList.add(classes[j]);
+            }
         }
 
     };
