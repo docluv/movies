@@ -1,4 +1,5 @@
 /// <reference path="movie.app.js" />
+/// <reference path="movie.app.api.js" />
 
 ;
 
@@ -70,48 +71,7 @@
 
     var movieApp = function (customSettings) {
 
-        var that = new movieApp.fn.init(customSettings);
-
-        that.settings = $.extend({}, that.settings, customSettings);
-
-        that.bp = that.settings.bp || backpack();
-        that.data = that.settings.data || rqData();
-        that.tmpl = that.settings.tmpl || Mustache;
-
-        that.compileTemplates();
-
-        toolbar(".toolbar", {
-            menuItems: menuItems
-        });
-
-        deeptissue(".hamburger-nav").tap(function () {
-
-            $.toggle(document.querySelector(".main-nav"));
-            //                document.querySelector(".main-nav").style.display = "block";
-
-        });
-
-        deeptissue(".main-nav > a").tap(function () {
-
-            that.hideBurgerMenu();
-
-        });
-
-        window.addEventListener("resize", function (e) {
-
-            requestAnimationFrame(function () {
-                for (var key in that.resizeEvents) {
-                    if (that.resizeEvents.hasOwnProperty(key)) {
-                        that.resizeEvents[key].call(that);
-                    }
-                }
-            });
-
-        });
-
-        that.bindBackButton();
-
-        return that;
+        return new movieApp.fn.init(customSettings);
 
     };
 
@@ -119,8 +79,51 @@
 
         constructor: movieApp,
 
-        init: function () {
-            return this;
+        init: function (customSettings) {
+
+            var that = this;
+
+            that.settings = $.extend({}, that.settings, customSettings);
+
+            that.bp = that.settings.bp || backpack();
+            that.data = that.settings.data || rqData();
+            that.tmpl = that.settings.tmpl || Mustache;
+
+            that.compileTemplates();
+
+            toolbar(".toolbar", {
+                menuItems: menuItems
+            });
+
+            deeptissue(".hamburger-nav").tap(function () {
+
+                $.toggle(document.querySelector(".main-nav"));
+                //                document.querySelector(".main-nav").style.display = "block";
+
+            });
+
+            deeptissue(".main-nav > a").tap(function () {
+
+                that.hideBurgerMenu();
+
+            });
+
+            window.addEventListener("resize", function (e) {
+
+                requestAnimationFrame(function () {
+                    for (var key in that.resizeEvents) {
+                        if (that.resizeEvents.hasOwnProperty(key)) {
+                            that.resizeEvents[key].call(that);
+                        }
+                    }
+                });
+
+            });
+
+            that.bindBackButton();
+
+
+            return that;
         },
 
         version: "0.0.1",
@@ -365,7 +368,10 @@
             appTitle: "Modern Web Movies",
             InTheatersHomeCount: 15,
             CommingSoonHomeCount: 15,
-            SearchCount: 20
+            SearchCount: 20,
+            smallBreakPoint: 610,
+            desktopBreakPoint: 1080,
+            largeBreakPoint: 3000 //arbitrary number for giant TV/Kiosks
         }
 
     };

@@ -18,6 +18,7 @@ body {
     -ms-content-zooming: none;
     overflow-x: hidden;
     background-color: #7b359a;
+    background-image:url( '../../img/purple-bkg.jpg');
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;

@@ -113,7 +113,7 @@
                         view.getAttribute("data-transition") :
                         ""),
                 paramValues: {},
-                callback: (view.hasAttribute("data-callback") ? view.getAttribute("data-callback") : "load" + viewId),
+                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : "load" + viewId),
                 unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : "unload" + viewId)
             };
 
@@ -315,7 +315,7 @@
 
                     that.setDocumentTitle(route);
 
-                    if (route.callback) {
+                    if (route.onload) {
                         that.makeCallback(route);
                     }
 
@@ -393,7 +393,7 @@
         makeCallback: function (route) {
 
             var a, that,
-                callback = route.callback,
+                callback = route.onload,
             //    unload = route.unload,
                 cbPaths = callback.split(".");
 

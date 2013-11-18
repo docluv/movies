@@ -1,5 +1,6 @@
 ﻿/// <reference path="movie.app.js" />
-/// 
+/// <reference path="movie.app.api.js" />
+
 (function (window, undefined) {
 
     "use strict";

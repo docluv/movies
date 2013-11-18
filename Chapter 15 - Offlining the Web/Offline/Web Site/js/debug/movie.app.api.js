@@ -48,7 +48,7 @@
 
             };
 
-        return this.data.getData(url, false, {
+        return this.data.getData(url, {
             type: "jsonp",
             success: MoviesCallback
         });
@@ -67,7 +67,7 @@
 
             };
 
-        return this.data.getData(url, false, {
+        return this.data.getData(url, {
             type: "jsonp",
             success: _callback
         });
@@ -138,7 +138,7 @@
         var url = this.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
                 this.apiKey + "&page_limit=" + pageLimit + "&page=" + page;
 
-        return this.data.getData(url, false, {
+        return this.data.getData(url, {
             type: "jsonp",
             success: callback
         });
@@ -158,11 +158,11 @@
 
         for (i = 0; i < movies.length; i++) {
 
-            if (width < 600) {
+            if (width < this.settings.smallBreakPoint) {
 
                 movies[i].poster = movies[i].posters.profile;
 
-            } else if (width > 1024) {
+            } else if (width > this.settings.desktopBreakPoint) {
 
                 if (i === 0) {
                     movies[i].poster = movies[i].posters.original;

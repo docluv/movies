@@ -18,13 +18,24 @@
 
 .hamburger-nav {
     display: none;
-    width: 40px;
+    width: 100px;
     height: 40px;
     margin: 10px 5px;
     line-height: 26pt;
-    padding: 10px 0 0 0;
+    /*padding: 10px 0 0 0;*/
     float: right;
+    border:1px solid #fff;
 }
+
+
+.hamburger-bar-wrapper {
+    float: left;
+    height: 40px;
+    padding-top: 8px;
+    width: 40px;
+    display: inline-block;
+}
+
 
 .hamburger-bar {
     height: 4px;
@@ -33,6 +44,15 @@
     margin: 3px auto;
     width: 30px;
     display: block;
+}
+
+.hamburger-bar-text {
+    line-height: 40px;
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    float: left;
 }
 
 .main-nav > a, .main-nav > a:visited {

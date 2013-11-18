@@ -149,9 +149,11 @@
     <Content Include="img\map.png" />
     <Content Include="img\offline-poster.png" />
     <Content Include="img\overflow.png" />
+    <Content Include="img\purple-bkg.jpg" />
     <Content Include="img\rate.png" />
     <Content Include="img\refresh.png" />
     <Content Include="img\search.png" />
+    <Content Include="img\test-purple-2000.png" />
     <Content Include="js\debug\movie.app.account-view.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
     <Content Include="js\debug\movie.app.api.js" />

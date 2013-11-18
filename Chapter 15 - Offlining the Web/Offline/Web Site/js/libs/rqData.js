@@ -53,10 +53,13 @@
             return str.join("&");
         },
 
-        ajaxPrefilter: function (options, jqXHR) {
+        ajaxPrefilter: function (options) {
 
             // Cache it ?
             if (!window.localStorage || !options.localCache) {
+
+                this.doAJAX(options);
+
                 return;
             }
 
@@ -68,7 +71,7 @@
                 cacheKey = options.cacheKey ||
                          options.url.replace(/jQuery.*/, '') + options.type +
                          (options.data ? that.serialize(options.data) : ""),
-                ttl = ls.getItem(cacheKey + 'cachettl');
+                ttl = ls.getItem(cacheKey + '-cachettl');
 
             value = that.getExistingData({
                 isCacheValid: options.isCacheValid,
@@ -123,12 +126,7 @@
 
             };
 
-            reqwest(options)
-             .fail(function (e) {
-
-                 that.failCallback(e);
-
-             });
+            this.doAJAX(options);
 
         },
 
@@ -190,11 +188,16 @@
 
         doAJAX: function (ajaxOptions) {
 
-            return this.ajaxPrefilter(ajaxOptions);
+            reqwest(ajaxOptions)
+             .fail(function (e) {
+
+                 that.failCallback(e);
+
+             });
 
         },
 
-        getData: function (url, cache, ajaxSettings) {
+        getData: function (url, ajaxSettings) {
 
             var ajaxOptions = $.extend({},
                                 this.ajaxSettings,
@@ -205,7 +208,7 @@
                 delete ajaxOptions.dataType;
             }
 
-            return this.doAJAX(ajaxOptions);
+            return this.ajaxPrefilter(ajaxOptions);
 
         },
 
@@ -228,33 +231,33 @@
 
         putData: function (options) {
 
-            var ajaxOptions = $.extend({}, this.ajaxSettings,
-                            { type: "PUT" },
-                            options.ajaxSettings,
-                            { "url": options.url });
+            //var ajaxOptions = $.extend({}, this.ajaxSettings,
+            //                { type: "PUT" },
+            //                options.ajaxSettings,
+            //                { "url": options.url });
 
-            return reqwest(ajaxOptions)
-             .fail(function (e) {
+            //return reqwest(ajaxOptions)
+            // .fail(function (e) {
 
-                 that.failCallback(e);
+            //     that.failCallback(e);
 
-             });
+            // });
 
         },
 
         deleteData: function (options) {
 
-            var ajaxOptions = $.extend({}, this.ajaxSettings,
-                            { type: "DELETE" },
-                            options.ajaxSettings,
-                            { "url": options.url });
+            //var ajaxOptions = $.extend({}, this.ajaxSettings,
+            //                { type: "DELETE" },
+            //                options.ajaxSettings,
+            //                { "url": options.url });
 
-            return reqwest(ajaxOptions)
-            .fail(function (e) {
+            //return reqwest(ajaxOptions)
+            //.fail(function (e) {
 
-                that.failCallback(e);
+            //    that.failCallback(e);
 
-            });
+            //});
 
         }
 

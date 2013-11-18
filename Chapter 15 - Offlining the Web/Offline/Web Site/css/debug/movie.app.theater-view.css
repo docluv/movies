@@ -9,6 +9,8 @@
     height: 30px;
     width: 30px;
     display: inline-block;
+    background-color: #ddd;
+    color: #7b359a;
 }
 
     .movie-showtime-date:first-of-type {
@@ -187,7 +189,11 @@
         margin-bottom: 3px;
         width: 100%;
         height: calc(100% - 1.6em);
-        line-height: calc(100% - 1.4em);
+        line-height: 1em;
+    }
+
+    .movie-showtimes-scroller {
+        height: calc(100% - 75px);
     }
 }
 
