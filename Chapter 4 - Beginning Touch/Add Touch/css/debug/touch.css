@@ -15,7 +15,17 @@
     height: 100%;
 }
 
-@media /*(max-width:1024px) and */ (min-width:600px) {
+.y-scroller-wrapper {
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        /*-ms-scroll-snap-points-x: snapInterval(0%, 100%);*/
+        width: 100%;
+        padding-right: 0;
+        height: 100%;
+    }
+
+@media (min-width:600px) {
 
     .y-scroller-wrapper {
         overflow: hidden;
@@ -27,21 +37,6 @@
         height: 100%;
     }
 
-    /*.movie-poster-div {
-        width: 3000px;
-    }*/
 }
 
 
-@media (max-width:600px) {
-
-    .y-scroller-wrapper {
-        overflow: hidden;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        /*-ms-scroll-snap-points-x: snapInterval(0%, 100%);*/
-        width: 100%;
-        padding-right: 0;
-        height: 100%;
-    }
-}

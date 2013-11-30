@@ -12,8 +12,8 @@
             pHeight = 170, //poster height
             pWidth = 120, //poster width
             wBox = {
-                width: parseInt(main.clientWidth, 10),
-                height: parseInt(main.clientHeight, 10)
+                width: parseInt(grid.clientWidth, 10),
+                height: parseInt(grid.clientHeight, 10)
             },
             rows = 0, columns = 0;
 

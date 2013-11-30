@@ -5,83 +5,80 @@
 
 .movie-poster-list .movie-target {
     display: block;
-    list-style-type: none;
     margin: 10px;
     width: 100%;
-    height: auto;
+    height: 91px;
     overflow: hidden;
     background: transparent;
-    text-align: center;
     border-bottom: solid 1px #afafaf;
 }
 
 .movie-poster-list .movie-grid-poster {
-    width: 40px;
-    height: 60px;
+    width: 61px;
+    height: 91px;
     border: none;
     display: block;
     float: left;
 }
 
 .movie-poster-list .photo-caption {
-    line-height: 60px;
+    line-height: 45px;
     text-align: left;
     margin-left: 15px;
     display: inline-block;
-    width: 180px;
     font-size: 1.2em;
     overflow: hidden;
     padding-right: 6px;
     color: white;
+    line-height: 2em;
+    width: calc(100% - 90px);
+    float: left;
 }
 
 .movie-poster-list a {
     display: inline-block;
-    float: left;
-    width: 250px;
     overflow: hidden;
+    width: 100%;
 }
+
 
 .movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
     font-size: .75em;
-    margin: 0 0 0 10px;
     width: 70px;
     line-height: 20px;
-    float: none;
+    float: left;
     text-align: left;
+    width: 4em;
+    margin-left: 15px;
+    display: inline-block;
 }
 
+
 .movie-poster-list .critics_rating {
-    width: 70px;
+    width: 90px;
     margin-left: 10px;
 }
 
 @media (min-width:600px) {
 
     .movie-poster-list .photo-caption {
-        width: 200px;
+        width: calc(100% - 390px);
         font-size: 1.5em;
-    }
-}
-
-@media (min-width:800px) {
-
-    .movie-poster-list a {
-        width: 300px;
+        float: left;
+        line-height: 91px;
+        font-weight: bold;
     }
 
     .movie-poster-list .mpaa_rating, .movie-poster-list .critics_rating {
         font-size: 1.5em;
         margin: 0 0 0 50px;
-        width: 100px;
-        line-height: 60px;
-        float: left;
+        width: 80px;
+        line-height: 91px;
         display: inline-block;
     }
 
     .movie-poster-list .critics_rating {
-        width: 200px;
+        width: 150px;
         margin-left: 10px;
     }
 }
-

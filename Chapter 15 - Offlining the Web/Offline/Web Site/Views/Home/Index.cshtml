@@ -97,17 +97,18 @@
         <h1 class="view-title">Modern Web Movies</h1>
         <nav class="main-nav" role="navigation">
             <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
-            <a href="@Html.SPALink("theaters")" role="menuitem" class="theaters-nav"><span class="nav-icon theaters-icon"></span><span class="nav-text">Theaters</span></a>
             <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-            <a href="@Html.SPALink("news")" role="menuitem" class="news-nav"><span class="nav-icon news-icon"></span><span class="nav-text">News</span></a>
+            <a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>
             <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
+            <a href="@Html.SPALink("login")" role="menuitem" class="signin-nav"><span class="nav-icon signin-icon"></span><span class="nav-text">Sign In</span></a>
+            <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
         </nav>
         <span class="hamburger-nav">
             <span class="hamburger-bar-wrapper">
                 <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
             </span>
-                <span class="hamburger-bar-text">menu</span>
-            </span>
+            <span class="hamburger-bar-text">menu</span>
+        </span>
     </header>
     <main class="main-content" role="main"></main>
     <footer class="toolbar">
@@ -123,10 +124,11 @@
             @RenderPage(lastLoad, "movies-view.cshtml")
             @RenderPage(lastLoad, "movie-view.cshtml")
             @RenderPage(lastLoad, "maps-view.cshtml")
-            @RenderPage(lastLoad, "news-view.cshtml")
+            @RenderPage(lastLoad, "reviews-view.cshtml")
             @RenderPage(lastLoad, "search-view.cshtml")
             @RenderPage(lastLoad, "theater-view.cshtml")
-
+            @RenderPage(lastLoad, "about-view.cshtml")
+            @RenderPage(lastLoad, "login-view.cshtml")
             @RenderPage(lastLoad, "_templates.cshtml")
 
         }

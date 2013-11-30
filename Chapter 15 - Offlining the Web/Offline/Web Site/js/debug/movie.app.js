@@ -31,10 +31,10 @@
         }],
         subMenu: [
             {
-                title: "news",
+                title: "reviews",
                 icon: undefined,
-                iconClass: "go-news",
-                url: "#!news"
+                iconClass: "go-reviews",
+                url: "#!reviews"
             }
 
              , {
@@ -66,6 +66,11 @@
                 icon: undefined,
                 iconClass: "go-account",
                 url: "#!account"
+            }, {
+                title: "about",
+                icon: undefined,
+                iconClass: "go-about",
+                url: "#!about"
             }]
     };
 
@@ -288,7 +293,7 @@
                                     }));
 
                 //that.panoramaDt = 
-/*
+                /**/
                 dt = deeptissue(pCont,
                             {
                                 swipeRightThreshold: 35,
@@ -299,7 +304,7 @@
 
                 dt.swipeRight(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ) {
+                    if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveRight(evt);
                     }
 
@@ -307,12 +312,12 @@
 
                 .swipeLeft(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth ) {
+                    if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveLeft(evt);
                     }
 
                 });
-                */
+                /**/
                 //pCont.addEventListener("MSManipulationStateChanged", function (e) {
                 //    console.log(e.currentState);
                 //});

@@ -13,6 +13,7 @@
     list-style-type: none;
     margin: 10px;
     width: 80px;
+    height: 120px;
     overflow: hidden;
     background: transparent;
     text-align: center;
@@ -26,12 +27,12 @@
 
 .movie-poster-grid .photo-caption {
     position: relative;
-    top: -12px;
+    top: -14px;
     float: left;
     overflow: hidden;
     padding-right: 6px;
-    width: 75px;
-    height: 12px;
+    width: 80px;
+    height: 14px;
     background-color: rgba(0, 0, 0, .4);
     color: white;
     text-align: right;

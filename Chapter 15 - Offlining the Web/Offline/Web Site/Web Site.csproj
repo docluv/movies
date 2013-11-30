@@ -133,7 +133,7 @@
     <Content Include="css\debug\movie.app.movie-view.css" />
     <Content Include="css\debug\movie.app.movies-view.css" />
     <Content Include="css\debug\movie.app.nav.css" />
-    <Content Include="css\debug\movie.app.news-view.css" />
+    <Content Include="css\debug\movie.app.reviews-view.css" />
     <Content Include="css\debug\movie.app.profile-view.css" />
     <Content Include="css\debug\movie.app.search-view.css" />
     <Content Include="css\debug\movie.app.theater-view.css" />
@@ -164,7 +164,7 @@
     <Content Include="js\debug\movie.app.maps-view.js" />
     <Content Include="js\debug\movie.app.movie-view.js" />
     <Content Include="js\debug\movie.app.movies-view.js" />
-    <Content Include="js\debug\movie.app.news-view.js" />
+    <Content Include="js\debug\movie.app.reviews-view.js" />
     <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
     <Content Include="js\debug\movie.app.theater-view.js" />
@@ -231,7 +231,7 @@
     <Content Include="Views\Home\maps-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\news-view.cshtml" />
+    <Content Include="Views\Home\reviews-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\profile-view.cshtml" />
@@ -268,6 +268,9 @@
       <Project>{909666ff-501b-405f-befa-1cbdf60a10b7}</Project>
       <Name>SPAHelper</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\about-view.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
