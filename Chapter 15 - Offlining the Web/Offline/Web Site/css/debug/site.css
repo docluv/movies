@@ -18,12 +18,13 @@ body {
     -ms-content-zooming: none;
     overflow-x: hidden;
     background-color: #7b359a;
-    background-image:url( '../../img/purple-bkg.jpg');
+    background-image: url( '../../img/purple-bkg.jpg');
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
     font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', sans-serif;
     line-height: 1.231;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -32,8 +33,8 @@ body {
 }
 
 /*http://www.sitepoint.com/html5-main-element/*/
-main{
-    display:block;
+main {
+    display: block;
 }
 
 a, a:visited {

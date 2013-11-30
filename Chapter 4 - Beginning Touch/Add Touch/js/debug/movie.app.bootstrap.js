@@ -3,6 +3,14 @@ var movie = movieApp();
 
 movie.setMovieGridSize();
 
-window.addEventListener("resize", movie.setMovieGridSize);
+movie.setupMQL("min600", "(min-width: 600px)", [{
+    matchName: "setMovieGridSize",
+    matchFunc: function(){
+        movie.setMovieGridSize();
+    },
+    nomatchName: "setMovieGridSize",
+    nomatchFunc: function(){
+        movie.setMovieGridSize();
+    }
+}]);
 
-window.addEventListener("orientationchange", movie.setMovieGridSize);
