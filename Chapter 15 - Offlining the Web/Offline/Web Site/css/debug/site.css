@@ -147,29 +147,11 @@ h4, .panel-small-title {
     text-align: center;
 }
 
-
-/*@media (min-width:601px) {
-
-    .site-header {
-        height: 100px;
-    }
-
-    .main-content {
-        top: 110px;
-        bottom: 0;
-        left: 5px;
-    }
+.no-results {
+    width: 50%;
+    margin: 3em auto;
+    font-size: 2em;
 }
-
-@media (max-width:800px) {
-
-    .main-content {
-        left: 10px;
-    }
-}
-*/
-
-
 
 @media (min-width: 600px) {
 

@@ -137,6 +137,8 @@
         data: undefined,
         tmpl: undefined,
 
+        noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
+
         mainTitle: document.querySelector(".view-title"),
 
         hideBurgerMenu: function () {
