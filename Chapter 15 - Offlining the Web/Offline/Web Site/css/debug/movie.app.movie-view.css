@@ -64,6 +64,16 @@ span.center, img.center {
     display: none;
 }
 
+.movie-description-panel,
+.movie-cast-panel,
+.movie-showtimes-panel {
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    -webkit-user-select: text;
+    user-select: text;
+}
+
 @media (min-width:610px) and (max-width:800px) {
 
     .movie-description-panel,
@@ -112,7 +122,6 @@ span.center, img.center {
         top: 0px;
         right: 0;
         position: absolute;
-        background-color: rgb(123, 53, 154);
     }
 }
 

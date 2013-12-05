@@ -3,7 +3,7 @@
     margin: 6px;
     padding-right: 3px;
     padding-left: 6px;
-    width: calc(100% - 3em);
+    width: calc(100% - 2em);
     height: 42px;
     border: 1px solid #E9E9E9;
     background-color: #fff;
@@ -63,4 +63,22 @@ input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-results-button,
 input[type="search"]::-webkit-search-results-decoration {
     display: none;
+}
+
+@media(min-width:600px){
+
+    .searchBox{
+        margin-left:30px;
+        width: calc(100% - 3em);
+    }
+
+}
+
+@media(min-width:1024px){
+
+    .searchBox{
+        margin-left:60px;
+        width: calc(100% - 5em);
+    }
+
 }
