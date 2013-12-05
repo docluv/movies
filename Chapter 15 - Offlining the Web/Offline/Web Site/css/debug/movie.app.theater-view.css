@@ -1,4 +1,6 @@
 ﻿
+/*Calendar CSS*/
+
 .movie-showtime-dates {
     margin: 5px auto;
     width: 255px;
@@ -41,6 +43,8 @@
     height: 100%;
     line-height: 30px;
 }
+
+/* End Calendar CSS */
 
 .movie-showtime-detail {
     display: inline-block;

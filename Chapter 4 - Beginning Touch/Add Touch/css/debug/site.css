@@ -1,8 +1,22 @@
 
+html, body {
+    -ms-scroll-translation: vertical-to-horizontal;
+    -ms-touch-action: none;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    height: 100%;
+    font-size: 100%;
+    cursor: default;
+}
+
 html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    font-size: 100%;
 }
 
 body {

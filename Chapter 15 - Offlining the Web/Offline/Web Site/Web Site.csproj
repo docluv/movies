@@ -143,6 +143,7 @@
     <Content Include="css\debug\touch.css" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />
+    <Content Include="IEconfig.xml" />
     <Content Include="img\back.png" />
     <Content Include="img\camera.png" />
     <Content Include="img\home.png" />
@@ -184,7 +185,6 @@
     <Content Include="js\specs\core\moveiApp.core.Tests.js" />
     <Content Include="js\specs\home-view\moveiApp.home-view.html" />
     <Content Include="js\specs\home-view\moveiApp.home-view.Tests.js" />
-    <Content Include="js\specs\jquery.min.js" />
     <Content Include="js\specs\map-view\moveiApp.map-view.html" />
     <Content Include="js\specs\map-view\moveiApp.map-view.Tests.js" />
     <Content Include="js\specs\movie-view\moveiApp.movie-view.html" />
@@ -196,6 +196,10 @@
     <Content Include="js\specs\search-view\moveiApp.search-view.html" />
     <Content Include="js\specs\search-view\moveiApp.search-view.Tests.js" />
     <Content Include="js\specs\sinon.js" />
+    <Content Include="js\specs\Util.Tests.js" />
+    <Content Include="movies1.xml" />
+    <Content Include="movies2.xml" />
+    <Content Include="movies3.xml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -272,6 +276,9 @@
   <ItemGroup>
     <Content Include="Views\Home\about-view.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\privacy-view.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -301,7 +308,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>grunt.cmd</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,6 @@
-﻿
+﻿/// <reference path="movie.app.js" />
+/// <reference path="movie.app.api.js" />
+
 (function (window, undefined) {
 
     movieApp.fn.loadMoviesView = function (params) {

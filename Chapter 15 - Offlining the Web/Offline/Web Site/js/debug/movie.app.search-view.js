@@ -4,7 +4,6 @@
 
     "use strict";
 
-
     movieApp.fn.searchForMovies = function (term) {
 
         var that = this,
@@ -65,6 +64,5 @@
         that.setMainTitle("Search");
 
     }
-
 
 }(window));

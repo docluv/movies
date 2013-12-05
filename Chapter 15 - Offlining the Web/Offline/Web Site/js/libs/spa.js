@@ -81,7 +81,7 @@
                 if (view.hasAttributes() && view.hasAttribute("id")) {
 
                     viewId = view.getAttribute("id");
-                    rawPath = (view.hasAttribute("data-path") ? view.getAttribute("data-path") : "");
+                    rawPath = (view.hasAttribute("data-route") ? view.getAttribute("data-route") : "");
 
                     route = that.createRoute(viewId, rawPath, view);
                     routes[route.path] = route;

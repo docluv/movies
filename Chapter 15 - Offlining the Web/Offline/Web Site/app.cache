@@ -1,27 +1,12 @@
 ﻿CACHE MANIFEST
 # version 0.01
 
-/deferred 
-
 #images
 
-/favicon.ico
-img/l/apple-touch-icon.png
-img/l/apple-touch-icon-precomposed.png
-img/l/splash.png
-img/m/apple-touch-icon.png
-img/h/apple-touch-icon.png
-
-img/bullets.png
-img/next.png
-img/prev.png  
-img/movie-ticket.png
-img/movies-icon.png
-icons/search.png 
-img/back-32.png 
+img/purple-bkg.jpg
 
 #css
-css/site.css?v=.1
+css/site.min.css?v=.1
 
 #js
 
@@ -30,7 +15,9 @@ js/applib.js
 
 NETWORK:
 #http://example.com/api/
-*
+
+http://api.rottentomatoes.com/api/public/v1.0/
+http://api.nytimes.com/svc/movies/
 
 FALLBACK:
 

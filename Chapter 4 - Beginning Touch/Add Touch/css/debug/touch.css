@@ -1,29 +1,20 @@
-.x-scroller-wrapper, .y-scroller-wrapper {
+.y-scroller-wrapper {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch;
-    -moz-overflow-scrolling:touch;
-    overflow-scrolling:touch;
+    -moz-overflow-scrolling: touch;
+    overflow-scrolling: touch;
     overflow-style: none;
     -ms-scroll-chaining: none;
     -ms-scroll-snap-type: proximity;
-    -ms-scroll-translation: vertical-to-horizontal; 
-    overflow: auto;
-    overflow-y: scroll;
+    -ms-scroll-translation: vertical-to-horizontal;
+    overflow: hidden;
     overflow-x: hidden;
+    overflow-y: scroll;
     width: 100%;
     padding-right: 0;
     height: 100%;
 }
 
-.y-scroller-wrapper {
-        overflow: hidden;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        /*-ms-scroll-snap-points-x: snapInterval(0%, 100%);*/
-        width: 100%;
-        padding-right: 0;
-        height: 100%;
-    }
 
 @media (min-width:600px) {
 
@@ -36,7 +27,4 @@
         padding-right: 0;
         height: 100%;
     }
-
 }
-
-

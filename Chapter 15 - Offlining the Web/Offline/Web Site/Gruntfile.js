@@ -8,12 +8,11 @@
         qunit: {
             all: ['js/specs/**/*.html']
         },
-
         jshint: {
             options: {
                 browser: true
             },
-            files: ['Gruntfile.js', 'js/debug/*.js']
+            files: ['Gruntfile.js', 'js/debug/*.js', 'js/libs/*.js']
         },
         cssmin: {
             sitecss: {
@@ -46,15 +45,8 @@
             options: {
                 compress: true
             },
-            //    options: {
-            //        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-            //'<%= grunt.template.today("yyyy-mm-dd") %> */'
-            //    },
-
             applib: {
                 src: [
-            //    'js/libs/add2home.js',
-                //'js/libs/helper.js',
                 'js/libs/mbp.js',
                 'js/libs/reqwest.js',
                 'js/libs/backpack.js',
@@ -82,15 +74,10 @@
                 ],
                 dest: 'js/applib.js'
             }
-
         }
     });
 
-    //grunt.loadnpmtasks('grunt-contrib-uglify');
-    //grunt.loadnpmtasks('grunt-contrib-cssmin');
-    //grunt.loadnpmtasks('grunt-contrib-jshint');
-
     // Default task.
-    grunt.registerTask('default', [/*'jshint', */'uglify', 'cssmin']);
+    grunt.registerTask('default', ['jshint', 'qunit', 'uglify', 'cssmin']);
 
 };

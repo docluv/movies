@@ -1,12 +1,10 @@
 
 module("MovieApp Core module Unit Tests", {
     setup: function () {
-
-        
-
+        console.info("starting test");
     },
     teardown: function () {
-
+        console.info("finished test");
     }
 });
 
@@ -15,31 +13,40 @@ module("MovieApp Core module Unit Tests", {
 test("Verify We Have movieApp with expected members", function () {
 
     //basic sainty assertions to know members are present
-    ok(movieApp, "movieApp object should exist");
-    ok(movieApp.fn.init, "init function should exist");
+    isFunction(movieApp, "movieApp object should exist");
+    isFunction(movieApp.fn.init, "init function should exist");
     ok(movieApp.fn.version, "version should exist");
     equal(movieApp.fn.bp, undefined, "bp should exist");
     equal(movieApp.fn.data, undefined, "data should exist");
     equal(movieApp.fn.tmpl, undefined, "tmpl should exist");
     ok(movieApp.fn.mainTitle, "mainTitle should exist");
-    ok(movieApp.fn.hideBurgerMenu, "hideBurgerMenu function should exist");
+    isFunction(movieApp.fn.hideBurgerMenu, "hideBurgerMenu function should exist");
     ok(movieApp.fn.movieTypes, "movieTypes function should exist");
-    ok(movieApp.fn.setMainTitle, "setMainTitle function should exist");
-    ok(movieApp.fn.bindBackButton, "bindBackButton function should exist");
+    isFunction(movieApp.fn.setMainTitle, "setMainTitle function should exist");
+    isFunction(movieApp.fn.bindBackButton, "bindBackButton function should exist");
     ok(movieApp.fn.templates, "templates should exist");
-    ok(movieApp.fn.compileTemplates, "compileTemplates function should exist");
-    ok(movieApp.fn.showLoading, "showLoading function should exist");
-    ok(movieApp.fn.mergeData, "mergeData function should exist");
+    isFunction(movieApp.fn.compileTemplates, "compileTemplates function should exist");
+    isFunction(movieApp.fn.showLoading, "showLoading function should exist");
+    isFunction(movieApp.fn.mergeData, "mergeData function should exist");
     ok(movieApp.fn.resizeEvents, "resizeEvents should exist");
-    ok(movieApp.fn.viewWidth, "viewWidth should exist");
-    ok(movieApp.fn.setMoviePanelWidth, "setMoviePanelWidth function should exist");
+    isFunction(movieApp.fn.setMoviePanelWidth, "setMoviePanelWidth function should exist");
     equal(movieApp.fn.panorama, undefined, "panorama should exist");
     ok(movieApp.fn.hasTouch, "hasTouch function should exist");
-    ok(movieApp.fn.setupPanorama, "setupPanorama function should exist");
-    ok(movieApp.fn.setPanoramaWings, "setPanoramaWings function should exist");
+    isFunction(movieApp.fn.setupPanorama, "setupPanorama function should exist");
+    isFunction(movieApp.fn.setPanoramaWings, "setPanoramaWings function should exist");
     ok(movieApp.fn.settings, "settings should exist");
 
 });
+
+
+test("Verify movieApp() creates a new object", function () {
+
+    var movie = movieApp();
+
+    isObject(movie, "mainTitle should equal test DIV");
+
+});
+
 
 test("Verify can a new mainTitle points to the desired element", function () {
 
