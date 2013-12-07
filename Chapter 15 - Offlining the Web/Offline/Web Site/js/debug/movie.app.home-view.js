@@ -6,73 +6,50 @@
 
     "use strict";
 
-    movieApp.fn.unloadHomeView = function () {
-        delete this.resizeEvents["manageHomeView"];
-      //  this.panorama.clearPanoramaSettings();
-        this.panorama = undefined;
-      ////  this.panoramaDt.clear();
-      //  this.panoramaDt = undefined;
-    };
+movieApp.fn.unloadHomeView = function () {
+    delete this.resizeEvents["manageHomeView"];
+    this.panorama = undefined;
+};
 
-    movieApp.fn.loadHomeView = function () {
+movieApp.fn.renderHomeMovies = function (target, data) {
 
-        var that = this;
+    if (!data) {
+        return;
+    }
 
-        that.setupPanorama();
-        that.setMainTitle("Modern Web Movies");
+    this.mergeData(target, "MoviePosterGridTemplate", data);
+    this.setPosterSrc();
 
-        that.InTheatersMovies(50, 1, function (data) {
+};
 
-            if (!data) {
-                return;
-            }
+movieApp.fn.loadHomeView = function () {
 
-            that.mergeData(".top-box-list", "MoviePosterGridTemplate", data);
-            that.setPosterSrc();
+    var that = this,
+        i = 0,
+        vPanels = document.querySelectorAll(".panel-v-scroll");
 
-        });
+    that.setupPanorama();
+    that.setMainTitle("Modern Web Movies");
 
-        that.OpeningMovies(50, 1, function (data) {
+    that.InTheatersMovies(50, 1, function (data) {
+        that.renderHomeMovies.call(that, ".top-box-list", data);
+    });
 
-            if (!data) {
-                return;
-            }
+    that.OpeningMovies(50, 1, function (data) {
+        that.renderHomeMovies.call(that, ".opening-movie-list", data);
+    });
 
-            that.mergeData(".opening-movie-list", "MoviePosterGridTemplate", data);
-            that.setPosterSrc();
+    that.TopBoxOfficeMovies(50, 1, function (data) {
+        that.renderHomeMovies.call(that, ".movies-near-me-list", data);
+    });
 
-        });
+    that.CommingSoonMovies(50, 1, function (data) {
+        that.renderHomeMovies.call(that, ".comming-soon-list", data);
+    });
 
-        that.TopBoxOfficeMovies(50, 1, function (data) {
+    that.setPanoramaWidth();
 
-            if (!data) {
-                return;
-            }
-
-            that.mergeData(".movies-near-me-list", "MoviePosterGridTemplate", data);
-            that.setPosterSrc();
-
-        });
-
-        that.CommingSoonMovies(50, 1, function (data) {
-
-            if (!data) {
-                return;
-            }
-
-            that.mergeData(".comming-soon-list", "MoviePosterGridTemplate", data);
-            that.setPosterSrc();
-
-        });
-
-        that.setPanoramaWidth();
-
-        var i = 0,
-            vPanels = document.querySelectorAll(".panel-v-scroll");
-
-        //that.resizeEvents["manageHomeView"] = that.setPanoramaWidth;
-
-        that.setupMQL("min600", "(min-width: 600px)", [{
+    that.setupMQL("min600", "(min-width: 600px)", [{
             matchName: "manageHomeView",
             matchFunc: function () {
                 that.setPanoramaWidth.call(that);
@@ -85,7 +62,7 @@
             }
         }]);
 
-        that.setupMQL("min1024", "(min-width: 1024px)", [{
+    that.setupMQL("min1024", "(min-width: 1024px)", [{
             matchName: "manageHomeView1024",
             matchFunc: function () {
                 that.setPanoramaWidth.call(that);
@@ -98,7 +75,7 @@
             }
         }]);
 
-    };
+};
 
     movieApp.fn.viewWidth = window.innerWidth;
 
@@ -125,37 +102,6 @@
 
     };
 
-    movieApp.fn.setMovieGridSize = function () {
-
-        //panorama-panels
-        //single-panel
-
-        var that = this,
-            grid = document.querySelector(".movie-poster-div"),
-            posters = document.querySelectorAll(".movie-target"),
-            l = posters.length,
-            pHeight = 170, //poster height
-            pWidth = 120, //poster width
-            wBox = {
-                width: parseInt(main.clientWidth, 10),
-                height: parseInt(main.clientHeight, 10)
-            },
-            rows = 0, columns = 0;
-
-        if (wBox.width > 600 && grid) {//make it horizontal
-
-            rows = Math.floor(wBox.height / pHeight);
-            grid.style.width = (pWidth * (l / rows)) + "px";
-            grid.style.height = (rows * pHeight) + "px";
-
-        } else {//make it vertical
-
-            grid.style.width = "";
-            grid.style.height = "";
-
-        }
-
-    };
 
     function getGridHeight (baseHeight) {
 

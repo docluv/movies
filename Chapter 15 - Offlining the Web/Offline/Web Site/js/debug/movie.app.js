@@ -323,26 +323,26 @@
         _panoramaSetup: false,
         hasTouch: (window.navigator.msPointerEnabled || "ontouchstart" in window),
 
-        setupPanorama: function (target, settings) {
+setupPanorama: function (target, settings) {
 
-            target = target || ".panorama-container";
-            settings = $.extend({
-                maxHeight: Number.MAX_VALUE,
-                maxWidth: Number.MAX_VALUE
-            }, settings);
+    target = target || ".panorama-container";
+    settings = $.extend({
+        maxHeight: Number.MAX_VALUE,
+        maxWidth: Number.MAX_VALUE
+    }, settings);
 
-            var that = this, dt,
-                pCont = document.querySelector(target);
+    var that = this, dt,
+        pCont = document.querySelector(target);
 
-            if (settings.maxWidth &&
-                settings.maxWidth >= window.innerWidth) {
+    if (settings.maxWidth &&
+        settings.maxWidth >= window.innerWidth) {
 
-                that.panorama = panorama(pCont,
-                                    $.extend(settings, {
-                                        speed: 600,
-                                        headerHeight: 80,
-                                        peekWidth: 50,
-                                        contentResize: function () {
+        that.panorama = panorama(pCont,
+                            $.extend(settings, {
+                                speed: 600,
+                                headerHeight: 80,
+                                peekWidth: 50,
+                                contentResize: function () {
 
                                             var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
 
@@ -352,19 +352,19 @@
                                             }
 
                                         }
-                                    }));
+                            }));
 
-                //that.panoramaDt = 
-                /**/
-                dt = deeptissue(pCont,
-                            {
-                                swipeRightThreshold: 35,
-                                swipeLeftThreshold: -35,
-                                swipeUpThreshold: 35,
-                                swipeDownThreshold: 35
-                            });
+        //that.panoramaDt = 
+        /**/
+        dt = deeptissue(pCont,
+                    {
+                        swipeRightThreshold: 35,
+                        swipeLeftThreshold: -35,
+                        swipeUpThreshold: 35,
+                        swipeDownThreshold: 35
+                    });
 
-                dt.swipeRight(function (evt, m, translate) {
+        dt.swipeRight(function (evt, m, translate) {
 
                     if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveRight(evt);
@@ -372,52 +372,52 @@
 
                 })
 
-                .swipeLeft(function (evt, m, translate) {
+        .swipeLeft(function (evt, m, translate) {
 
                     if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveLeft(evt);
                     }
 
                 });
-                /**/
-                //pCont.addEventListener("MSManipulationStateChanged", function (e) {
-                //    console.log(e.currentState);
-                //});
+        /**/
+        //pCont.addEventListener("MSManipulationStateChanged", function (e) {
+        //    console.log(e.currentState);
+        //});
 
-            }
+    }
 
-            if (!that._panoramaSetup) {
+    if (!that._panoramaSetup) {
 
-                var pn = document.querySelector(".pxs_next"),
-                    pp = document.querySelector(".pxs_prev");
+        var pn = document.querySelector(".pxs_next"),
+            pp = document.querySelector(".pxs_prev");
 
-                if (!that.hasTouch) {
-                    //just falback to mouse stuff
+        if (!that.hasTouch) {
+            //just falback to mouse stuff
 
-                    that.setPanoramaWings();
+            that.setPanoramaWings();
 
-                    if (pn) {
-                        pn.addEventListener("click", function (e) {
+            if (pn) {
+                pn.addEventListener("click", function (e) {
                             that.panorama.moveLeft(e);
                         });
-                    }
+            }
 
-                    if (pp) {
-                        pp.addEventListener("click", function (e) {
+            if (pp) {
+                pp.addEventListener("click", function (e) {
                             that.panorama.moveRight(e);
                         });
 
-                    }
-
-                } else {
-                    //remove the wings, don't need them
-                }
-
-                that._panoramaSetup = true;
-
             }
 
-        },
+        } else {
+            //remove the wings, don't need them
+        }
+
+        that._panoramaSetup = true;
+
+    }
+
+},
 
         panoramaDt: undefined,
 
