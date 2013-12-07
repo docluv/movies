@@ -1,0 +1,18 @@
+﻿<tile>
+  <visual lang="en-US" version="2">
+    <binding template="TileSquare150x150PeekImageAndText04" branding="name">
+      <image id="1" src="http://content6.flixster.com/movie/11/17/21/11172174_pro.jpg"/>
+      <text id="1">Despicable Me 2</text>
+    </binding>
+
+    <binding template="TileWide310x150ImageAndText01" branding="name">
+      <image id="1" src="http://content6.flixster.com/movie/11/17/21/11172174_pro.jpg"/>
+      <text id="1">Despicable Me 2</text>
+    </binding>
+
+    <binding template="TileSquare310x310ImageAndText01" branding="name">
+      <image id="1" src="http://content6.flixster.com/movie/11/17/21/11172174_pro.jpg"/>
+      <text id="1">Despicable Me 2</text>
+    </binding>
+  </visual>
+</tile>
