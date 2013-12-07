@@ -141,15 +141,15 @@
 
         });
 
-        deeptissue(showReview).tap(function (e) {
+deeptissue(showReview).tap(function (e) {
 
-            $.show(document.querySelector(selectors.reviewPanel));
-            $.hide(document.querySelector(selectors.detailPanel));
-            $.hide(document.querySelector(selectors.castPanel));
-            $.hide(document.querySelector(selectors.showtimesPanel));
-            $.hide(document.querySelector(selectors.descPanel));
+    $.show(document.querySelector(selectors.reviewPanel));
+    $.hide(document.querySelector(selectors.detailPanel));
+    $.hide(document.querySelector(selectors.castPanel));
+    $.hide(document.querySelector(selectors.showtimesPanel));
+    $.hide(document.querySelector(selectors.descPanel));
 
-        });
+});
 
         deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
 
@@ -163,13 +163,13 @@
 
     };
 
-    movieApp.fn.unloadMovieView = function () {
+movieApp.fn.unloadMovieView = function () {
 
-        delete this.resizeEvents["manageMovieView"];
-        this.panorama.clearPanoramaSettings();
-        this.panorama = undefined;
+    delete this.resizeEvents["manageMovieView"];
+    this.panorama.clearPanoramaSettings();
+    this.panorama = undefined;
 
-    };
+};
 
     var prevWidth = 0;
 
@@ -177,6 +177,7 @@
 
         var width = window.innerWidth;
 
+        //move from mini-tablet view
         if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
 
             var showTimes = document.querySelector(".movie-showtime-list"),

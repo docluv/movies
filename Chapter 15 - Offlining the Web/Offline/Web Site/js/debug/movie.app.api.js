@@ -37,24 +37,13 @@
         var that = this,
             url = that.rtRoot + "movies.json?apikey=" + this.apiKey +
                     "&q=" + q + "&page_limit=" +
-                    pageLimit + "&page=" + page,
-            MoviesCallback = function (data) {
-
-                if (data.total > 0) {
-                    data.movies = that.setMoviePoster(data.movies);
-                }
-
-                if (callback) {
-                    callback.call(that, data);
-                }
-
-                that.storeMoviesInStorage(data.movies);
-
-            };
+                    pageLimit + "&page=" + page;
 
         return this.data.getData(url, {
             type: "jsonp",
-            success: MoviesCallback
+            success: function (data) {
+                that.MoviesCallback.call(that, data, callback);
+            }
         });
 
     };
@@ -113,22 +102,29 @@
 
     };
 
+    movieApp.fn.MoviesCallback = function (data, callback) {
+
+        var that = this;
+
+        if (data.total > 0 || data.movies.length > 1 ) {
+            data.movies = that.setMoviePoster(data.movies);
+        }
+
+        if (callback) {
+            callback.call(that, data);
+        }
+
+        that.storeMoviesInStorage(data.movies);
+
+    };
+
     movieApp.fn.getRottenTomatoesList = function (listName, pageLimit, page, callback) {
 
-        var that = this,
-            MoviesCallback = function (data) {
+        var that = this;
 
-                data.movies = that.setMoviePoster(data.movies);
-
-                if (callback) {
-                    callback.call(that, data);
-                }
-
-                that.storeMoviesInStorage(data.movies);
-
-            };
-
-        return this.getRottenTomatoes(listName, pageLimit, page, MoviesCallback);
+        return this.getRottenTomatoes(listName, pageLimit, page, function (data) {
+            that.MoviesCallback.call(that, data, callback);
+        });
 
     };
 

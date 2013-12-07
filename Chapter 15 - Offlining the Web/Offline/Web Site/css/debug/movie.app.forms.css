@@ -2,7 +2,7 @@
 .btn {
     margin: auto;
     width: 45%;
-    display:inline-block;
+    display: inline-block;
     height: 30px;
     border: 1px solid #fff;
     background-color: transparent;
@@ -83,6 +83,14 @@ textarea {
 }
 
 
+@media(min-width:600px) {
+    .btn {
+        margin: 0 60px 0 0;
+        width: 200px;
+        float: right;
+    }
+}
+
 
 @media (min-width:800px) {
 
@@ -104,7 +112,7 @@ textarea {
     .input-label {
         width: 20%;
         font-size: 1.5em;
-        display:inline-block;
+        display: inline-block;
     }
 
     input:-moz-placeholder,
@@ -114,21 +122,13 @@ textarea {
     input::input-placeholder {
         color: #808080;
     }
-
-    .btn {
-        margin: 0 100px 0 0;
-        width: 400px;
-        float: right;
-    }
 }
 
-@media (min-width:1090px){
+@media (min-width:1090px) {
 
     .btn {
         margin: 5px 10%;
         width: 100px;
         float: none;
     }
-
-
 }

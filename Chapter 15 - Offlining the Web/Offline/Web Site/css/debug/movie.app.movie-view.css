@@ -17,11 +17,9 @@ span.center, img.center {
 }
 
 .full-movie-poster {
-    /*width: 250px;*/
     border: none;
     width: 180px;
 }
-
 
 .theater-title {
     font-weight: bold;
@@ -103,7 +101,6 @@ span.center, img.center {
         margin: 5px 0 10px 0;
     }
 
-
     .movie-poster-centered,
     .movie-description,
     .movie-review-panel,
@@ -119,18 +116,13 @@ span.center, img.center {
     .movie-review-panel {
         padding: 20px;
         left: 0;
-        top: 0px;
+        top: 0;
         right: 0;
         position: absolute;
     }
 }
 
 @media (min-width:800px) {
-
-    /*.full-movie-poster {
-        width: 300px;
-        height: 461px;
-    }*/
 
     .movie-details-panel {
         margin: 0 20px 0 0;
@@ -141,7 +133,8 @@ span.center, img.center {
     }
 
     .movie-description-panel {
-        width: 200px;
+        /* 200 pixels for each of the other panels */
+        width: calc(100% - 600px);
     }
 
     .movie-showtimes-panel {
@@ -158,11 +151,10 @@ span.center, img.center {
         display: none;
     }
 
-    /*#showReview {
+    #showReview {
         display: block;
-    }*/
+    }
 }
-
 
 @media (min-width:1080px) {
 
@@ -201,10 +193,6 @@ span.center, img.center {
 
     .movie-poster-centered {
         display: none;
-    }
-
-    #showReview {
-        display: block;
     }
 }
 

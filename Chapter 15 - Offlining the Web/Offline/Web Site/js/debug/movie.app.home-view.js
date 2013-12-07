@@ -28,6 +28,7 @@
             }
 
             that.mergeData(".top-box-list", "MoviePosterGridTemplate", data);
+            that.setPosterSrc();
 
         });
 
@@ -38,6 +39,7 @@
             }
 
             that.mergeData(".opening-movie-list", "MoviePosterGridTemplate", data);
+            that.setPosterSrc();
 
         });
 
@@ -48,6 +50,7 @@
             }
 
             that.mergeData(".movies-near-me-list", "MoviePosterGridTemplate", data);
+            that.setPosterSrc();
 
         });
 
@@ -58,6 +61,7 @@
             }
 
             that.mergeData(".comming-soon-list", "MoviePosterGridTemplate", data);
+            that.setPosterSrc();
 
         });
 
@@ -66,7 +70,33 @@
         var i = 0,
             vPanels = document.querySelectorAll(".panel-v-scroll");
 
-        that.resizeEvents["manageHomeView"] = that.setPanoramaWidth;
+        //that.resizeEvents["manageHomeView"] = that.setPanoramaWidth;
+
+        that.setupMQL("min600", "(min-width: 600px)", [{
+            matchName: "manageHomeView",
+            matchFunc: function () {
+                that.setPanoramaWidth.call(that);
+                that.setPosterSrc.call(that);
+            },
+            nomatchName: "manageHomeView",
+            nomatchFunc: function () {
+                that.setPanoramaWidth.call(that);
+                that.setPosterSrc.call(that);
+            }
+        }]);
+
+        that.setupMQL("min1024", "(min-width: 1024px)", [{
+            matchName: "manageHomeView1024",
+            matchFunc: function () {
+                that.setPanoramaWidth.call(that);
+                that.setPosterSrc.call(that);
+            },
+            nomatchName: "manageHomeView1024",
+            nomatchFunc: function () {
+                that.setPanoramaWidth.call(that);
+                that.setPosterSrc.call(that);
+            }
+        }]);
 
     };
 

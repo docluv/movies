@@ -169,6 +169,7 @@
     <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
     <Content Include="js\debug\movie.app.theater-view.js" />
+    <Content Include="js\libs\add2home.js" />
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\mbp.js" />

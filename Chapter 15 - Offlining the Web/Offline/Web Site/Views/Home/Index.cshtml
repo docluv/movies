@@ -30,9 +30,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
 
     <link href="img/l/splash.png" rel="apple-touch-startup-image">
-
-
-
+    
     <meta name="application-name" content="Modern Movie Web" />
     <meta name="msapplication-config" content="IEconfig.xml" />
 
@@ -88,6 +86,12 @@
     {
             <link href="css/debug/site.min.css?v=.2" rel="stylesheet">
     }
+
+@if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+{
+<link href="css/debug/add2home.css?v=.2" rel="stylesheet">
+}
+
 </head>
 <body>
     <header class="site-header" role="banner">
@@ -166,7 +170,14 @@
     else
     {
             <script src="@Href("~/js/applib.js?v=.1")"></script>
+        
+            if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+            {
+                <script src="@Href("~/js/libs/add2home.js?v=.2")" async="async"></script>
+            }
     }
+
+
 
 </body>
 </html>

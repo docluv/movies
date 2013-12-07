@@ -1,17 +1,18 @@
-﻿
+﻿/// <reference path="movie.app.js" />
+/// <reference path="movie.app.api.js" />
 
 (function (window, undefined) {
 
     "use strict";
 
-    movieApp.fn.searchForMovies = function (term) {
+movieApp.fn.searchForMovies = function (term) {
 
-        var that = this,
-            value = term || document.getElementById("searchTerm").value;
+    var that = this,
+        value = term || document.getElementById("searchTerm").value;
 
-        if (value !== "") {
+    if (value !== "") {
 
-            that.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
+        that.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
 
                 if (data && data.total > 0 && data.movies) {
 
@@ -23,9 +24,9 @@
 
             });
 
-        }
+    }
 
-    };
+};
 
     movieApp.fn.searchKeyCheck = function (e) {
 
