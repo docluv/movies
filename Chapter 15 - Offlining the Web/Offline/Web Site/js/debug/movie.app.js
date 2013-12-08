@@ -132,10 +132,6 @@
 
         version: "0.0.1",
 
-        bp: undefined,
-        data: undefined,
-        tmpl: undefined,
-
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 
         mainTitle: document.querySelector(".view-title"),
@@ -287,8 +283,6 @@
 
         },
 
-        viewWidth: 0,
-
         setMoviePanelWidth: function (target, length) {
 
             target = target || ".movie-poster-div";
@@ -323,26 +317,26 @@
         _panoramaSetup: false,
         hasTouch: (window.navigator.msPointerEnabled || "ontouchstart" in window),
 
-setupPanorama: function (target, settings) {
+        setupPanorama: function (target, settings) {
 
-    target = target || ".panorama-container";
-    settings = $.extend({
-        maxHeight: Number.MAX_VALUE,
-        maxWidth: Number.MAX_VALUE
-    }, settings);
+            target = target || ".panorama-container";
+            settings = $.extend({
+                maxHeight: Number.MAX_VALUE,
+                maxWidth: Number.MAX_VALUE
+            }, settings);
 
-    var that = this, dt,
-        pCont = document.querySelector(target);
+            var that = this, dt,
+                pCont = document.querySelector(target);
 
-    if (settings.maxWidth &&
-        settings.maxWidth >= window.innerWidth) {
+            if (settings.maxWidth &&
+                settings.maxWidth >= window.innerWidth) {
 
-        that.panorama = panorama(pCont,
-                            $.extend(settings, {
-                                speed: 600,
-                                headerHeight: 80,
-                                peekWidth: 50,
-                                contentResize: function () {
+                that.panorama = panorama(pCont,
+                                    $.extend(settings, {
+                                        speed: 600,
+                                        headerHeight: 80,
+                                        peekWidth: 50,
+                                        contentResize: function () {
 
                                             var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
 
@@ -352,19 +346,19 @@ setupPanorama: function (target, settings) {
                                             }
 
                                         }
-                            }));
+                                    }));
 
-        //that.panoramaDt = 
-        /**/
-        dt = deeptissue(pCont,
-                    {
-                        swipeRightThreshold: 35,
-                        swipeLeftThreshold: -35,
-                        swipeUpThreshold: 35,
-                        swipeDownThreshold: 35
-                    });
+                //that.panoramaDt = 
+                /**/
+                dt = deeptissue(pCont,
+                            {
+                                swipeRightThreshold: 35,
+                                swipeLeftThreshold: -35,
+                                swipeUpThreshold: 35,
+                                swipeDownThreshold: 35
+                            });
 
-        dt.swipeRight(function (evt, m, translate) {
+                dt.swipeRight(function (evt, m, translate) {
 
                     if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveRight(evt);
@@ -372,54 +366,52 @@ setupPanorama: function (target, settings) {
 
                 })
 
-        .swipeLeft(function (evt, m, translate) {
+                .swipeLeft(function (evt, m, translate) {
 
                     if (settings.maxWidth >= window.innerWidth) {
                         that.panorama.moveLeft(evt);
                     }
 
                 });
-        /**/
-        //pCont.addEventListener("MSManipulationStateChanged", function (e) {
-        //    console.log(e.currentState);
-        //});
+                /**/
+                //pCont.addEventListener("MSManipulationStateChanged", function (e) {
+                //    console.log(e.currentState);
+                //});
 
-    }
-
-    if (!that._panoramaSetup) {
-
-        var pn = document.querySelector(".pxs_next"),
-            pp = document.querySelector(".pxs_prev");
-
-        if (!that.hasTouch) {
-            //just falback to mouse stuff
-
-            that.setPanoramaWings();
-
-            if (pn) {
-                pn.addEventListener("click", function (e) {
-                            that.panorama.moveLeft(e);
-                        });
             }
 
-            if (pp) {
-                pp.addEventListener("click", function (e) {
+            if (!that._panoramaSetup) {
+
+                var pn = document.querySelector(".pxs_next"),
+                    pp = document.querySelector(".pxs_prev");
+
+                if (!that.hasTouch) {
+                    //just falback to mouse stuff
+
+                    that.setPanoramaWings();
+
+                    if (pn) {
+                        pn.addEventListener("click", function (e) {
+                            that.panorama.moveLeft(e);
+                        });
+                    }
+
+                    if (pp) {
+                        pp.addEventListener("click", function (e) {
                             that.panorama.moveRight(e);
                         });
 
+                    }
+
+                } else {
+                    //remove the wings, don't need them
+                }
+
+                that._panoramaSetup = true;
+
             }
 
-        } else {
-            //remove the wings, don't need them
-        }
-
-        that._panoramaSetup = true;
-
-    }
-
-},
-
-        panoramaDt: undefined,
+        },
 
         setPanoramaWings: function () {
 
@@ -429,19 +421,15 @@ setupPanorama: function (target, settings) {
                 wrapper.style.display = "block";
             }
 
-        },
-
-        settings: {
-            appTitle: "Modern Web Movies",
-            InTheatersHomeCount: 15,
-            CommingSoonHomeCount: 15,
-            SearchCount: 20,
-            smallBreakPoint: 610,
-            desktopBreakPoint: 1080,
-            largeBreakPoint: 3000 //arbitrary number for giant TV/Kiosks
         }
 
     };
+
+    movieApp.panoramaDt;
+    movieApp.viewWidth = 0;
+    movieApp.bp;
+    movieApp.data;
+    movieApp.tmpl;
 
     // Give the init function the movieApp prototype for later instantiation
     movieApp.fn.init.prototype = movieApp.fn;

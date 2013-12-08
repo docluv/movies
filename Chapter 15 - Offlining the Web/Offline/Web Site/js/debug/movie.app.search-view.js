@@ -5,14 +5,14 @@
 
     "use strict";
 
-movieApp.fn.searchForMovies = function (term) {
+    movieApp.fn.searchForMovies = function (term) {
 
-    var that = this,
-        value = term || document.getElementById("searchTerm").value;
+        var that = this,
+            value = term || document.getElementById("searchTerm").value;
 
-    if (value !== "") {
+        if (value !== "") {
 
-        that.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
+            that.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
 
                 if (data && data.total > 0 && data.movies) {
 
@@ -24,28 +24,35 @@ movieApp.fn.searchForMovies = function (term) {
 
             });
 
-    }
+        }
 
-};
+    };
 
     movieApp.fn.searchKeyCheck = function (e) {
 
-        if (!e) {
-            return;
-        }
+        e = e || event;
 
         var that = this,
-            searchEle = e.target;
+            target = e.target || e.srcElement,
+            txtArea = /textarea/i.test((target).tagName),
+            key = e.keyCode || e.which || e.charCode || 0,
+            ret = txtArea || (key) !== 13;
+        
+        if (ret) {
+            return false;
+        }
 
         that.manageSearchIcons();
 
-        if (e.which === 13) {
+        if (key === 13) {
 
             e.preventDefault();
 
             that.searchForMovies();
 
         }
+
+        return false;
 
     };
 
@@ -57,7 +64,7 @@ movieApp.fn.searchForMovies = function (term) {
         //clear the field just in case a previous value was entered and the markup not cleared from the page
         searchField.value = "";
 
-        searchField.addEventListener("keyup", function (e) {
+        document.movieSearch.addEventListener("keypress", function (e) {
             that.searchKeyCheck.call(that, e);
         });
 
@@ -67,6 +74,15 @@ movieApp.fn.searchForMovies = function (term) {
         that.searchForMovies(params.term);
 
         that.setMainTitle("Search");
+
+        //document.movieSearch.submit = function (e) {
+
+        //    e.preventDefault();
+
+        //    that.searchForMovies();
+
+        //    return false;
+        //}
 
     }
 

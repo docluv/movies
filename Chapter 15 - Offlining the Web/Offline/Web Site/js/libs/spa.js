@@ -119,7 +119,7 @@
 
         },
 
-        matchRoute: function (path, routes) {
+        matchRouteByPath: function (path, routes) {
 
             if (!routes) {
                 routes = this.settings.routes;
@@ -163,6 +163,30 @@
             }
 
             return route;
+        },
+
+        matchRouteById: function (id, routes) {
+
+            if (!routes) {
+                routes = this.settings.routes;
+            }
+
+            var route;
+
+            for (route in routes) {
+                if (routes[route].viewId === id) {
+                    return routes[route];
+                }
+            }
+
+            //for (var i = 0; i < routes.length; i++) {
+
+            //    if (routes[i].viewId === id) {
+            //        return route[i];
+            //    }
+
+            //}
+
         },
 
         //  newView: undefined, //placeholder for new view
@@ -261,11 +285,10 @@
         swapView: function () {
 
             var that = this,
-                route, callback, title, i, a, anim,
+                route, oldRoute, callback, title, i, a, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
-          //      params = hashFragment.split(":").slice(1),
                 path = hashFragment.split(":")[0],
                 currentView = document.querySelectorAll("." + this.settings.currentClass);
 
@@ -277,7 +300,11 @@
             //convert nodelist to a single node
             currentView = currentView[0];
 
-            route = that.matchRoute(path);
+            if (currentView && currentView.id) {
+                oldRoute = that.matchRouteById(currentView.id);
+            }
+            
+            route = that.matchRouteByPath(path);
             anim = that.getAnimation(route);
             that.animation = anim;
 
@@ -295,8 +322,9 @@
 
                         if (that.hasAnimations() && anim) {
 
-                            currentView.addEventListener(that.transitionend[that.cssPrefix("animation")], function (e) {
-                                that.endSwapAnimation.call(that, e, currentView, newView);
+                            currentView.addEventListener(
+                                that.transitionend[that.cssPrefix("animation")], function (e) {
+                                    that.endSwapAnimation.call(that, e, currentView, newView, oldRoute);
                             });
 
                             //modify once addClass supports array of classes
@@ -305,7 +333,7 @@
                             $.removeClass(currentView, "in");
 
                         } else {
-                            that.endSwapAnimation.call(that, undefined, currentView, newView);
+                            that.endSwapAnimation.call(that, undefined, currentView, newView, oldRoute);
                         }
 
                     }
@@ -316,7 +344,7 @@
                     that.setDocumentTitle(route);
 
                     if (route.onload) {
-                        that.makeCallback(route);
+                        that.makeCallback(route.onload, route.paramValues);
                     }
 
                 }
@@ -342,7 +370,7 @@
 
         },
 
-        endSwapAnimation: function (e, currentView, newView) {
+        endSwapAnimation: function (e, currentView, newView, route) {
 
             var that = this,
                 anim = that.animation;
@@ -352,11 +380,14 @@
 
             $.removeClass(newView, anim + " in");
 
-
             if (currentView && bp && currentView.parentNode) {
 
                 currentView.parentNode.removeChild(currentView);
 
+            }
+
+            if (route && route.unload) {
+                that.makeCallback(route.unload, route.paramValues);
             }
 
         },
@@ -390,11 +421,9 @@
 
         },
 
-        makeCallback: function (route) {
+        makeCallback: function (callback, paramValues) {
 
             var a, that,
-                callback = route.onload,
-            //    unload = route.unload,
                 cbPaths = callback.split(".");
 
             if (!callback) {
@@ -412,10 +441,8 @@
                 callback = callback[cbPaths[a]];
             }
 
-            route.paramValues = route.paramValues || {};
-
             if (callback) {
-                callback.call(that, route.paramValues);
+                callback.call(that, paramValues || {});
             }
 
         },

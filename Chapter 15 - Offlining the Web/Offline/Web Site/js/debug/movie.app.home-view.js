@@ -6,50 +6,50 @@
 
     "use strict";
 
-movieApp.fn.unloadHomeView = function () {
-    delete this.resizeEvents["manageHomeView"];
-    this.panorama = undefined;
-};
+    movieApp.fn.unloadHomeView = function () {
+        delete this.resizeEvents["manageHomeView"];
+        this.panorama = undefined;
+    };
 
-movieApp.fn.renderHomeMovies = function (target, data) {
+    movieApp.fn.renderHomeMovies = function (target, data) {
 
-    if (!data) {
-        return;
-    }
+        if (!data) {
+            return;
+        }
 
-    this.mergeData(target, "MoviePosterGridTemplate", data);
-    this.setPosterSrc();
+        this.mergeData(target, "MoviePosterGridTemplate", data);
+        this.setPosterSrc();
 
-};
+    };
 
-movieApp.fn.loadHomeView = function () {
+    movieApp.fn.loadHomeView = function () {
 
-    var that = this,
-        i = 0,
-        vPanels = document.querySelectorAll(".panel-v-scroll");
+        var that = this,
+            i = 0,
+            vPanels = document.querySelectorAll(".panel-v-scroll");
 
-    that.setupPanorama();
-    that.setMainTitle("Modern Web Movies");
+        that.setupPanorama();
+        that.setMainTitle("Modern Web Movies");
 
-    that.InTheatersMovies(50, 1, function (data) {
-        that.renderHomeMovies.call(that, ".top-box-list", data);
-    });
+        that.InTheatersMovies(50, 1, function (data) {
+            that.renderHomeMovies.call(that, ".top-box-list", data);
+        });
 
-    that.OpeningMovies(50, 1, function (data) {
-        that.renderHomeMovies.call(that, ".opening-movie-list", data);
-    });
+        that.OpeningMovies(50, 1, function (data) {
+            that.renderHomeMovies.call(that, ".opening-movie-list", data);
+        });
 
-    that.TopBoxOfficeMovies(50, 1, function (data) {
-        that.renderHomeMovies.call(that, ".movies-near-me-list", data);
-    });
+        that.TopBoxOfficeMovies(50, 1, function (data) {
+            that.renderHomeMovies.call(that, ".movies-near-me-list", data);
+        });
 
-    that.CommingSoonMovies(50, 1, function (data) {
-        that.renderHomeMovies.call(that, ".comming-soon-list", data);
-    });
+        that.CommingSoonMovies(50, 1, function (data) {
+            that.renderHomeMovies.call(that, ".comming-soon-list", data);
+        });
 
-    that.setPanoramaWidth();
+        that.setPanoramaWidth();
 
-    that.setupMQL("min600", "(min-width: 600px)", [{
+        that.setupMQL("min600", "(min-width: 600px)", [{
             matchName: "manageHomeView",
             matchFunc: function () {
                 that.setPanoramaWidth.call(that);
@@ -62,7 +62,7 @@ movieApp.fn.loadHomeView = function () {
             }
         }]);
 
-    that.setupMQL("min1024", "(min-width: 1024px)", [{
+        that.setupMQL("min1024", "(min-width: 1024px)", [{
             matchName: "manageHomeView1024",
             matchFunc: function () {
                 that.setPanoramaWidth.call(that);
@@ -75,7 +75,7 @@ movieApp.fn.loadHomeView = function () {
             }
         }]);
 
-};
+    };
 
     movieApp.fn.viewWidth = window.innerWidth;
 
@@ -103,16 +103,16 @@ movieApp.fn.loadHomeView = function () {
     };
 
 
-    function getGridHeight (baseHeight) {
+    function getGridHeight(baseHeight) {
 
         var wWidth = window.innerWidth;
 
         if (wWidth <= 600) {
             return baseHeight - 32;
         } else if (wWidth > 600 && wWidth <= 1024) {
-            return Math.floor(baseHeight /200) * 200;
+            return Math.floor(baseHeight / 200) * 200;
         } else if (wWidth > 1024) {
-            return (Math.floor(baseHeight / 200) * 200) + 20 ;
+            return (Math.floor(baseHeight / 200) * 200) + 20;
         }
 
 

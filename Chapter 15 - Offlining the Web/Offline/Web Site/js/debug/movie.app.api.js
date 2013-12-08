@@ -32,7 +32,7 @@
     movieApp.fn.SearchMovies = function (pageLimit, page, q, callback) {
 
         page = page || 1;
-        pageLimit = pageLimit || that.defaultPageLimit;
+        pageLimit = pageLimit || this.defaultPageLimit;
 
         var that = this,
             url = that.rtRoot + "movies.json?apikey=" + this.apiKey +

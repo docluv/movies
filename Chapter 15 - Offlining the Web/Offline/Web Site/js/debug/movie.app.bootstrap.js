@@ -7,12 +7,13 @@ var bp = backpack(),
         tmpl: Mustache
     }),
 
- //data = jqData(),
     _spa = spa({
-        appContext: movie,
+        "appContext": movie,
         "bp": bp,
-        "defaultPage": "homeview", "viewWrapper": "#main",
-        "viewTransition": "slide", "defaultTitle": "Modern Web Movies"
+        "defaultPage": "homeview",
+        "viewWrapper": "#main",
+        "viewTransition": "slide",
+        "defaultTitle": "Modern Web Movies"
     });
 
 

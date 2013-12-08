@@ -156,6 +156,7 @@
     <Content Include="img\refresh.png" />
     <Content Include="img\search.png" />
     <Content Include="img\test-purple-2000.png" />
+    <Content Include="js\debug\movie.app.about-view.js" />
     <Content Include="js\debug\movie.app.account-view.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
     <Content Include="js\debug\movie.app.api.js" />
