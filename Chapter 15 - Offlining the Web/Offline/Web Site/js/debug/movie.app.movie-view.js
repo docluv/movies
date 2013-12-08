@@ -33,8 +33,6 @@
 
         });
 
-        prevWidth = window.width;
-
     };
 
     movieApp.fn.renderMovieDetails = function (data) {
@@ -57,6 +55,36 @@
             that.manageMovieView();
 
             that.resizeEvents["manageMovieView"] = that.manageMovieView;
+
+            var //form = document.getElementsByTagName("form"),
+                reviewSubmit = document.getElementById("reviewSubmit");
+
+//            deeptissue(reviewSubmit).tap(function () {
+
+            document.reviewForm.onsubmit = function (e) {
+                
+                e.preventDefault();
+
+                if (e.srcElement) {
+                    var i = 0,
+                        data = {},
+                        inputs = e.srcElement.querySelectorAll("input, textarea");
+
+                    for (; i < inputs.length; i++) {
+                        data[inputs[i].name] = inputs[i].value;
+                        console.info(inputs[i].name + " " + inputs[i].value);
+                    }
+
+
+                }
+
+                return false;
+
+            };
+
+  //          });
+
+
         }
 
     };
@@ -149,6 +177,8 @@ deeptissue(showReview).tap(function (e) {
     $.hide(document.querySelector(selectors.showtimesPanel));
     $.hide(document.querySelector(selectors.descPanel));
 
+    document.getElementById("ReviewerName").focus();
+
 });
 
         deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
@@ -171,8 +201,7 @@ movieApp.fn.unloadMovieView = function () {
 
 };
 
-    var prevWidth = 0;
-
+   
     movieApp.fn.manageMovieView = function () {
 
         var width = window.innerWidth;
@@ -193,9 +222,6 @@ movieApp.fn.unloadMovieView = function () {
         }
 
         //need a routine to reset the order of panels since they may have been swiped
-
-
-        prevWidth = width;
 
     };
 
