@@ -27,6 +27,7 @@
     movieApp.fn.CommingSoonMovies = function (pageLimit, page, callback) {
 
         return this.getRottenTomatoesList("upcoming", pageLimit, page, callback);
+
     };
 
     movieApp.fn.SearchMovies = function (pageLimit, page, q, callback) {

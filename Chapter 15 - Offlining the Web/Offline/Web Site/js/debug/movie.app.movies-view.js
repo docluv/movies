@@ -3,28 +3,32 @@
 
 (function (window, undefined) {
 
-    movieApp.fn.loadMoviesView = function (params) {
+    movieApp.fn.moviesView = {
 
-        var that = this,
-            movieType = params.movieType || "TopBoxOffice";
+        onload: function (params) {
 
-        that[movieType + "Movies"](50, 1, function (data) {
+            var that = this,
+                movieType = params.movieType || "TopBoxOffice";
 
-            if (!data) {
-                return;
-            }
+            that[movieType + "Movies"](50, 1, function (data) {
 
-            that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+                if (!data) {
+                    return;
+                }
 
-            window.addEventListener("resize", function () {
                 that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+
+                window.addEventListener("resize", function () {
+                    that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+                });
+
+                that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
+
             });
 
-            that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
+            that.setMainTitle(that.movieTypes[movieType]);
 
-        });
-
-        that.setMainTitle(that.movieTypes[movieType]);
+        }
 
     };
 

@@ -178,7 +178,7 @@ span.center, img.center {
     }
 
     .movie-description-panel {
-        width: 200px;
+        width: calc(100% - 920px);
     }
 
     .movie-cast-panel {

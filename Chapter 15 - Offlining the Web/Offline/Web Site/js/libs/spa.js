@@ -113,8 +113,8 @@
                         view.getAttribute("data-transition") :
                         ""),
                 paramValues: {},
-                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : "load" + viewId),
-                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : "unload" + viewId)
+                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : undefined), //"load" + viewId),
+                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : undefined)//"unload" + viewId)
             };
 
         },
@@ -343,8 +343,8 @@
 
                     that.setDocumentTitle(route);
 
-                    if (route.onload) {
-                        that.makeCallback(route.onload, route.paramValues);
+                    if (route) {
+                        that.makeCallback(route, "onload");
                     }
 
                 }
@@ -386,8 +386,8 @@
 
             }
 
-            if (route && route.unload) {
-                that.makeCallback(route.unload, route.paramValues);
+            if (route) {
+                that.makeCallback(route, "unload");
             }
 
         },
@@ -421,14 +421,28 @@
 
         },
 
-        makeCallback: function (callback, paramValues) {
+        makeCallback: function (route, action) {
 
-            var a, that,
-                cbPaths = callback.split(".");
+            var that = this,
+                a, cbPaths, callback;
 
-            if (!callback) {
+            if (action && !route[action]) {
+
+                var ctx = that.settings.appContext;
+
+                if (that.settings.appContext) {
+
+                    if (ctx[route.viewId] && ctx[route.viewId][action]) {
+                        ctx[route.viewId][action].call(ctx, route.paramValues || {});
+                    }
+
+                }
+
+
                 return;
             }
+
+            cbPaths = route[action].split(".");
 
             callback = window[cbPaths[0]];
 
@@ -442,7 +456,7 @@
             }
 
             if (callback) {
-                callback.call(that, paramValues || {});
+                callback.call(that, route.paramValues || {});
             }
 
         },
