@@ -6,21 +6,6 @@
 
     "use strict";
 
-    //function getGridHeight(baseHeight) {
-
-    //    var wWidth = window.innerWidth;
-
-    //    if (wWidth <= 600) {
-    //        return baseHeight - 32;
-    //    } else if (wWidth > 600 && wWidth <= 1024) {
-    //        return Math.floor(baseHeight / 200) * 200;
-    //    } else if (wWidth > 1024) {
-    //        return (Math.floor(baseHeight / 200) * 200) + 20;
-    //    }
-
-
-    //};
-
     movieApp.fn.homeView = {
 
         onload: function () {
@@ -56,28 +41,38 @@
             that.setupMQL("min600", "(min-width: 600px)", [{
                 matchName: "manageHomeView",
                 matchFunc: function () {
-                    hv.setPanoramaWidth.call(that);
-                    that.setPosterSrc.call(that);
+                    hv.updatePanoramaLayout.call(that);
                 },
                 nomatchName: "manageHomeView",
                 nomatchFunc: function () {
-                    hv.setPanoramaWidth.call(that);
-                    that.setPosterSrc.call(that);
+                    hv.updatePanoramaLayout.call(that);
                 }
             }]);
 
             that.setupMQL("min1024", "(min-width: 1024px)", [{
                 matchName: "manageHomeView1024",
                 matchFunc: function () {
-                    hv.setPanoramaWidth.call(that);
-                    that.setPosterSrc.call(that);
+                    hv.updatePanoramaLayout.call(that);
                 },
                 nomatchName: "manageHomeView1024",
                 nomatchFunc: function () {
-                    hv.setPanoramaWidth.call(that);
-                    that.setPosterSrc.call(that);
+                    hv.updatePanoramaLayout.call(that);
                 }
             }]);
+
+        },
+
+        updatePanoramaLayout: function () {
+
+            var that = this,
+                hv = that.homeView;
+
+            hv.setPanoramaWidth.call(that);
+
+            that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
+            that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
+            that.setPosterSrc.call(that, ".comming-soon-list .movie-grid-poster");
+            that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
 
         },
 
@@ -91,9 +86,14 @@
                 return;
             }
 
-            this.mergeData(target, "MoviePosterGridTemplate", data);
-            this.setPosterSrc();
+            var that = this;
 
+            that.mergeData(target, "MoviePosterGridTemplate", data);
+
+            requestAnimationFrame(function () {
+                that.setPosterSrc(target + " .movie-grid-poster");
+            });
+            
         },
 
         viewWidth : window.innerWidth,
@@ -107,13 +107,10 @@
                 panoramaWrapper = document.querySelector(".panorama-panels"),
                 panels = document.querySelectorAll(".single-panel"),
                 movieGrids = document.querySelectorAll(".movie-poster-grid");
-//                gridHeight;
 
             if (!panoramaWrapper) {
                 return;
             }
-
-     //       gridHeight = getGridHeight(parseInt(panoramaWrapper.style.height, 10));
 
             for (; i < panels.length; i++) {
                 panels[i].style.width = panelWidth + "px";
