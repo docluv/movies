@@ -406,4 +406,4 @@ callback: function(){} //gets executed when the item is selected
     return (window.toolbar = toolbar);
 
 
-}(window, $));
+}(window, $()));

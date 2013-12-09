@@ -207,6 +207,6 @@
 
     return (window.backpack = backpack);
 
-})(window, $);
+})(window, $());
 
 

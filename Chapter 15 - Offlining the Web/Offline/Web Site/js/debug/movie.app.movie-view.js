@@ -101,16 +101,16 @@
 
         bindPanelTitles : function () {
 
-            var showTimes = document.querySelector(".movie-showtime-list"),
-                castNames = document.querySelector(".cast-name-list"),
-                movieDesc = document.querySelector(".movie-description"),
-                showTimesTitle = document.querySelector(".movie-showtimes-panel > .panel-title"),
-                castNamesTitle = document.querySelector(".movie-cast-panel > .panel-title"),
-                movieDescTitle = document.querySelector(".movie-description-panel > .panel-title"),
-                showReview = document.getElementById("showReview"),
+            var showTimes = $(".movie-showtime-list"),
+                castNames = $(".cast-name-list"),
+                movieDesc = $(".movie-description"),
+                showTimesTitle = $(".movie-showtimes-panel > .panel-title"),
+                castNamesTitle = $(".movie-cast-panel > .panel-title"),
+                movieDescTitle = $(".movie-description-panel > .panel-title"),
+                showReview = $("#showReview"),
                 selectors = this.movie.Items;
 
-            $.show(movieDesc);
+            $(movieDesc).show();
 
             deeptissue(movieDescTitle).tap(function (e) {
 
@@ -118,14 +118,14 @@
 
                 if (width > 600 && width < 820) {
 
-                    $.hide(showTimes);
-                    $.hide(showReview);
-                    $.hide(castNames);
-                    $.show(movieDesc);
+                    showTimes.hide();
+                    showReview.hide();
+                    castNames.hide();
+                    movieDesc.show();
                     
-                    $.removeClass(showTimesTitle, "selected");
-                    $.removeClass(castNamesTitle, "selected");
-                    $.addClass(movieDescTitle, "selected");
+                    showTimesTitle.removeClass("selected");
+                    castNamesTitle.removeClass("selected");
+                    movieDescTitle.addClass("selected");
 
                 }
 
@@ -137,17 +137,17 @@
 
                 if (width > 600 && width < 820) {
 
-                    $.hide(showTimes);
-                    $.hide(showReview);
-                    $.show(castNames);
-                    $.hide(movieDesc);
+                    showTimes.hide();
+                    showReview.hide();
+                    castNames.show();
+                    movieDesc.hide();
 
                     castNames.style.position = "relative";
                     castNames.style.left = "-130px";
 
-                    $.removeClass(showTimesTitle, "selected");
-                    $.addClass(castNamesTitle, "selected");
-                    $.removeClass(movieDescTitle, "selected");
+                    showTimesTitle.removeClass("selected");
+                    castNamesTitle.addClass("selected");
+                    movieDescTitle.removeClass("selected");
 
                 }
 
@@ -159,10 +159,10 @@
 
                 if (width > 600 && width < 820) {
 
-                    $.show(showTimes);
-                    $.show(showReview);
-                    $.hide(castNames);
-                    $.hide(movieDesc);
+                    showTimes.show();
+                    showReview.show();
+                    castNames.hide();
+                    movieDesc.hide();
 
                     showTimes.style.position = "relative";
                     showTimes.style.left = "-260px";
@@ -171,21 +171,21 @@
                     showReview.style.left = "-200px";
                     showReview.style.top = "30px";
 
-                    $.addClass(showTimesTitle, "selected");
-                    $.removeClass(castNamesTitle, "selected");
-                    $.removeClass(movieDescTitle, "selected");
+                    showTimesTitle.addClass("selected");
+                    castNamesTitle.removeClass("selected");
+                    movieDescTitle.removeClass("selected");
 
                 }
 
             });
 
-            deeptissue(showReview).tap(function (e) {
+            deeptissue("#showReview").tap(function (e) {
 
-                $.show(document.querySelector(selectors.reviewPanel));
-                $.hide(document.querySelector(selectors.detailPanel));
-                $.hide(document.querySelector(selectors.castPanel));
-                $.hide(document.querySelector(selectors.showtimesPanel));
-                $.hide(document.querySelector(selectors.descPanel));
+                $(selectors.reviewPanel).show();
+                $(selectors.detailPanel).hide();
+                $(selectors.castPanel).hide();
+                $(selectors.showtimesPanel).hide();
+                $(selectors.descPanel).hide();
 
                 document.getElementById("ReviewerName").focus();
 
@@ -193,11 +193,11 @@
 
             deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
 
-                $.hide(document.querySelector(selectors.reviewPanel));
-                $.show(document.querySelector(selectors.detailPanel));
-                $.show(document.querySelector(selectors.castPanel));
-                $.show(document.querySelector(selectors.showtimesPanel));
-                $.show(document.querySelector(selectors.descPanel));
+                $(selectors.reviewPanel).hide();
+                $(selectors.detailPanel).show();
+                $(selectors.castPanel).show();
+                $(selectors.showtimesPanel).show();
+                $(selectors.descPanel).show();
 
             });
 

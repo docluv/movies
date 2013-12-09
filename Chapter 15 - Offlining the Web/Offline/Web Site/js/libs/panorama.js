@@ -502,5 +502,5 @@
 
     return (window.panorama = panorama);
 
-}(window, $));
+}(window, $()));
 

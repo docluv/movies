@@ -87,7 +87,7 @@
 
             var that = this;
 
-            that.settings = $.extend({}, that.settings, customSettings);
+            that.settings = $().extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
             that.data = that.settings.data || rqData();
@@ -101,7 +101,7 @@
 
             deeptissue(".hamburger-nav").tap(function () {
 
-                $.toggle(document.querySelector(".main-nav"));
+                $(".main-nav").toggle();
                 //                document.querySelector(".main-nav").style.display = "block";
 
             });
@@ -320,7 +320,7 @@
         setupPanorama: function (target, settings) {
 
             target = target || ".panorama-container";
-            settings = $.extend({
+            settings = $().extend({
                 maxHeight: Number.MAX_VALUE,
                 maxWidth: Number.MAX_VALUE
             }, settings);
@@ -332,7 +332,7 @@
                 settings.maxWidth >= window.innerWidth) {
 
                 that.panorama = panorama(pCont,
-                                    $.extend(settings, {
+                                    $().extend(settings, {
                                         speed: 600,
                                         headerHeight: 80,
                                         peekWidth: 50,

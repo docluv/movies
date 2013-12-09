@@ -13,7 +13,7 @@
 
         var that = new spa.fn.init();
 
-        that.settings = $.extend({}, that.settings, customSettings);
+        that.settings = $().extend({}, that.settings, customSettings);
 
         that.bp = that.settings.bp || backpack();
 
@@ -70,7 +70,8 @@
         setupRoutes: function () {
 
             var that = this,
-                routes = $.extend($.parseLocalStorage("routes") || {}, that.settings.routes),
+                $$ = $(),
+                routes = $$.extend($$.parseLocalStorage("routes") || {}, that.settings.routes),
                 i = 0, j = 0, rawPath, view, route, viewId,
                 Views = document.querySelectorAll(that.settings.viewSelector);
 
@@ -328,9 +329,8 @@
                             });
 
                             //modify once addClass supports array of classes
-                            $.addClass(currentView, "animated out " + anim);
-
-                            $.removeClass(currentView, "in");
+                            $(currentView).addClass("animated out " + anim)
+                                .removeClass("in");
 
                         } else {
                             that.endSwapAnimation.call(that, undefined, currentView, newView, oldRoute);
@@ -338,7 +338,7 @@
 
                     }
 
-                    $.addClass(newView, that.settings.currentClass +
+                    $(newView).addClass(that.settings.currentClass +
                                         " animated " + anim + " in");
 
                     that.setDocumentTitle(route);
@@ -354,8 +354,7 @@
                 window.location.hash = "#!" + this.settings.NotFoundRoute;
 
             } else {//should only get here is this is an escapefragemented url for the spiders
-                newView = $.addClass(this.settings.viewSelector,
-                                    that.settings.currentClass);
+                newView = $(this.settings.viewSelector).addClass(that.settings.currentClass);
             }
 
         },
@@ -375,10 +374,10 @@
             var that = this,
                 anim = that.animation;
 
-            $.removeClass(currentView, that.settings.currentClass + " " +
+            $(currentView).removeClass(that.settings.currentClass + " " +
                                         anim + " out ");
 
-            $.removeClass(newView, anim + " in");
+            $(newView).removeClass(anim + " in");
 
             if (currentView && bp && currentView.parentNode) {
 
