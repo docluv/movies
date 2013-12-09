@@ -38,7 +38,6 @@
 
     };
 
-
     movieApp.fn.setMovieGridSize = function () {
 
         //panorama-panels
@@ -107,11 +106,11 @@
         return movies;
     };
 
-    movieApp.fn.setPosterSrc = function () {
+    movieApp.fn.setPosterSrc = function (posterSelector) {
 
         var i = 0,
             moviePoster,
-            moviePosters = document.querySelectorAll(".movie-grid-poster"),
+            moviePosters = document.querySelectorAll(posterSelector || ".movie-grid-poster"),
             curWidth = window.innerWidth,
             detBreakPoint = 600,
             oriBreakPoint = 1024;

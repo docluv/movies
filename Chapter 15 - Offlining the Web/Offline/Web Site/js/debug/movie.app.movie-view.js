@@ -65,9 +65,7 @@
                 that.setMainTitle(data.title);
 
                 mv.bindPanelTitles.call(that);
-
-                mv.manageMovieView.call(that);
-
+                
                 that.resizeEvents["manageMovieView"] = mv.manageMovieView;
 
                 var reviewSubmit = document.getElementById("reviewSubmit");
@@ -92,6 +90,10 @@
                     return false;
 
                 };
+
+                requestAnimationFrame(function () {
+                    mv.manageMovieView.call(that);
+                });
 
             }
 
@@ -221,6 +223,23 @@
             }
 
             //need a routine to reset the order of panels since they may have been swiped
+
+
+            var poster = document.querySelector(".full-movie-poster");
+
+            if (width > 1024) {
+                
+                poster.src = poster.src
+                                    .replace("pro", "ori")
+                                    .replace("det", "ori");
+
+            } else {
+
+                poster.src = poster.src
+                                    .replace("pro", "det")
+                                    .replace("ori", "det");
+
+            }
 
         },
 
