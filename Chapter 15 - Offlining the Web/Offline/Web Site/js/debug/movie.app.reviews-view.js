@@ -13,70 +13,64 @@ function jsonpCallback(data) {
 
     "use strict";
 
-    movieApp.fn.loadReviewsView = function () {
+    movieApp.fn.reviewsView = {
 
-        this.setMainTitle("Current Reviews");
+        onload: function () {
 
-    };
+            this.setMainTitle("Current Reviews");
 
-    movieApp.fn.renderReviews = function (results) {
+        },
 
-        //        if (results && results.articles && results.articles.length > 0) {
-        this.mergeData(".new-article-list", "NewsHeadlineTemplate", results);
+        renderReviews : function (results) {
 
-        //} else {
+            this.mergeData(".new-article-list", "NewsHeadlineTemplate", results);
 
-        //    document.querySelector(".new-article-list")
-        //                .innerHTML = "<h2>Sorry No News Available</h2>";
-        //      }
+        },
 
-    };
+        SendAjax : function (url, callbackFunction) {
 
+            var request;
 
-    movieApp.fn.SendAjax = function (url, callbackFunction) {
+            if (window.XMLHttpRequest) {
+                request = new XMLHttpRequest();
+            } else {
+                request = new ActiveXObject("Microsoft.XMLHTTP");
+            }
 
-        var request;
+            request.open("GET", url, true);
+            request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        if (window.XMLHttpRequest) {
-            request = new XMLHttpRequest();
-        } else {
-            request = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        request.open("GET", url, true);
-        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        request.onreadystatechange = function () {
-            if (request.readyState === 4 && request.status === 200) {
-                if (request.responseText) {
-                    ReceiveAjax(request.responseText, callbackFunction);
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    if (request.responseText) {
+                        ReceiveAjax(request.responseText, callbackFunction);
+                    }
                 }
             }
+
+            request.send(null);
+        },
+
+        ReceiveAjax : function (response, callbackFunction) {
+
+            var doc;
+
+            if (window.ActiveXObject) {
+
+                doc = new ActiveXObject("Microsoft.XMLDOM");
+                doc.async = "false";
+                doc.loadXML(response);
+
+            } else {
+
+                var parser = new DOMParser();
+                doc = parser.parseFromString(response, "text/xml");
+
+            }
+
+            callbackFunction(doc.documentElement);
         }
 
-        request.send(null);
     };
-
-    movieApp.fn.ReceiveAjax = function (response, callbackFunction) {
-
-        var doc;
-
-        if (window.ActiveXObject) {
-
-            doc = new ActiveXObject("Microsoft.XMLDOM");
-            doc.async = "false";
-            doc.loadXML(response);
-
-        } else {
-
-            var parser = new DOMParser();
-            doc = parser.parseFromString(response, "text/xml");
-
-        }
-
-        callbackFunction(doc.documentElement);
-    };
-
-
 
 }(window));
