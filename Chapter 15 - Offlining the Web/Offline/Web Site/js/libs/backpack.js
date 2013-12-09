@@ -1,6 +1,6 @@
 ;
 //Backpack is a deferred content managment library with single page and mobile applications in mind
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
@@ -8,7 +8,7 @@
 
         var that = new backpack.fn.init(customSettings);
 
-        that.settings = $.extend({}, that.settings, customSettings);
+        that.settings = $().extend({}, that.settings, customSettings);
 
         return that;
     };
@@ -28,7 +28,7 @@
 
             var i, temp,
                 t = document.querySelectorAll("script[type='" + this.settings.templateType + "']"),
-                templates = $.parseLocalStorage("templates");
+                templates = $().parseLocalStorage("templates");
 
             for (i = 0; i < t.length; i++) {
 
@@ -151,7 +151,7 @@
         //keep
         storeViewInfo: function (viewInfo) {
 
-            viewInfo = $.extend({}, this.pageSettings, viewInfo);
+            viewInfo = $().extend({}, this.pageSettings, viewInfo);
 
             localStorage.setItem(viewInfo.pageId,
                             JSON.stringify(viewInfo));
@@ -207,6 +207,6 @@
 
     return (window.backpack = backpack);
 
-})(window, $());
+})(window);
 
 

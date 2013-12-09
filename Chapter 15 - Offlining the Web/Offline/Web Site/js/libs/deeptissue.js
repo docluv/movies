@@ -1,6 +1,6 @@
 ;
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
@@ -34,9 +34,11 @@
                 this.node = [node];
             }
 
-            this["settings"] = $.extend({}, this["settings"], customSettings);
+            var $$ = $();
 
-            this.support = $.buildVendorNames();
+            this["settings"] = $$.extend({}, this["settings"], customSettings);
+
+            this.support = $$.buildVendorNames();
 
             this.touchType = window.navigator.msPointerEnabled ? "pointer" :
                                 "ontouchstart" in window ? "touch" : "mouse";
@@ -173,17 +175,17 @@
 
         },
 
-        swipeRightCallback: $.noop,
-        swipeLeftCallback: $.noop,
-        swipeUpCallback: $.noop,
-        swipeDownCallback: $.noop,
-        moveCallback: $.noop,
-        moveHorizontalCallback: $.noop,
-        moveVerticalCallback: $.noop,
-        rotateCallback: $.noop,
-        scaleCallback: $.noop,
-        tapCallback: $.noop,
-        doubleTapCallback: $.noop,
+        swipeRightCallback: function(){},
+        swipeLeftCallback: function(){},
+        swipeUpCallback: function(){},
+        swipeDownCallback: function(){},
+        moveCallback: function(){},
+        moveHorizontalCallback: function(){},
+        moveVerticalCallback: function(){},
+        rotateCallback: function(){},
+        scaleCallback: function(){},
+        tapCallback: function(){},
+        doubleTapCallback: function(){},
 
         processGestureChange: function (e, m) {
 
@@ -889,7 +891,7 @@
             var that = this;
 
             if (!callback) {
-                callback = $.noop;
+                callback = function(){};
             }
 
             if (that.hasmsGesture) {
@@ -1004,9 +1006,9 @@
 
         },
 
-        tapHoldBeginCallback: $.noop,
-        tapHoldEndCallback: $.noop,
-        tapHoldCancelCallback: $.noop,
+        tapHoldBeginCallback: function(){},
+        tapHoldEndCallback: function(){},
+        tapHoldCancelCallback: function(){},
 
         tapHoldCallback: function (evt) {
 
@@ -1111,4 +1113,4 @@
 
     return (window.deeptissue = deeptissue);
 
-}(window, $()));
+}(window));

@@ -6,7 +6,7 @@
 //The swipe experience is continuous so the user could swipe to the right or left and the 
 //panorama would seamlessly continue without interruption.
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
@@ -14,7 +14,7 @@
 
         var that = new panorama.fn.init(container, customSettings);
 
-        that.settings = $.extend({}, that.settings, customSettings);
+        that.settings = $().extend({}, that.settings, customSettings);
         that.setupElements(container);
         that.resizePanorama();
         that.buildTransitionValue();
@@ -76,12 +76,14 @@
 
             this.div = document.createElement('div');
 
+            var $$ = $();
+
             // Check for the browser's transitions support.
-            this.support.transition = $.getVendorPropertyName('transition');
-            this.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
-            this.support.transform = $.getVendorPropertyName('transform');
-            this.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
-            this.support.transform3d = $.checkTransform3dSupport();
+            this.support.transition = $$.getVendorPropertyName('transition');
+            this.support.transitionDelay = $$.getVendorPropertyName('transitionDelay');
+            this.support.transform = $$.getVendorPropertyName('transform');
+            this.support.transformOrigin = $$.getVendorPropertyName('transformOrigin');
+            this.support.transform3d = $$.checkTransform3dSupport();
 
             // Avoid memory leak in IE.
             this.div = null;
@@ -502,5 +504,5 @@
 
     return (window.panorama = panorama);
 
-}(window, $()));
+}(window));
 

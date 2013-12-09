@@ -6,20 +6,20 @@
 
     "use strict";
 
-    function getGridHeight(baseHeight) {
+    //function getGridHeight(baseHeight) {
 
-        var wWidth = window.innerWidth;
+    //    var wWidth = window.innerWidth;
 
-        if (wWidth <= 600) {
-            return baseHeight - 32;
-        } else if (wWidth > 600 && wWidth <= 1024) {
-            return Math.floor(baseHeight / 200) * 200;
-        } else if (wWidth > 1024) {
-            return (Math.floor(baseHeight / 200) * 200) + 20;
-        }
+    //    if (wWidth <= 600) {
+    //        return baseHeight - 32;
+    //    } else if (wWidth > 600 && wWidth <= 1024) {
+    //        return Math.floor(baseHeight / 200) * 200;
+    //    } else if (wWidth > 1024) {
+    //        return (Math.floor(baseHeight / 200) * 200) + 20;
+    //    }
 
 
-    };
+    //};
 
     movieApp.fn.homeView = {
 
@@ -49,7 +49,9 @@
                 hv.renderHomeMovies.call(that, ".comming-soon-list", data);
             });
 
-            hv.setPanoramaWidth.call(that);
+            requestAnimationFrame(function () {
+                hv.setPanoramaWidth.call(that);
+            });            
 
             that.setupMQL("min600", "(min-width: 600px)", [{
                 matchName: "manageHomeView",
@@ -104,8 +106,14 @@
                 panelWidth = (that.viewWidth - peekWidth),
                 panoramaWrapper = document.querySelector(".panorama-panels"),
                 panels = document.querySelectorAll(".single-panel"),
-                movieGrids = document.querySelectorAll(".movie-poster-grid"),
-                gridHeight = getGridHeight(parseInt(panoramaWrapper.style.height, 10));
+                movieGrids = document.querySelectorAll(".movie-poster-grid");
+//                gridHeight;
+
+            if (!panoramaWrapper) {
+                return;
+            }
+
+     //       gridHeight = getGridHeight(parseInt(panoramaWrapper.style.height, 10));
 
             for (; i < panels.length; i++) {
                 panels[i].style.width = panelWidth + "px";

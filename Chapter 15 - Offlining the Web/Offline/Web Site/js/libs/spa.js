@@ -2,7 +2,7 @@
 /// <reference path="helper.extensions.js" />
 ;
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
@@ -567,4 +567,4 @@
 
     return (window.spa = spa);
 
-})(window, $);
+})(window);

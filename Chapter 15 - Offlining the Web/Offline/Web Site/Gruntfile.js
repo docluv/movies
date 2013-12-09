@@ -47,7 +47,7 @@
             },
             applib: {
                 src: [
-                'js/libs/mbp.js',
+                'js/libs/dollarbill.min.js',
                 'js/libs/reqwest.js',
                 'js/libs/backpack.js',
                 'js/libs/deeptissue.js',

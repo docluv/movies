@@ -3,7 +3,7 @@
 //navigator.onLine = navigator.onLine || true; //does not support application cache most likely, so assume online
 
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
     
@@ -11,7 +11,7 @@
 
         var that = new rqData.fn.init();
 
-        that.settings = $.extend({}, that.settings, customSettings);
+        that.settings = $().extend({}, that.settings, customSettings);
 
         return that;
 
@@ -199,7 +199,7 @@
 
         getData: function (url, ajaxSettings) {
 
-            var ajaxOptions = $.extend({},
+            var ajaxOptions = $().extend({},
                                 this.ajaxSettings,
                                 ajaxSettings, { "url": url });
 
@@ -214,7 +214,7 @@
 
         postData: function (options) {
 
-            var ajaxOptions = $.extend({},
+            var ajaxOptions = $().extend({},
                             this.ajaxSettings,
                             { type: "POST" },
                             options.ajaxSettings,
@@ -268,5 +268,5 @@
 
     return (window.rqData = rqData);
 
-}(window, $()));
+}(window));
 

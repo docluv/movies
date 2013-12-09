@@ -11,7 +11,7 @@ callback: function(){} //gets executed when the item is selected
 */
 
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
@@ -36,10 +36,11 @@ callback: function(){} //gets executed when the item is selected
         }
 
         var that = new toolbar.fn.init(),
+            $$ = $(),
             settings = that.settings =
-                        $.extend({}, that.settings, customSettings);
+                        $$.extend({}, that.settings, customSettings);
 
-        that.support = $.buildVendorNames();
+        that.support = $$.buildVendorNames();
         that.support.transitionEnd =
                             that.eventNames[that.support.transition] || null;
 
@@ -406,4 +407,4 @@ callback: function(){} //gets executed when the item is selected
     return (window.toolbar = toolbar);
 
 
-}(window, $()));
+}(window));
