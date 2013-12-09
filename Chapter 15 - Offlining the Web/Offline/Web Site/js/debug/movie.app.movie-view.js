@@ -15,229 +15,231 @@
         }
     };
 
-    movieApp.fn.loadMovieView = function (params) {
+    var prevWidth = window.innerWidth;
 
-        if (!params || !params.id) {
-            this.showError("No Movie Id Requested");
-        }
+    movieApp.fn.movieView = {
 
-        var that = this;
+        onload: function (params) {
 
-        that.loadMovieDetails(params.id, function (data) {
-
-            if (!data) {
-                return;
+            if (!params || !params.id) {
+                this.showError("No Movie Id Requested");
             }
 
-            that.renderMovieDetails(data);
+            var that = this,
+                mv = this.movieView;
 
-        });
+            prevWidth = window.innerWidth;
 
-    };
+            this.loadMovieDetails(params.id, function (data) {
 
-    movieApp.fn.renderMovieDetails = function (data) {
+                if (!data) {
+                    return;
+                }
 
-        if (data) {
+                mv.renderMovieDetails.call(that, data);
 
-            var that = this;
+            });
 
-            that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
-            that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
-            that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
-            that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
-                            that.mergeInFakeShowtimes(data));
+        },
 
-            that.setupPanorama(".panorama-container", { maxWidth: 610 });
-            that.setMainTitle(data.title);
+        unload: function () {
 
-            that.bindPanelTitles();
+            delete this.resizeEvents["manageMovieView"];
 
-            that.manageMovieView();
+        },
 
-            that.resizeEvents["manageMovieView"] = that.manageMovieView;
+        renderMovieDetails : function (data) {
 
-            var //form = document.getElementsByTagName("form"),
-                reviewSubmit = document.getElementById("reviewSubmit");
+            if (data) {
 
-//            deeptissue(reviewSubmit).tap(function () {
+                var that = this,
+                    mv = that.movieView;
 
-            document.reviewForm.onsubmit = function (e) {
-                
-                e.preventDefault();
+                that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
+                that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
+                that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
+                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
+                                that.mergeInFakeShowtimes(data));
 
-                if (e.srcElement) {
-                    var i = 0,
-                        data = {},
-                        inputs = e.srcElement.querySelectorAll("input, textarea");
+                that.setupPanorama(".panorama-container", { maxWidth: 610 });
+                that.setMainTitle(data.title);
 
-                    for (; i < inputs.length; i++) {
-                        data[inputs[i].name] = inputs[i].value;
-                        console.info(inputs[i].name + " " + inputs[i].value);
+                mv.bindPanelTitles.call(that);
+
+                mv.manageMovieView.call(that);
+
+                that.resizeEvents["manageMovieView"] = mv.manageMovieView;
+
+                var reviewSubmit = document.getElementById("reviewSubmit");
+
+                document.reviewForm.onsubmit = function (e) {
+
+                    e.preventDefault();
+
+                    if (e.srcElement) {
+                        var i = 0,
+                            data = {},
+                            inputs = e.srcElement.querySelectorAll("input, textarea");
+
+                        for (; i < inputs.length; i++) {
+                            data[inputs[i].name] = inputs[i].value;
+                            console.info(inputs[i].name + " " + inputs[i].value);
+                        }
+
+
                     }
 
+                    return false;
+
+                };
+
+            }
+
+        },
+
+        bindPanelTitles : function () {
+
+            var showTimes = document.querySelector(".movie-showtime-list"),
+                castNames = document.querySelector(".cast-name-list"),
+                movieDesc = document.querySelector(".movie-description"),
+                showTimesTitle = document.querySelector(".movie-showtimes-panel > .panel-title"),
+                castNamesTitle = document.querySelector(".movie-cast-panel > .panel-title"),
+                movieDescTitle = document.querySelector(".movie-description-panel > .panel-title"),
+                showReview = document.getElementById("showReview"),
+                selectors = this.movie.Items;
+
+            $.show(movieDesc);
+
+            deeptissue(movieDescTitle).tap(function (e) {
+
+                var width = window.innerWidth;
+
+                if (width > 600 && width < 820) {
+
+                    $.hide(showTimes);
+                    $.hide(showReview);
+                    $.hide(castNames);
+                    $.show(movieDesc);
+                    
+                    $.removeClass(showTimesTitle, "selected");
+                    $.removeClass(castNamesTitle, "selected");
+                    $.addClass(movieDescTitle, "selected");
 
                 }
 
-                return false;
+            });
 
-            };
+            deeptissue(castNamesTitle).tap(function (e) {
 
-  //          });
+                var width = window.innerWidth;
 
+                if (width > 600 && width < 820) {
 
-        }
+                    $.hide(showTimes);
+                    $.hide(showReview);
+                    $.show(castNames);
+                    $.hide(movieDesc);
 
-    };
+                    castNames.style.position = "relative";
+                    castNames.style.left = "-130px";
 
-    movieApp.fn.bindPanelTitles = function () {
+                    $.removeClass(showTimesTitle, "selected");
+                    $.addClass(castNamesTitle, "selected");
+                    $.removeClass(movieDescTitle, "selected");
 
-        var showTimes = document.querySelector(".movie-showtime-list"),
-            castNames = document.querySelector(".cast-name-list"),
-            movieDesc = document.querySelector(".movie-description"),
-            showTimesTitle = document.querySelector(".movie-showtimes-panel > .panel-title"),
-            castNamesTitle = document.querySelector(".movie-cast-panel > .panel-title"),
-            movieDescTitle = document.querySelector(".movie-description-panel > .panel-title"),
-            showReview = document.getElementById("showReview"),
-            selectors = this.movie.Items;
+                }
 
-        $.show(movieDesc);
+            });
 
-        deeptissue(".movie-description-panel > .panel-title").tap(function (e) {
+            deeptissue(showTimesTitle).tap(function (e) {
+
+                var width = window.innerWidth;
+
+                if (width > 600 && width < 820) {
+
+                    $.show(showTimes);
+                    $.show(showReview);
+                    $.hide(castNames);
+                    $.hide(movieDesc);
+
+                    showTimes.style.position = "relative";
+                    showTimes.style.left = "-260px";
+
+                    showReview.style.position = "relative";
+                    showReview.style.left = "-200px";
+                    showReview.style.top = "30px";
+
+                    $.addClass(showTimesTitle, "selected");
+                    $.removeClass(castNamesTitle, "selected");
+                    $.removeClass(movieDescTitle, "selected");
+
+                }
+
+            });
+
+            deeptissue(showReview).tap(function (e) {
+
+                $.show(document.querySelector(selectors.reviewPanel));
+                $.hide(document.querySelector(selectors.detailPanel));
+                $.hide(document.querySelector(selectors.castPanel));
+                $.hide(document.querySelector(selectors.showtimesPanel));
+                $.hide(document.querySelector(selectors.descPanel));
+
+                document.getElementById("ReviewerName").focus();
+
+            });
+
+            deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
+
+                $.hide(document.querySelector(selectors.reviewPanel));
+                $.show(document.querySelector(selectors.detailPanel));
+                $.show(document.querySelector(selectors.castPanel));
+                $.show(document.querySelector(selectors.showtimesPanel));
+                $.show(document.querySelector(selectors.descPanel));
+
+            });
+
+        },
+
+        manageMovieView : function () {
 
             var width = window.innerWidth;
 
-            if (width > 600 && width < 820) {
+            //move from mini-tablet view
+            if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
 
-                $.hide(showTimes);
-                $.hide(showReview);
-                $.hide(castNames);
-                $.show(movieDesc);
+                var showTimes = document.querySelector(".movie-showtime-list"),
+                    castNames = document.querySelector(".cast-name-list");
 
-                showTimesTitle.removeClass("selected");
-                castNamesTitle.removeClass("selected");
-                movieDescTitle.addClass("selected");
+                showTimes.style.position = "";
+                showTimes.style.left = "";
 
-            }
-
-        });
-
-        deeptissue(".movie-cast-panel > .panel-title").tap(function (e) {
-
-            var width = window.innerWidth;
-
-            if (width > 600 && width < 820) {
-
-                $.hide(showTimes);
-                $.hide(showReview);
-                $.show(castNames);
-                $.hide(movieDesc);
-
-                castNames.style.position = "relative";
-                castNames.style.left = "-130px";
-
-                showTimesTitle.removeClass("selected");
-                castNamesTitle.addClass("selected");
-                movieDescTitle.removeClass("selected");
+                showReview.style.position = "";
+                showReview.style.left = "";
+                showReview.style.top = "";
 
             }
 
-        });
+            //need a routine to reset the order of panels since they may have been swiped
 
-        deeptissue(".movie-showtimes-panel > .panel-title").tap(function (e) {
+        },
 
-            var width = window.innerWidth;
+        clearInlineRelativePostition : function (nodes) {
 
-            if (width > 600 && width < 820) {
-
-                $.show(showTimes);
-                $.show(showReview);
-                $.hide(castNames);
-                $.hide(movieDesc);
-
-                showTimes.style.position = "relative";
-                showTimes.style.left = "-260px";
-
-                showReview.style.position = "relative";
-                showReview.style.left = "-200px";
-                showReview.style.top = "30px";
-
-                showTimesTitle.addClass("selected");
-                castNamesTitle.removeClass("selected");
-                movieDescTitle.removeClass("selected");
-
+            if (!nodes.legth) {
+                nodes = [nodes];
             }
 
-        });
+            for (var i = 0; i < nodes.length; i++) {
 
-deeptissue(showReview).tap(function (e) {
+                nodes[i].style.position = "";
+                nodes[i].style.left = "";
 
-    $.show(document.querySelector(selectors.reviewPanel));
-    $.hide(document.querySelector(selectors.detailPanel));
-    $.hide(document.querySelector(selectors.castPanel));
-    $.hide(document.querySelector(selectors.showtimesPanel));
-    $.hide(document.querySelector(selectors.descPanel));
-
-    document.getElementById("ReviewerName").focus();
-
-});
-
-        deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
-
-            $.hide(document.querySelector(selectors.reviewPanel));
-            $.show(document.querySelector(selectors.detailPanel));
-            $.show(document.querySelector(selectors.castPanel));
-            $.show(document.querySelector(selectors.showtimesPanel));
-            $.show(document.querySelector(selectors.descPanel));
-
-        });
-
-    };
-
-movieApp.fn.unloadMovieView = function () {
-
-    delete this.resizeEvents["manageMovieView"];
-    this.panorama.clearPanoramaSettings();
-    this.panorama = undefined;
-
-};
-
-   
-    movieApp.fn.manageMovieView = function () {
-
-        var width = window.innerWidth;
-
-        //move from mini-tablet view
-        if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
-
-            var showTimes = document.querySelector(".movie-showtime-list"),
-                castNames = document.querySelector(".cast-name-list");
-
-            showTimes.style.position = "";
-            showTimes.style.left = "";
-
-            showReview.style.position = "";
-            showReview.style.left = "";
-            showReview.style.top = "";
-
-        }
-
-        //need a routine to reset the order of panels since they may have been swiped
-
-    };
-
-    movieApp.fn.clearInlineRelativePostition = function (nodes) {
-
-        if (!nodes.legth) {
-            nodes = [nodes];
-        }
-
-        for (var i = 0; i < nodes.length; i++) {
-
-            nodes[i].style.position = "";
-            nodes[i].style.left = "";
+            }
 
         }
 
     };
+
 
 }(window));
