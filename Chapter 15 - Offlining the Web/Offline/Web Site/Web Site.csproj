@@ -167,6 +167,7 @@
     <Content Include="js\debug\movie.app.maps-view.js" />
     <Content Include="js\debug\movie.app.movie-view.js" />
     <Content Include="js\debug\movie.app.movies-view.js" />
+    <Content Include="js\debug\movie.app.privacy-view.js" />
     <Content Include="js\debug\movie.app.reviews-view.js" />
     <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />

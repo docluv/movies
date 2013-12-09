@@ -1,11 +1,15 @@
 
 var bp = backpack(),
     data = rqData(),
-    movie = movieApp({
-        bp: bp,
-        data: data,
-        tmpl: Mustache
-    }),
+    movie;
+
+movieApp.fn.privacyView = privacyView(data);
+
+movie = movieApp({
+    bp: bp,
+    data: data,
+    tmpl: Mustache
+});
 
     _spa = spa({
         "appContext": movie,
@@ -16,6 +20,7 @@ var bp = backpack(),
         "defaultTitle": "Modern Web Movies"
     });
 
+movie.privacyView.foo();
 
 //causes the Android and iPhone browser to scroll up to claim more real estate
 $.hideUrlBar();
