@@ -1,28 +1,18 @@
 ﻿<tile>
   <visual lang="en-US" version="2">
     <binding template="TileSquare150x150PeekImageAndText04" branding="name">
-      <image id="1" src="http://contoso.com/images/firstImage.jpg"/>
-      <text id="1">First image</text>
+      <image id="1" src="http://content6.flixster.com/movie/11/17/35/11173584_pro.jpg"/>
+      <text id="1">Frozen</text>
     </binding>
 
     <binding template="TileWide310x150ImageAndText01" branding="name">
-      <image id="1" src="http://contoso.com/images/firstImage.jpg"/>
-      <text id="1">First image</text>
+      <image id="1" src="http://content6.flixster.com/movie/11/17/35/11173584_pro.jpg"/>
+      <text id="1">Frozen</text>
     </binding>
 
-    <binding template="TileSquare310x310SmallImagesAndTextList01" branding="name">
-      <image id="1" src="http://contoso.com/images/firstImage.jpg"/>
-      <image id="2" src="http://contoso.com/images/secondImage.jpg"/>
-      <image id="3" src="http://contoso.com/images/thirdImage.jpg"/>
-      <text id="1">Title Text 1</text>
-      <text id="2">Body Text 1.1</text>
-      <text id="3">Body Text 1.2</text>
-      <text id="4">Title Text 2</text>
-      <text id="5">Body Text 2.1</text>
-      <text id="6">Body Text 2.2</text>
-      <text id="7">Title Text 3</text>
-      <text id="8">Body Text 3.1</text>
-      <text id="9">Body Text 3.2</text>
+    <binding template="TileSquare310x310ImageAndText01" branding="name">
+      <image id="1" src="http://content6.flixster.com/movie/11/17/35/11173584_pro.jpg"/>
+      <text id="1">Frozen</text>
     </binding>
   </visual>
 </tile>

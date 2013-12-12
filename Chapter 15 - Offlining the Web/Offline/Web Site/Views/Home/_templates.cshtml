@@ -22,7 +22,8 @@
                 <ul class="horizontal-list">
                     <li class="movie-showtime-detail movie-showtime-detail-rating">Rating: {{mpaa_rating}}</li>
                     <li class="movie-showtime-detail movie-showtime-detail-release">
-                        Released: {{year}}</li>
+                        Released: {{year}}
+                    </li>
                     <li class="movie-showtime-detail movie-showtime-detail-release-runtime">
                         {{runtime}} minutes
                     </li>
@@ -87,7 +88,27 @@
     <div>
         <a href="{{link}}"><h3>{{title}}</h3></a>
     </div>
-   
+
     {{/articles}}
-    {{^articles}}<h2>Sorry No News Available</h2>{{/articles}}
+    {{^articles}}
+    <h2>Sorry No News Available</h2>{{/articles}}
+</script>
+
+
+<script id="NYTReviewsTemplate" type="text/x-mustache-template">
+    {{#results}}
+    <article>
+        <header>
+            <a href="{{link.url}}"><h3>{{display_title}}</h3></a>
+            <div class="review-by-line">
+                <div class="review-reviewer">{{byline}}</div>
+                <div class="review-pub-date">{{publication_date}}</div>
+            </div>
+            <img src="{{multimedia.resource.src}}" class="review-reviewer" alt="" />
+        </header>
+        <div class="review-summary">{{summary_short}}</div>
+    </article>
+    {{/results}}
+    {{^results}}
+    <h2>Sorry No Reviews Available</h2>{{/results}}
 </script>

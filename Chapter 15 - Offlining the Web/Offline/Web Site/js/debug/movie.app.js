@@ -60,12 +60,13 @@
                 iconClass: "go-movie-soon",
                 url: "#!movies/CommingSoon"
             }
+            //, {
+            //    title: "account",
+            //    icon: undefined,
+            //    iconClass: "go-account",
+            //    url: "#!account"
+            //}
             , {
-                title: "account",
-                icon: undefined,
-                iconClass: "go-account",
-                url: "#!account"
-            }, {
                 title: "about",
                 icon: undefined,
                 iconClass: "go-about",
