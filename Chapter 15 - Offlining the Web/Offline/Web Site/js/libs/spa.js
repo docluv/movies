@@ -304,7 +304,7 @@
             if (currentView && currentView.id) {
                 oldRoute = that.matchRouteById(currentView.id);
             }
-            
+
             route = that.matchRouteByPath(path);
             anim = that.getAnimation(route);
             that.animation = anim;
@@ -326,7 +326,7 @@
                             currentView.addEventListener(
                                 that.transitionend[that.cssPrefix("animation")], function (e) {
                                     that.endSwapAnimation.call(that, e, currentView, newView, oldRoute);
-                            });
+                                });
 
                             //modify once addClass supports array of classes
                             $(currentView).addClass("animated out " + anim)

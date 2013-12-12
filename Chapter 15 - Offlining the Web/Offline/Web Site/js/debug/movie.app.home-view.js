@@ -42,10 +42,12 @@
                 matchName: "manageHomeView",
                 matchFunc: function () {
                     hv.updatePanoramaLayout.call(that);
+                    that.panorama.settings.peekWidth = 75;
                 },
                 nomatchName: "manageHomeView",
                 nomatchFunc: function () {
                     hv.updatePanoramaLayout.call(that);
+                    that.panorama.settings.peekWidth = 50;
                 }
             }]);
 
@@ -53,10 +55,12 @@
                 matchName: "manageHomeView1024",
                 matchFunc: function () {
                     hv.updatePanoramaLayout.call(that);
+                    that.panorama.settings.peekWidth = 100;
                 },
                 nomatchName: "manageHomeView1024",
                 nomatchFunc: function () {
                     hv.updatePanoramaLayout.call(that);
+                    that.panorama.settings.peekWidth = 75;
                 }
             }]);
 

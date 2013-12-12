@@ -102,7 +102,6 @@
             deeptissue(".hamburger-nav").tap(function () {
 
                 $(".main-nav").toggle();
-                //                document.querySelector(".main-nav").style.display = "block";
 
             });
 
@@ -126,11 +125,10 @@
 
             that.bindBackButton();
 
-
             return that;
         },
 
-        version: "0.0.1",
+        version: "0.0.2",
 
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 

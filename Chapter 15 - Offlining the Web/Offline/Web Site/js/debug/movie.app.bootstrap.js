@@ -11,14 +11,14 @@ movie = movieApp({
     tmpl: Mustache
 });
 
-    _spa = spa({
-        "appContext": movie,
-        "bp": bp,
-        "defaultPage": "homeview",
-        "viewWrapper": "#main",
-        "viewTransition": "slide",
-        "defaultTitle": "Modern Web Movies"
-    });
+_spa = spa({
+    "appContext": movie,
+    "bp": bp,
+    "defaultPage": "homeview",
+    "viewWrapper": "#main",
+    "viewTransition": "slide",
+    "defaultTitle": "Modern Web Movies"
+});
 
 movie.privacyView.foo();
 

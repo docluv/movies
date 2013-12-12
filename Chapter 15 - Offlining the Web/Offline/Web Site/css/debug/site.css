@@ -56,6 +56,8 @@ h1, .view-title {
     text-align: left;
     float: left;
     overflow: hidden;
+    width:calc(100% - 100px);
+    height:26pt;
 }
 
 h2, .view-title-x-large, .page-title {

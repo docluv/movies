@@ -1,15 +1,13 @@
 .x-scroller-wrapper, .xy-scroller-wrapper, .y-scroller-wrapper {
     -webkit-overflow-style: none;
-    -ms-overflow-style: none;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-style: none;
     -moz-overflow-scrolling: touch;
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    overflow-style: none;
     -ms-scroll-chaining: none;
-    -ms-scroll-snap-type: proximity;
     -ms-scroll-translation: vertical-to-horizontal;
-    overflow: auto;
+    overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
     padding-right: 0;
@@ -50,19 +48,6 @@
     overflow-x: hidden;
     overflow-y: scroll;
     height: 100%;
-}
-
-
-@media (max-width:600px) {
-
-    .xy-scroller-wrapper {
-        overflow: hidden;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        padding-right: 0;
-        width: 100%;
-        height: 100%;
-    }
 }
 
 @media (min-width:600px) {
