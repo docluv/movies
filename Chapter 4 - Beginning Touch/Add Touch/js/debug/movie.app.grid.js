@@ -17,7 +17,7 @@
             posters = document.querySelectorAll(".movie-target"),
             l = posters.length,
             pHeight = 170, //poster height
-            pWidth = 110, //poster width
+            pWidth = 115, //poster width
             wBox = {
                 width: parseInt(main.clientWidth, 10),
                 height: parseInt(main.clientHeight, 10)

@@ -1,11 +1,11 @@
-.y-scroller-wrapper {
+.scroller-wrapper {
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch;
     -moz-overflow-scrolling: touch;
     overflow-scrolling: touch;
     overflow-style: none;
-    -ms-scroll-chaining: none;
-    -ms-scroll-snap-type: proximity;
     -ms-scroll-translation: vertical-to-horizontal;
     overflow: hidden;
     overflow-x: hidden;
@@ -18,13 +18,11 @@
 
 @media (min-width:600px) {
 
-    .y-scroller-wrapper {
+    .scroller-wrapper {
+        -ms-touch-action: pan-x;
+        touch-action: pan-x;
         overflow: hidden;
         overflow-x: scroll;
         overflow-y: hidden;
-        /*-ms-scroll-snap-points-x: snapInterval(0%, 100%);*/
-        width: auto;
-        padding-right: 0;
-        height: 100%;
     }
 }
