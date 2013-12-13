@@ -28,7 +28,9 @@
             var that = this,
                 mv = this.movieView;
 
-            prevWidth = window.innerWidth;
+            prevWidth = Number.MAX_VALUE;
+
+            //            prevWidth = window.innerWidth;
 
             this.loadMovieDetails(params.id, function (data) {
 
@@ -48,7 +50,7 @@
 
         },
 
-        renderMovieDetails : function (data) {
+        renderMovieDetails: function (data) {
 
             if (data) {
 
@@ -61,11 +63,10 @@
                 that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
                                 that.mergeInFakeShowtimes(data));
 
-                that.setupPanorama(".panorama-container", { maxWidth: 610 });
                 that.setMainTitle(data.title);
 
                 mv.bindPanelTitles.call(that);
-                
+
                 that.resizeEvents["manageMovieView"] = mv.manageMovieView;
 
                 var reviewSubmit = document.getElementById("reviewSubmit");
@@ -94,12 +95,11 @@
                 requestAnimationFrame(function () {
                     mv.manageMovieView.call(that);
                 });
-
             }
 
         },
 
-        bindPanelTitles : function () {
+        bindPanelTitles: function () {
 
             var showTimes = $(".movie-showtime-list"),
                 castNames = $(".cast-name-list"),
@@ -122,7 +122,7 @@
                     showReview.hide();
                     castNames.hide();
                     movieDesc.show();
-                    
+
                     showTimesTitle.removeClass("selected");
                     castNamesTitle.removeClass("selected");
                     movieDescTitle.addClass("selected");
@@ -142,8 +142,8 @@
                     castNames.show();
                     movieDesc.hide();
 
-                    castNames.style.position = "relative";
-                    castNames.style.left = "-130px";
+                    castNames[0].style.position = "relative";
+                    castNames[0].style.left = "-130px";
 
                     showTimesTitle.removeClass("selected");
                     castNamesTitle.addClass("selected");
@@ -164,12 +164,12 @@
                     castNames.hide();
                     movieDesc.hide();
 
-                    showTimes.style.position = "relative";
-                    showTimes.style.left = "-260px";
+                    showTimes[0].style.position = "relative";
+                    showTimes[0].style.left = "-260px";
 
-                    showReview.style.position = "relative";
-                    showReview.style.left = "-200px";
-                    showReview.style.top = "30px";
+                    showReview[0].style.position = "relative";
+                    showReview[0].style.left = "-200px";
+                    showReview[0].style.top = "30px";
 
                     showTimesTitle.addClass("selected");
                     castNamesTitle.removeClass("selected");
@@ -203,22 +203,75 @@
 
         },
 
-        manageMovieView : function () {
+        manageMovieView: function () {
 
-            var width = window.innerWidth;
+            var that = this,
+                width = window.innerWidth,
+                showReview = $("#showReview"),
+                showTimes = document.querySelector(".movie-showtime-list"),
+                castNames = document.querySelector(".cast-name-list");
 
             //move from mini-tablet view
-            if (width < 610 && width > 820 && prevWidth > 610 && prevWidth < 820) {
-
-                var showTimes = document.querySelector(".movie-showtime-list"),
-                    castNames = document.querySelector(".cast-name-list");
+            if ((width < 610 || width > 800) && (prevWidth >= 610 && prevWidth <= 800)) {
 
                 showTimes.style.position = "";
                 showTimes.style.left = "";
 
-                showReview.style.position = "";
-                showReview.style.left = "";
-                showReview.style.top = "";
+                //showReview.css({
+                //    position: "",
+                //    left: "",
+                //    top: ""
+                //});
+
+                showReview[0].style.position = "";
+                showReview[0].style.left = "";
+                showReview[0].style.top = "";
+
+                $(".movie-showtime-list").show();
+                $(".movie-review-panel").hide();
+                $(".movie-details-list").show();
+                $(".movie-descrption-list").show();
+                castNames.style.display = "block";
+
+
+            }
+
+            if ((width > 610 && width < 820) && (prevWidth <= 610 || prevWidth >= 820)) {
+
+                $(showTimes).hide();
+                $(showReview).hide();
+                $(".movie-description").show();
+                $(".movie-showtime-list").hide();
+                $(".movie-review-panel").hide();
+                $(".movie-details-list").hide();
+                $(".cast-name-list").hide();
+
+                var i = 0,
+                    panelWrapper = document.querySelector(".panorama-panels"),
+                    panels = document.querySelectorAll(".single-panel");
+
+                for (; i < panels.length; i++) {
+                    panels[i].style.width = "";
+                }
+
+                var pp = document.querySelector(".panorama-panels");
+
+                pp.style.width = "";
+                pp.style.height = "";
+                pp.style.left = "";
+
+            }
+
+
+            if (width <= 610 && prevWidth > 610) {
+                //make sure panorama in effect
+                that.setupPanorama(".panorama-container", { maxWidth: 610 });
+
+                $(".movie-showtime-list").show();
+                $(".movie-review-panel").show();
+                $(".movie-details-list").show();
+                $(".movie-descrption-list").show();
+                $(".cast-name-list").show();
 
             }
 
@@ -228,7 +281,7 @@
             var poster = document.querySelector(".full-movie-poster");
 
             if (width > 1024) {
-                
+
                 poster.src = poster.src
                                     .replace("pro", "ori")
                                     .replace("det", "ori");
@@ -241,9 +294,11 @@
 
             }
 
+            prevWidth = width;
+
         },
 
-        clearInlineRelativePostition : function (nodes) {
+        clearInlineRelativePostition: function (nodes) {
 
             if (!nodes.legth) {
                 nodes = [nodes];
