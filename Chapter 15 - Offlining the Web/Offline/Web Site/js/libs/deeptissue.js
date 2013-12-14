@@ -6,10 +6,7 @@
 
     HTMLElement.prototype.ha = HTMLElement.prototype.hasAttribute;
 
-    var querySelector = document.querySelector,
-
-
-    deeptissue = function (node, customSettings) {
+    var deeptissue = function (node, customSettings) {
 
         return new deeptissue.fn.init(node, customSettings);
     };
@@ -36,7 +33,7 @@
 
             var $$ = $();
 
-            this["settings"] = $$.extend({}, this["settings"], customSettings);
+            this.settings = $$.extend({}, this.settings, customSettings);
 
             this.support = $$.buildVendorNames();
 
@@ -152,8 +149,8 @@
 
                         ///Double Tap functionality
                         el.addEventListener("MSGestureEnd", function (evt) {
-                            console.info("MSGestureEnd");
-                            that.endGesture();
+                            // console.info("MSGestureEnd");
+                            that.endGesture(evt);
                         });
 
                     }
@@ -175,17 +172,17 @@
 
         },
 
-        swipeRightCallback: function(){},
-        swipeLeftCallback: function(){},
-        swipeUpCallback: function(){},
-        swipeDownCallback: function(){},
-        moveCallback: function(){},
-        moveHorizontalCallback: function(){},
-        moveVerticalCallback: function(){},
-        rotateCallback: function(){},
-        scaleCallback: function(){},
-        tapCallback: function(){},
-        doubleTapCallback: function(){},
+        swipeRightCallback: function () { },
+        swipeLeftCallback: function () { },
+        swipeUpCallback: function () { },
+        swipeDownCallback: function () { },
+        moveCallback: function () { },
+        moveHorizontalCallback: function () { },
+        moveVerticalCallback: function () { },
+        rotateCallback: function () { },
+        scaleCallback: function () { },
+        tapCallback: function () { },
+        doubleTapCallback: function () { },
 
         processGestureChange: function (e, m) {
 
@@ -249,9 +246,9 @@
 
         processSwipe: function (el, e, settings, m) {
 
-            var that = this,
-                horizontal = false,
-                vertical = false;
+            var that = this;
+                //horizontal = false,
+                //vertical = false;
 
             m = m || {};
 
@@ -270,7 +267,7 @@
                     (e.clientX - that.swipeX) > settings.swipeRightThreshold) {
 
                     if (!that.swipping) {
-                        console.info("swipeRight");
+                        // console.info("swipeRight");
 
                         that.swipping = true;
 
@@ -292,7 +289,7 @@
                         (e.clientX - that.swipeX) < settings.swipeLeftThreshold) {
 
                     if (!that.swipping) {
-                        console.info("swipe Left");
+                        // console.info("swipe Left");
 
                         that.swipping = true;
 
@@ -320,7 +317,7 @@
                         (clientY - that.swipeY) < settings.swipeUpThreshold) {
 
                         if (!that.swipping) {
-                            console.info("swipeUp");
+                            // console.info("swipeUp");
 
                             that.swipping = true;
 
@@ -344,7 +341,7 @@
                     (e.clientY - that.swipeY) > settings.swipeDownThreshold) {
 
                     if (!that.swipping) {
-                        console.info("swipe Down");
+                        // console.info("swipe Down");
                         that.swipping = true;
 
                         that.swipeY = null;
@@ -369,24 +366,24 @@
 
             e.preventDefault();
 
-            console.info("gesture Change \r\n" +
-                            el.ha(settings.rotateIndicator) + "\r\n");
+            // console.info("gesture Change \r\n" +
+            //              el.ha(settings.rotateIndicator) + "\r\n");
 
             if (el.ha(settings.rotateIndicator) &&
                     Math.abs(e.rotation) > settings.rotateThreshold) {
                 //probably going to remove this or make it an optional setting to trigger
-                el.style.webkitTransform =
-                        'rotate(' + (el.gStartRotation + e.rotation) + 'deg)';
+                //el.style.webkitTransform =
+                //        'rotate(' + (el.gStartRotation + e.rotation) + 'deg)';
 
-                this.rotateCallback(e, m);
+                this.rotateCallback(e);
             }
 
             if (el.ha(settings.scaleIndicator) &&
                     Math.abs(e.scale) > settings.scaleThreshold) {
                 //probably going to remove this or make it an optional setting to trigger
-                el.style.webkitTransform =
-                        'scale(' + (el.gStartScale * e.scale) + ') ';
-                this.scaleCallback(e, m);
+                //el.style.webkitTransform =
+                //        'scale(' + (el.gStartScale * e.scale) + ') ';
+                this.scaleCallback(e);
             }
 
         },
@@ -587,23 +584,23 @@
                 el.addEventListener("mouseup", endHandler);
 
                 el.addEventListener(that.touchEnd, function () {
-                    console.info("touchEnd");
+                    // console.info("touchEnd");
                 });
 
                 el.addEventListener("mouseout", function () {
-                    console.info("mouseout");
+                    // console.info("mouseout");
                 });
 
                 el.addEventListener("mouseup", function () {
-                    console.info("mouseup");
+                    // console.info("mouseup");
                 });
 
                 el.addEventListener(that.touchCancel, function () {
-                    console.info("touchCancel");
+                    // console.info("touchCancel");
                 });
 
                 el.addEventListener(that.touchOut, function () {
-                    console.info("touchOut");
+                    // console.info("touchOut");
                 });
 
                 if (that.hasMouse) {
@@ -625,7 +622,7 @@
 
             evt.preventDefault();
 
-            console.info("touch start");
+            // console.info("touch start");
 
             if (el.ha(settings.moveIndicator)) {
 
@@ -744,9 +741,9 @@
                 if (!el.ha(settings.moveTouchEnded) &&
                             el.ha(settings.moveTouchInitial)) {
 
-                    start = JSON.parse(el.getAttribute(settings.moveTouchInitial)),
-                                end = that.getTouchPoints(evt),
-                                translate = that.calculateTranslation(start, end);
+                    start = JSON.parse(el.getAttribute(settings.moveTouchInitial));
+                    end = that.getTouchPoints(evt);
+                    translate = that.calculateTranslation(start, end);
 
                     el.style[that.support.transform] = "translate3D(" + translate.translationX + "px, " +
                                                     translate.translationY + "px, 0)";
@@ -757,6 +754,8 @@
 
             }
 
+            var start, end, translate;
+
             if (el.ha(settings.horizontalIndicator)) {
 
                 if (!el.ha(settings.horizontalTouchEnd) &&
@@ -764,9 +763,9 @@
 
                     console.log("should -horizontal move");
 
-                    var start = JSON.parse(el.getAttribute(settings.horizontalTouchInit)),
-                                    end = that.getTouchPoints(evt),
-                                    translate = that.calculateTranslation(start, end);
+                    start = JSON.parse(el.getAttribute(settings.horizontalTouchInit));
+                    end = that.getTouchPoints(evt);
+                    translate = that.calculateTranslation(start, end);
 
                     if (Math.abs(translate.translationX) > that.settings.moveThreshold) {
 
@@ -784,9 +783,9 @@
                 if (!el.ha(settings.verticalTouchEnd) &&
                             el.ha(settings.verticalTouchInit)) {
 
-                    var start = JSON.parse(el.getAttribute(settings.verticalTouchInit)),
-                                end = that.getTouchPoints(evt),
-                                translate = that.calculateTranslation(start, end);
+                    start = JSON.parse(el.getAttribute(settings.verticalTouchInit));
+                    end = that.getTouchPoints(evt);
+                    translate = that.calculateTranslation(start, end);
 
                     if (Math.abs(translate.translationY) > that.settings.moveThreshold) {
 
@@ -891,7 +890,7 @@
             var that = this;
 
             if (!callback) {
-                callback = function(){};
+                callback = function () { };
             }
 
             if (that.hasmsGesture) {
@@ -915,9 +914,9 @@
 
         dblTap: function (callback) {
 
-            var that = this,
-                settings = this.settings,
-                tl = document.querySelector(".touch-log");
+            var //that = this,
+                settings = this.settings;
+                //tl = document.querySelector(".touch-log");
 
             if (callback) {
                 settings.doubleTapCallback = callback;
@@ -996,19 +995,19 @@
                 clearTimeout(tht);
             }, 500);
 
-            el.addEventListener(that.touchEnd, function (evt) {
+            el.addEventListener(that.touchEnd, function () {
                 clearTimeout(tht);
             }, false);
 
-            el.addEventListener(that.touchCancel, function (evt) {
+            el.addEventListener(that.touchCancel, function () {
                 clearTimeout(tht);
             }, false);
 
         },
 
-        tapHoldBeginCallback: function(){},
-        tapHoldEndCallback: function(){},
-        tapHoldCancelCallback: function(){},
+        tapHoldBeginCallback: function () { },
+        tapHoldEndCallback: function () { },
+        tapHoldCancelCallback: function () { },
 
         tapHoldCallback: function (evt) {
 
@@ -1016,7 +1015,7 @@
 
             evt.preventDefault();
 
-            // console.info("evt.detail - " + evt.detail);
+            // // console.info("evt.detail - " + evt.detail);
 
             if (evt.detail & evt.MSGESTURE_FLAG_BEGIN) {
 

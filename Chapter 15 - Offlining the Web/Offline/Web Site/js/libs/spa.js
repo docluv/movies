@@ -25,7 +25,7 @@
 
         }
 
-        window.addEventListener("hashchange", function (e) {
+        window.addEventListener("hashchange", function () {
 
             that.swapView();
 
@@ -43,7 +43,7 @@
 
         if (that.settings.asyncUrl && typeof that.settings.asyncUrl === "string") {
 
-            document.addEventListener("DOMContentLoaded", function (event) {
+            document.addEventListener("DOMContentLoaded", function () {
 
                 e.target.removeEventListener(e.type, arguments.callee);
 
@@ -72,7 +72,7 @@
             var that = this,
                 $$ = $(),
                 routes = $$.extend($$.parseLocalStorage("routes") || {}, that.settings.routes),
-                i = 0, j = 0, rawPath, view, route, viewId,
+                i = 0, rawPath, view, route, viewId,
                 Views = document.querySelectorAll(that.settings.viewSelector);
 
             for (; i < Views.length; i++) {
@@ -109,7 +109,7 @@
                 path: rawPath.split("\\:")[0],
                 params: rawPath.split("\\:").slice(1),
                 title: (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
-                        that.settings.defaultTitle),
+                        this.settings.defaultTitle),
                 transition: (view.hasAttribute("data-transition") ?
                         view.getAttribute("data-transition") :
                         ""),
@@ -286,7 +286,7 @@
         swapView: function () {
 
             var that = this,
-                route, oldRoute, callback, title, i, a, anim,
+                route, oldRoute, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
@@ -325,7 +325,7 @@
 
                             currentView.addEventListener(
                                 that.transitionend[that.cssPrefix("animation")], function (e) {
-                                    that.endSwapAnimation.call(that, e, currentView, newView, oldRoute);
+                                    that.endSwapAnimation.call(that, currentView, newView, oldRoute);
                                 });
 
                             //modify once addClass supports array of classes
@@ -369,7 +369,7 @@
 
         },
 
-        endSwapAnimation: function (e, currentView, newView, route) {
+        endSwapAnimation: function (currentView, newView, route) {
 
             var that = this,
                 anim = that.animation;
@@ -400,7 +400,7 @@
                     newView, loc;
 
                 if (view) {
-                    newView = this.createFragment(view.content)
+                    newView = this.createFragment(view.content);
                 } else {
                     loc = window.location.href.split("#!");
                     window.location.replace(loc[0] + "?" +
@@ -462,8 +462,7 @@
 
         setDocumentTitle: function (route) {
 
-            var that = this,
-                title = route.title, i;
+            var title = route.title, i;
 
             if (title === "") {
                 return;

@@ -41,7 +41,7 @@
             isCacheValid: function () {  // optional
                 return true;
             },
-            success: function (d) { }
+            success: function () { }
         },
 
         serialize: function (obj) {
@@ -228,7 +228,7 @@
              });
             
         },
-
+        /*
         putData: function (options) {
 
             //var ajaxOptions = $.extend({}, this.ajaxSettings,
@@ -260,7 +260,7 @@
             //});
 
         }
-
+        */
     };
 
     // Give the init function the rqData prototype for later instantiation

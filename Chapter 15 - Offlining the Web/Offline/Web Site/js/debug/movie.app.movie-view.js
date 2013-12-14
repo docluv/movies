@@ -206,6 +206,7 @@
         manageMovieView: function () {
 
             var that = this,
+                mv = that.movieView,
                 width = window.innerWidth,
                 showReview = $("#showReview"),
                 showTimes = document.querySelector(".movie-showtime-list"),
@@ -262,7 +263,6 @@
 
             }
 
-
             if (width <= 610 && prevWidth > 610) {
                 //make sure panorama in effect
                 that.setupPanorama(".panorama-container", { maxWidth: 610 });
@@ -277,6 +277,13 @@
 
             //need a routine to reset the order of panels since they may have been swiped
 
+            mv.setMoviePoster(width);
+
+            prevWidth = width;
+
+        },
+
+        setMoviePoster: function (width) {
 
             var poster = document.querySelector(".full-movie-poster");
 
@@ -293,9 +300,6 @@
                                     .replace("ori", "det");
 
             }
-
-            prevWidth = width;
-
         },
 
         clearInlineRelativePostition: function (nodes) {

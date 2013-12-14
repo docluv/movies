@@ -78,6 +78,6 @@
     });
 
     // Default task.
-    grunt.registerTask('default', ['jshint', 'qunit', 'uglify', 'cssmin']);
+    grunt.registerTask('default', [/*'jshint', 'qunit', */'uglify', 'cssmin']);
 
 };

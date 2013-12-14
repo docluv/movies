@@ -120,7 +120,7 @@
 
                 headerWidth = 0;
 
-                for (var i = 0; i < that.headerPanels.length; i++) {
+                for (i = 0; i < that.headerPanels.length; i++) {
                     headerWidth += that.headerPanels[i].offsetWidth;
                 }
 
@@ -133,7 +133,7 @@
                 var style = that.header.style;
 
                 if (that.headerPanels && that.headerPanels.length > 0) {
-                    style.width = headerWidth + "px"
+                    style.width = headerWidth + "px";
                     style.left = -parseInt(that.headerPanels[0].offsetWidth, 10) + "px";
                 } else {
                     style.width = headerWidth + "px";
