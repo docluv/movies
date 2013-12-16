@@ -148,40 +148,40 @@
                   {
 
                       case "":
-                          @RenderPage("home-view.cshtml")
+                          @SPARenderPage("home-view.cshtml")
                           break;
 
                       case "movies":
-                         @RenderPage("movies-view.cshtml")
+                         @SPARenderPage("movies-view.cshtml")
                           break;
 
                       case "movie":
-                          @RenderPage("movie-view.cshtml")
+                          @SPARenderPage("movie-view.cshtml")
                           break;
 
                       case "about":
-                          @RenderPage("about-view.cshtml")
+                          @SPARenderPage("about-view.cshtml")
                           break;
                           
                       case "theater":
-                          @RenderPage("theater-view.cshtml")
+                          @SPARenderPage("theater-view.cshtml")
                           break;
 
 
                       case "reviews":
-                          @RenderPage("reviews-view.cshtml")
+                          @SPARenderPage("reviews-view.cshtml")
                           break;
 
                       case "privacy":
-                          @RenderPage("privacy-view.cshtml")
+                          @SPARenderPage("privacy-view.cshtml")
                           break;
 
                       case "search":
-                          @RenderPage("search-view.cshtml")
+                          @SPARenderPage("search-view.cshtml")
                           break;
 
                       default:
-                          @RenderPage("notFound.cshtml")
+                          @SPARenderPage("notFound.cshtml")
                           break;
                   }
             }
@@ -196,17 +196,17 @@
           {
               long lastLoad = Html.LastUpdated();
 
-              @RenderPage(lastLoad, "home-view.cshtml")
-              @RenderPage(lastLoad, "movies-view.cshtml")
-              @RenderPage(lastLoad, "movie-view.cshtml")
-              @RenderPage(lastLoad, "maps-view.cshtml")
-              @RenderPage(lastLoad, "reviews-view.cshtml")
-              @RenderPage(lastLoad, "search-view.cshtml")
-              @RenderPage(lastLoad, "theater-view.cshtml")
-              @RenderPage(lastLoad, "about-view.cshtml")
-              @RenderPage(lastLoad, "login-view.cshtml")
-              @RenderPage(lastLoad, "privacy-view.cshtml")
-              @RenderPage(lastLoad, "_templates.cshtml")
+              @RenderPage("home-view.cshtml")
+              @RenderPage("movies-view.cshtml")
+              @RenderPage("movie-view.cshtml")
+              @RenderPage("maps-view.cshtml")
+              @RenderPage("reviews-view.cshtml")
+              @RenderPage("search-view.cshtml")
+              @RenderPage("theater-view.cshtml")
+              @RenderPage("about-view.cshtml")
+              @RenderPage("login-view.cshtml")
+              @RenderPage("privacy-view.cshtml")
+              @RenderPage("_templates.cshtml")
 
           }
 
