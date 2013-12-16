@@ -1,5 +1,7 @@
-﻿<section id="privacyView" class="content-pane"
-         data-title="Modern Web Movies Privacy Statement"
+﻿@using SPAHelper
+<section id="privacyView" class="content-pane @if (Html.HasEscapeFragment()){@:current
+                  } "
+         data-title=" modern web movies privacy statement"
          data-transition="flip"
          data-route="privacy">
 

@@ -390,8 +390,6 @@ callback: function(){} //gets executed when the item is selected
             toolbarItemTemplate: "<div class='toolbar-item'><a href='{{url}}'><div class='toolbar-item-icon {{iconClass}}'></div><figcaption>{{title}}</figcaption></a></div>",
             subMenuItemTemplate: "<a href='{{url}}'><div class='toolbar-sub-menu-nav-item {{iconClass}}'>{{title}}</div></a>",
 
-            topLevelItems: [],
-            secondLevelItems: [],
             expandSpeed: 1000, //ms
             that: undefined,
 

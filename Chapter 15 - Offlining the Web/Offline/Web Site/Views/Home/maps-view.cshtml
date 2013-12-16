@@ -1,7 +1,9 @@
-﻿<section id="mapsView" class="content-pane"
-    data-title="Modern Web Movies Maps"
-    data-transition="flip"
-    data-route="maps">
+﻿@using SPAHelper
+<section id="mapsView" class="content-pane @if (Html.HasEscapeFragment()){@:current
+                  } "
+    data-title=" modern web movies maps"
+         data-transition="flip"
+         data-route="maps">
 
     <div id="nearbyMap" style="position:absolute;width:100%;height:100%;"></div>
 

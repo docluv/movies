@@ -6,8 +6,8 @@
 
     "use strict";
 
-    var menuItems = {
-        topMenu: [
+var menuItems = {
+    topMenu: [
         {
             title: "home",
             iconClass: "home-icon",
@@ -28,51 +28,45 @@
             iconClass: "search-icon",
             url: "#!search"
         }],
-        subMenu: [
-            {
-                title: "reviews",
-                icon: undefined,
-                iconClass: "go-reviews",
-                url: "#!reviews"
-            }
+    subMenu: [
+        {
+            title: "reviews",
+            icon: undefined,
+            iconClass: "go-reviews",
+            url: "#!reviews"
+        }
 
-             , {
-                 title: "opening this week",
-                 icon: undefined,
-                 iconClass: "go-opening",
-                 url: "#!movies/Opening"
-             }
-             , {
-                 title: "in theaters",
-                 icon: undefined,
-                 iconClass: "go-in-theaters",
-                 url: "#!movies/InTheaters"
-             }
-             , {
-                 title: "top box office",
-                 icon: undefined,
-                 iconClass: "go-top-box-office",
-                 url: "#!movies/TopBoxOffice"
-             }
-            , {
-                title: "comming soon",
-                icon: undefined,
-                iconClass: "go-movie-soon",
-                url: "#!movies/CommingSoon"
-            }
-            //, {
-            //    title: "account",
-            //    icon: undefined,
-            //    iconClass: "go-account",
-            //    url: "#!account"
-            //}
-            , {
-                title: "about",
-                icon: undefined,
-                iconClass: "go-about",
-                url: "#!about"
-            }]
-    };
+         , {
+             title: "opening this week",
+             icon: undefined,
+             iconClass: "go-opening",
+             url: "#!movies/Opening"
+         }
+         , {
+             title: "in theaters",
+             icon: undefined,
+             iconClass: "go-in-theaters",
+             url: "#!movies/InTheaters"
+         }
+         , {
+             title: "top box office",
+             icon: undefined,
+             iconClass: "go-top-box-office",
+             url: "#!movies/TopBoxOffice"
+         }
+        , {
+            title: "comming soon",
+            icon: undefined,
+            iconClass: "go-movie-soon",
+            url: "#!movies/CommingSoon"
+        }
+        , {
+            title: "about",
+            icon: undefined,
+            iconClass: "go-about",
+            url: "#!about"
+        }]
+};
 
     var movieApp = function (customSettings) {
 
@@ -436,6 +430,9 @@
     return (window.movieApp = movieApp);
 
 }(window));
+
+
+
 
 
 

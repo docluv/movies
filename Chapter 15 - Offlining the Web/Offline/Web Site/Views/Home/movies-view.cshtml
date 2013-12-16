@@ -1,9 +1,19 @@
-﻿<section id="moviesView" class="content-pane"
-    data-title="Modern Web Movies"
-    data-transition="flip"
-    data-route="movies\:movieType">    
+﻿@using SPAHelper
 
-    <div class="xy-scroller-wrapper">
-        <div class="movie-poster-div movie-poster-grid"></div>
-    </div>
+<section id="moviesView" class="content-pane @if (Html.HasEscapeFragment()){@:current
+         } "
+         data-title=" modern web movies"
+         data-transition="flip"
+         data-route="movies\:movieType">
+
+    @if (!Html.HasEscapeFragment())
+    {
+        <div class="xy-scroller-wrapper">
+            <div class="movie-poster-div movie-poster-grid"></div>
+        </div>
+    }
+    else
+    {
+        @RenderPage("_MovieList.cshtml")
+    }
 </section>

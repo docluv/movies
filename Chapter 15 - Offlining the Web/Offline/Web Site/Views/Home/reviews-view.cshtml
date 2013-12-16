@@ -1,7 +1,9 @@
-﻿<section id="reviewsView" class="content-pane"
-    data-title="Modern Web Movies Reviews"
-    data-transition="flip"
-    data-route="reviews">
+﻿@using SPAHelper
+<section id="reviewsView" class="content-pane @if (Html.HasEscapeFragment()){@:current
+                  } "
+    data-title=" modern web movies reviews"
+         data-transition="flip"
+         data-route="reviews">
 
 
     <h2>Reviews</h2>
