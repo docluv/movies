@@ -1,25 +1,27 @@
 .movie-poster-grid {
     overflow: hidden;
-    padding: 0px;
+    padding: 0;
+    height: 4000px;
+    width: 100%;
 }
 
-.movie-poster-grid .movie-target {
+.movie-target {
     display: inline-block;
     list-style-type: none;
     margin: 10px;
-    width: 90px;
+    width: 80px;
     overflow: hidden;
     background: transparent;
     text-align: center;
 }
 
-.movie-poster-grid .movie-grid-poster {
-    width: 90px;
-    height: 135px;
+.movie-grid-poster {
+    width: 80px;
+    height: 120px;
     border: none;
 }
 
-.movie-poster-grid .demo-photo-caption {
+.photo-caption {
     position: relative;
     top: -12px;
     float: left;
@@ -33,3 +35,88 @@
     font-size: .8em;
     line-height: 12px;
 }
+
+
+@media (min-width: 600px) {
+
+    .movie-target {
+        width: 180px;
+        height: 180px;
+    }
+
+    .movie-grid-poster {
+        width: 180px;
+        height: 267px;
+    }
+
+    .photo-caption {
+        top: -127px;
+        padding-left: 12px;
+        width: 180px;
+        height: 40px;
+        font-size: 1.2em;
+        line-height: 40px;
+        text-align:left;
+    }
+
+}
+
+@media (min-width:800px) {
+
+    .movie-poster-grid{
+        width: 4000px;
+        height: 600px;
+    }
+
+}
+
+@media (min-width: 1024px) {
+
+    .movie-poster-grid{
+        height:440px;
+    }
+
+    .movie-target:nth-child(1) {
+        width: 450px;
+        height: 420px;
+        float:left;
+        margin:10px;
+    }
+
+    .movie-target:nth-child(1) .movie-grid-poster {
+        width: 450px;   
+        height: 667px; 
+    }
+
+    .movie-target:nth-child(1) .photo-caption {
+        top: -327px;
+        padding-left: 20px;
+        width: 450px;
+        height: 80px;
+        font-size: 1.5em;
+        line-height: 80px;
+    }
+
+    .movie-target {
+        width: 180px;
+        height: 200px;
+        margin:10px 10px 5px 10px;
+    }
+
+    .movie-grid-poster {
+        width: 180px;
+        height: 267px;
+    }
+
+    .photo-caption {
+        top: -107px;
+        padding-left: 12px;
+        width: 180px;
+        height: 40px;
+        font-size: 1.2em;
+        line-height: 40px;
+        text-align:left;
+    }
+
+}
+

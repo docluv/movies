@@ -37,5 +37,14 @@
 
     };
 
+    movieApp.fn.makeGridVertical = function(){
+        
+        var grid = document.querySelector(".movie-poster-div");
+
+        grid.style.width = "";
+        grid.style.height = "";
+
+    };
+
 }(window));
 

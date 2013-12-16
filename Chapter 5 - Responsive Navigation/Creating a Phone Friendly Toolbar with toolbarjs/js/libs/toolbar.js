@@ -11,55 +11,56 @@ callback: function(){} //gets executed when the item is selected
 */
 
 
-(function (window, $, undefined) {
+(function (window, undefined) {
 
     "use strict";
 
     var toolbar = function (node, customSettings) {
-        return new toolbar.fn.init(node, customSettings);
+
+        if (!node) {
+            return node;
+        }
+
+        if (typeof node === "string") { //assume selector
+
+            node = document.querySelector(node);
+
+            if (!node) {
+                return node;
+            }
+
+        }
+
+        if ("length" in node) {  //rude detection for nodeList
+            node = node[0]; //limit the toolbar application to a single node for now, just makes sense
+        }
+
+        var that = new toolbar.fn.init(),
+            $$ = $(),
+            settings = that.settings =
+                        $$.extend({}, that.settings, customSettings);
+
+        that.support = $$.buildVendorNames();
+        that.support.transitionEnd =
+                            that.eventNames[that.support.transition] || null;
+
+        that.setupToolbarElements(node, settings);
+        that.applyTransitionEnd();
+        //     that.setupOritentationChange();
+        that.setToolbarMenu(settings.menuItems);
+
+        return that;
     };
 
     toolbar.fn = toolbar.prototype = {
 
         constructor: toolbar,
 
-        init: function (node, customSettings) {
-
-            if (!node) {
-                return node;
-            }
-
-            if (typeof node === "string") { //assume selector
-
-                node = document.querySelector(node);
-
-                if (!node) {
-                    return node;
-                }
-
-            }
-
-            if ("length" in node) {  //rude detection for nodeList
-                node = node[0]; //limit the toolbar application to a single node for now, just makes sense
-            }
-
-            var that = this,
-                settings = that.settings =
-                            $.extend({}, that.settings, customSettings);
-
-            that.support = $.buildVendorNames();
-            that.support.transitionEnd =
-                                that.eventNames[that.support.transition] || null;
-
-            that.setupToolbarElements(node, settings);
-            that.applyTransitionEnd();
-
-            that.setToolbarMenu(settings.menuItems);
-
+        init: function () {
             return this;
         },
 
-        version: "0.0.3",
+        version: "0.0.4",
 
         toolbar: undefined,
         topMenu: undefined,
@@ -131,6 +132,12 @@ callback: function(){} //gets executed when the item is selected
                 that.subMenu.innerHTML = subHTML;
 
                 that.setIconWidth(i);
+                that.setOrientation();
+
+                window.addEventListener("resize", function (e) {
+                    that.setIconWidth(i);
+                    that.setOrientation();
+                });
 
                 that.expandTarget = that.toolbar.querySelector(settings.expandTargetSelector);
 
@@ -166,6 +173,16 @@ callback: function(){} //gets executed when the item is selected
             if (exp) {
                 exp.style.marginRight = mWidth + "%";
                 exp.style.marginLeft = mWidth + "%";
+            }
+
+        },
+
+        setOrientation: function () {
+
+            if (window.innerWidth < window.innerHeight) {
+                this.toolbar.orientation = "portrait";
+            } else {
+                this.toolbar.orientation = "landscape";
             }
 
         },
@@ -339,19 +356,20 @@ callback: function(){} //gets executed when the item is selected
 
                     toolbar.style.height = (top.height + sub.height) + "px";
 
-                } else {
+                }
+                else {
 
                     if (settings.menuItems.subMenu.length > 0) {
                         toolbar.style.width = settings.expandWidth + "px";
                     }
 
                 }
-
+                
                 toolbar.expanded = true;
             }
 
         },
-        
+
         settings: {
 
             minHeight: 35,
@@ -370,10 +388,8 @@ callback: function(){} //gets executed when the item is selected
                 subMenu: []
             },
             toolbarItemTemplate: "<div class='toolbar-item'><a href='{{url}}'><div class='toolbar-item-icon {{iconClass}}'></div><figcaption>{{title}}</figcaption></a></div>",
-            subMenuItemTemplate: "<div class='toolbar-sub-menu-nav-item {{iconClass}}'>{{title}}</div>",
+            subMenuItemTemplate: "<a href='{{url}}'><div class='toolbar-sub-menu-nav-item {{iconClass}}'>{{title}}</div></a>",
 
-            topLevelItems: [],
-            secondLevelItems: [],
             expandSpeed: 1000, //ms
             that: undefined,
 
@@ -389,4 +405,4 @@ callback: function(){} //gets executed when the item is selected
     return (window.toolbar = toolbar);
 
 
-}(window, MBP));
+}(window));

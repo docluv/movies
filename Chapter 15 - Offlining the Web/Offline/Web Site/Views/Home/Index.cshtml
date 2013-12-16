@@ -1,5 +1,5 @@
 ﻿@using SPAHelper
-@model Web_Site.Models.SPAModel
+@model Web_Site.Models.MoviesModel
 <!DOCTYPE html>
 @{if (HttpContext.Current.IsDebuggingEnabled)
 {
@@ -38,9 +38,9 @@
 
 </script>
 
-        <title>Modern Web Movies - High Performance Single Page Web Applications</title>
+        <title>@Model.Title</title>
 
-        <meta content="This is a demonstration site for the Modern Web Movie Book. It is meant to serve as an example of how to build a modern single page web application." name="description">
+        <meta content="@Model.Description" name="description">
         <meta content="Chris Love" name="author">
 
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -123,7 +123,7 @@
       <body>
           <header class="site-header" role="banner">
               <span class="win-backbutton"></span>
-              <h1 class="view-title">Modern Web Movies</h1>
+              <h1 class="view-title">@Model.Title</h1>
               <nav class="main-nav" role="navigation">
                   <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
                   <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>

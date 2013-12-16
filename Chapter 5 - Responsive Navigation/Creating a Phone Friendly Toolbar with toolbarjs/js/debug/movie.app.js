@@ -69,9 +69,7 @@ var menuItems = {
 
             toolbar(".toolbar", {
                 menuItems: menuItems
-            });
-
-            
+            });           
 
             return this;
         },
