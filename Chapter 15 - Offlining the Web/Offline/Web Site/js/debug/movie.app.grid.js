@@ -71,41 +71,7 @@
 
     };
     */
-    movieApp.fn.setMoviePoster = function (movies) {
-
-        if (!movies.length) {  //rude detection for nodeList
-            //    movies = movies;
-            //} else {
-            movies = [movies];
-        }
-
-        var i = 0,
-            width = parseInt(window.innerWidth, 10);
-
-        for (i = 0; i < movies.length; i++) {
-
-            if (width < this.settings.smallBreakPoint) {
-
-                movies[i].poster = movies[i].posters.profile;
-
-            } else if (width > this.settings.desktopBreakPoint) {
-
-                if (i === 0) {
-                    movies[i].poster = movies[i].posters.original;
-                } else {
-                    movies[i].poster = movies[i].posters.detailed;
-                }
-
-            } else {
-
-                movies[i].poster = movies[i].posters.detailed;
-
-            }
-
-        }
-
-        return movies;
-    };
+    
 
     movieApp.fn.setPosterSrc = function (posterSelector) {
 

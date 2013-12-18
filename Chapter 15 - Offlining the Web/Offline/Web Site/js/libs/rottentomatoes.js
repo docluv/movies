@@ -146,6 +146,23 @@
 
         },
 
+        setMoviePoster: function (movies) {
+
+            if (!movies.length) {  //rude detection for nodeList
+                //    movies = movies;
+                //} else {
+                movies = [movies];
+            }
+
+            for (var i = 0; i < movies.length; i++) {
+
+                movies[i].poster = movies[i].posters.profile;
+
+            }
+
+            return movies;
+        },
+
         MoviesCallback: function (data, callback) {
 
             var that = this;
@@ -176,148 +193,14 @@
 
             //might want to duck type to make the methods overloaded.
 
-            var url = this.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
-                    this.apiKey + "&page_limit=" +
+            var that = this,
+                url = that.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
+                    that.apiKey + "&page_limit=" +
                         (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1);
 
             return that.data.getJSONP(url, {
                 success: callback
             });
-
-        },
-
-        getNews: function (callback) {
-
-            return {
-                articles: [
-                {
-                    "title": "Actor Christian Bale visits Colorado shooting victims",
-                    "link": "http://news.yahoo.com/christian-bale-visits-shooting-victims-reports-223847447.html",
-                    "pubDate": "Tue, 24 Jul 2012 19:09:51 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "The porn industry condom debate: a double standard with Hollywood?",
-                    "link": "http://news.yahoo.com/porn-industry-condom-debate-double-standard-hollywood-113107105.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:31:07 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Ruby Sparks review: when cute becomes cutesy",
-                    "link": "http://news.yahoo.com/ruby-sparks-review-cute-becomes-cutesy-113041102.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:30:41 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Dark Knight Rises earns $160.8 million in debut",
-                    "link": "http://news.yahoo.com/dark-knight-rises-earns-160-8-million-debut-001911324--finance.html",
-                    "pubDate": "Mon, 23 Jul 2012 20:19:11 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Pixar moves Monsters Inc. 3D into crowded Christmas field",
-                    "link": "http://news.yahoo.com/pixar-moves-monsters-inc-3d-crowded-christmas-field-215103389.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Toronto film festival promises action, India, Affleck",
-                    "link": "http://news.yahoo.com/toronto-film-festival-promises-action-india-affleck-190502856.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Drama meets daily life in Palestinian film",
-                    "link": "http://news.yahoo.com/drama-meets-daily-life-palestinian-film-111602147.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Actor Christian Bale visits Colorado shooting victims",
-                    "link": "http://news.yahoo.com/christian-bale-visits-shooting-victims-reports-223847447.html",
-                    "pubDate": "Tue, 24 Jul 2012 19:09:51 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "The porn industry condom debate: a double standard with Hollywood?",
-                    "link": "http://news.yahoo.com/porn-industry-condom-debate-double-standard-hollywood-113107105.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:31:07 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Ruby Sparks review: when cute becomes cutesy",
-                    "link": "http://news.yahoo.com/ruby-sparks-review-cute-becomes-cutesy-113041102.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:30:41 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Dark Knight Rises earns $160.8 million in debut",
-                    "link": "http://news.yahoo.com/dark-knight-rises-earns-160-8-million-debut-001911324--finance.html",
-                    "pubDate": "Mon, 23 Jul 2012 20:19:11 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Pixar moves Monsters Inc. 3D into crowded Christmas field",
-                    "link": "http://news.yahoo.com/pixar-moves-monsters-inc-3d-crowded-christmas-field-215103389.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Toronto film festival promises action, India, Affleck",
-                    "link": "http://news.yahoo.com/toronto-film-festival-promises-action-india-affleck-190502856.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Drama meets daily life in Palestinian film",
-                    "link": "http://news.yahoo.com/drama-meets-daily-life-palestinian-film-111602147.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Actor Christian Bale visits Colorado shooting victims",
-                    "link": "http://news.yahoo.com/christian-bale-visits-shooting-victims-reports-223847447.html",
-                    "pubDate": "Tue, 24 Jul 2012 19:09:51 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "The porn industry condom debate: a double standard with Hollywood?",
-                    "link": "http://news.yahoo.com/porn-industry-condom-debate-double-standard-hollywood-113107105.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:31:07 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Ruby Sparks review: when cute becomes cutesy",
-                    "link": "http://news.yahoo.com/ruby-sparks-review-cute-becomes-cutesy-113041102.html",
-                    "pubDate": "Wed, 25 Jul 2012 07:30:41 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Dark Knight Rises earns $160.8 million in debut",
-                    "link": "http://news.yahoo.com/dark-knight-rises-earns-160-8-million-debut-001911324--finance.html",
-                    "pubDate": "Mon, 23 Jul 2012 20:19:11 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Pixar moves Monsters Inc. 3D into crowded Christmas field",
-                    "link": "http://news.yahoo.com/pixar-moves-monsters-inc-3d-crowded-christmas-field-215103389.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Toronto film festival promises action, India, Affleck",
-                    "link": "http://news.yahoo.com/toronto-film-festival-promises-action-india-affleck-190502856.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                },
-                {
-                    "title": "Drama meets daily life in Palestinian film",
-                    "link": "http://news.yahoo.com/drama-meets-daily-life-palestinian-film-111602147.html",
-                    "pubDate": "Tue, 24 Jul 2012 17:51:03 -0400",
-                    "source-url": "Reuters"
-                }
-                ]
-            };
 
         },
 
