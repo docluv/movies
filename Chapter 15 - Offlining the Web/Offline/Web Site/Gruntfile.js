@@ -49,6 +49,7 @@
                 src: [
                 'js/libs/dollarbill.min.js',
                 'js/libs/reqwest.js',
+                'js/libs/rottentomatoes.js',
                 'js/libs/backpack.js',
                 'js/libs/deeptissue.js',
                 'js/libs/toolbar.js',
@@ -57,7 +58,7 @@
                 'js/libs/spa.js',
                 'js/libs/rqData.js',
                 'js/debug/movie.app.js',
-                'js/debug/movie.app.api.js',
+                /*'js/debug/movie.app.api.js',*/
                 'js/debug/movie.app.grid.js',
                 'js/debug/movie.app.home-view.js',
                 'js/debug/movie.app.account-view.js',

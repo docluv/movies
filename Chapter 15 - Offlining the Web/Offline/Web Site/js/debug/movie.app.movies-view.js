@@ -24,6 +24,9 @@
 
                 that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
+                requestAnimationFrame(function () {
+                    that.setPosterSrc(" .movie-grid-poster");
+                });
             });
 
             that.setMainTitle(that.movieTypes[movieType]);

@@ -186,6 +186,7 @@
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
     <Content Include="js\libs\mustache.js" />
+    <Content Include="js\libs\nytimes.reviews.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
