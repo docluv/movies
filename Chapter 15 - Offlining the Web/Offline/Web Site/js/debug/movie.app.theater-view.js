@@ -15,7 +15,7 @@
 
             that.setMainTitle(decodeURIComponent(params.theaterName));
 
-            that.InTheatersMovies(50, 1, function (data) {
+            that.rt.InTheatersMovies(50, 1, function (data) {
                 if (!data) {
                     return;
                 }

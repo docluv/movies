@@ -32,11 +32,13 @@
 
             //            prevWidth = window.innerWidth;
 
-            this.loadMovieDetails(params.id, function (data) {
+            this.rt.loadMovieDetails(params.id, function (data) {
 
                 if (!data) {
                     return;
                 }
+
+                data = that.setMoviePoster(data)[0];
 
                 mv.renderMovieDetails.call(that, data);
 
@@ -61,7 +63,7 @@
                 that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
                 that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
                 that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
-                                that.mergeInFakeShowtimes(data));
+                                that.rt.mergeInFakeShowtimes(data));
 
                 that.setMainTitle(data.title);
 

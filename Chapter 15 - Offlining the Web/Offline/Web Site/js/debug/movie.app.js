@@ -413,6 +413,11 @@ var menuItems = {
                 wrapper.style.display = "block";
             }
 
+        },
+
+        settings: {
+            desktopBreakPoint: 1024,
+            smallBreakPoint: 600
         }
 
     };

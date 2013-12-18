@@ -10,7 +10,7 @@
             var that = this,
                 movieType = params.movieType || "TopBoxOffice";
 
-            that[movieType + "Movies"](50, 1, function (data) {
+            that.rt[movieType + "Movies"](50, 1, function (data) {
 
                 if (!data) {
                     return;

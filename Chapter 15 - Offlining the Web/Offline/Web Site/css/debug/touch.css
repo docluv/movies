@@ -29,6 +29,11 @@
     height: calc(100% - 50px);
 }
 
+.text-scroll {
+    width: calc(100% - 20px);
+    padding-right: 15px;
+}
+
 .panorama-panels {
     -ms-touch-action: pan-y;
     touch-action: pan-y;

@@ -18,19 +18,19 @@
             that.setupPanorama();
             that.setMainTitle("Modern Web Movies");
 
-            that.InTheatersMovies(50, 1, function (data) {
+            that.rt.InTheatersMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".top-box-list", data);
             });
 
-            that.OpeningMovies(50, 1, function (data) {
+            that.rt.OpeningMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".opening-movie-list", data);
             });
 
-            that.TopBoxOfficeMovies(50, 1, function (data) {
+            that.rt.TopBoxOfficeMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".movies-near-me-list", data);
             });
 
-            that.CommingSoonMovies(50, 1, function (data) {
+            that.rt.CommingSoonMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".comming-soon-list", data);
             });
 

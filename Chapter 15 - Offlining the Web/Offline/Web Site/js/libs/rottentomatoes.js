@@ -108,17 +108,10 @@
         loadMovieDetails: function (id, callback) {
 
             var that = this,
-                url = that.rtRoot + "movies/" + id + ".json?apikey=" + that.apiKey,
-                _callback = function (data) {
-
-                    if (callback) {
-                        callback(that.setMoviePoster(data)[0]);
-                    }
-
-                };
+                url = that.rtRoot + "movies/" + id + ".json?apikey=" + that.apiKey;
 
             return that.data.getJSONP(url, {
-                success: _callback
+                success: callback
             });
 
         },
