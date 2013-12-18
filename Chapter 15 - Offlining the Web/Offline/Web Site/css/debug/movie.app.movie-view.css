@@ -113,6 +113,10 @@ span.center, img.center {
         margin: 0 10px;
     }
 
+    .text-scroll {
+        width: 400px;
+    }
+
     .movie-review-panel {
         padding: 20px;
         left: 0;

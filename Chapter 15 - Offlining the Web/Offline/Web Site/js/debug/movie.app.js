@@ -85,7 +85,7 @@ var menuItems = {
             that.settings = $().extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
-            that.data = that.settings.data || rqData();
+        //    that.data = that.settings.data || rqData();
             that.rt = that.settings.rt || RottenTomatoes();
             that.tmpl = that.settings.tmpl || Mustache;
 

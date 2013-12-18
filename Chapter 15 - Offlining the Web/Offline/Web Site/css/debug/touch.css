@@ -77,3 +77,10 @@
         overflow-y: hidden;
     }
 }
+
+/*@media (min-width:610px) and (max-width:800px){
+    .text-scroll {
+    width: 100%;
+    padding-right: 0;
+}
+}*/

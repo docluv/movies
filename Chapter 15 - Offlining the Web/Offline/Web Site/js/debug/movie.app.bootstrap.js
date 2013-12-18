@@ -1,16 +1,16 @@
 
 var bp = backpack(),
     data = rqData(),
-    rt = RottenTomatoes({data: data}),
     movie;
 
-movieApp.fn.privacyView = privacyView(data);
+//movieApp.fn.privacyView = privacyView(data);
 
 movie = movieApp({
     bp: bp,
-    data: data,
+ //   data: data,
     tmpl: Mustache,
-    rt: rt
+    rt: RottenTomatoes({ data: data }),
+    nytr: nytReviews({ data: data })
 });
 
 _spa = spa({
@@ -22,7 +22,7 @@ _spa = spa({
     "defaultTitle": "Modern Web Movies"
 });
 
-movie.privacyView.foo();
+//movie.privacyView.foo();
 
 //causes the Android and iPhone browser to scroll up to claim more real estate
 //$().hideURLBar();

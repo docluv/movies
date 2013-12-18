@@ -38,7 +38,7 @@
                     return;
                 }
 
-                data = that.setMoviePoster(data)[0];
+//                data = mv.setMoviePoster(data)[0];
 
                 mv.renderMovieDetails.call(that, data);
 
