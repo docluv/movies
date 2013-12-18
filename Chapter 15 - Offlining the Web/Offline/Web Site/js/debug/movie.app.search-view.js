@@ -37,7 +37,7 @@
 
             if (value !== "") {
 
-                that.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
+                that.rt.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
 
                     if (data && data.total > 0 && data.movies) {
 

@@ -5,7 +5,7 @@
 
 (function (window, undefined) {
 
-    "use strict";
+        "use strict";
     
     var rqData = function (customSettings) {
 
@@ -75,7 +75,7 @@
 
             value = that.getExistingData({
                 isCacheValid: options.isCacheValid,
-                ttl : ttl,
+                ttl: ttl,
                 cacheKey: cacheKey
             });
 
@@ -157,7 +157,7 @@
 
         },
 
-        getExistingData: function(options){
+        getExistingData: function (options) {
 
             var ttl = options.ttl,
                 cacheKey = options.cacheKey;
@@ -197,6 +197,21 @@
 
         },
 
+        getJSONP: function (url, ajaxSettings) {
+
+            var ajaxOptions = $().extend({},
+                    this.ajaxSettings,
+                    ajaxSettings, {
+                        "url": url,
+                        "type": "jsonp"
+                    });
+
+            delete ajaxOptions.contentType;
+            delete ajaxOptions.dataType;
+
+            return this.ajaxPrefilter(ajaxOptions);
+        },
+
         getData: function (url, ajaxSettings) {
 
             var ajaxOptions = $().extend({},
@@ -226,7 +241,7 @@
                  that.failCallback(e);
 
              });
-            
+
         },
         /*
         putData: function (options) {

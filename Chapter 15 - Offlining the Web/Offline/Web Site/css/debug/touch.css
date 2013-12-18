@@ -26,6 +26,7 @@
     overflow: hidden;
     overflow-x: hidden;
     overflow-y: scroll;
+    height: calc(100% - 50px);
 }
 
 .panorama-panels {

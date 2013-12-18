@@ -75,3 +75,10 @@
     }
 
 }*/
+
+@media(min-width:610px){
+
+    .panorama-panels{
+        height:100%;
+    }
+}

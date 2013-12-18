@@ -1,6 +1,7 @@
 
 var bp = backpack(),
     data = rqData(),
+    rt = RottenTomatoes({data: data}),
     movie;
 
 movieApp.fn.privacyView = privacyView(data);
@@ -8,7 +9,8 @@ movieApp.fn.privacyView = privacyView(data);
 movie = movieApp({
     bp: bp,
     data: data,
-    tmpl: Mustache
+    tmpl: Mustache,
+    rt: rt
 });
 
 _spa = spa({

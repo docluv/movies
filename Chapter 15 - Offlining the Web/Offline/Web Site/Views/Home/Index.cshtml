@@ -139,76 +139,75 @@
                   <span class="hamburger-bar-text">menu</span>
               </span>
           </header>
-          <main class="main-content" role="main">
+<main class="main-content" role="main">
 
-              @if (Html.HasEscapeFragment())
-              {
+    @if (Html.HasEscapeFragment())
+    {
 
-                  switch (Model.MainRoute.ToLower())
-                  {
+        switch (Model.MainRoute.ToLower())
+        {
 
-                      case "":
-                          @SPARenderPage("home-view.cshtml")
-                          break;
+            case "":
+                @RenderPage("home-view.cshtml")
+                break;
 
-                      case "movies":
-                         @SPARenderPage("movies-view.cshtml")
-                          break;
+            case "movies":
+               @RenderPage("movies-view.cshtml")
+                break;
 
-                      case "movie":
-                          @SPARenderPage("movie-view.cshtml")
-                          break;
+            case "movie":
+                @RenderPage("movie-view.cshtml")
+                break;
 
-                      case "about":
-                          @SPARenderPage("about-view.cshtml")
-                          break;
-                          
-                      case "theater":
-                          @SPARenderPage("theater-view.cshtml")
-                          break;
+            case "about":
+                @RenderPage("about-view.cshtml")
+                break;
+                
+            case "theater":
+                @RenderPage("theater-view.cshtml")
+                break;
 
 
-                      case "reviews":
-                          @SPARenderPage("reviews-view.cshtml")
-                          break;
+            case "reviews":
+                @RenderPage("reviews-view.cshtml")
+                break;
 
-                      case "privacy":
-                          @SPARenderPage("privacy-view.cshtml")
-                          break;
+            case "privacy":
+                @RenderPage("privacy-view.cshtml")
+                break;
 
-                      case "search":
-                          @SPARenderPage("search-view.cshtml")
-                          break;
+            case "search":
+                @RenderPage("search-view.cshtml")
+                break;
 
-                      default:
-                          @SPARenderPage("notFound.cshtml")
-                          break;
-                  }
-            }
+            default:
+                @RenderPage("notFound.cshtml")
+                break;
+        }
+  }
 
-          </main>
+</main>
           <footer class="toolbar">
               <nav class="toolbar-top-menu"></nav>
               <nav class="toolbar-sub-menu"></nav>
           </footer>
 
-          @if (!Html.HasEscapeFragment())
-          {
-              long lastLoad = Html.LastUpdated();
+@if (!Html.HasEscapeFragment())
+{
 
-              @RenderPage("home-view.cshtml")
-              @RenderPage("movies-view.cshtml")
-              @RenderPage("movie-view.cshtml")
-              @RenderPage("maps-view.cshtml")
-              @RenderPage("reviews-view.cshtml")
-              @RenderPage("search-view.cshtml")
-              @RenderPage("theater-view.cshtml")
-              @RenderPage("about-view.cshtml")
-              @RenderPage("login-view.cshtml")
-              @RenderPage("privacy-view.cshtml")
-              @RenderPage("_templates.cshtml")
+    @SPARenderPage("home-view.cshtml")
+      @SPARenderPage("movies-view.cshtml")
+      @SPARenderPage("movie-view.cshtml")
+      @SPARenderPage("maps-view.cshtml")
+      @SPARenderPage("reviews-view.cshtml")
+      @SPARenderPage("search-view.cshtml")
+      @SPARenderPage("theater-view.cshtml")
+      @SPARenderPage("about-view.cshtml")
+      @SPARenderPage("login-view.cshtml")
+      @SPARenderPage("privacy-view.cshtml")
+      @SPARenderPage("_templates.cshtml")
 
-          }
+}
 
           <script id="bing-map-script" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
@@ -221,6 +220,7 @@
                   <script src="@Href("~/js/libs/backpack.js?v=.1")"></script>
                   <script src="@Href("~/js/libs/reqwest.min.js?v=.1")"></script>
                   <script src="@Href("~/js/libs/rqdata.js?v=.1")"></script>
+                  <script src="@Href("~/js/libs/rottentomatoes.js?v=.1")"></script>
                   <script src="@Href("~/js/libs/mustache.js?v=.1")"></script>
                   <script src="@Href("~/js/libs/spa.js?v=.1")"></script>
                   <script src="@Href("~/js/libs/deeptissue.js?v=.1")"></script>

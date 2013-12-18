@@ -19,13 +19,16 @@ public ActionResult Index()
 
     HttpContext.Response.Cache.SetLastModified(DateTime.UtcNow);
 
-
     if (SpaHelper.HasEscapeFragment())
     {
+        var i = 0;
 
         foreach (string key in queryString.AllKeys.Where(key => key != null))
         {
-            model.SetRoute(queryString[key]);
+            if (i == 0)
+            {
+                model.SetRoute(queryString[key]);
+            }
         }
 
         switch (model.MainRoute.ToLower())

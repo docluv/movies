@@ -1,10 +1,9 @@
 ﻿@using SPAHelper
-
+@model Web_Site.Models.MoviesModel
 <section id="homeView" class="content-pane @if (Html.HasEscapeFragment()){@:current
-         } "
+                  } "
          data-title=" modern movie web"
          data-transition="flip">
-
     @if (!Html.HasEscapeFragment())
     {
         <div class="pxs_container home-page-panorama panorama-container">
@@ -52,15 +51,15 @@
         <a href="@Html.SPALink("movies/Opening")">
             <h3 class="panel-title">opening movies</h3>
         </a>
-    <a href="@Html.SPALink("movies/TopBoxOffice")">
-        <h3 class="panel-title">top box office</h3>
-    </a>
-    <a href="@Html.SPALink("movies/CommingSoon")">
-        <h3 class="panel-title">coming soon</h3>
-    </a>
-    <a href="@Html.SPALink("movies/InTheaters")">
-        <h3 class="panel-title">near me</h3>
-    </a>
+        <a href="@Html.SPALink("movies/TopBoxOffice")">
+            <h3 class="panel-title">top box office</h3>
+        </a>
+        <a href="@Html.SPALink("movies/CommingSoon")">
+            <h3 class="panel-title">coming soon</h3>
+        </a>
+        <a href="@Html.SPALink("movies/InTheaters")">
+            <h3 class="panel-title">near me</h3>
+        </a>
         @RenderPage("_MovieList.cshtml")
     }
 

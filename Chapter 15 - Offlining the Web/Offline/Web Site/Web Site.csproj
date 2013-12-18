@@ -185,12 +185,12 @@
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
-    <Content Include="js\libs\mbp.js" />
     <Content Include="js\libs\mustache.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
     <Content Include="js\libs\reqwest.min.js" />
+    <Content Include="js\libs\rottentomatoes.js" />
     <Content Include="js\libs\rqData.js" />
     <Content Include="js\libs\spa.js" />
     <Content Include="js\libs\toolbar.js" />

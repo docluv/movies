@@ -40,8 +40,7 @@
                     "&q=" + q + "&page_limit=" +
                     pageLimit + "&page=" + page;
 
-        return this.data.getData(url, {
-            type: "jsonp",
+        return this.data.getJSONP(url, {
             success: function (data) {
                 that.MoviesCallback.call(that, data, callback);
             }
@@ -61,8 +60,7 @@
 
             };
 
-        return this.data.getData(url, {
-            type: "jsonp",
+        return this.data.getJSONP(url, {
             success: _callback
         });
 
@@ -133,14 +131,11 @@
 
         //might want to duck type to make the methods overloaded.
 
-        page = page || 1;
-        pageLimit = pageLimit || that.defaultPageLimit;
-
         var url = this.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
-                this.apiKey + "&page_limit=" + pageLimit + "&page=" + page;
+                this.apiKey + "&page_limit=" +
+                    (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1);
 
-        return this.data.getData(url, {
-            type: "jsonp",
+        return this.data.getJSONP(url, {
             success: callback
         });
 

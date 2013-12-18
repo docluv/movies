@@ -86,6 +86,7 @@ var menuItems = {
 
             that.bp = that.settings.bp || backpack();
             that.data = that.settings.data || rqData();
+            that.rt = that.settings.rt || RottenTomatoes();
             that.tmpl = that.settings.tmpl || Mustache;
 
             that.compileTemplates();
@@ -147,8 +148,6 @@ var menuItems = {
         },
 
         setMainTitle: function (title) {
-
-            //            var mainTitle = document.querySelector(".view-title");
 
             this.mainTitle.textContent = title;
         },
@@ -418,7 +417,6 @@ var menuItems = {
 
     };
 
-    movieApp.panoramaDt;
     movieApp.viewWidth = 0;
     movieApp.bp;
     movieApp.data;
