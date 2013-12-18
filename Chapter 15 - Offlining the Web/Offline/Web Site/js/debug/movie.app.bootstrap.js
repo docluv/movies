@@ -25,4 +25,4 @@ _spa = spa({
 movie.privacyView.foo();
 
 //causes the Android and iPhone browser to scroll up to claim more real estate
-$().hideURLBar();
+//$().hideURLBar();

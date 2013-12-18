@@ -4,6 +4,7 @@
 
     "use strict";
 
+    /*
     movieApp.fn.setMovieGridSize = function () {
 
         var that = this,
@@ -69,7 +70,7 @@
         }
 
     };
-
+    */
     movieApp.fn.setMoviePoster = function (movies) {
 
         if (!movies.length) {  //rude detection for nodeList
