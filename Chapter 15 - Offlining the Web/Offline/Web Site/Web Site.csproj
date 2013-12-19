@@ -214,6 +214,11 @@
     <Content Include="movies1.xml" />
     <Content Include="movies2.xml" />
     <Content Include="movies3.xml" />
+    <Content Include="startup.png" />
+    <Content Include="touch-icon-ipad-retina.png" />
+    <Content Include="touch-icon-ipad.png" />
+    <Content Include="touch-icon-iphone-retina.png" />
+    <Content Include="touch-icon-iphone.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
