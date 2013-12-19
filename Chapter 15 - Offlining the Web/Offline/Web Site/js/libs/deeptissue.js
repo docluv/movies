@@ -88,7 +88,7 @@
 
                     el.addEventListener("gesturestart", function (evt) {
 
-                        evt.preventDefault();
+                    //    evt.preventDefault();
 
                     });
 
@@ -363,7 +363,7 @@
             var el = e.target,
                 settings = this.settings;
 
-            e.preventDefault();
+        //    e.preventDefault();
 
             // console.info("gesture Change \r\n" +
             //              el.hasAttribute(settings.rotateIndicator) + "\r\n");
@@ -619,7 +619,7 @@
             var that = this;
             settings = this.settings;
 
-            evt.preventDefault();
+          //  evt.preventDefault();
 
             // console.info("touch start");
 
@@ -679,7 +679,7 @@
             var that = this;
             settings = this.settings;
 
-            evt.preventDefault();
+        //    evt.preventDefault();
 
             if (el.hasAttribute(settings.moveTouchInitial)) {
                 el.setAttribute(settings.moveTouchEnded, "true");
@@ -733,7 +733,7 @@
             var that = this;
             settings = this.settings;
 
-            evt.preventDefault();
+         //   evt.preventDefault();
 
             if (el.hasAttribute(settings.moveIndicator)) {
 
@@ -979,7 +979,7 @@
         preventTapHoldContext: function (elm) {
 
             elm.addEventListener("contextmenu", function (e) {
-                e.preventDefault();    // Disables system menu
+              //  e.preventDefault();    // Disables system menu
             }, false);
 
         },
@@ -1012,7 +1012,7 @@
 
             var that = this;
 
-            evt.preventDefault();
+          //  evt.preventDefault();
 
             // // console.info("evt.detail - " + evt.detail);
 
