@@ -5,253 +5,254 @@
 {
     @:<html lang="en">
     }
-    else
-    {
+else
+{
     @:<html lang="en" manifest="@Html.TickVersionLink("default.appcache")">
     }
-    }
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<script>
+    <script>
 
-    if (!('querySelector' in document)
-         || !('localStorage' in window)
-         || !('addEventListener' in window)
-        || !('matchMedia' in window)) {
+        if (!('querySelector' in document)
+             || !('localStorage' in window)
+             || !('addEventListener' in window)
+            || !('matchMedia' in window)) {
 
-        if (window.location.href.indexOf("#!") > 0) {
-            window.location.href = window.location.href.replace("#!", "?_escaped_fragment_=");
+            if (window.location.href.indexOf("#!") > 0) {
+                window.location.href = window.location.href.replace("#!", "?_escaped_fragment_=");
+            } else {
+                if (window.location.href.indexOf("?_escaped_fragment_=") < 0) {
+                    window.location.href = window.location.href + "?_escaped_fragment_=";
+                }
+            }
+
         } else {
-            if (window.location.href.indexOf("?_escaped_fragment_=") < 0) {
-                window.location.href = window.location.href + "?_escaped_fragment_=";
+
+            if (window.location.href.indexOf("?_escaped_fragment_=") >= 0) {
+                window.location.href = window.location.href.replace("?_escaped_fragment_=", "#!");
             }
         }
 
-    } else {
+    </script>
 
-        if (window.location.href.indexOf("?_escaped_fragment_=") >= 0) {
-            window.location.href = window.location.href.replace("?_escaped_fragment_=", "#!");
-        }
-    }
+    <title>@Model.Title</title>
 
-</script>
+    <meta content="@Model.Description" name="description">
+    <meta content="Chris Love" name="author">
 
-        <title>@Model.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-        <meta content="@Model.Description" name="description">
-        <meta content="Chris Love" name="author">
+    <link href="favicon.ico" rel="shortcut icon">
 
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png" >
+    <link rel="apple-touch-icon" sizes="76x76" href="touch-icon-ipad.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone-retina.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad-retina.png">
+    
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
 
-        <link href="favicon.ico" rel="shortcut icon">
+    <link rel="apple-touch-startup-image" href=startup.png">
 
-        <link href="img/h/apple-touch-icon.png" rel="apple-touch-icon-precomposed" sizes="114x114">
-        <link href="img/m/apple-touch-icon.png" rel="apple-touch-icon-precomposed" sizes="72x72">
-        <link href="img/l/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed">
-        <link href="img/l/apple-touch-icon.png" rel="shortcut icon">
+    <meta name="application-name" content="Modern Movie Web" />
+    <meta name="msapplication-config" content="IEconfig.xml" />
 
-        <meta content="yes" name="apple-mobile-web-app-capable">
-        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="msapplication-allowDomainMetaTags" content="true">
+    <meta name="msapplication-navbutton-color" content="#7b359a">
+    <meta name="msapplication-badge" content="frequency=1440; polling-uri=http://love2dev.com/polling">
+    <meta name="msapplication-notification" content="frequency=1440;polling-uri=http://love2dev.com/polling; cycle=1" />
+    <meta name="msapplication-starturl" content="#!">
+    <meta name="msapplication-tooltip" content="Modern Movies Web">
 
-        <link href="img/l/splash.png" rel="apple-touch-startup-image">
+    <meta content="name=Home;action-uri=#!;icon-uri=./favicon.ico" name="msapplication-task">
+    <meta content="name=Maps;action-uri=#!maps;icon-uri=./favicon.ico" name="msapplication-task">
+    <meta content="name=Reviews;action-uri=#!reviews;icon-uri=./favicon.ico" name="msapplication-task">
+    <meta content="name=Search;action-uri=#!search;icon-uri=./favicon.ico" name="msapplication-task">
 
-        <meta name="application-name" content="Modern Movie Web" />
-        <meta name="msapplication-config" content="IEconfig.xml" />
+    <meta name="google-site-verification" content="[verification key goes here]" />
 
-        <meta name="msapplication-allowDomainMetaTags" content="true">
-        <meta name="msapplication-navbutton-color" content="#7b359a">
-        <meta name="msapplication-badge" content="frequency=1440; polling-uri=http://love2dev.com/polling">
-        <meta name="msapplication-notification" content="frequency=1440;polling-uri=http://love2dev.com/polling; cycle=1" />
-        <meta name="msapplication-starturl" content="#!">
-        <meta name="msapplication-tooltip" content="Modern Movies Web">
+    <meta content="on" http-equiv="cleartype">
 
-        <meta content="name=Home;action-uri=#!;icon-uri=./favicon.ico" name="msapplication-task">
-        <meta content="name=Maps;action-uri=#!maps;icon-uri=./favicon.ico" name="msapplication-task">
-        <meta content="name=Reviews;action-uri=#!reviews;icon-uri=./favicon.ico" name="msapplication-task">
-        <meta content="name=Search;action-uri=#!search;icon-uri=./favicon.ico" name="msapplication-task">
-
-        <meta name="google-site-verification" content="[verification key goes here]" />
-
-        <meta content="on" http-equiv="cleartype">
-
-        @if (!Html.HasEscapeFragment())
+    @if (!Html.HasEscapeFragment())
+    {
+        if (HttpContext.Current.IsDebuggingEnabled)
         {
-            if (HttpContext.Current.IsDebuggingEnabled)
-            {
-                <link href="css/debug/site.css?v=.2" rel="stylesheet">
-                <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
-                <link href="css/debug/animations.css?v=.2" rel="stylesheet">
-                <link href="css/debug/touch.css?v=.2" rel="stylesheet">
-                <link href="css/debug/panorama.css?v=.2" rel="stylesheet">
-                <link href="css/debug/toolbar.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.forms.css?v=.2" rel="stylesheet">
-                <link href="css/debug/movie.app.nav.css?v=.2" rel="stylesheet">
+            <link href="css/debug/site.css?v=.2" rel="stylesheet">
+            <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
+            <link href="css/debug/animations.css?v=.2" rel="stylesheet">
+            <link href="css/debug/touch.css?v=.2" rel="stylesheet">
+            <link href="css/debug/panorama.css?v=.2" rel="stylesheet">
+            <link href="css/debug/toolbar.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.forms.css?v=.2" rel="stylesheet">
+            <link href="css/debug/movie.app.nav.css?v=.2" rel="stylesheet">
 
-                <link href="css/debug/movie.app.account-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.home-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.movie-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.movies-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.reviews-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.theater-view.css?v=.1" rel="stylesheet">
-                <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
-
-            }
-            else
-            {
-                <link href="css/debug/site.min.css?v=.2" rel="stylesheet">
-            }
+            <link href="css/debug/movie.app.account-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.home-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.movie-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.movies-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.reviews-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.theater-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
 
         }
         else
         {
-            <link href="css/debug/site.css?v=.2" rel="stylesheet">
-            <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
-
+            <link href="css/debug/site.min.css?v=.2" rel="stylesheet">
         }
 
-        @if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+    }
+    else
     {
-            <link href="css/debug/add2home.css?v=.2" rel="stylesheet">
+        <link href="css/debug/site.css?v=.2" rel="stylesheet">
+        <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
+
     }
 
-    </head>
-      <body>
-          <header class="site-header" role="banner">
-              <span class="win-backbutton"></span>
-              <h1 class="view-title">@Model.Title</h1>
-              <nav class="main-nav" role="navigation">
-                  <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
-                  <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-                  <a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>
-                  <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
-                  <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
-                  <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
-                  <a href="@Html.SPALink("privacy")" role="menuitem" class="privacy-nav"><span class="nav-icon privacy-icon"></span><span class="nav-text">Privacy</span></a>
-              </nav>
-              <span class="hamburger-nav">
-                  <span class="hamburger-bar-wrapper">
-                      <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
-                  </span>
-                  <span class="hamburger-bar-text">menu</span>
-              </span>
-          </header>
-<main class="main-content" role="main">
-
-    @if (Html.HasEscapeFragment())
+    @if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
     {
+        <link href="css/debug/add2home.css?v=.2" rel="stylesheet">
+    }
 
-        switch (Model.MainRoute.ToLower())
+</head>
+<body>
+    <header class="site-header" role="banner">
+        <span class="win-backbutton"></span>
+        <h1 class="view-title">@Model.Title</h1>
+        <nav class="main-nav" role="navigation">
+            <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
+            <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
+            <a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>
+            <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
+            <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
+            <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
+            <a href="@Html.SPALink("privacy") role="menuitem" class="privacy-nav"><span class="nav-icon privacy-icon"></span><span class="nav-text">Privacy</span></a>
+        </nav>
+        <span class="hamburger-nav">
+            <span class="hamburger-bar-wrapper">
+                <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+            </span>
+            <span class="hamburger-bar-text">menu</span>
+        </span>
+    </header>
+    <main class="main-content" role="main">
+
+        @if (Html.HasEscapeFragment())
         {
 
-            case "":
-                @RenderPage("home-view.cshtml")
-                break;
+            switch (Model.MainRoute.ToLower())
+            {
 
-            case "movies":
-               @RenderPage("movies-view.cshtml")
-                break;
+                case "":
+                    @RenderPage("home-view.cshtml")
+                    break;
 
-            case "movie":
+                case "movies":
+                @RenderPage("movies-view.cshtml")
+                    break;
+
+                case "movie":
                 @RenderPage("movie-view.cshtml")
-                break;
+                    break;
 
-            case "about":
+                case "about":
                 @RenderPage("about-view.cshtml")
-                break;
-                
-            case "theater":
+                    break;
+
+                case "theater":
                 @RenderPage("theater-view.cshtml")
-                break;
+                    break;
 
-            case "reviews":
+                case "reviews":
                 @RenderPage("reviews-view.cshtml")
-                break;
+                    break;
 
-            case "privacy":
+                case "privacy":
                 @RenderPage("privacy-view.cshtml")
-                break;
+                    break;
 
-            case "search":
+                case "search":
                 @RenderPage("search-view.cshtml")
-                break;
+                    break;
 
-            default:
+                default:
                 @RenderPage("notFound.cshtml")
-                break;
+                    break;
+            }
         }
-  }
 
-</main>
-          <footer class="toolbar">
-              <nav class="toolbar-top-menu"></nav>
-              <nav class="toolbar-sub-menu"></nav>
-          </footer>
+    </main>
+    <footer class="toolbar">
+        <nav class="toolbar-top-menu"></nav>
+        <nav class="toolbar-sub-menu"></nav>
+    </footer>
 
-@if (!Html.HasEscapeFragment())
-{
+    @if (!Html.HasEscapeFragment())
+    {
 
-    @SPARenderPage("home-view.cshtml")
-      @SPARenderPage("movies-view.cshtml")
-      @SPARenderPage("movie-view.cshtml")
-      @SPARenderPage("maps-view.cshtml")
-      @SPARenderPage("reviews-view.cshtml")
-      @SPARenderPage("search-view.cshtml")
-      @SPARenderPage("theater-view.cshtml")
-      @SPARenderPage("about-view.cshtml")
-      @SPARenderPage("privacy-view.cshtml")
-      @SPARenderPage("_templates.cshtml")
+        @SPARenderPage("home-view.cshtml")
+        @SPARenderPage("movies-view.cshtml")
+        @SPARenderPage("movie-view.cshtml")
+        @SPARenderPage("maps-view.cshtml")
+        @SPARenderPage("reviews-view.cshtml")
+        @SPARenderPage("search-view.cshtml")
+        @SPARenderPage("theater-view.cshtml")
+        @SPARenderPage("about-view.cshtml")
+        @SPARenderPage("privacy-view.cshtml")
+        @SPARenderPage("notfound-view.cshtml")
+        @SPARenderPage("_templates.cshtml")
 
-}
+    }
 
-          <script id="bing-map-script" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+    <script id="bing-map-script" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
-          @if (!Html.HasEscapeFragment())
-          {
+    @if (!Html.HasEscapeFragment())
+    {
 
-              if (HttpContext.Current.IsDebuggingEnabled)
-              {
-                  <script src="@Href("~/js/libs/dollarbill.min.js?v=.01")"></script>
-                  <script src="@Href("~/js/libs/backpack.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/reqwest.min.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/rqdata.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/rottentomatoes.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/nytimes.reviews.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/mustache.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/spa.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/deeptissue.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/panorama.js?v=.1")"></script>
-                  <script src="@Href("~/js/libs/toolbar.js?v=.1")"></script>
+        if (HttpContext.Current.IsDebuggingEnabled)
+        {
+            <script src="@Href("~/js/libs/dollarbill.min.js?v=.01")"></script>
+            <script src="@Href("~/js/libs/backpack.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/reqwest.min.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/rqdata.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/rottentomatoes.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/nytimes.reviews.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/mustache.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/spa.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/deeptissue.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/panorama.js?v=.1")"></script>
+            <script src="@Href("~/js/libs/toolbar.js?v=.1")"></script>
 
-                  <script src="@Href("~/js/debug/movie.app.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.grid.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.grid.js?v=.1")"></script>
             <!--  <script src="@Href("~/js/debug/movie.app.api.js?v=.1")"></script> -->
 
-                  <script src="@Href("~/js/debug/movie.app.home-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.maps-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.reviews-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.search-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.theater-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.movie-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.movies-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.privacy-view.js?v=.1")"></script>
-                  <script src="@Href("~/js/debug/movie.app.about-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.home-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.maps-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.reviews-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.search-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.theater-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.movie-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.movies-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.privacy-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.about-view.js?v=.1")"></script>
 
-                  <script src="@Href("~/js/debug/movie.app.bootstrap.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.bootstrap.js?v=.1")"></script>
 
-              }
-              else
-              {
-                  <script src="@Href("~/js/applib.js?v=.1")"></script>
+        }
+        else
+        {
+            <script src="@Href("~/js/applib.js?v=.1")"></script>
 
-                  if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
-                  {
-                      <script src="@Href("~/js/libs/add2home.js?v=.2")" async="async"></script>
-                  }
-              }
-          }
+            if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+            {
+                <script src="@Href("~/js/libs/add2home.js?v=.2")" async="async"></script>
+            }
+        }
+    }
 
-      </body>
+</body>
 </html>

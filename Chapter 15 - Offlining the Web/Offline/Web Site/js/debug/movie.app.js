@@ -95,15 +95,28 @@
                 menuItems: menuItems
             });
 
-            deeptissue(".hamburger-nav, .main-nav").tap(function () {
+            deeptissue(".hamburger-nav, .main-nav").tap(function (e) {
 
                 $(".main-nav").toggle();
 
             });
 
-            deeptissue(".main-nav > a").tap(function () {
 
-                that.hideBurgerMenu();
+            deeptissue(".main-nav > a").tap(function (e) {
+
+                var $target = $(e.currentTarget);
+
+                requestAnimationFrame(function (e) {
+
+                    $target.toggleClass("seleted-nav");
+
+                    $(".main-nav").toggle();
+
+                    requestAnimationFrame(function () {
+                        that.hideBurgerMenu();
+                        $target.toggleClass("seleted-nav");
+                    });
+                });
 
             });
 
@@ -132,11 +145,7 @@
 
         hideBurgerMenu: function () {
 
-            var width = window.innerWidth;
-
-            if (width > 601 && width < 720) {
-                document.querySelector(".main-nav").style.display = "none";
-            }
+            document.querySelector(".main-nav").style.display = "none";
 
         },
 
@@ -225,16 +234,16 @@
         setupMQL: function (key, mediaQuery, matches) {
 
             /*
-
+        
             matches - an array of match function names and definitions
-
+        
             match = {
                 matchName: "foo",
                 matchFunc: function(){},
                 nomatchName: "nofoo",
                 nomatchFunc: function(){}
             };
-
+        
             */
 
             var that = this,
