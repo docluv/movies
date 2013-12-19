@@ -166,19 +166,16 @@
     <Content Include="img\test-purple-2000.png" />
     <Content Include="img\widetile.png" />
     <Content Include="js\debug\movie.app.about-view.js" />
-    <Content Include="js\debug\movie.app.account-view.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
     <Content Include="js\debug\movie.app.api.js" />
     <Content Include="js\debug\movie.app.grid.js" />
     <Content Include="js\debug\movie.app.home-view.js" />
     <Content Include="js\debug\movie.app.js" />
-    <Content Include="js\debug\movie.app.login-view.js" />
     <Content Include="js\debug\movie.app.maps-view.js" />
     <Content Include="js\debug\movie.app.movie-view.js" />
     <Content Include="js\debug\movie.app.movies-view.js" />
     <Content Include="js\debug\movie.app.privacy-view.js" />
     <Content Include="js\debug\movie.app.reviews-view.js" />
-    <Content Include="js\debug\movie.app.profile-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
     <Content Include="js\debug\movie.app.theater-view.js" />
     <Content Include="js\libs\add2home.js" />
@@ -240,19 +237,10 @@
     <Content Include="Views\Home\notfound-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\account-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\login-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Home\maps-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\reviews-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\profile-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\search-view.cshtml" />

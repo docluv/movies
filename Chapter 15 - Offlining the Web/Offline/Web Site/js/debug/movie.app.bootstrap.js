@@ -7,10 +7,9 @@ var bp = backpack(),
 
 movie = movieApp({
     bp: bp,
- //   data: data,
     tmpl: Mustache,
     rt: RottenTomatoes({ data: data }),
-    nytr: nytReviews({ data: data })
+    reviews: nytReviews({ data: data })
 });
 
 _spa = spa({

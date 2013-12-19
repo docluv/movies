@@ -379,7 +379,7 @@
 
             $(newView).removeClass(anim + " in");
 
-            if (currentView && bp && currentView.parentNode) {
+            if (currentView && that.bp && currentView.parentNode) {
 
                 currentView.parentNode.removeChild(currentView);
 

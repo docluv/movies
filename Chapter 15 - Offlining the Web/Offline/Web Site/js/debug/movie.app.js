@@ -6,67 +6,67 @@
 
     "use strict";
 
-var menuItems = {
-    topMenu: [
-        {
-            title: "home",
-            iconClass: "home-icon",
-            url: "#!"
-        },
-        {
-            title: "map",
-            iconClass: "maps-icon",
-            url: "#!maps"
-        }
-        , {
-            title: "showtimes",
-            iconClass: "theaters-icon",
-            url: "#!showtimes"
-        }
-        , {
-            title: "search",
-            iconClass: "search-icon",
-            url: "#!search"
-        }],
-    subMenu: [
-        {
-            title: "reviews",
-            icon: undefined,
-            iconClass: "go-reviews",
-            url: "#!reviews"
-        }
+    var menuItems = {
+        topMenu: [
+            {
+                title: "home",
+                iconClass: "home-icon",
+                url: "#!"
+            },
+            {
+                title: "map",
+                iconClass: "maps-icon",
+                url: "#!maps"
+            }
+            , {
+                title: "showtimes",
+                iconClass: "theaters-icon",
+                url: "#!showtimes"
+            }
+            , {
+                title: "search",
+                iconClass: "search-icon",
+                url: "#!search"
+            }],
+        subMenu: [
+            {
+                title: "reviews",
+                icon: undefined,
+                iconClass: "go-reviews",
+                url: "#!reviews"
+            }
 
-         , {
-             title: "opening this week",
-             icon: undefined,
-             iconClass: "go-opening",
-             url: "#!movies/Opening"
-         }
-         , {
-             title: "in theaters",
-             icon: undefined,
-             iconClass: "go-in-theaters",
-             url: "#!movies/InTheaters"
-         }
-         , {
-             title: "top box office",
-             icon: undefined,
-             iconClass: "go-top-box-office",
-             url: "#!movies/TopBoxOffice"
-         }
-        , {
-            title: "comming soon",
-            icon: undefined,
-            iconClass: "go-movie-soon",
-            url: "#!movies/CommingSoon"
-        }
-        , {
-            title: "about",
-            icon: undefined,
-            iconClass: "go-about",
-            url: "#!about"
-        }]
-};
+             , {
+                 title: "opening this week",
+                 icon: undefined,
+                 iconClass: "go-opening",
+                 url: "#!movies/Opening"
+             }
+             , {
+                 title: "in theaters",
+                 icon: undefined,
+                 iconClass: "go-in-theaters",
+                 url: "#!movies/InTheaters"
+             }
+             , {
+                 title: "top box office",
+                 icon: undefined,
+                 iconClass: "go-top-box-office",
+                 url: "#!movies/TopBoxOffice"
+             }
+            , {
+                title: "comming soon",
+                icon: undefined,
+                iconClass: "go-movie-soon",
+                url: "#!movies/CommingSoon"
+            }
+            , {
+                title: "about",
+                icon: undefined,
+                iconClass: "go-about",
+                url: "#!about"
+            }]
+    };
 
     var movieApp = function (customSettings) {
 
@@ -85,8 +85,8 @@ var menuItems = {
             that.settings = $().extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
-        //    that.data = that.settings.data || rqData();
             that.rt = that.settings.rt || RottenTomatoes();
+            that.reviews = that.settings.reviews || nytReviews();
             that.tmpl = that.settings.tmpl || Mustache;
 
             that.compileTemplates();
@@ -162,6 +162,12 @@ var menuItems = {
                 });
 
         },
+
+        viewWidth: 0,
+        bp: undefined,
+        tmpl: undefined,
+        rt: undefined,
+        reviews: undefined,
 
         templates: {},
         compileTemplates: function () {
@@ -365,10 +371,7 @@ var menuItems = {
                     }
 
                 });
-                /**/
-                //pCont.addEventListener("MSManipulationStateChanged", function (e) {
-                //    console.log(e.currentState);
-                //});
+
 
             }
 
@@ -422,10 +425,6 @@ var menuItems = {
 
     };
 
-    movieApp.viewWidth = 0;
-    movieApp.bp;
-    movieApp.data;
-    movieApp.tmpl;
 
     // Give the init function the movieApp prototype for later instantiation
     movieApp.fn.init.prototype = movieApp.fn;
