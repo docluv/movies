@@ -160,8 +160,8 @@ h4, .panel-small-title {
     .view-title {
         width: 400px;
         font-size: 1.5em;
-        height: 26pt;
-        line-height: 26pt;
+        height: 30pt;
+        line-height: 30pt;
     }
 
     .panel-title {
@@ -201,9 +201,6 @@ h4, .panel-small-title {
     .panel-title {
         font-weight: bold;
     }
-}
-
-@media (min-width:720px) {
 
     .view-title {
         font-size: 26pt;
@@ -211,12 +208,12 @@ h4, .panel-small-title {
     }
 }
 
-@media (min-width:1024px) {
+/*@media (min-width:1024px) {
 
     .view-title {
         width: 300px;
     }
-}
+}*/
 
 @media (min-width:1100px) {
 

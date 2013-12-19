@@ -141,6 +141,7 @@
     <Content Include="css\debug\movie.app.reviews-view.css" />
     <Content Include="css\debug\movie.app.profile-view.css" />
     <Content Include="css\debug\movie.app.search-view.css" />
+    <Content Include="css\debug\movie.app.social.css" />
     <Content Include="css\debug\movie.app.theater-view.css" />
     <Content Include="css\debug\panorama.css" />
     <Content Include="css\debug\site.css" />
@@ -177,6 +178,7 @@
     <Content Include="js\debug\movie.app.privacy-view.js" />
     <Content Include="js\debug\movie.app.reviews-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
+    <Content Include="js\debug\movie.app.social-view.js" />
     <Content Include="js\debug\movie.app.theater-view.js" />
     <Content Include="js\libs\add2home.js" />
     <Content Include="js\libs\backpack.js" />
@@ -286,6 +288,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\_MovieList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\social-view.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

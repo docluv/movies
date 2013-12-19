@@ -13,17 +13,7 @@
     //what every suites your needs.
     var RottenTomatoes = function (customSettings) {
 
-
-        //return the object created by the init method (defined later).
-        //notice we are calling the RottenTomatoes init method from the object's protype alias.
-        //The customSettings parameter is passed to the init method. Remember to pass
-        //any parameters along to the init method.
         var that = new RottenTomatoes.fn.init(customSettings);
-
-
-        //here I had a delima. I want to show how to merge a custom settings object
-        //but I don't wan to rely on jQuery, Underscore or something else for this example.
-        //so I decided to show you what it would look like with a jQuery dependancy.
 
         that.settings = $().extend({}, that.settings, customSettings);
 
@@ -32,9 +22,6 @@
         //https://github.com/docluv/dollarbill
 
         that.data = that.settings.data || rqData();
-
-        //This is actually where jQuery select the DOM element(s) you are looking for and encapsulates them.
-
 
         return that;
     };

@@ -95,7 +95,7 @@
                 menuItems: menuItems
             });
 
-            deeptissue(".hamburger-nav").tap(function () {
+            deeptissue(".hamburger-nav, .main-nav").tap(function () {
 
                 $(".main-nav").toggle();
 

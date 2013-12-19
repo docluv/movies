@@ -22,9 +22,9 @@
     height: 40px;
     margin: 10px 5px;
     line-height: 26pt;
-    /*padding: 10px 0 0 0;*/
+    margin-right:2em;
     float: right;
-    border:1px solid #fff;
+    border: 1px solid #fff;
 }
 
 
@@ -90,7 +90,7 @@
     background-repeat: no-repeat;
 }
 
-@media (min-width:600px) and (max-width:1024px) {
+@media (min-width:600px) /*and (max-width:1024px)*/ {
 
     .hamburger-nav {
         display: inline-block;
@@ -103,7 +103,8 @@
         top: 50px;
         width: 200px;
         background-color: #48195c;
-        height: 190px;
+        height: auto;
+        padding-bottom: 2%;
     }
 
         .main-nav > a, .main-nav > a:visited {
@@ -133,35 +134,12 @@
         width: 130px;
         margin: 0 5px 0 0;
     }
-}
-
-
-@media (min-width:720px) {
 
     .view-title {
-        width: 500px;
+        width: calc(100% - 220px);
     }
 }
 
-
-@media (min-width:1024px) {
-
-    .main-nav {
-        display: block;
-    }
-
-    .nav-icon {
-        display: none;
-    }
-
-    .nav-text {
-        display: block;
-    }
-
-    .view-title {
-        width: 450px;
-    }
-}
 
 @media (min-width:1180px) {
 
@@ -169,30 +147,3 @@
         display: inline-block;
     }
 }
-
-/*
-@media (min-width:601px) and (max-width:900px){
-    
-    .hamburger-nav{
-        display:inline-block;
-    }
-
-}
-
-@media (min-width: 860px){
-
-    .main-nav {
-        display: inline-block;
-    }
-
-}
-
-@media (max-width:900px) {
-
-    .main-nav > a.account-nav {
-        display: none;
-    }
-
-}
-
-*/

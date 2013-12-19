@@ -31,7 +31,7 @@ textarea {
 }
 
     textarea:invalid, input:invalid {
-        background-color: #808080;
+        background-color: #dfdfdf;
     }
 
     textarea:required, input:required {
