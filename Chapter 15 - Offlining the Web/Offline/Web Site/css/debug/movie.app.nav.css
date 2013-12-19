@@ -121,7 +121,7 @@
             font-weight: bold;
             font-size: 1.25em;
             display: block;
-            width: 180px;
+            width: 185px;
             height:32px;
         }
 
@@ -136,7 +136,7 @@
     }
 
     .nav-text {
-        width: 130px;
+        width: calc(100% - 45px);
         margin: 0 5px 0 0;
     }
 

@@ -95,30 +95,9 @@
                 menuItems: menuItems
             });
 
-            deeptissue(".hamburger-nav, .main-nav").tap(function (e) {
+            that.setupHamburger();
 
-                $(".main-nav").toggle();
-
-            });
-
-
-            deeptissue(".main-nav > a").tap(function (e) {
-
-                var $target = $(e.currentTarget);
-
-                requestAnimationFrame(function (e) {
-
-                    $target.toggleClass("seleted-nav");
-
-                    $(".main-nav").toggle();
-
-                    requestAnimationFrame(function () {
-                        that.hideBurgerMenu();
-                        $target.toggleClass("seleted-nav");
-                    });
-                });
-
-            });
+            that.bindBackButton();
 
             window.addEventListener("resize", function (e) {
 
@@ -132,9 +111,34 @@
 
             });
 
-            that.bindBackButton();
-
             return that;
+        },
+
+        setupHamburger: function () {
+
+            deeptissue(".hamburger-nav").tap(function () {
+                requestAnimationFrame(function () {
+                    $(".main-nav").show();
+                });
+            });
+
+            deeptissue(".main-nav > a").tap(function (e) {
+
+                var $target = $(e.currentTarget);
+
+                    $target.addClass("seleted-nav");
+
+                    requestAnimationFrame(function () {
+                        $(".main-nav").hide();
+                        $target.removeClass("seleted-nav");
+                    });
+
+            });
+
+            window.addEventListener("click", function () {
+                $(".main-nav").hide();
+            });
+
         },
 
         version: "0.0.2",
@@ -142,12 +146,6 @@
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 
         mainTitle: document.querySelector(".view-title"),
-
-        hideBurgerMenu: function () {
-
-            document.querySelector(".main-nav").style.display = "none";
-
-        },
 
         movieTypes: {
             "Opening": "Opening",
