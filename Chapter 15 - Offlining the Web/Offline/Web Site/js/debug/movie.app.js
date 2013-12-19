@@ -427,7 +427,8 @@
 
         settings: {
             desktopBreakPoint: 1024,
-            smallBreakPoint: 600
+            smallBreakPoint: 600,
+            SearchCount: 50
         }
 
     };

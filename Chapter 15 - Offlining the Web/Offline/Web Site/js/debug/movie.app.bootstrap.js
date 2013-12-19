@@ -3,7 +3,7 @@ var bp = backpack(),
     data = rqData(),
     movie;
 
-//movieApp.fn.privacyView = privacyView(data);
+movieApp.fn.privacyView = privacyView(data);
 
 movie = movieApp({
     bp: bp,

@@ -99,6 +99,7 @@ else
             <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.theater-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
+            <link href="css/debug/movie.app.social.css?v=.1" rel="stylesheet">
 
         }
         else
@@ -179,6 +180,10 @@ else
                 case "search":
                 @RenderPage("search-view.cshtml")
                     break;
+                    
+                 case "social":
+                @RenderPage("social-view.cshtml")
+                    break;
 
                 default:
                 @RenderPage("notFound.cshtml")
@@ -203,6 +208,7 @@ else
         @SPARenderPage("search-view.cshtml")
         @SPARenderPage("theater-view.cshtml")
         @SPARenderPage("about-view.cshtml")
+        @SPARenderPage("social-view.cshtml")
         @SPARenderPage("privacy-view.cshtml")
         @SPARenderPage("notfound-view.cshtml")
         @SPARenderPage("_templates.cshtml")
@@ -241,6 +247,7 @@ else
             <script src="@Href("~/js/debug/movie.app.movies-view.js?v=.1")"></script>
             <script src="@Href("~/js/debug/movie.app.privacy-view.js?v=.1")"></script>
             <script src="@Href("~/js/debug/movie.app.about-view.js?v=.1")"></script>
+            <script src="@Href("~/js/debug/movie.app.social-view.js?v=.1")"></script>
 
             <script src="@Href("~/js/debug/movie.app.bootstrap.js?v=.1")"></script>
 

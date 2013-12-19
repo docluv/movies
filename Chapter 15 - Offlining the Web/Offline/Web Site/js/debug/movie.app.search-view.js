@@ -43,6 +43,15 @@
 
                         that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
+                        that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+
+                        window.addEventListener("resize", function () {
+                            that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+                            that.setPosterSrc(".movie-grid-poster");
+                        });
+
+                        that.setPosterSrc(".movie-grid-poster");
+
                     } else {
                         document.querySelector(".movie-poster-div").innerHTML = that.noResults;
                     }

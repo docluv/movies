@@ -20,12 +20,13 @@
 
                 window.addEventListener("resize", function () {
                     that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+                    that.setPosterSrc(".movie-grid-poster");
                 });
 
                 that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
                 requestAnimationFrame(function () {
-                    that.setPosterSrc(" .movie-grid-poster");
+                    that.setPosterSrc(".movie-grid-poster");
                 });
             });
 
