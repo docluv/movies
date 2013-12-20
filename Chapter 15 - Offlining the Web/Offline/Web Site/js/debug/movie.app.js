@@ -19,24 +19,19 @@
                 url: "#!maps"
             }
             , {
-                title: "showtimes",
-                iconClass: "theaters-icon",
-                url: "#!showtimes"
-            }
-            , {
                 title: "search",
                 iconClass: "search-icon",
                 url: "#!search"
-            }],
-        subMenu: [
+            },
             {
                 title: "reviews",
-                icon: undefined,
-                iconClass: "go-reviews",
+                iconClass: "reviews-icon",
                 url: "#!reviews"
             }
 
-             , {
+        ],
+        subMenu: [
+             {
                  title: "opening this week",
                  icon: undefined,
                  iconClass: "go-opening",
@@ -65,7 +60,14 @@
                 icon: undefined,
                 iconClass: "go-about",
                 url: "#!about"
-            }]
+            },
+                    {
+                        title: "privacy",
+                        icon: undefined,
+                        iconClass: "",
+                        url: "#!privacy"
+                    }
+        ]
     };
 
     var movieApp = function (customSettings) {
@@ -126,12 +128,12 @@
 
                 var $target = $(e.currentTarget);
 
-                    $target.addClass("seleted-nav");
+                $target.addClass("seleted-nav");
 
-                    requestAnimationFrame(function () {
-                        $(".main-nav").hide();
-                        $target.removeClass("seleted-nav");
-                    });
+                requestAnimationFrame(function () {
+                    $(".main-nav").hide();
+                    $target.removeClass("seleted-nav");
+                });
 
             });
 
@@ -156,7 +158,7 @@
 
         setMainTitle: function (title) {
 
-            this.mainTitle.textContent = title;
+            this.mainTitle.textContent = title.toLowerCase();
         },
 
         bindBackButton: function () {

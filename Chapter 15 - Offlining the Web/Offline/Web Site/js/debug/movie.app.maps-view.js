@@ -25,6 +25,8 @@
                 mv = that.mapsView,
                 title = "nearby";
 
+            that.setMainTitle("theaters near you");
+
             $().loadScript("bing-map-script", "http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0", function () {
 
                 mv.loadNearbyTheaters.call(that);
