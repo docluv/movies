@@ -46,11 +46,11 @@
 
         },
 
-        unload: function () {
+unload: function () {
 
-            delete this.resizeEvents["manageMovieView"];
+    delete this.resizeEvents["manageMovieView"];
 
-        },
+},
 
         renderMovieDetails: function (data) {
 

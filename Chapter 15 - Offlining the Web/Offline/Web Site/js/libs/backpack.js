@@ -52,40 +52,6 @@
         },
 
         //keep
-        storeTemplates: function () {
-
-            var i, //templates,
-                scripts = document.querySelectorAll("script[type='" +
-                                                      this.settings.templateType + "']");
-
-            for (i = 0; i < scripts.length; i++) {
-
-                this.saveTemplateToStorage(scripts[i]);
-
-            }
-
-        },
-
-        //keep
-        saveTemplateToStorage: function (s) {
-
-            if (typeof s === "string") { //assume this is the element id
-                s = document.getElementById(s);
-            }
-
-            if (s) {
-
-                localStorage.setItem(s.id, s.innerHTML.replace(/(\r\n|\n|\r)/gm, ""));
-
-                if (s.parentNode) {
-                    s.parentNode.removeChild(s);
-                }
-
-            }
-
-        },
-
-        //keep
         getTemplate: function (id) {
 
             return "<script type='" +
@@ -105,12 +71,6 @@
 
         },
 
-        //keep
-        hasClass: function (e, className) {
-
-            return (e.className.search(className) > -1);
-
-        },
 
         //keep, but modify the promise stuff, take it out 4 now
         saveViewToStorage: function (e) {
@@ -123,7 +83,7 @@
 
                 this.storeViewInfo(this.parseViewInfo(e));
 
-                if (e.parentNode && !this.hasClass(e, this.settings.currentClass)) {
+                if (e.parentNode && !(e.className.search(this.settings.currentClass) > -1)) {
                     e.parentNode.removeChild(e);
                 }
 

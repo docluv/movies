@@ -15,7 +15,7 @@
     display: none;
 }
 
-
+/* Start Hamburger */
 .hamburger-nav {
     display: none;
     width: 100px;
@@ -54,6 +54,7 @@
     display: inline-block;
     float: left;
 }
+/* End Hamburger */
 
 .main-nav > a, .main-nav > a:visited {
     margin: 5px 5px 20px 5px;

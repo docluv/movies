@@ -41,6 +41,11 @@
             that.swapView();
         }
 
+        /*
+
+        //decided to shelve this for the time being. Will complete this functionality
+        //after the book is published
+
         if (that.settings.asyncUrl && typeof that.settings.asyncUrl === "string") {
 
             document.addEventListener("DOMContentLoaded", function () {
@@ -50,6 +55,8 @@
                 that.loadAsyncContent.call(that, that.settings.asyncUrl);
             });
         }
+
+        */
 
         return that;
 
@@ -70,10 +77,11 @@
         setupRoutes: function () {
 
             var that = this,
+                settings = that.settings,
                 $$ = $(),
-                routes = $$.extend($$.parseLocalStorage("routes") || {}, that.settings.routes),
+                routes = $$.extend($$.parseLocalStorage("routes") || {}, settings.routes),
                 i = 0, rawPath, view, route, viewId,
-                Views = document.querySelectorAll(that.settings.viewSelector);
+                Views = document.querySelectorAll(settings.viewSelector);
 
             for (; i < Views.length; i++) {
 
@@ -96,7 +104,7 @@
             localStorage.setItem("routes", JSON.stringify(routes));
 
             if (that.bp && (that.getParameterByName("_escaped_fragment_") === "")) {
-                that.bp.updateViews(that.settings.viewSelector);
+                that.bp.updateViews(settings.viewSelector);
             }
 
         },
@@ -106,6 +114,8 @@
             //need to check for duplicate path
             return {
                 viewId: viewId,
+                viewModule: (view.hasAttribute("data-module") ? view.getAttribute("data-viewId") :
+                        viewId),
                 path: rawPath.split("\\:")[0],
                 params: rawPath.split("\\:").slice(1),
                 title: (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
@@ -286,12 +296,13 @@
         swapView: function () {
 
             var that = this,
+                settings = that.settings,
                 route, oldRoute, anim,
                 hash = window.location.hash, newView,
                 hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
                 hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
                 path = hashFragment.split(":")[0],
-                currentView = document.querySelectorAll("." + this.settings.currentClass);
+                currentView = document.querySelectorAll("." + settings.currentClass);
 
             if (currentView.length) {
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
@@ -338,8 +349,8 @@
 
                     }
 
-                    $(newView).addClass(that.settings.currentClass +
-                                        " animated " + anim + " in");
+                    $(newView).addClass(settings.currentClass +
+                        " animated " + anim + " in");
 
                     that.setDocumentTitle(route);
 
@@ -351,10 +362,10 @@
 
             } else if (hasEscapeFragment === "") { //Goto 404 handler
 
-                window.location.hash = "#!" + this.settings.NotFoundRoute;
+                window.location.hash = "#!" + settings.NotFoundRoute;
 
             } else {//should only get here is this is an escapefragemented url for the spiders
-                newView = $(this.settings.viewSelector).addClass(that.settings.currentClass);
+                newView = $(settings.viewSelector).addClass(settings.currentClass);
             }
 
         },
@@ -423,16 +434,17 @@
         makeCallback: function (route, action) {
 
             var that = this,
+                settings = that.settings,
                 a, cbPaths, callback;
 
             if (action && !route[action]) {
 
-                var ctx = that.settings.appContext;
+                var ctx = settings.appContext;
 
-                if (that.settings.appContext) {
+                if (settings.appContext) {
 
-                    if (ctx[route.viewId] && ctx[route.viewId][action]) {
-                        ctx[route.viewId][action].call(ctx, route.paramValues || {});
+                    if (ctx[route.viewModule] && ctx[route.viewModule][action]) {
+                        ctx[route.viewModule][action].call(ctx, route.paramValues || {});
                     }
 
                 }
@@ -524,6 +536,8 @@
             this.bp.updateViewsFromFragment(this.settings.viewSelector, content);
         },
 
+        /*
+
         loadAsyncContent: function (url, callback) {
 
             callback = callback || this.storeAsyncContent;
@@ -534,6 +548,7 @@
             oReq.open("get", url, true);
             oReq.send();
         },
+        */
 
         //array of animations. The names match the CSS class so make sure you have the CSS for this animation or you will be dissapointed.
         animations: {
@@ -547,9 +562,9 @@
             viewSelector: ".content-pane",
             currentClass: "current",
             mainWrappperSelector: "main",
-            NotFoundView: "NotFound",
+            NotFoundView: "nofoundView",
             NotFoundRoute: "404",
-            defaultTitle: "A Single Page Site with Routes",
+            defaultTitle: "A Single Page Application with Routes",
             titleSelector: ".view-title",
             forceReload: "_force_reload_",
             autoSetTitle: true,

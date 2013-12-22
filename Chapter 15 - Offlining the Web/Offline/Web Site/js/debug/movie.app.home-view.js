@@ -8,15 +8,56 @@
 
     movieApp.fn.homeView = {
 
-        onload: function () {
+onload: function () {
+
+    var that = this,
+        hv = that.homeView;
+
+    that.setupPanorama();
+    that.setMainTitle("Modern Web Movies");
+
+    hv.loadMovies.call(that);
+
+    requestAnimationFrame(function () {
+        hv.setPanoramaWidth.call(that);
+    });
+
+    hv.setupMQLs.call(that, hv);
+
+},
+
+        setupMQLs: function(hv){
+
+            var that = this;
+
+            that.setupMQL("min600", "(min-width: 600px)", [{
+                matchName: "manageHomeView",
+                matchFunc: function () {
+                    hv.updatePanoramaLayout.call(that);
+                },
+                nomatchName: "manageHomeView",
+                nomatchFunc: function () {
+                    hv.updatePanoramaLayout.call(that);
+                }
+            }]);
+
+            that.setupMQL("min1024", "(min-width: 1024px)", [{
+                matchName: "manageHomeView1024",
+                matchFunc: function () {
+                    hv.updatePanoramaLayout.call(that);
+                },
+                nomatchName: "manageHomeView1024",
+                nomatchFunc: function () {
+                    hv.updatePanoramaLayout.call(that);
+                }
+            }]);
+
+        },
+
+        loadMovies: function () {
 
             var that = this,
-                hv = that.homeView,
-                i = 0,
-                vPanels = document.querySelectorAll(".panel-v-scroll");
-
-            that.setupPanorama();
-            that.setMainTitle("Modern Web Movies");
+                hv = that.homeView;
 
             that.rt.InTheatersMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".top-box-list", data);
@@ -33,36 +74,6 @@
             that.rt.CommingSoonMovies(50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".comming-soon-list", data);
             });
-
-            requestAnimationFrame(function () {
-                hv.setPanoramaWidth.call(that);
-            });            
-
-            that.setupMQL("min600", "(min-width: 600px)", [{
-                matchName: "manageHomeView",
-                matchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                    that.panorama.settings.peekWidth = 75;
-                },
-                nomatchName: "manageHomeView",
-                nomatchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                    that.panorama.settings.peekWidth = 50;
-                }
-            }]);
-
-            that.setupMQL("min1024", "(min-width: 1024px)", [{
-                matchName: "manageHomeView1024",
-                matchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                    that.panorama.settings.peekWidth = 100;
-                },
-                nomatchName: "manageHomeView1024",
-                nomatchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                    that.panorama.settings.peekWidth = 75;
-                }
-            }]);
 
         },
 
@@ -84,7 +95,7 @@
         //  //  delete this.resizeEvents["manageHomeView"];
         //},
 
-        renderHomeMovies : function (target, data) {
+        renderHomeMovies: function (target, data) {
 
             if (!data) {
                 return;
@@ -97,12 +108,12 @@
             requestAnimationFrame(function () {
                 that.setPosterSrc(target + " .movie-grid-poster");
             });
-            
+
         },
 
-        viewWidth : window.innerWidth,
+        viewWidth: window.innerWidth,
 
-        setPanoramaWidth : function () {
+        setPanoramaWidth: function () {
 
             var that = this,
                 i = 0,
@@ -129,5 +140,5 @@
         }
 
     };
-    
+
 }(window));

@@ -67,6 +67,9 @@
         width: auto;
         height: 100%;
     }
+}
+
+@media(min-width: 1024px) {
 
     .panel-v-scroll {
         -ms-overflow-style: none;

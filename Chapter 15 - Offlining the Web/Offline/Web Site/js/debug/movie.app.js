@@ -101,9 +101,9 @@
 
             that.bindBackButton();
 
-            window.addEventListener("resize", function (e) {
+window.addEventListener("resize", function (e) {
 
-                requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
                     for (var key in that.resizeEvents) {
                         if (that.resizeEvents.hasOwnProperty(key)) {
                             that.resizeEvents[key].call(that);
@@ -111,7 +111,7 @@
                     }
                 });
 
-            });
+});
 
             return that;
         },
@@ -137,7 +137,7 @@
 
             });
 
-            window.addEventListener("click", function () {
+            deeptissue(document.body).tap(function () {
                 $(".main-nav").hide();
             });
 
@@ -227,9 +227,9 @@
 
         },
 
-        resizeEvents: {},
+resizeEvents: {},
 
-        minWidthMQLs: {},
+minWidthMQLs: {},
 
         setupMQL: function (key, mediaQuery, matches) {
 

@@ -5,33 +5,40 @@
 
     movieApp.fn.moviesView = {
 
-        onload: function (params) {
+onload: function (params) {
 
-            var that = this,
-                movieType = params.movieType || "TopBoxOffice";
+    var that = this,
+        mv = that.moviesView,
+        movieType = params.movieType || "TopBoxOffice";
 
-            that.rt[movieType + "Movies"](50, 1, function (data) {
+    that.rt[movieType + "Movies"](50, 1, function (data) {
+        mv.renderMovies.call(that, data);
+    });
 
-                if (!data) {
-                    return;
-                }
+    that.setMainTitle(that.movieTypes[movieType]);
 
+},
+
+        renderMovies: function (data) {
+
+            if (!data) {
+                return;
+            }
+
+            var that = this;
+
+            that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
+
+            window.addEventListener("resize", function () {
                 that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
-
-                window.addEventListener("resize", function () {
-                    that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
-                    that.setPosterSrc(".movie-grid-poster");
-                });
-
-                that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
-
-                requestAnimationFrame(function () {
-                    that.setPosterSrc(".movie-grid-poster");
-                });
+                that.setPosterSrc(".movie-grid-poster");
             });
 
-            that.setMainTitle(that.movieTypes[movieType]);
+            that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
+            requestAnimationFrame(function () {
+                that.setPosterSrc(".movie-grid-poster");
+            });
         }
 
     };
