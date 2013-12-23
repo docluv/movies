@@ -36,21 +36,29 @@
 
             var that = this;
 
-            hv.mql600 = window.matchMedia("(min-width: 600px)");
+            if (!hv.mql600) {
 
-            hv.mql600.addListener(function (e) {
+                hv.mql600 = window.matchMedia("(min-width: 600px)");
 
-                hv.updateMoviePosters.call(that);
+                hv.mql600.addListener(function (e) {
 
-            });
+                    hv.updateMoviePosters.call(that, e);
 
-            hv.mql1024 = window.matchMedia("(min-width: 1024px)");
+                });
 
-            hv.mql1024.addListener(function (e) {
+            }
 
-                hv.updateMoviePosters.call(that);
+            if (!hv.mql1024) {
 
-            });
+                hv.mql1024 = window.matchMedia("(min-width: 1024px)");
+
+                hv.mql1024.addListener(function (e) {
+
+                    hv.updateMoviePosters.call(that, e);
+
+                });
+
+            }
 
         },
 
@@ -77,24 +85,22 @@
 
         },
 
-        updateMoviePosters: function () {
+updateMoviePosters: function (e) {
 
-            if (this.homeView.isVisible) {
+    if (this.homeView.isVisible) {
 
-                var that = this;
+        var that = this;
 
-                that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
-                that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
-                that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
-                that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
+        that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
+        that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
+        that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
+        that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
 
-            }
+    }
 
-        },
+},
 
         unload: function () {
-            //    this.homeView.mql600.removeListener(callback600);
-            //    this.homeView.mql1024.removeListener(callback1024);
             this.homeView.isVisible = false;
         },
 
