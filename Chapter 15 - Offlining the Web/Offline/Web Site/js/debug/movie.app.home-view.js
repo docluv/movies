@@ -13,6 +13,8 @@
             var that = this,
                 hv = that.homeView;
 
+            hv.isVisible = true;
+
             that.setupPanorama();
             that.setMainTitle("Modern Web Movies");
 
@@ -26,31 +28,29 @@
 
         },
 
+        mql600: undefined,
+        mql1024: undefined,
+        isVisible: false,
+
         setupMQLs: function (hv) {
 
             var that = this;
 
-            that.setupMQL("min600", "(min-width: 600px)", [{
-                matchName: "manageHomeView",
-                matchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                },
-                nomatchName: "manageHomeView",
-                nomatchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                }
-            }]);
+            hv.mql600 = window.matchMedia("(min-width: 600px)");
 
-            that.setupMQL("min1024", "(min-width: 1024px)", [{
-                matchName: "manageHomeView1024",
-                matchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                },
-                nomatchName: "manageHomeView1024",
-                nomatchFunc: function () {
-                    hv.updatePanoramaLayout.call(that);
-                }
-            }]);
+            hv.mql600.addListener(function (e) {
+
+                hv.updateMoviePosters.call(that);
+
+            });
+
+            hv.mql1024 = window.matchMedia("(min-width: 1024px)");
+
+            hv.mql1024.addListener(function (e) {
+
+                hv.updateMoviePosters.call(that);
+
+            });
 
         },
 
@@ -77,22 +77,25 @@
 
         },
 
-        updatePanoramaLayout: function () {
+        updateMoviePosters: function () {
 
-            var that = this;
+            if (this.homeView.isVisible) {
 
-            that.panorama.resizePanorama();
+                var that = this;
 
-            that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
-            that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
-            that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
-            that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
+
+            }
 
         },
 
         unload: function () {
-            delete this.minWidthMQLs["min600"];
-            delete this.minWidthMQLs["min1024"];
+            //    this.homeView.mql600.removeListener(callback600);
+            //    this.homeView.mql1024.removeListener(callback1024);
+            this.homeView.isVisible = false;
         },
 
         renderHomeMovies: function (target, data) {
