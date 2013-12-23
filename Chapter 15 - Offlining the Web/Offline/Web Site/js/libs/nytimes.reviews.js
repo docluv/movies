@@ -10,35 +10,13 @@
     //it is set at the end of the module
     //I use nytReviews as an example name, you can do a replace all to name it 
     //what every suites your needs.
-    var nytReviews = function (customSettings) {
+    var nytReviews = function (data) {
 
+        var that = new nytReviews.fn.init();
 
-        //return the object created by the init method (defined later).
-        //notice we are calling the nytReviews init method from the object's protype alias.
-        //The customSettings parameter is passed to the init method. Remember to pass
-        //any parameters along to the init method.
-        var that = new nytReviews.fn.init(customSettings);
+        that.data = data.data;
 
-
-        //here I had a delima. I want to show how to merge a custom settings object
-        //but I don't wan to rely on jQuery, Underscore or something else for this example.
-        //so I decided to show you what it would look like with a jQuery dependancy.
-
-
-        //this.settings = utility.extend({}, this.settings, customSettings);
-
-
-        //for a lightweight library with an extend method see my dollarbill repository
-        //https://github.com/docluv/dollarbill
-
-        //and then just a simple little way to override the default settings.
-        //I do encourage merging the values though.
-        if (customSettings) {
-            that.settings = customSettings;
-        }
-
-
-       return that;
+        return that;
     };
 
 
@@ -53,16 +31,28 @@
 
         //gets everything started and returns a reference to the object.
         //notice it was called from the nytReviews function definition above.
-        init: function (customSettings) {
+        init: function () {
             //return a reference to itself so you can chain things later!
             return this;
         },
 
+        data: undefined,
 
         //I think this is just good practice ;)
         version: "0.0.1",
 
+        reviews: function (callback) {
 
+            return this.data.getData(
+                    "http://api.nytimes.com/svc/movies/v2/reviews/all/by-opening-date.json?api-key=003f5423c8182dca2684e2cdc804f925:16:60721682", {
+                        success: function (data) {
+                            if (callback) {
+                                callback.call(that, data);
+                            }
+                        }
+                    });
+
+        },
 
 
         //yes you can create chile objects

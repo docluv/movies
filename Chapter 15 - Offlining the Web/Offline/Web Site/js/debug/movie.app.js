@@ -22,51 +22,41 @@
                 title: "search",
                 iconClass: "search-icon",
                 url: "#!search"
-            },
-            {
-                title: "reviews",
-                iconClass: "reviews-icon",
-                url: "#!reviews"
+            }, {
+                title: "about",
+                iconClass: "about-icon",
+                url: "#!about"
             }
+            //,
+            //{
+            //    title: "reviews",
+            //    iconClass: "reviews-icon",
+            //    url: "#!reviews"
+            //}
 
         ],
         subMenu: [
              {
                  title: "opening this week",
-                 icon: undefined,
-                 iconClass: "go-opening",
                  url: "#!movies/Opening"
              }
              , {
                  title: "in theaters",
-                 icon: undefined,
-                 iconClass: "go-in-theaters",
                  url: "#!movies/InTheaters"
              }
              , {
                  title: "top box office",
-                 icon: undefined,
-                 iconClass: "go-top-box-office",
                  url: "#!movies/TopBoxOffice"
              }
             , {
                 title: "comming soon",
-                icon: undefined,
-                iconClass: "go-movie-soon",
-                url: "#!movies/CommingSoon"
+                url: "#!movies/ComingSoon"
             }
-            , {
-                title: "about",
-                icon: undefined,
-                iconClass: "go-about",
-                url: "#!about"
-            },
-                    {
-                        title: "privacy",
-                        icon: undefined,
-                        iconClass: "",
-                        url: "#!privacy"
-                    }
+            ,
+            {
+                title: "privacy",
+                url: "#!privacy"
+            }
         ]
     };
 
@@ -101,9 +91,9 @@
 
             that.bindBackButton();
 
-window.addEventListener("resize", function (e) {
+            window.addEventListener("resize", function (e) {
 
-    requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
                     for (var key in that.resizeEvents) {
                         if (that.resizeEvents.hasOwnProperty(key)) {
                             that.resizeEvents[key].call(that);
@@ -111,7 +101,7 @@ window.addEventListener("resize", function (e) {
                     }
                 });
 
-});
+            });
 
             return that;
         },
@@ -172,7 +162,7 @@ window.addEventListener("resize", function (e) {
 
         },
 
-        viewWidth: 0,
+        //        viewWidth: 0,
         bp: undefined,
         tmpl: undefined,
         rt: undefined,
@@ -227,9 +217,9 @@ window.addEventListener("resize", function (e) {
 
         },
 
-resizeEvents: {},
+        resizeEvents: {},
 
-minWidthMQLs: {},
+        minWidthMQLs: {},
 
         setupMQL: function (key, mediaQuery, matches) {
 
@@ -335,34 +325,22 @@ minWidthMQLs: {},
             var that = this, dt,
                 pCont = document.querySelector(target);
 
-            if (/*!that.panorama && */ settings.maxWidth &&
+            if (settings.maxWidth &&
                 settings.maxWidth >= window.innerWidth) {
 
                 that.panorama = panorama(pCont,
                                     $().extend(settings, {
                                         speed: 600,
                                         headerHeight: 80,
-                                        peekWidth: 50,
-                                        contentResize: function () {
-
-                                            var posterWrappers = document.querySelectorAll(".panel-v-scroll"), i = 0;
-
-                                            for (; i < posterWrappers.length; i++) {
-                                                posterWrappers[i].style.height =
-                                                    (window.innerHeight - 115 - 32) + "px";
-                                            }
-
-                                        }
+                                        peekWidth: 50
                                     }));
 
-                //that.panoramaDt = 
-                /**/
                 dt = deeptissue(pCont,
                             {
-                                swipeRightThreshold: 35,
-                                swipeLeftThreshold: -35,
-                                swipeUpThreshold: 35,
-                                swipeDownThreshold: 35
+                                swipeRightThreshold: 50,
+                                swipeLeftThreshold: -50,
+                                swipeUpThreshold: 50,
+                                swipeDownThreshold: 50
                             });
 
                 dt.swipeRight(function (evt, m, translate) {
@@ -384,6 +362,7 @@ minWidthMQLs: {},
 
             }
 
+            /* 
             if (!that._panoramaSetup) {
 
                 var pn = document.querySelector(".pxs_next"),
@@ -414,6 +393,8 @@ minWidthMQLs: {},
                 that._panoramaSetup = true;
 
             }
+
+            */
 
         },
 

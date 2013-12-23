@@ -188,6 +188,8 @@
 
         doAJAX: function (ajaxOptions) {
 
+            var that = this;
+
             reqwest(ajaxOptions)
              .fail(function (e) {
 
@@ -206,8 +208,8 @@
                         "type": "jsonp"
                     });
 
-            delete ajaxOptions.contentType;
-            delete ajaxOptions.dataType;
+            //delete ajaxOptions.contentType;
+            //delete ajaxOptions.dataType;
 
             return this.ajaxPrefilter(ajaxOptions);
         },

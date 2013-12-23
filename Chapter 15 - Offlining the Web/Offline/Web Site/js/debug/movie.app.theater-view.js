@@ -11,12 +11,27 @@
         onload: function (params) {
 
             var that = this,
-                tv = that.theaterView;
+                tv = that.theaterView,
+                msdate = ".movie-showtime-date";
 
             that.setMainTitle(decodeURIComponent(params.theaterName));
 
             that.rt.InTheatersMovies(50, 1, function (data) {
                 tv.renderTheaterMovies.call(that, data);
+            });
+
+
+            deeptissue(msdate).tap(function (e) {
+
+                $(msdate).removeClass("selected");
+
+                e.currentTarget.classList.add("selected");
+
+                //load new movie showtimes
+                that.rt.InTheatersMovies(50, 1, function (data) {
+                    tv.renderTheaterMovies.call(that, data);
+                });
+
             });
         },
 
@@ -30,6 +45,8 @@
 
             that.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate",
                 that.theaterView.cleanFirstPoster.call(that, data));
+
+            document.querySelector(".movie-showtimes-scroller").scrollTop = 0;
         },
 
         cleanFirstPoster : function (data) {

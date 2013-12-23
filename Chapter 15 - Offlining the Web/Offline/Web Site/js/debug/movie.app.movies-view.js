@@ -5,19 +5,19 @@
 
     movieApp.fn.moviesView = {
 
-onload: function (params) {
+        onload: function (params) {
 
-    var that = this,
-        mv = that.moviesView,
-        movieType = params.movieType || "TopBoxOffice";
+            var that = this,
+                mv = that.moviesView,
+                movieType = params.movieType || "TopBoxOffice";
 
-    that.rt[movieType + "Movies"](50, 1, function (data) {
-        mv.renderMovies.call(that, data);
-    });
+            that.rt[movieType + "Movies"](50, 1, function (data) {
+                mv.renderMovies.call(that, data);
+            });
 
-    that.setMainTitle(that.movieTypes[movieType]);
+            that.setMainTitle(that.movieTypes[movieType]);
 
-},
+        },
 
         renderMovies: function (data) {
 

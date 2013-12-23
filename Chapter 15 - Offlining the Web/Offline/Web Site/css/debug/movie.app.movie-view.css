@@ -6,6 +6,16 @@
     text-align: center;
 }
 
+.movie-detail {
+    margin: .5em 0;
+}
+
+
+.movie-description {
+    font-size: 1em;
+    line-height: 1.5em;
+}
+
 .cast-name-list {
     margin-left: 6px;
 }
@@ -24,10 +34,6 @@ span.center, img.center {
 .theater-title {
     font-weight: bold;
     font-size: 1.1em;
-}
-
-.movie-poster-centered {
-    text-align: center;
 }
 
 .movie-showtime-theater {
@@ -90,6 +96,8 @@ span.center, img.center {
     .movie-showtime-list {
         top: 20px;
         width: 400px;
+        font-size: 1.2em;
+        line-height: 1.5em;
     }
 
         .cast-name-list li {
@@ -101,7 +109,6 @@ span.center, img.center {
         margin: 5px 0 10px 0;
     }
 
-    .movie-poster-centered,
     .movie-description,
     .movie-review-panel,
     .cast-name-list,
@@ -151,10 +158,6 @@ span.center, img.center {
         height: 200px;
     }
 
-    .movie-poster-centered {
-        display: none;
-    }
-
     #showReview {
         display: block;
     }
@@ -195,9 +198,6 @@ span.center, img.center {
         height: 200px;
     }
 
-    .movie-poster-centered {
-        display: none;
-    }
 }
 
 @media (min-width:1095px) {

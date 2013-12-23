@@ -95,7 +95,7 @@ else
             <link href="css/debug/movie.app.home-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.movie-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.movies-view.css?v=.1" rel="stylesheet">
-            <link href="css/debug/movie.app.reviews-view.css?v=.1" rel="stylesheet">
+            @*<link href="css/debug/movie.app.reviews-view.css?v=.1" rel="stylesheet">*@
             <link href="css/debug/movie.app.search-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.theater-view.css?v=.1" rel="stylesheet">
             <link href="css/debug/movie.app.maps-view.css?v=.1" rel="stylesheet">
@@ -128,7 +128,7 @@ else
 <nav class="main-nav" role="navigation">
     <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
     <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-    <a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>
+    @*<a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>*@
     <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
     <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
     <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
@@ -169,9 +169,9 @@ else
                 @RenderPage("theater-view.cshtml")
                     break;
 
-                case "reviews":
+                @*case "reviews":
                 @RenderPage("reviews-view.cshtml")
-                    break;
+                    break;*@
 
                 case "privacy":
                 @RenderPage("privacy-view.cshtml")
@@ -204,7 +204,7 @@ else
         @SPARenderPage("movies-view.cshtml")
         @SPARenderPage("movie-view.cshtml")
         @SPARenderPage("maps-view.cshtml")
-        @SPARenderPage("reviews-view.cshtml")
+        @*@SPARenderPage("reviews-view.cshtml")*@
         @SPARenderPage("search-view.cshtml")
         @SPARenderPage("theater-view.cshtml")
         @SPARenderPage("about-view.cshtml")
@@ -240,7 +240,7 @@ else
 
             <script src="@Href("~/js/debug/movie.app.home-view.js?v=.1")"></script>
             <script src="@Href("~/js/debug/movie.app.maps-view.js?v=.1")"></script>
-            <script src="@Href("~/js/debug/movie.app.reviews-view.js?v=.1")"></script>
+            @*<script src="@Href("~/js/debug/movie.app.reviews-view.js?v=.1")"></script>*@
             <script src="@Href("~/js/debug/movie.app.search-view.js?v=.1")"></script>
             <script src="@Href("~/js/debug/movie.app.theater-view.js?v=.1")"></script>
             <script src="@Href("~/js/debug/movie.app.movie-view.js?v=.1")"></script>

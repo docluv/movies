@@ -15,10 +15,12 @@
         var that = new panorama.fn.init(container, customSettings);
 
         that.settings = $().extend({}, that.settings, customSettings);
+        that.buildVendorNames();
+
         that.setupElements(container);
         that.resizePanorama();
         that.buildTransitionValue();
-        that.buildVendorNames();
+
         that.support.transitionEnd =
                         that.eventNames[that.support.transition] || null;
 
@@ -61,15 +63,17 @@
 
         buildTransitionValue: function () {
 
-            var that = this;
+            var that = this,
+                support = that.support,
+                settings = that.settings;
 
-            that.transitionValue = "all " +
-                that.settings.speed + "ms " +
-                that.settings.easing;
+            that.transitionValue = support.transform + " " +
+                settings.speed + "ms " +
+                settings.easing;
 
-            that.headerTransitionValue = "all " +
-                (that.settings.speed - 100) + "ms " +
-                that.settings.easing;
+            that.headerTransitionValue = support.transform + " " +
+                (settings.speed - 100) + "ms " +
+                settings.easing;
 
             return this; //why not make it chainable LOL
         },
@@ -107,13 +111,13 @@
 
             that.container.style.height = panelHeight + "px";
             that.panelbody.style.height = panelHeight + "px";
-        //    that.panelbody.style.top = headerHeight + "px";
+            //    that.panelbody.style.top = headerHeight + "px";
             that.panelbody.style.width = (that.totalPanels * pw) + "px";
             that.panelbody.style.left = -pw + "px";
 
             for (var i = 0; i < that.panels.length; i++) {
                 that.panels[i].style.width = pw + "px";
-               // that.panels[i].style.minHeight = that.panelbody.style.height;
+                // that.panels[i].style.minHeight = that.panelbody.style.height;
             }
 
             if (that.headerPanels.length > 1) {
@@ -254,13 +258,13 @@
                 // && this.isApplied
                 ) {
 
-//                this.isApplied = false;
+                //                this.isApplied = false;
                 settings.canMove = false;
                 this.clearPanoramaSettings();
 
             } else {
 
-  //              this.isApplied = true;
+                //              this.isApplied = true;
                 settings.canMove = true;
                 this.setPanoramaDimensions();
             }
@@ -300,9 +304,9 @@
 
             var that = this,
                 move = {
-                cb: cb,
-                value: value
-            };
+                    cb: cb,
+                    value: value
+                };
 
             if (that.moving) {
                 return;
@@ -353,7 +357,7 @@
             if (that.moveHeader) {
                 that.moveHeader(true);
             }
-            
+
             that.movePanels(-x, that.moveLeftCallback);
 
             for (i = 0; i < that._moveNextCB.length; i++) {
@@ -382,7 +386,7 @@
             if (that.moveHeader) {
                 that.moveHeader(true);
             }
-            
+
             that.movePanels(x, that.moveRightCallback);
 
             for (i = 0; i < that._movePrevCB.length; i++) {
@@ -476,37 +480,37 @@
 
         bigHeaderTrans: 0,
 
-        settings: {
-            panoramaSelector: ".panorama-panels",
-            container: ".panorama-container",
-            singleColumnSelector: ".single-panel",
-            doubleColumnSelector: ".double-panel",
-            speed: 150,     //speed of each slide animation
-            //    easing: 'swing', //easing effect for the slide animation
+settings: {
+    panoramaSelector: ".panorama-panels",
+    container: ".panorama-container",
+    singleColumnSelector: ".single-panel",
+    doubleColumnSelector: ".double-panel",
+    speed: 150,     //speed of each slide animation
+    //    easing: 'swing', //easing effect for the slide animation
 
-            windowWidth: window.innerWidth,
-            panelWidth: window.innerWidth,
-            panelHeight: window.innerHeight,
+    windowWidth: window.innerWidth,
+    panelWidth: window.innerWidth,
+    panelHeight: window.innerHeight,
 
-            peekWidth: 35,
+    peekWidth: 35,
 
-            easing: "ease-in-out",
+    easing: "ease-in-out",
 
-            // This are for wings - To Come later
-            nextScroll: ".panorama-next",
-            prevScroll: ".panorama-prev",
-            navWrapper: ".panorama-navigation",
-            showPrevNext: false, //do this when no touch available
+    // This are for wings - To Come later
+    nextScroll: ".panorama-next",
+    prevScroll: ".panorama-prev",
+    navWrapper: ".panorama-navigation",
+    showPrevNext: false, //do this when no touch available
 
-            headerSlide: .2,
-            bigHeaderLeft: 0,
+    headerSlide: .2,
+    bigHeaderLeft: 0,
 
-            headerStyle: ".panorama-header",
-            headerPanelStyle: ".panorama-panel-header",
-            headerHeight: 40,
+    headerStyle: ".panorama-header",
+    headerPanelStyle: ".panorama-panel-header",
+    headerHeight: 40,
 
-            bottomMargin: 35
-        }
+    bottomMargin: 35
+}
 
     };
 

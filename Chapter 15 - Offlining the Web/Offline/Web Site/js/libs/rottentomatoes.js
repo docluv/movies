@@ -68,7 +68,7 @@
             return this.getRottenTomatoesList("in_theaters", pageLimit, page, callback);
         },
 
-        CommingSoonMovies: function (pageLimit, page, callback) {
+        ComingSoonMovies: function (pageLimit, page, callback) {
 
             return this.getRottenTomatoesList("upcoming", pageLimit, page, callback);
 
@@ -185,9 +185,9 @@
                     that.apiKey + "&page_limit=" +
                         (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1);
 
-            return that.data.getJSONP(url, {
-                success: callback
-            });
+return that.data.getJSONP(url, {
+    success: callback
+});
 
         },
 
