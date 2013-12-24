@@ -67,11 +67,11 @@
                 support = that.support,
                 settings = that.settings;
 
-            that.transitionValue = support.transform + " " +
+            that.transitionValue = "all " +
                 settings.speed + "ms " +
                 settings.easing;
 
-            that.headerTransitionValue = support.transform + " " +
+            that.headerTransitionValue = "all " +
                 (settings.speed - 100) + "ms " +
                 settings.easing;
 
