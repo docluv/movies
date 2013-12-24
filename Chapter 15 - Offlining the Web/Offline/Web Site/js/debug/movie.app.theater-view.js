@@ -20,14 +20,14 @@
                 tv.renderTheaterMovies.call(that, data);
             });
 
-
             deeptissue(msdate).tap(function (e) {
 
+                //removes from all the date elements
                 $(msdate).removeClass("selected");
 
                 e.currentTarget.classList.add("selected");
 
-                //load new movie showtimes
+                //load "new" movie showtimes
                 that.rt.InTheatersMovies(50, 1, function (data) {
                     tv.renderTheaterMovies.call(that, data);
                 });
@@ -43,17 +43,10 @@
 
             var that = this;
 
-            that.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate",
-                that.theaterView.cleanFirstPoster.call(that, data));
+            that.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate", data);
 
             document.querySelector(".movie-showtimes-scroller").scrollTop = 0;
         },
-
-        cleanFirstPoster : function (data) {
-
-
-            return data;
-        }
 
     };
 

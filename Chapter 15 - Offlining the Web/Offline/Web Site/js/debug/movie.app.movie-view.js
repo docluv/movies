@@ -38,7 +38,7 @@
                     return;
                 }
 
-//                data = mv.setMoviePoster(data)[0];
+                //                data = mv.setMoviePoster(data)[0];
 
                 mv.renderMovieDetails.call(that, data);
 
@@ -46,11 +46,11 @@
 
         },
 
-unload: function () {
+        unload: function () {
 
-    delete this.resizeEvents["manageMovieView"];
+            delete this.resizeEvents["manageMovieView"];
 
-},
+        },
 
         renderMovieDetails: function (data) {
 
@@ -220,12 +220,6 @@ unload: function () {
                 showTimes.style.position = "";
                 showTimes.style.left = "";
 
-                //showReview.css({
-                //    position: "",
-                //    left: "",
-                //    top: ""
-                //});
-
                 showReview[0].style.position = "";
                 showReview[0].style.left = "";
                 showReview[0].style.top = "";
@@ -235,8 +229,6 @@ unload: function () {
                 $(".movie-details-list").show();
                 $(".movie-descrption-list").show();
                 castNames.style.display = "block";
-
-
             }
 
             if ((width > 610 && width < 820) && (prevWidth <= 610 || prevWidth >= 820)) {

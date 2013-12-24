@@ -185,9 +185,9 @@
                     that.apiKey + "&page_limit=" +
                         (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1);
 
-return that.data.getJSONP(url, {
-    success: callback
-});
+            return that.data.getJSONP(url, {
+                success: callback
+            });
 
         },
 
@@ -211,12 +211,6 @@ return that.data.getJSONP(url, {
 
             return movie;
         }
-
-        //yes you can create child objects
-        //settings: {
-        //    prop1: "Sample Module"
-        //}
-
 
     };
 
