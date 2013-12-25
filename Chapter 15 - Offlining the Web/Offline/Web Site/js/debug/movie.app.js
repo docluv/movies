@@ -113,21 +113,24 @@
                     $(".main-nav").show();
                 });
             });
-
+            /*
             deeptissue(".main-nav > a").tap(function (e) {
 
-                e.preventDefault();
+                e.stopPropagation();
 
-                var $target = $(e.currentTarget);
+                var $target = $(e.currentTarget),
+                    select = "seleted-nav";
 
-                $target.addClass("seleted-nav");
+                $target.addClass(select);
 
                 requestAnimationFrame(function () {
+                    $target.removeClass(select);
                     $(".main-nav").hide();
-                    $target.removeClass("seleted-nav");
                 });
 
             });
+
+            */
 
             deeptissue(document.body).tap(function () {
                 $(".main-nav").hide();
