@@ -38,8 +38,6 @@
                     return;
                 }
 
-                //                data = mv.setMoviePoster(data)[0];
-
                 mv.renderMovieDetails.call(that, data);
 
             });
@@ -48,7 +46,7 @@
 
         unload: function () {
 
-            delete this.resizeEvents["manageMovieView"];
+          //  delete this.resizeEvents["manageMovieView"];
 
         },
 
@@ -57,7 +55,8 @@
             if (data) {
 
                 var that = this,
-                    mv = that.movieView;
+                    mv = that.movieView,
+                    width = window.innerWidth;
 
                 that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
                 that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
@@ -69,7 +68,11 @@
 
                 mv.bindPanelTitles.call(that);
 
-                that.resizeEvents["manageMovieView"] = mv.manageMovieView;
+                mv.setupMQLs.call(that, mv);
+
+                that.setupPanorama(".panorama-container", { maxWidth: 610 });
+
+         //       that.resizeEvents["manageMovieView"] = mv.manageMovieView;
 
                 var reviewSubmit = document.getElementById("reviewSubmit");
 
@@ -87,7 +90,6 @@
                             console.info(inputs[i].name + " " + inputs[i].value);
                         }
 
-
                     }
 
                     return false;
@@ -95,9 +97,78 @@
                 };
 
                 requestAnimationFrame(function () {
-                    mv.manageMovieView.call(that);
+
+                    if (width < 610) {
+                        mv.renderSmallScreen.call(that);
+                    } else if (width >= 610 && width <= 820) {
+                        mv.renderMiniTablet.call(that);
+                    } else {
+                        mv.renderFullScreen.call(that);
+                    }
+
+                    mv.setMoviePoster();
+
                 });
             }
+
+        },
+
+        mql600: undefined,
+        mql820: undefined,
+        mql1024: undefined,
+
+        setupMQLs: function (mv) {
+
+            var that = this;
+
+            if (!mv.mql600) {
+
+                mv.mql600 = window.matchMedia("(min-width: 610px)");
+
+                mv.mql600.addListener(function (e) {
+
+                    if (e.matches) {
+                        mv.renderMiniTablet.call(that);
+                    } else {
+                        mv.renderSmallScreen.call(that);
+                    }
+
+                    mv.setMoviePoster(window.innerWidth);
+
+                });
+
+            }
+
+            if (!mv.mql820) {
+
+                mv.mql820 = window.matchMedia("(min-width: 820px)");
+
+                mv.mql820.addListener(function (e) {
+
+                    if (e.matches) {
+                        mv.renderFullScreen.call(that);
+                    } else {
+                        mv.renderMiniTablet.call(that);
+                    }
+
+                    mv.setMoviePoster(window.innerWidth);
+
+                });
+
+            }
+
+            if (!mv.mql1024) {
+
+                mv.mql1024 = window.matchMedia("(min-width: 1024px)");
+
+                mv.mql1024.addListener(function (e) {
+
+                    mv.setMoviePoster(window.innerWidth);
+
+                });
+
+            }
+
 
         },
 
@@ -205,6 +276,66 @@
 
         },
 
+        renderSmallScreen: function () {
+
+            $("#showReview").hide();
+
+            $(".movie-showtime-list").show();
+            $(".movie-review-panel").show();
+            $(".movie-details-list").show();
+            $(".movie-descrption-list").show();
+            $(".cast-name-list").show();
+            
+        },
+
+        renderMiniTablet: function () {
+
+            $("#showReview").hide();
+
+            $(".movie-descrption-list").show();
+            $(".movie-description").show();
+            $(".movie-showtime-list").hide();
+            $(".movie-review-panel").hide();
+            $(".movie-details-list").hide();
+            $(".cast-name-list").hide();
+
+            var i = 0,
+                panelWrapper = document.querySelector(".panorama-panels"),
+                panels = document.querySelectorAll(".single-panel");
+
+            for (; i < panels.length; i++) {
+                panels[i].style.width = "";
+            }
+
+            panelWrapper.style.width = "";
+            panelWrapper.style.height = "";
+            panelWrapper.style.left = "";
+
+            
+
+        },
+
+        renderFullScreen: function () {
+
+            var showReview = $("#showReview"),
+                showTimes = document.querySelector(".movie-showtime-list");
+            
+            showTimes.style.position = "";
+            showTimes.style.left = "";
+            showTimes.style.display = "block";
+
+            showReview[0].style.position = "";
+            showReview[0].style.left = "";
+            showReview[0].style.top = "";
+
+            $(".movie-review-panel").hide();
+            $(".movie-details-list").show();
+            $(".movie-descrption-list").show();
+            document.querySelector(".cast-name-list").style.display = "block";
+
+
+        },
+
         manageMovieView: function () {
 
             var that = this,
@@ -277,9 +408,14 @@
 
         },
 
-        setMoviePoster: function (width) {
+        setMoviePoster: function () {
 
-            var poster = document.querySelector(".full-movie-poster");
+            var width = window.innerWidth,
+                poster = document.querySelector(".full-movie-poster");
+
+            if (!poster) {
+                return;
+            }
 
             if (width > 1024) {
 

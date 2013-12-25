@@ -214,6 +214,7 @@
     <Content Include="movies1.xml" />
     <Content Include="movies2.xml" />
     <Content Include="movies3.xml" />
+    <Content Include="robots.txt" />
     <Content Include="startup.png" />
     <Content Include="touch-icon-ipad-retina.png" />
     <Content Include="touch-icon-ipad.png" />

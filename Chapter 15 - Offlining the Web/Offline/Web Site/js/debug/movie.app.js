@@ -116,6 +116,8 @@
 
             deeptissue(".main-nav > a").tap(function (e) {
 
+                e.preventDefault();
+
                 var $target = $(e.currentTarget);
 
                 $target.addClass("seleted-nav");
