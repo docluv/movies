@@ -10,6 +10,17 @@
 
     "use strict";
 
+    window.addEventListener("resize", function (e) {
+        for (var key in resizeCallbacks) {
+            if (resizeCallbacks.hasOwnProperty(key)) {
+                resizeCallbacks[key].call();
+            }
+        }
+    });
+
+    var resizeCallbacks = {};
+
+
     var panorama = function (container, customSettings) {
 
         var that = new panorama.fn.init(container, customSettings);
@@ -239,9 +250,13 @@
             //    that.resizePanorama(e);
             //});
 
-            window.addEventListener("resize", function (e) {
-                that.resizePanorama(e);
-            });
+            //window.addEventListener("resize", function (e) {
+            //    that.resizePanorama(e);
+            //});
+
+            resizeCallbacks.resizePanorama = function (e) {
+                that.resizePanorama.call(that, e);
+            };
 
         },
 
@@ -470,6 +485,10 @@
 
             this.movePanels(x, this.moveLeftCallback);
 
+        },
+
+        destroy: function () {
+            delete resizeCallbacks.resizePanorama;
         },
 
         container: undefined,

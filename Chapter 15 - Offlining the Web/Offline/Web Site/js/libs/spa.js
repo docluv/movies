@@ -334,20 +334,31 @@
 
                         if (that.hasAnimations() && anim) {
 
-                            currentView.addEventListener(
-                                that.transitionend[that.cssPrefix("animation")], function (e) {
-                                    that.endSwapAnimation.call(that, currentView, newView, oldRoute);
-                                });
+                            //currentView.addEventListener(
+                            //    that.transitionend[that.cssPrefix("animation")], function (e) {
+                            //        that.endSwapAnimation.call(that, currentView, oldRoute);
+                            //    });
 
                             //modify once addClass supports array of classes
                             $(currentView).addClass("animated out " + anim)
                                 .removeClass("in");
 
+                            //currentView.classList.add("animated");
+                            //currentView.classList.add("out");
+                            //currentView.classList.add(anim);
+                            //currentView.classList.remove("in");
+
                         } else {
-                            that.endSwapAnimation.call(that, undefined, currentView, newView, oldRoute);
+                          //  that.endSwapAnimation.call(that, undefined, currentView, newView, oldRoute);
                         }
 
                     }
+
+                    newView.addEventListener(
+                                that.transitionend[that.cssPrefix("animation")], function (e) {
+                                    that.endSwapAnimation.call(that, oldRoute);
+                                });
+
 
                     $(newView).addClass(settings.currentClass +
                         " animated " + anim + " in");
@@ -380,24 +391,37 @@
 
         },
 
-        endSwapAnimation: function (currentView, newView, route) {
-
+        endSwapAnimation: function (route) {
+            //currentView, newView, 
             var that = this,
+//                $view = $(view),
+                currentView = document.querySelector(".current.out"),
+                newView = document.querySelector(".current.in"),
+                parent,
                 anim = that.animation;
-
-            $(currentView).removeClass(that.settings.currentClass + " " +
-                                        anim + " out ");
-
-            $(newView).removeClass(anim + " in");
-
-            if (currentView && that.bp && currentView.parentNode) {
-
-                currentView.parentNode.removeChild(currentView);
-
-            }
 
             if (route) {
                 that.makeCallback(route, "unload");
+            }
+
+
+            //$(currentView).removeClass(that.settings.currentClass + " " +
+            //                            anim + " out ");
+
+            if (newView.classList.contains("in")) {
+                newView.classList.remove("in");
+                newView.classList.remove(anim);
+            } 
+
+            if (currentView && that.bp && currentView.parentNode) {
+
+                parent = currentView.parentNode
+                parent.removeChild(currentView);
+
+//                    view = undefined;
+
+         //       }
+
             }
 
         },

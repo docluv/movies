@@ -164,7 +164,6 @@
     <Content Include="img\refresh.png" />
     <Content Include="img\search.png" />
     <Content Include="img\smalltile.png" />
-    <Content Include="img\test-purple-2000.png" />
     <Content Include="img\widetile.png" />
     <Content Include="js\debug\movie.app.about-view.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
@@ -184,6 +183,8 @@
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
+    <Content Include="js\libs\fakeTheaters.js" />
+    <Content Include="js\libs\movie-data.js" />
     <Content Include="js\libs\mustache.js" />
     <Content Include="js\libs\nytimes.reviews.js" />
     <Content Include="js\libs\panorama.header.js" />

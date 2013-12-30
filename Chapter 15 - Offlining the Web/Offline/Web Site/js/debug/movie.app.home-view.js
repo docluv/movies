@@ -102,6 +102,8 @@ updateMoviePosters: function (e) {
 
         unload: function () {
             this.homeView.isVisible = false;
+            this.panorama.destroy();
+            this.panorama = undefined;
         },
 
         renderHomeMovies: function (target, data) {
