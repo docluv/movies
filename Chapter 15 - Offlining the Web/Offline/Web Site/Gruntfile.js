@@ -70,7 +70,7 @@
                 'js/debug/movie.app.movies-view.js',
                 'js/debug/movie.app.news-view.js',
                 'js/debug/movie.app.search-view.js',
-                //'js/debug/movie.app.profile-view.js',
+                'js/debug/movie.app.privacy-view.js',
                 'js/debug/movie.app.search-view.js',
                 'js/debug/movie.app.theaters-view.js',
                 'js/debug/movie.app.bootstrap.js'
