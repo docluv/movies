@@ -77,8 +77,12 @@
             that.settings = $().extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
-            that.rt = that.settings.rt || RottenTomatoes();
-            that.reviews = that.settings.reviews || nytReviews();
+
+            that.movieData = that.settings.movieData || movieData(
+                RottenTomatoes({ data: data }),
+                fakeTheaters()
+            );
+
             that.tmpl = that.settings.tmpl || Mustache;
 
             that.compileTemplates();
@@ -113,7 +117,7 @@
                     $(".main-nav").show();
                 });
             });
-            
+
             deeptissue(".main-nav > a").tap(function (e) {
 
                 e.stopPropagation();
@@ -136,7 +140,7 @@
 
             });
 
-            
+
 
             deeptissue(document.body).tap(function () {
                 $(".main-nav").hide();
@@ -176,8 +180,8 @@
         //        viewWidth: 0,
         bp: undefined,
         tmpl: undefined,
-        rt: undefined,
-        reviews: undefined,
+
+        movieData: undefined,
 
         templates: {},
         compileTemplates: function () {

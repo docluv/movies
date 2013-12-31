@@ -32,12 +32,13 @@
         searchForMovies : function (term) {
 
             var that = this,
+                md = that.movieData,
                 sv = that.searchView,
                 value = term || document.getElementById("searchTerm").value;
 
             if (value !== "") {
 
-                that.rt.SearchMovies(that.settings.SearchCount, 1, value, function (data) {
+                md.SearchMovies.call(md, that.settings.SearchCount, 1, value, function (data) {
 
                     if (data && data.total > 0 && data.movies) {
 

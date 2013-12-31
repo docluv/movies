@@ -26,13 +26,12 @@
             }
 
             var that = this,
+                md = that.movieData,
                 mv = this.movieView;
 
             prevWidth = Number.MAX_VALUE;
 
-            //            prevWidth = window.innerWidth;
-
-            this.rt.loadMovieDetails(params.id, function (data) {
+            md.loadMovieDetails.call(md, params.id, function (data) {
 
                 if (!data) {
                     return;
@@ -44,9 +43,7 @@
 
         },
 
-        unload: function () {
-
-          //  delete this.resizeEvents["manageMovieView"];
+        unload: function () {          
 
         },
 
@@ -61,8 +58,7 @@
                 that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
                 that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
                 that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
-                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",
-                                that.rt.mergeInFakeShowtimes(data));
+                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",data);
 
                 that.setMainTitle(data.title);
 
@@ -71,8 +67,6 @@
                 mv.setupMQLs.call(that, mv);
 
                 that.setupPanorama(".panorama-container", { maxWidth: 610 });
-
-         //       that.resizeEvents["manageMovieView"] = mv.manageMovieView;
 
                 var reviewSubmit = document.getElementById("reviewSubmit");
 
@@ -117,6 +111,7 @@
         mql820: undefined,
         mql1024: undefined,
 
+        //toying with the idea to refactor this into a common method.
         setupMQLs: function (mv) {
 
             var that = this;
@@ -161,7 +156,7 @@
 
                 mv.mql1024 = window.matchMedia("(min-width: 1024px)");
 
-                mv.mql1024.addListener(function (e) {
+                mv.mql1024.addListener(function () {
 
                     mv.setMoviePoster(window.innerWidth);
 
@@ -185,7 +180,7 @@
 
             $(movieDesc).show();
 
-            deeptissue(movieDescTitle).tap(function (e) {
+            deeptissue(movieDescTitle).tap(function () {
 
                 var width = window.innerWidth;
 
@@ -204,7 +199,7 @@
 
             });
 
-            deeptissue(castNamesTitle).tap(function (e) {
+            deeptissue(castNamesTitle).tap(function () {
 
                 var width = window.innerWidth;
 
@@ -226,7 +221,7 @@
 
             });
 
-            deeptissue(showTimesTitle).tap(function (e) {
+            deeptissue(showTimesTitle).tap(function () {
 
                 var width = window.innerWidth;
 
@@ -252,7 +247,7 @@
 
             });
 
-            deeptissue("#showReview").tap(function (e) {
+            deeptissue("#showReview").tap(function () {
 
                 $(selectors.reviewPanel).show();
                 $(selectors.detailPanel).hide();
@@ -335,79 +330,7 @@
 
 
         },
-
-        manageMovieView: function () {
-
-            var that = this,
-                mv = that.movieView,
-                width = window.innerWidth,
-                showReview = $("#showReview"),
-                showTimes = document.querySelector(".movie-showtime-list"),
-                castNames = document.querySelector(".cast-name-list");
-
-            //move from mini-tablet view
-            if ((width < 610 || width > 800) && (prevWidth >= 610 && prevWidth <= 800)) {
-
-                showTimes.style.position = "";
-                showTimes.style.left = "";
-
-                showReview[0].style.position = "";
-                showReview[0].style.left = "";
-                showReview[0].style.top = "";
-
-                $(".movie-showtime-list").show();
-                $(".movie-review-panel").hide();
-                $(".movie-details-list").show();
-                $(".movie-descrption-list").show();
-                castNames.style.display = "block";
-            }
-
-            if ((width > 610 && width < 820) && (prevWidth <= 610 || prevWidth >= 820)) {
-
-                $(showTimes).hide();
-                $(showReview).hide();
-                $(".movie-description").show();
-                $(".movie-showtime-list").hide();
-                $(".movie-review-panel").hide();
-                $(".movie-details-list").hide();
-                $(".cast-name-list").hide();
-
-                var i = 0,
-                    panelWrapper = document.querySelector(".panorama-panels"),
-                    panels = document.querySelectorAll(".single-panel");
-
-                for (; i < panels.length; i++) {
-                    panels[i].style.width = "";
-                }
-
-                var pp = document.querySelector(".panorama-panels");
-
-                pp.style.width = "";
-                pp.style.height = "";
-                pp.style.left = "";
-
-            }
-
-            if (width <= 610 && prevWidth > 610) {
-                //make sure panorama in effect
-                that.setupPanorama(".panorama-container", { maxWidth: 610 });
-
-                $(".movie-showtime-list").show();
-                $(".movie-review-panel").show();
-                $(".movie-details-list").show();
-                $(".movie-descrption-list").show();
-                $(".cast-name-list").show();
-
-            }
-
-            //need a routine to reset the order of panels since they may have been swiped
-
-            mv.setMoviePoster(width);
-
-            prevWidth = width;
-
-        },
-
+        
         setMoviePoster: function () {
 
             var width = window.innerWidth,
@@ -432,6 +355,7 @@
             }
         },
 
+        /*
         clearInlineRelativePostition: function (nodes) {
 
             if (!nodes.legth) {
@@ -446,7 +370,7 @@
             }
 
         }
-
+        */
     };
 
 

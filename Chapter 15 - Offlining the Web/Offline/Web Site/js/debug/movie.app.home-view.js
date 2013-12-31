@@ -65,44 +65,45 @@
         loadMovies: function () {
 
             var that = this,
+                md = that.movieData,
                 hv = that.homeView;
 
-            that.rt.InTheatersMovies(50, 1, function (data) {
+            md.InTheatersMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".top-box-list", data);
             });
-
-            that.rt.OpeningMovies(50, 1, function (data) {
+            
+            md.OpeningMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".opening-movie-list", data);
             });
-
-            that.rt.TopBoxOfficeMovies(50, 1, function (data) {
+            
+            md.TopBoxOfficeMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".movies-near-me-list", data);
             });
-
-            that.rt.ComingSoonMovies(50, 1, function (data) {
+            
+            md.ComingSoonMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".coming-soon-list", data);
             });
 
         },
 
-updateMoviePosters: function (e) {
+        updateMoviePosters: function (e) {
 
-    if (this.homeView.isVisible) {
+            if (this.homeView.isVisible) {
 
-        var that = this;
+                var that = this;
 
-        that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
-        that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
-        that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
-        that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
+                that.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
 
-    }
+            }
 
-},
+        },
 
         unload: function () {
             this.homeView.isVisible = false;
-            this.panorama.destroy();
+   //         this.panorama.destroy();
             this.panorama = undefined;
         },
 

@@ -61,6 +61,8 @@
                         mv.AddPushpin.call(that, position, map, fakeTheaters[i]);
                     }
 
+                    //add fake theater load
+
                 });
 
             }

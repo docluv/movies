@@ -8,8 +8,10 @@ movieApp.fn.privacyView = privacyView(data);
 movie = movieApp({
     bp: bp,
     tmpl: Mustache,
-    rt: RottenTomatoes({ data: data }),
-    reviews: nytReviews({ data: data })
+    movieData: movieData(
+        RottenTomatoes({ data: data }),
+        fakeTheaters()
+    )
 });
 
 _spa = spa({

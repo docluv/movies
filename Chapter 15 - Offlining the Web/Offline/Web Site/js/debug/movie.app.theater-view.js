@@ -16,7 +16,7 @@
 
             that.setMainTitle(decodeURIComponent(params.theaterName));
 
-            that.rt.InTheatersMovies(50, 1, function (data) {
+            that.movieData.InTheatersMovies(50, 1, function (data) {
                 tv.renderTheaterMovies.call(that, data);
             });
 
@@ -28,7 +28,7 @@
                 e.currentTarget.classList.add("selected");
 
                 //load "new" movie showtimes
-                that.rt.InTheatersMovies(50, 1, function (data) {
+                that.movieData.InTheatersMovies(50, 1, function (data) {
                     tv.renderTheaterMovies.call(that, data);
                 });
 
