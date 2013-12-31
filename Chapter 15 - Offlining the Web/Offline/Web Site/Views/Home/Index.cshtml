@@ -104,15 +104,14 @@ else
         }
         else
         {
-            <link href="css/debug/site.min.css?v=.2" rel="stylesheet">
+            <link href="css/site.min.css?v=.2" rel="stylesheet">
         }
 
     }
     else
     {
-        <link href="css/debug/site.css?v=.2" rel="stylesheet">
-        <link href="css/debug/movie-grid.css?v=.2" rel="stylesheet">
-
+        <link href="css/core/movie.app.core.css?v=.2" rel="stylesheet">
+        
     }
 
     @if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
