@@ -3,7 +3,7 @@
 
 (function (window, undefined) {
 
-    var fakeTheaters = [{
+    var mockTheaters = [{
         id: "fake1",
         name: "The Mystic",
         address: "123 fake st",
@@ -144,14 +144,48 @@
 
         nearbyTheaters: function (latitude, longitude) {
 
-            return fakeTheaters;
+            var that = this,
+                i = 0, pos;
+
+            for (; i < mockTheaters.length; i++) {
+                
+                pos = that.getRandomPoistion(latitude, longitude);
+
+                mockTheaters[i].latitude = pos.latitude;
+                mockTheaters[i].longitude = pos.longitude;
+            }
+
+            return mockTheaters;
         },
 
         theaterShowTimes: function (theaterId, movieId) {
 
             return fakeShowTimes;
 
+        },
+
+        getRandomPoistion: function (latitude, longitude) {
+
+            var r = Math.floor((Math.random() * 5500) + 1) / 100000,
+                  rl = Math.floor((Math.random() * 6500) + 1) / 100000,
+                  pm = Math.round(Math.random()),
+                  pm1 = Math.round(Math.random()),
+                  coords = {};
+
+            if (pm === 0) {
+                r = parseFloat("-" + r);
+            }
+
+            if (pm1 === 0) {
+                rl = parseFloat("-" + rl);
+            }
+
+            coords.latitude = latitude + r;
+            coords.longitude = longitude + rl;
+
+            return coords;
         }
+
 
     };
 

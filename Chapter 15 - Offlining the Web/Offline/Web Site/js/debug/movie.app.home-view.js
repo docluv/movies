@@ -103,7 +103,7 @@
 
         unload: function () {
             this.homeView.isVisible = false;
-   //         this.panorama.destroy();
+            this.panorama.destroy();
             this.panorama = undefined;
         },
 

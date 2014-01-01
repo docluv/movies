@@ -44,6 +44,8 @@
         },
 
         unload: function () {          
+            this.panorama.destroy();
+            this.panorama = undefined;
 
         },
 

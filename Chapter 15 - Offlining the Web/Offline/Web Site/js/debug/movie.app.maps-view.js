@@ -39,7 +39,7 @@
 
             var that = this,
                 mv = that.mapsView,
-                map, i,
+                map, i, theaters = [],
                 key = "Ai2HABTSdPR3baDe6yPjFDNRac3RsbaFMjUb2d-OjlQd8o3vO2DcqRxBpDgRTuUD";
 
             if (navigator.geolocation) {
@@ -56,9 +56,12 @@
                         zoom: 12
                     });
 
+                    theaters = that.movieData.nearbyTheaters(position.coords.latitude,
+                                                            position.coords.longitude);
+
                     //loop thorugh and place 10 random pushpins to represent theaters on the map
-                    for (i = 0; i < 10; i++) {
-                        mv.AddPushpin.call(that, position, map, fakeTheaters[i]);
+                    for (i = 0; i < theaters.length; i++) {
+                        mv.AddPushpin.call(that, position, map, theaters[i]);
                     }
 
                     //add fake theater load
@@ -69,17 +72,19 @@
 
         },
 
-        AddPushpin: function (position, map, theaterName) {
+        AddPushpin: function (position, map, theater) {
 
             var that = this,
                 mv = that.mapsView,
                   shape,
-                  coords = mv.getRandomPoistion(position),
-                  pin = new Microsoft.Maps.Pushpin(coords /*, { text: theaterName }*/);
+                  pin = new Microsoft.Maps.Pushpin({
+                      latitude: theater.latitude,
+                      longitude: theater.longitude
+                  });
 
             // Add a handler to the pushpin drag
             Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-                mv.goToTheaterFromMap(theaterName);
+                mv.goToTheaterFromMap(theater.name);
             });
 
             map.entities.push(pin);
@@ -88,28 +93,6 @@
         goToTheaterFromMap: function (theaterName) {
             window.location.hash = "#!theater/" + theaterName;
         },
-
-        getRandomPoistion: function (position) {
-
-            var r = Math.floor((Math.random() * 5000) + 1) / 100000,
-                  rl = Math.floor((Math.random() * 5500) + 1) / 100000,
-                  pm = Math.round(Math.random()),
-                  pm1 = Math.round(Math.random()),
-                  coords = {};
-
-            if (pm === 0) {
-                r = parseFloat("-" + r);
-            }
-
-            if (pm1 === 0) {
-                rl = parseFloat("-" + rl);
-            }
-
-            coords.latitude = position.coords.latitude + r;
-            coords.longitude = position.coords.longitude + rl;
-
-            return coords;
-        }
 
     };
 

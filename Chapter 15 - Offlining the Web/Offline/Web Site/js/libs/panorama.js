@@ -246,14 +246,6 @@
 
             });
 
-            //window.addEventListener("orientationchange", function (e) {
-            //    that.resizePanorama(e);
-            //});
-
-            //window.addEventListener("resize", function (e) {
-            //    that.resizePanorama(e);
-            //});
-
             resizeCallbacks.resizePanorama = function (e) {
                 that.resizePanorama.call(that, e);
             };

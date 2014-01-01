@@ -3,7 +3,7 @@
 ;
 
 (function (window, undefined) {
-
+   
     "use strict";
 
     var _gaq = _gaq || undefined;
@@ -334,10 +334,11 @@
 
                         if (that.hasAnimations() && anim) {
 
-                            //currentView.addEventListener(
-                            //    that.transitionend[that.cssPrefix("animation")], function (e) {
-                            //        that.endSwapAnimation.call(that, currentView, oldRoute);
-                            //    });
+                            currentView.addEventListener(
+                                that.transitionend[that.cssPrefix("animation")], function (e) {
+                                    that.endSwapAnimation.call(that, oldRoute);
+                                    currentView = undefined;
+                                });
 
                             //modify once addClass supports array of classes
                             $(currentView).addClass("animated out " + anim)
@@ -354,10 +355,12 @@
 
                     }
 
-                    newView.addEventListener(
-                                that.transitionend[that.cssPrefix("animation")], function (e) {
-                                    that.endSwapAnimation.call(that, oldRoute);
-                                });
+                    //newView.addEventListener(
+                    //            that.transitionend[that.cssPrefix("animation")], function (e) {
+                    //                that.endSwapAnimation.call(that, oldRoute);
+                    //            });
+
+//                    newView.addEventListener();
 
 
                     $(newView).addClass(settings.currentClass +
