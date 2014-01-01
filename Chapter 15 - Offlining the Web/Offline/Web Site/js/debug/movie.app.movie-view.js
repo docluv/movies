@@ -44,8 +44,13 @@
         },
 
         unload: function () {          
-            this.panorama.destroy();
-            this.panorama = undefined;
+
+            if (this.panorama) {
+
+                this.panorama.destroy();
+                this.panorama = undefined;
+
+            }
 
         },
 

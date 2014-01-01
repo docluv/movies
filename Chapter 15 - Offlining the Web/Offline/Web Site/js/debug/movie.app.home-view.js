@@ -103,8 +103,13 @@
 
         unload: function () {
             this.homeView.isVisible = false;
-            this.panorama.destroy();
-            this.panorama = undefined;
+
+            if (this.panorama) {
+
+                this.panorama.destroy();
+                this.panorama = undefined;
+
+            }
         },
 
         renderHomeMovies: function (target, data) {

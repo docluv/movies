@@ -279,9 +279,13 @@
 
         removeExtraViews: function (currentView) {
 
-            while (currentView.length > 1) {
-                currentView[currentView.length - 1]
-                        .parentNode.removeChild(currentView[currentView.length - 1]);
+            var length = currentView.length;
+
+            while (length > 1) {
+
+                length--;
+                currentView[length]
+                        .parentNode.removeChild(currentView[length]);
             }
         },
 
