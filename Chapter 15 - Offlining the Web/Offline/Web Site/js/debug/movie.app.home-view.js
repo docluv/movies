@@ -104,12 +104,12 @@
         unload: function () {
             this.homeView.isVisible = false;
 
-            if (this.panorama) {
+            //if (this.panorama) {
 
-                this.panorama.destroy();
-                this.panorama = undefined;
+            //    this.panorama.destroy();
+            //    this.panorama = undefined;
 
-            }
+            //}
         },
 
         renderHomeMovies: function (target, data) {

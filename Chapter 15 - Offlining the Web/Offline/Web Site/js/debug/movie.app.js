@@ -279,8 +279,8 @@
             var that = this, dt,
                 pCont = document.querySelector(target);
 
-            if (settings.maxWidth &&
-                settings.maxWidth >= window.innerWidth) {
+            //if (settings.maxWidth &&
+            //    settings.maxWidth >= window.innerWidth) {
 
                 that.panorama = panorama(pCont,
                                     $().extend(settings, {
@@ -312,9 +312,8 @@
                     }
 
                 });
-
-
-            }
+            
+//            }
 
             /* 
             if (!that._panoramaSetup) {

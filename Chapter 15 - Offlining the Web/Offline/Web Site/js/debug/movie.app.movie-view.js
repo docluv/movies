@@ -5,6 +5,15 @@
 
     "use strict";
 
+    var //qs = document.querySelector(),
+        showTimes = ".movie-showtime-list",
+	    castNames = ".cast-name-list",
+        movieDesc = ".movie-description",
+        showTimesTitle = ".movie-showtimes-panel > .panel-title",
+        castNamesTitle = ".movie-cast-panel > .panel-title",
+        movieDescTitle = ".movie-description-panel > .panel-title",
+        showReview = "#showReview";
+
     movieApp.fn.movie = {
         Items: {
             reviewPanel: ".movie-review-panel",
@@ -14,8 +23,6 @@
             descPanel: ".movie-description-panel"
         }
     };
-
-    var prevWidth = window.innerWidth;
 
     movieApp.fn.movieView = {
 
@@ -29,8 +36,6 @@
                 md = that.movieData,
                 mv = this.movieView;
 
-            prevWidth = Number.MAX_VALUE;
-
             md.loadMovieDetails.call(md, params.id, function (data) {
 
                 if (!data) {
@@ -43,14 +48,14 @@
 
         },
 
-        unload: function () {          
+        unload: function () {
 
-            if (this.panorama) {
+            //if (this.panorama) {
 
-                this.panorama.destroy();
-                this.panorama = undefined;
+            //    this.panorama.destroy();
+            //    this.panorama = undefined;
 
-            }
+            //}
 
         },
 
@@ -60,12 +65,13 @@
 
                 var that = this,
                     mv = that.movieView,
-                    width = window.innerWidth;
+                    width = window.innerWidth,
+                    reviewSubmit = document.getElementById("reviewSubmit");
 
                 that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
                 that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
                 that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
-                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate",data);
+                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate", data);
 
                 that.setMainTitle(data.title);
 
@@ -75,28 +81,9 @@
 
                 that.setupPanorama(".panorama-container", { maxWidth: 610 });
 
-                var reviewSubmit = document.getElementById("reviewSubmit");
+                document.reviewForm.onsubmit = that.reviewSubmit;
 
-                document.reviewForm.onsubmit = function (e) {
-
-                    e.preventDefault();
-
-                    if (e.srcElement) {
-                        var i = 0,
-                            data = {},
-                            inputs = e.srcElement.querySelectorAll("input, textarea");
-
-                        for (; i < inputs.length; i++) {
-                            data[inputs[i].name] = inputs[i].value;
-                            console.info(inputs[i].name + " " + inputs[i].value);
-                        }
-
-                    }
-
-                    return false;
-
-                };
-
+                //setup the initial layout
                 requestAnimationFrame(function () {
 
                     if (width < 610) {
@@ -111,6 +98,26 @@
 
                 });
             }
+
+        },
+
+        reviewSubmit: function (e) {
+
+            e.preventDefault();
+
+            if (e.srcElement) {
+                var i = 0,
+                    data = {},
+                    inputs = e.srcElement.querySelectorAll("input, textarea");
+
+                for (; i < inputs.length; i++) {
+                    data[inputs[i].name] = inputs[i].value;
+                    console.info(inputs[i].name + " " + inputs[i].value);
+                }
+
+            }
+
+            return false;
 
         },
 
@@ -171,12 +178,12 @@
 
             }
 
-
         },
 
         bindPanelTitles: function () {
 
-            var showTimes = $(".movie-showtime-list"),
+            var that = this,
+                showTimes = $(".movie-showtime-list"),
                 castNames = $(".cast-name-list"),
                 movieDesc = $(".movie-description"),
                 showTimesTitle = $(".movie-showtimes-panel > .panel-title"),
@@ -193,14 +200,15 @@
 
                 if (width > 600 && width < 820) {
 
-                    showTimes.hide();
-                    showReview.hide();
-                    castNames.hide();
-                    movieDesc.show();
+                    //showTimes.hide();
+                    //showReview.hide();
+                    //castNames.hide();
+                    //movieDesc.show();
 
-                    showTimesTitle.removeClass("selected");
-                    castNamesTitle.removeClass("selected");
-                    movieDescTitle.addClass("selected");
+                    //showTimesTitle.removeClass("selected");
+                    //castNamesTitle.removeClass("selected");
+                    //movieDescTitle.addClass("selected");
+                    that.movieView.displayDescription();
 
                 }
 
@@ -212,17 +220,7 @@
 
                 if (width > 600 && width < 820) {
 
-                    showTimes.hide();
-                    showReview.hide();
-                    castNames.show();
-                    movieDesc.hide();
-
-                    castNames[0].style.position = "relative";
-                    castNames[0].style.left = "-130px";
-
-                    showTimesTitle.removeClass("selected");
-                    castNamesTitle.addClass("selected");
-                    movieDescTitle.removeClass("selected");
+                    that.movieView.displayCastNames();
 
                 }
 
@@ -234,21 +232,23 @@
 
                 if (width > 600 && width < 820) {
 
-                    showTimes.show();
-                    showReview.show();
-                    castNames.hide();
-                    movieDesc.hide();
+                    that.movieView.displayShowtimes();
 
-                    showTimes[0].style.position = "relative";
-                    showTimes[0].style.left = "-260px";
+                    //showTimes.show();
+                    //showReview.show();
+                    //castNames.hide();
+                    //movieDesc.hide();
 
-                    showReview[0].style.position = "relative";
-                    showReview[0].style.left = "-200px";
-                    showReview[0].style.top = "30px";
+                    //showTimes[0].style.position = "relative";
+                    //showTimes[0].style.left = "-260px";
 
-                    showTimesTitle.addClass("selected");
-                    castNamesTitle.removeClass("selected");
-                    movieDescTitle.removeClass("selected");
+                    //showReview[0].style.position = "relative";
+                    //showReview[0].style.left = "-200px";
+                    //showReview[0].style.top = "30px";
+
+                    //showTimesTitle.addClass("selected");
+                    //castNamesTitle.removeClass("selected");
+                    //movieDescTitle.removeClass("selected");
 
                 }
 
@@ -278,7 +278,109 @@
 
         },
 
+        displayShowtimes: function () {
+
+            var st = document.querySelector(showTimes),
+                cn = document.querySelector(castNames),
+                md = document.querySelector(movieDesc),
+                stt = document.querySelector(showTimesTitle),
+                cnt = document.querySelector(castNamesTitle),
+                mdt = document.querySelector(movieDescTitle),
+                sr = document.querySelector(showReview);
+
+            st.style.display = "block";
+            sr.style.display = "block";
+            cn.style.display = "none";
+            md.style.display = "none";
+
+            st.style.position = "relative";
+            st.style.left = "-260px";
+
+            sr.style.position = "relative";
+            sr.style.left = "-200px";
+            sr.style.top = "30px";
+
+            stt.classList.add("selected");
+            cnt.classList.remove("selected");
+            mdt.classList.remove("selected");
+        },
+
+        displayCastNames: function () {
+
+            var st = document.querySelector(showTimes),
+                cn = document.querySelector(castNames),
+                md = document.querySelector(movieDesc),
+                stt = document.querySelector(showTimesTitle),
+                cnt = document.querySelector(castNamesTitle),
+                mdt = document.querySelector(movieDescTitle);
+
+            st.style.display = "none";
+            document.querySelector(showReview).style.display = "none";
+            cn.style.display = "block";
+            md.style.display = "none";
+
+            cn.style.position = "relative";
+            cn.style.left = "-130px";
+
+            stt.classList.remove("selected");
+            cnt.classList.add("selected");
+            mdt.classList.remove("selected");
+
+        },
+
+        displayDescription: function () {
+
+            var st = document.querySelector(showTimes),
+	            cn = document.querySelector(castNames),
+                md = document.querySelector(movieDesc),
+                stt = document.querySelector(showTimesTitle),
+                cnt = document.querySelector(castNamesTitle),
+                mdt = document.querySelector(movieDescTitle);
+
+            st.style.display = "none";
+            document.querySelector(showReview).style.display = "none";
+            cn.style.display = "none";
+            cn.style.position = "";
+            cn.style.left = "";
+            md.style.display = "block";
+
+            stt.classList.remove("selected");
+            cnt.classList.remove("selected");
+            mdt.classList.add("selected");
+
+        },
+
+        clearMiniTablet: function () {
+
+            var showTimes = $(".movie-showtime-list"),
+                castNames = $(".cast-name-list"),
+                movieDesc = $(".movie-description"),
+                showTimesTitle = $(".movie-showtimes-panel > .panel-title"),
+                castNamesTitle = $(".movie-cast-panel > .panel-title"),
+                movieDescTitle = $(".movie-description-panel > .panel-title"),
+                showReview = $("#showReview");
+
+            showTimes.show();
+            showReview.show();
+            castNames.show();
+            movieDesc.show();
+
+            showTimes[0].style.position = "";
+            showTimes[0].style.left = "";
+
+            showReview[0].style.position = "";
+            showReview[0].style.left = "";
+            showReview[0].style.top = "";
+
+            showTimesTitle.removeClass("selected");
+            castNamesTitle.removeClass("selected");
+            movieDescTitle.removeClass("selected");
+
+        },
+
         renderSmallScreen: function () {
+
+            this.movieView.clearMiniTablet();
 
             $("#showReview").hide();
 
@@ -287,7 +389,7 @@
             $(".movie-details-list").show();
             $(".movie-descrption-list").show();
             $(".cast-name-list").show();
-            
+
         },
 
         renderMiniTablet: function () {
@@ -312,16 +414,15 @@
             panelWrapper.style.width = "";
             panelWrapper.style.height = "";
             panelWrapper.style.left = "";
-
-            
-
         },
 
         renderFullScreen: function () {
 
             var showReview = $("#showReview"),
                 showTimes = document.querySelector(".movie-showtime-list");
-            
+
+            this.movieView.clearMiniTablet();
+
             showTimes.style.position = "";
             showTimes.style.left = "";
             showTimes.style.display = "block";
@@ -337,7 +438,7 @@
 
 
         },
-        
+
         setMoviePoster: function () {
 
             var width = window.innerWidth,
