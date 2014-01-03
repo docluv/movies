@@ -5,14 +5,17 @@
 
     "use strict";
 
-    var //qs = document.querySelector(),
-        showTimes = ".movie-showtime-list",
+    var showTimes = ".movie-showtime-list",
 	    castNames = ".cast-name-list",
         movieDesc = ".movie-description",
         showTimesTitle = ".movie-showtimes-panel > .panel-title",
         castNamesTitle = ".movie-cast-panel > .panel-title",
         movieDescTitle = ".movie-description-panel > .panel-title",
         showReview = "#showReview";
+
+    function qs(selector) {
+        return document.querySelector(selector);
+    };
 
     movieApp.fn.movie = {
         Items: {
@@ -69,9 +72,9 @@
                     reviewSubmit = document.getElementById("reviewSubmit");
 
                 that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
-                that.mergeData(".movie-description", "movieDetailsDescriptionTemplate", data);
-                that.mergeData(".cast-name-list", "movieDetailsCastTemplate", data);
-                that.mergeData(".movie-showtime-list", "MovieShowtimeTemplate", data);
+                that.mergeData(movieDesc, "movieDetailsDescriptionTemplate", data);
+                that.mergeData(castNames, "movieDetailsCastTemplate", data);
+                that.mergeData(showTimes, "MovieShowtimeTemplate", data);
 
                 that.setMainTitle(data.title);
 
@@ -183,13 +186,6 @@
         bindPanelTitles: function () {
 
             var that = this,
-                showTimes = $(".movie-showtime-list"),
-                castNames = $(".cast-name-list"),
-                movieDesc = $(".movie-description"),
-                showTimesTitle = $(".movie-showtimes-panel > .panel-title"),
-                castNamesTitle = $(".movie-cast-panel > .panel-title"),
-                movieDescTitle = $(".movie-description-panel > .panel-title"),
-                showReview = $("#showReview"),
                 selectors = this.movie.Items;
 
             $(movieDesc).show();
@@ -199,17 +195,7 @@
                 var width = window.innerWidth;
 
                 if (width > 600 && width < 820) {
-
-                    //showTimes.hide();
-                    //showReview.hide();
-                    //castNames.hide();
-                    //movieDesc.show();
-
-                    //showTimesTitle.removeClass("selected");
-                    //castNamesTitle.removeClass("selected");
-                    //movieDescTitle.addClass("selected");
                     that.movieView.displayDescription();
-
                 }
 
             });
@@ -234,27 +220,11 @@
 
                     that.movieView.displayShowtimes();
 
-                    //showTimes.show();
-                    //showReview.show();
-                    //castNames.hide();
-                    //movieDesc.hide();
-
-                    //showTimes[0].style.position = "relative";
-                    //showTimes[0].style.left = "-260px";
-
-                    //showReview[0].style.position = "relative";
-                    //showReview[0].style.left = "-200px";
-                    //showReview[0].style.top = "30px";
-
-                    //showTimesTitle.addClass("selected");
-                    //castNamesTitle.removeClass("selected");
-                    //movieDescTitle.removeClass("selected");
-
                 }
 
             });
 
-            deeptissue("#showReview").tap(function () {
+            deeptissue(showReview).tap(function () {
 
                 $(selectors.reviewPanel).show();
                 $(selectors.detailPanel).hide();
@@ -280,13 +250,13 @@
 
         displayShowtimes: function () {
 
-            var st = document.querySelector(showTimes),
-                cn = document.querySelector(castNames),
-                md = document.querySelector(movieDesc),
-                stt = document.querySelector(showTimesTitle),
-                cnt = document.querySelector(castNamesTitle),
-                mdt = document.querySelector(movieDescTitle),
-                sr = document.querySelector(showReview);
+            var st = qs(showTimes),
+                cn = qs(castNames),
+                md = qs(movieDesc),
+                stt = qs(showTimesTitle),
+                cnt = qs(castNamesTitle),
+                mdt = qs(movieDescTitle),
+                sr = qs(showReview);
 
             st.style.display = "block";
             sr.style.display = "block";
@@ -307,15 +277,15 @@
 
         displayCastNames: function () {
 
-            var st = document.querySelector(showTimes),
-                cn = document.querySelector(castNames),
-                md = document.querySelector(movieDesc),
-                stt = document.querySelector(showTimesTitle),
-                cnt = document.querySelector(castNamesTitle),
-                mdt = document.querySelector(movieDescTitle);
+            var st = qs(showTimes),
+                cn = qs(castNames),
+                md = qs(movieDesc),
+                stt = qs(showTimesTitle),
+                cnt = qs(castNamesTitle),
+                mdt = qs(movieDescTitle);
 
             st.style.display = "none";
-            document.querySelector(showReview).style.display = "none";
+            qs(showReview).style.display = "none";
             cn.style.display = "block";
             md.style.display = "none";
 
@@ -330,15 +300,15 @@
 
         displayDescription: function () {
 
-            var st = document.querySelector(showTimes),
-	            cn = document.querySelector(castNames),
-                md = document.querySelector(movieDesc),
-                stt = document.querySelector(showTimesTitle),
-                cnt = document.querySelector(castNamesTitle),
-                mdt = document.querySelector(movieDescTitle);
+            var st = qs(showTimes),
+	            cn = qs(castNames),
+                md = qs(movieDesc),
+                stt = qs(showTimesTitle),
+                cnt = qs(castNamesTitle),
+                mdt = qs(movieDescTitle);
 
             st.style.display = "none";
-            document.querySelector(showReview).style.display = "none";
+            qs(showReview).style.display = "none";
             cn.style.display = "none";
             cn.style.position = "";
             cn.style.left = "";
@@ -352,29 +322,29 @@
 
         clearMiniTablet: function () {
 
-            var showTimes = $(".movie-showtime-list"),
-                castNames = $(".cast-name-list"),
-                movieDesc = $(".movie-description"),
-                showTimesTitle = $(".movie-showtimes-panel > .panel-title"),
-                castNamesTitle = $(".movie-cast-panel > .panel-title"),
-                movieDescTitle = $(".movie-description-panel > .panel-title"),
-                showReview = $("#showReview");
+            var st = $(showTimes),
+                cn = $(castNames),
+                md = $(movieDesc),
+                stt = $(showTimesTitle),
+                cnt = $(castNamesTitle),
+                mdt = $(movieDescTitle),
+                sr = $(showReview);
 
-            showTimes.show();
-            showReview.show();
-            castNames.show();
-            movieDesc.show();
+            st.show();
+            sr.show();
+            cn.show();
+            md.show();
 
-            showTimes[0].style.position = "";
-            showTimes[0].style.left = "";
+            st[0].style.position = "";
+            st[0].style.left = "";
 
-            showReview[0].style.position = "";
-            showReview[0].style.left = "";
-            showReview[0].style.top = "";
+            sr[0].style.position = "";
+            sr[0].style.left = "";
+            sr[0].style.top = "";
 
-            showTimesTitle.removeClass("selected");
-            castNamesTitle.removeClass("selected");
-            movieDescTitle.removeClass("selected");
+            stt.removeClass("selected");
+            cnt.removeClass("selected");
+            mdt.removeClass("selected");
 
         },
 
@@ -382,29 +352,29 @@
 
             this.movieView.clearMiniTablet();
 
-            $("#showReview").hide();
+            $(showReview).hide();
 
-            $(".movie-showtime-list").show();
+            $(showTimes).show();
             $(".movie-review-panel").show();
             $(".movie-details-list").show();
             $(".movie-descrption-list").show();
-            $(".cast-name-list").show();
+            $(castNames).show();
 
         },
 
         renderMiniTablet: function () {
 
-            $("#showReview").hide();
+            $(showReview).hide();
 
             $(".movie-descrption-list").show();
-            $(".movie-description").show();
-            $(".movie-showtime-list").hide();
+            $(movieDesc).show();
+            $(showTimes).hide();
             $(".movie-review-panel").hide();
             $(".movie-details-list").hide();
-            $(".cast-name-list").hide();
+            $(castNames).hide();
 
             var i = 0,
-                panelWrapper = document.querySelector(".panorama-panels"),
+                panelWrapper = qs(".panorama-panels"),
                 panels = document.querySelectorAll(".single-panel");
 
             for (; i < panels.length; i++) {
@@ -418,23 +388,23 @@
 
         renderFullScreen: function () {
 
-            var showReview = $("#showReview"),
-                showTimes = document.querySelector(".movie-showtime-list");
+            var sr = $(showReview),
+                st = qs(showTimes);
 
             this.movieView.clearMiniTablet();
 
-            showTimes.style.position = "";
-            showTimes.style.left = "";
-            showTimes.style.display = "block";
+            st.style.position = "";
+            st.style.left = "";
+            st.style.display = "block";
 
-            showReview[0].style.position = "";
-            showReview[0].style.left = "";
-            showReview[0].style.top = "";
+            sr[0].style.position = "";
+            sr[0].style.left = "";
+            sr[0].style.top = "";
 
             $(".movie-review-panel").hide();
             $(".movie-details-list").show();
             $(".movie-descrption-list").show();
-            document.querySelector(".cast-name-list").style.display = "block";
+            qs(castNames).style.display = "block";
 
 
         },
@@ -442,7 +412,7 @@
         setMoviePoster: function () {
 
             var width = window.innerWidth,
-                poster = document.querySelector(".full-movie-poster");
+                poster = qs(".full-movie-poster");
 
             if (!poster) {
                 return;

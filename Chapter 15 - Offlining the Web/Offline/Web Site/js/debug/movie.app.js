@@ -177,7 +177,6 @@
 
         },
 
-        //        viewWidth: 0,
         bp: undefined,
         tmpl: undefined,
 
@@ -279,9 +278,6 @@
             var that = this, dt,
                 pCont = document.querySelector(target);
 
-            //if (settings.maxWidth &&
-            //    settings.maxWidth >= window.innerWidth) {
-
                 that.panorama = panorama(pCont,
                                     $().extend(settings, {
                                         speed: 600,
@@ -312,42 +308,6 @@
                     }
 
                 });
-            
-//            }
-
-            /* 
-            if (!that._panoramaSetup) {
-
-                var pn = document.querySelector(".pxs_next"),
-                    pp = document.querySelector(".pxs_prev");
-
-                if (!that.hasTouch) {
-                    //just falback to mouse stuff
-
-                    that.setPanoramaWings();
-
-                    if (pn) {
-                        pn.addEventListener("click", function (e) {
-                            that.panorama.moveLeft(e);
-                        });
-                    }
-
-                    if (pp) {
-                        pp.addEventListener("click", function (e) {
-                            that.panorama.moveRight(e);
-                        });
-
-                    }
-
-                } else {
-                    //remove the wings, don't need them
-                }
-
-                that._panoramaSetup = true;
-
-            }
-
-            */
 
         },
 
@@ -368,7 +328,6 @@
         }
 
     };
-
 
     // Give the init function the movieApp prototype for later instantiation
     movieApp.fn.init.prototype = movieApp.fn;
