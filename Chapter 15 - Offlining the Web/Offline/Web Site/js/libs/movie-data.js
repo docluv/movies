@@ -7,15 +7,12 @@
 
         var that = new movieData.fn.init();
 
-
         that.movieSrc = movieSrc;
         that.theaterSrc = theaterSrc;
 
-
         return that;
     };
-
-
+    
     movieData.fn = movieData.prototype = {
 
         constructor: movieData,
@@ -99,44 +96,43 @@
 
         },
 
-        loadMovieDetails: function (id, callback) {
+loadMovieDetails: function (id, callback) {
 
-            if (!this.movieSrc) {
-                return;
-            }
+    if (!this.movieSrc) {
+        return;
+    }
 
-            var that = this;
+    var that = this;
 
-            this.movieSrc.loadMovieDetails(id, function (movie) {
+    this.movieSrc.loadMovieDetails(id, function (movie) {
 
-                if (callback) {
-                    callback(that.mergeInFakeShowtimes(movie));
-                }
-            });
+        if (callback) {
+            callback(that.mergeInFakeShowtimes(movie));
+        }
+    });
 
-        },
+},
 
-        mergeInFakeShowtimes: function (movie) {
+mergeInFakeShowtimes: function (movie) {
 
-            var showtimes = [{ "theater": "The Mystic", "showtimes": ["12:20", "3:05", "5:45", "7:50", "10:10"] },
-                                { "theater": "The Marquee", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] },
-                                { "theater": "The Pantagees", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] }], i = 0;
+    var showtimes = [{ "theater": "The Mystic", "showtimes": ["12:20", "3:05", "5:45", "7:50", "10:10"] },
+                        { "theater": "The Marquee", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] },
+                        { "theater": "The Pantagees", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] }], i = 0;
 
-            if (movie.length != undefined) {
+    if (movie.length != undefined) {
 
-                for (i = 0; i < movie.length - 1; i++) {
+        for (i = 0; i < movie.length - 1; i++) {
 
-                    movie[i].showtimes = showtimes;
+            movie[i].showtimes = showtimes;
 
-                }
-
-            } else {
-                movie.showtimes = showtimes;
-            }
-
-            return movie;
         }
 
+    } else {
+        movie.showtimes = showtimes;
+    }
+
+    return movie;
+}
 
     };
 

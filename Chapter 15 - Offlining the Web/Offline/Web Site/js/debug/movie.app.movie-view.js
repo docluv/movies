@@ -6,15 +6,34 @@
     "use strict";
 
     var showTimes = ".movie-showtime-list",
-	    castNames = ".cast-name-list",
+        castNames = ".cast-name-list",
         movieDesc = ".movie-description",
         showTimesTitle = ".movie-showtimes-panel > .panel-title",
         castNamesTitle = ".movie-cast-panel > .panel-title",
         movieDescTitle = ".movie-description-panel > .panel-title",
-        showReview = "#showReview";
+        showReview = "#showReview",
+        reviewPanel = ".movie-review-panel",
+        detailPanel = ".movie-details-panel",
+        castPanel = ".movie-cast-panel",
+        showtimesPanel = ".movie-showtimes-panel",
+        descPanel = ".movie-description-panel";
 
     function qs(selector) {
         return document.querySelector(selector);
+    };
+
+    function getViewElements() {
+
+        return {
+            st: qs(showTimes),
+            cn: qs(castNames),
+            md: qs(movieDesc),
+            stt: qs(showTimesTitle),
+            cnt: qs(castNamesTitle),
+            mdt: qs(movieDescTitle),
+            sr: qs(showReview)
+        };
+
     };
 
     movieApp.fn.movie = {
@@ -33,6 +52,7 @@
 
             if (!params || !params.id) {
                 this.showError("No Movie Id Requested");
+                return;
             }
 
             var that = this,
@@ -51,25 +71,29 @@
 
         },
 
-        unload: function () {
+        //    unload: function () {
 
-            //if (this.panorama) {
+        //if (this.panorama) {
 
-            //    this.panorama.destroy();
-            //    this.panorama = undefined;
+        //    this.panorama.destroy();
+        //    this.panorama = undefined;
 
-            //}
+        //}
 
-        },
+        //   },
 
         renderMovieDetails: function (data) {
 
             if (data) {
 
+                if (!data.id) {
+                    //cause an automatic redirect to the not found page.
+                    window.location.hash = "#!404";
+                }
+
                 var that = this,
                     mv = that.movieView,
-                    width = window.innerWidth,
-                    reviewSubmit = document.getElementById("reviewSubmit");
+                    width = window.innerWidth;
 
                 that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
                 that.mergeData(movieDesc, "movieDetailsDescriptionTemplate", data);
@@ -84,7 +108,7 @@
 
                 that.setupPanorama(".panorama-container", { maxWidth: 610 });
 
-                document.reviewForm.onsubmit = that.reviewSubmit;
+                document.reviewForm.onsubmit = mv.reviewSubmit;
 
                 //setup the initial layout
                 requestAnimationFrame(function () {
@@ -100,6 +124,7 @@
                     mv.setMoviePoster();
 
                 });
+
             }
 
         },
@@ -183,14 +208,14 @@
 
         },
 
-        bindPanelTitles: function () {
+bindPanelTitles: function () {
 
-            var that = this,
-                selectors = this.movie.Items;
+    var that = this,
+        selectors = this.movie.Items;
 
-            $(movieDesc).show();
+    $(movieDesc).show();
 
-            deeptissue(movieDescTitle).tap(function () {
+    deeptissue(movieDescTitle).tap(function () {
 
                 var width = window.innerWidth;
 
@@ -200,7 +225,7 @@
 
             });
 
-            deeptissue(castNamesTitle).tap(function () {
+    deeptissue(castNamesTitle).tap(function () {
 
                 var width = window.innerWidth;
 
@@ -212,139 +237,141 @@
 
             });
 
-            deeptissue(showTimesTitle).tap(function () {
+    deeptissue(showTimesTitle).tap(function () {
 
-                var width = window.innerWidth;
+        var width = window.innerWidth;
 
-                if (width > 600 && width < 820) {
+        if (width > 600 && width < 820) {
 
-                    that.movieView.displayShowtimes();
+            that.movieView.displayShowtimes();
 
-                }
+        }
 
-            });
+    });
 
-            deeptissue(showReview).tap(function () {
+    deeptissue(showReview).tap(function (e) {
 
-                $(selectors.reviewPanel).show();
-                $(selectors.detailPanel).hide();
-                $(selectors.castPanel).hide();
-                $(selectors.showtimesPanel).hide();
-                $(selectors.descPanel).hide();
+        that.movieView.displayReview.call(that);
 
-                document.getElementById("ReviewerName").focus();
+    });
 
-            });
+},
 
-            deeptissue(document.getElementById("reviewCancel")).tap(function (e) {
+        boundCancel: false,
 
-                $(selectors.reviewPanel).hide();
-                $(selectors.detailPanel).show();
-                $(selectors.castPanel).show();
-                $(selectors.showtimesPanel).show();
-                $(selectors.descPanel).show();
+displayReview: function () {
 
-            });
+    var that = this;
 
+            qs(reviewPanel).style.display = "block";
+            qs(detailPanel).style.display = "none";
+            qs(castPanel).style.display = "none";
+            qs(showtimesPanel).style.display = "none";
+            qs(descPanel).style.display = "none";
+
+            document.getElementById("ReviewerName").focus();
+
+            if (!that.movieView.boundCancel) {
+
+
+                deeptissue(".review-cancel").tap(function (e) {
+
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    that.movieView.hideReview();
+
+                });
+
+                that.movieView.boundCancel = true;
+            }
+
+        },
+
+        hideReview: function () {
+
+            qs(reviewPanel).style.display = "none";
+            qs(detailPanel).style.display = "block";
+            qs(castPanel).style.display = "block";
+            qs(showtimesPanel).style.display = "block";
+            qs(descPanel).style.display = "block";
         },
 
         displayShowtimes: function () {
 
-            var st = qs(showTimes),
-                cn = qs(castNames),
-                md = qs(movieDesc),
-                stt = qs(showTimesTitle),
-                cnt = qs(castNamesTitle),
-                mdt = qs(movieDescTitle),
-                sr = qs(showReview);
+            var ele = getViewElements();
 
-            st.style.display = "block";
-            sr.style.display = "block";
-            cn.style.display = "none";
-            md.style.display = "none";
+            ele.st.style.display = "block";
+            ele.sr.style.display = "block";
+            ele.cn.style.display = "none";
+            ele.md.style.display = "none";
 
-            st.style.position = "relative";
-            st.style.left = "-260px";
+            ele.st.style.position = "relative";
+            ele.st.style.left = "-260px";
 
-            sr.style.position = "relative";
-            sr.style.left = "-200px";
-            sr.style.top = "30px";
+            ele.sr.style.position = "relative";
+            ele.sr.style.left = "-200px";
+            ele.sr.style.top = "30px";
 
-            stt.classList.add("selected");
-            cnt.classList.remove("selected");
-            mdt.classList.remove("selected");
+            ele.stt.classList.add("selected");
+            ele.cnt.classList.remove("selected");
+            ele.mdt.classList.remove("selected");
         },
 
         displayCastNames: function () {
 
-            var st = qs(showTimes),
-                cn = qs(castNames),
-                md = qs(movieDesc),
-                stt = qs(showTimesTitle),
-                cnt = qs(castNamesTitle),
-                mdt = qs(movieDescTitle);
+            var ele = getViewElements();
 
-            st.style.display = "none";
-            qs(showReview).style.display = "none";
-            cn.style.display = "block";
-            md.style.display = "none";
+            ele.st.style.display = "none";
+            ele.sr.style.display = "none";
+            ele.cn.style.display = "block";
+            ele.md.style.display = "none";
 
-            cn.style.position = "relative";
-            cn.style.left = "-130px";
+            ele.cn.style.position = "relative";
+            ele.cn.style.left = "-130px";
 
-            stt.classList.remove("selected");
-            cnt.classList.add("selected");
-            mdt.classList.remove("selected");
+            ele.stt.classList.remove("selected");
+            ele.cnt.classList.add("selected");
+            ele.mdt.classList.remove("selected");
 
         },
 
         displayDescription: function () {
 
-            var st = qs(showTimes),
-	            cn = qs(castNames),
-                md = qs(movieDesc),
-                stt = qs(showTimesTitle),
-                cnt = qs(castNamesTitle),
-                mdt = qs(movieDescTitle);
+            var ele = getViewElements();
 
-            st.style.display = "none";
-            qs(showReview).style.display = "none";
-            cn.style.display = "none";
-            cn.style.position = "";
-            cn.style.left = "";
-            md.style.display = "block";
+            ele.st.style.display = "none";
+            ele.sr.style.display = "none";
+            ele.cn.style.display = "none";
+            ele.cn.style.position = "";
+            ele.cn.style.left = "";
+            ele.md.style.display = "block";
 
-            stt.classList.remove("selected");
-            cnt.classList.remove("selected");
-            mdt.classList.add("selected");
+            ele.stt.classList.remove("selected");
+            ele.cnt.classList.remove("selected");
+            ele.mdt.classList.add("selected");
 
         },
 
         clearMiniTablet: function () {
 
-            var st = $(showTimes),
-                cn = $(castNames),
-                md = $(movieDesc),
-                stt = $(showTimesTitle),
-                cnt = $(castNamesTitle),
-                mdt = $(movieDescTitle),
-                sr = $(showReview);
+            var ele = getViewElements();
 
-            st.show();
-            sr.show();
-            cn.show();
-            md.show();
+            ele.st.style.display = "block";
+            ele.sr.style.display = "block";
+            ele.cn.style.display = "block";
+            ele.md.style.display = "block";
 
-            st[0].style.position = "";
-            st[0].style.left = "";
+            ele.st.style.position = "";
+            ele.st.style.left = "";
 
-            sr[0].style.position = "";
-            sr[0].style.left = "";
-            sr[0].style.top = "";
+            ele.sr.style.position = "";
+            ele.sr.style.left = "";
+            ele.sr.style.top = "";
 
-            stt.removeClass("selected");
-            cnt.removeClass("selected");
-            mdt.removeClass("selected");
+            ele.stt.classList.remove("selected");
+            ele.cnt.classList.remove("selected");
+            ele.mdt.classList.remove("selected");
 
         },
 
@@ -433,22 +460,6 @@
             }
         },
 
-        /*
-        clearInlineRelativePostition: function (nodes) {
-
-            if (!nodes.legth) {
-                nodes = [nodes];
-            }
-
-            for (var i = 0; i < nodes.length; i++) {
-
-                nodes[i].style.position = "";
-                nodes[i].style.left = "";
-
-            }
-
-        }
-        */
     };
 
 

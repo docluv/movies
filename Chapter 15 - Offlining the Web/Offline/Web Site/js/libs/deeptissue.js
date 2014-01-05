@@ -129,10 +129,14 @@
 
                         el.addEventListener("MSPointerDown", function (evt) {
 
-                            // adds the current mouse, pen, or touch contact for gesture recognition
-                            t.addPointer(evt.pointerId);
+                            if (t.target) {
 
-                            that.setupSwipe(evt, el, settings);
+                                // adds the current mouse, pen, or touch contact for gesture recognition
+                                t.addPointer(evt.pointerId);
+
+                                that.setupSwipe(evt, el, settings);
+
+                            }
 
                         });
 

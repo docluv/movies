@@ -57,6 +57,16 @@
     height: 100%;
 }
 
+
+.full-text {
+    width: calc(100% - 20px);
+    margin: auto;
+}
+
+.large-text{
+    font-size:1.1em;
+}
+
 @media (min-width:600px) {
 
     .xy-scroller-wrapper {
@@ -67,6 +77,17 @@
         width: auto;
         height: 100%;
     }
+
+
+    .full-text {
+        width: calc(100% - 60px);
+        margin: auto;
+    }
+
+    
+.large-text{
+    font-size:1.6em;
+}
 }
 
 @media(min-width: 1024px) {

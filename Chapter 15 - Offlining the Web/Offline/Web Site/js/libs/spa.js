@@ -167,6 +167,8 @@
                         route.paramValues = paramValues;
 
                         break;
+                    } else {
+                        route = undefined;
                     }
 
                 }

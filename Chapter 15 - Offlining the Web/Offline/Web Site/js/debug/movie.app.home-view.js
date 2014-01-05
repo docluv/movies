@@ -71,15 +71,15 @@
             md.InTheatersMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".top-box-list", data);
             });
-            
+
             md.OpeningMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".opening-movie-list", data);
             });
-            
+
             md.TopBoxOfficeMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".movies-near-me-list", data);
             });
-            
+
             md.ComingSoonMovies.call(md, 50, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".coming-soon-list", data);
             });

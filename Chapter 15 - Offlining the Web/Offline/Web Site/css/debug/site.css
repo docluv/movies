@@ -156,11 +156,32 @@ h4, .panel-small-title {
 }
 
 
+.full-text a{
+    text-decoration:underline;
+    font-weight:500;
+}
+
+.left{
+    float:left;
+    margin:0 20px;
+}
+
+
 .no-results {
     width: 50%;
     margin: 3em auto;
     font-size: 2em;
 }
+
+
+@media screen and (max-width: 320px) {
+    @-ms-viewport { width: 320px; }
+    @-o-viewport { width: 320px; }
+    @viewport {width: 320px;}
+    /* CSS for 320px width snapped layout goes here */
+
+}
+
 
 @media (min-width: 600px) {
 

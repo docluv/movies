@@ -77,13 +77,13 @@
             that.settings = $().extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
+            that.tmpl = that.settings.tmpl || Mustache;
 
             that.movieData = that.settings.movieData || movieData(
                 RottenTomatoes({ data: data }),
                 fakeTheaters()
             );
 
-            that.tmpl = that.settings.tmpl || Mustache;
 
             that.compileTemplates();
 
@@ -139,8 +139,6 @@
                 });
 
             });
-
-
 
             deeptissue(document.body).tap(function () {
                 $(".main-nav").hide();
@@ -278,36 +276,36 @@
             var that = this, dt,
                 pCont = document.querySelector(target);
 
-                that.panorama = panorama(pCont,
-                                    $().extend(settings, {
-                                        speed: 600,
-                                        headerHeight: 80,
-                                        peekWidth: 50
-                                    }));
+            that.panorama = panorama(pCont,
+                                $().extend(settings, {
+                                    speed: 600,
+                                    headerHeight: 80,
+                                    peekWidth: 50
+                                }));
 
-                dt = deeptissue(pCont,
-                            {
-                                swipeRightThreshold: 50,
-                                swipeLeftThreshold: -50,
-                                swipeUpThreshold: 50,
-                                swipeDownThreshold: 50
-                            });
+            dt = deeptissue(pCont,
+                        {
+                            swipeRightThreshold: 50,
+                            swipeLeftThreshold: -50,
+                            swipeUpThreshold: 50,
+                            swipeDownThreshold: 50
+                        });
 
-                dt.swipeRight(function (evt, m, translate) {
+            dt.swipeRight(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth) {
-                        that.panorama.moveRight(evt);
-                    }
+                if (settings.maxWidth >= window.innerWidth) {
+                    that.panorama.moveRight(evt);
+                }
 
-                })
+            })
 
-                .swipeLeft(function (evt, m, translate) {
+            .swipeLeft(function (evt, m, translate) {
 
-                    if (settings.maxWidth >= window.innerWidth) {
-                        that.panorama.moveLeft(evt);
-                    }
+                if (settings.maxWidth >= window.innerWidth) {
+                    that.panorama.moveLeft(evt);
+                }
 
-                });
+            });
 
         },
 
