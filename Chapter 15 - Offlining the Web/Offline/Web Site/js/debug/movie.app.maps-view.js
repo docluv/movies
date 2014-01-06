@@ -5,25 +5,12 @@
 
     "use strict";
 
-    var fakeTheaters = ["The Mystic",
-                    "The Marquee",
-                    "The Pantagees",
-                    "Regal 22",
-                    "Rialto 16",
-                    "AMC Stadium 20",
-                    "AMC Loews Universal Cineplex 20",
-                    "Regal Pointe Stadium 20 & IMAX",
-                    "Touchstar Cinemas Southchase 7",
-                    "Cinemark Festival Bay Mall"
-    ];
-
     movieApp.fn.mapsView = {
 
         onload: function () {
 
             var that = this,
-                mv = that.mapsView,
-                title = "nearby";
+                mv = that.mapsView;
 
             that.setMainTitle("theaters near you");
 

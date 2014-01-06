@@ -233,6 +233,7 @@ h4, .panel-small-title {
     .view-title {
         font-size: 26pt;
         line-height: 30pt;
+        padding-bottom: 2pt;
     }
 }
 

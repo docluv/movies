@@ -16,7 +16,10 @@
         detailPanel = ".movie-details-panel",
         castPanel = ".movie-cast-panel",
         showtimesPanel = ".movie-showtimes-panel",
-        descPanel = ".movie-description-panel";
+        descPanel = ".movie-description-panel",
+        smallBreakpoint = 610,
+        miniBreakpoint = 820,
+        largebreakpoint = 1024;
 
     function qs(selector) {
         return document.querySelector(selector);
@@ -34,16 +37,6 @@
             sr: qs(showReview)
         };
 
-    };
-
-    movieApp.fn.movie = {
-        Items: {
-            reviewPanel: ".movie-review-panel",
-            detailPanel: ".movie-details-panel",
-            castPanel: ".movie-cast-panel",
-            showtimesPanel: ".movie-showtimes-panel",
-            descPanel: ".movie-description-panel"
-        }
     };
 
     movieApp.fn.movieView = {
@@ -71,17 +64,6 @@
 
         },
 
-        //    unload: function () {
-
-        //if (this.panorama) {
-
-        //    this.panorama.destroy();
-        //    this.panorama = undefined;
-
-        //}
-
-        //   },
-
         renderMovieDetails: function (data) {
 
             if (data) {
@@ -95,7 +77,7 @@
                     mv = that.movieView,
                     width = window.innerWidth;
 
-                that.mergeData(".movie-details-panel", "movieDetailsPosterTemplate", data);
+                that.mergeData(detailPanel, "movieDetailsPosterTemplate", data);
                 that.mergeData(movieDesc, "movieDetailsDescriptionTemplate", data);
                 that.mergeData(castNames, "movieDetailsCastTemplate", data);
                 that.mergeData(showTimes, "MovieShowtimeTemplate", data);
@@ -106,16 +88,16 @@
 
                 mv.setupMQLs.call(that, mv);
 
-                that.setupPanorama(".panorama-container", { maxWidth: 610 });
+                that.setupPanorama(".panorama-container", { maxWidth: smallBreakpoint });
 
                 document.reviewForm.onsubmit = mv.reviewSubmit;
 
                 //setup the initial layout
                 requestAnimationFrame(function () {
 
-                    if (width < 610) {
+                    if (width < smallBreakpoint) {
                         mv.renderSmallScreen.call(that);
-                    } else if (width >= 610 && width <= 820) {
+                    } else if (width >= smallBreakpoint && width <= miniBreakpoint) {
                         mv.renderMiniTablet.call(that);
                     } else {
                         mv.renderFullScreen.call(that);
@@ -133,6 +115,12 @@
 
             e.preventDefault();
 
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                //Implement you own means of displaying error messages to the user here.
+                console.info("not valid");
+            }
+
             if (e.srcElement) {
                 var i = 0,
                     data = {},
@@ -149,7 +137,7 @@
 
         },
 
-        mql600: undefined,
+        mql610: undefined,
         mql820: undefined,
         mql1024: undefined,
 
@@ -158,11 +146,11 @@
 
             var that = this;
 
-            if (!mv.mql600) {
+            if (!mv.mql610) {
 
-                mv.mql600 = window.matchMedia("(min-width: 610px)");
+                mv.mql610 = window.matchMedia("(min-width: 610px)");
 
-                mv.mql600.addListener(function (e) {
+                mv.mql610.addListener(function (e) {
 
                     if (e.matches) {
                         mv.renderMiniTablet.call(that);
@@ -208,28 +196,27 @@
 
         },
 
-bindPanelTitles: function () {
+        bindPanelTitles: function () {
 
-    var that = this,
-        selectors = this.movie.Items;
+            var that = this;
 
-    $(movieDesc).show();
+            $(movieDesc).show();
 
-    deeptissue(movieDescTitle).tap(function () {
+            deeptissue(movieDescTitle).tap(function () {
 
                 var width = window.innerWidth;
 
-                if (width > 600 && width < 820) {
+                if (width > smallBreakpoint && width < miniBreakpoint) {
                     that.movieView.displayDescription();
                 }
 
             });
 
-    deeptissue(castNamesTitle).tap(function () {
+            deeptissue(castNamesTitle).tap(function () {
 
                 var width = window.innerWidth;
 
-                if (width > 600 && width < 820) {
+                if (width > smallBreakpoint && width < miniBreakpoint) {
 
                     that.movieView.displayCastNames();
 
@@ -237,31 +224,31 @@ bindPanelTitles: function () {
 
             });
 
-    deeptissue(showTimesTitle).tap(function () {
+            deeptissue(showTimesTitle).tap(function () {
 
-        var width = window.innerWidth;
+                var width = window.innerWidth;
 
-        if (width > 600 && width < 820) {
+                if (width > smallBreakpoint && width < miniBreakpoint) {
 
-            that.movieView.displayShowtimes();
+                    that.movieView.displayShowtimes();
 
-        }
+                }
 
-    });
+            });
 
-    deeptissue(showReview).tap(function (e) {
+            deeptissue(showReview).tap(function (e) {
 
-        that.movieView.displayReview.call(that);
+                that.movieView.displayReview.call(that);
 
-    });
+            });
 
-},
+        },
 
         boundCancel: false,
 
-displayReview: function () {
+        displayReview: function () {
 
-    var that = this;
+            var that = this;
 
             qs(reviewPanel).style.display = "block";
             qs(detailPanel).style.display = "none";
@@ -272,7 +259,6 @@ displayReview: function () {
             document.getElementById("ReviewerName").focus();
 
             if (!that.movieView.boundCancel) {
-
 
                 deeptissue(".review-cancel").tap(function (e) {
 
@@ -379,13 +365,11 @@ displayReview: function () {
 
             this.movieView.clearMiniTablet();
 
-            $(showReview).hide();
+            qs(showReview).style.display = "none";
 
-            $(showTimes).show();
-            $(".movie-review-panel").show();
-            $(".movie-details-list").show();
-            $(".movie-descrption-list").show();
-            $(castNames).show();
+            qs(showTimes).style.display = "block";
+            qs(reviewPanel).style.display = "block";
+            qs(castNames).style.display = "block";
 
         },
 
@@ -393,11 +377,11 @@ displayReview: function () {
 
             $(showReview).hide();
 
-            $(".movie-descrption-list").show();
+//            $(movieDescriptionList).show();
             $(movieDesc).show();
             $(showTimes).hide();
-            $(".movie-review-panel").hide();
-            $(".movie-details-list").hide();
+            $(reviewPanel).hide();
+      //      $(movieDetailList).hide();
             $(castNames).hide();
 
             var i = 0,
@@ -415,24 +399,11 @@ displayReview: function () {
 
         renderFullScreen: function () {
 
-            var sr = $(showReview),
-                st = qs(showTimes);
-
             this.movieView.clearMiniTablet();
 
-            st.style.position = "";
-            st.style.left = "";
-            st.style.display = "block";
-
-            sr[0].style.position = "";
-            sr[0].style.left = "";
-            sr[0].style.top = "";
-
-            $(".movie-review-panel").hide();
-            $(".movie-details-list").show();
-            $(".movie-descrption-list").show();
+            qs(showTimes).style.display = "block";
+            qs(reviewPanel).style.display = "";
             qs(castNames).style.display = "block";
-
 
         },
 
@@ -445,7 +416,7 @@ displayReview: function () {
                 return;
             }
 
-            if (width > 1024) {
+            if (width > largebreakpoint) {
 
                 poster.src = poster.src
                                     .replace("pro", "ori")
@@ -458,7 +429,7 @@ displayReview: function () {
                                     .replace("ori", "det");
 
             }
-        },
+        }
 
     };
 

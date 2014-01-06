@@ -78,7 +78,7 @@ span.center, img.center {
     user-select: text;
 }
 
-@media (min-width:610px) and (max-width:800px) {
+@media (min-width:610px) and (max-width:820px) {
 
     .movie-description-panel,
     .movie-cast-panel,
@@ -133,7 +133,7 @@ span.center, img.center {
     }
 }
 
-@media (min-width:800px) {
+@media (min-width:820px) {
 
     .movie-details-panel {
         margin: 0 20px 0 0;

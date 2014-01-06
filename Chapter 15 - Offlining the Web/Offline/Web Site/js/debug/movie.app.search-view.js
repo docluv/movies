@@ -11,8 +11,8 @@
 
             var that = this,
                 sv = that.searchView,
-                searchField = document.getElementById("searchTerm"),
-                showToolbar = false;
+                searchField = document.getElementById("searchTerm");
+
             //clear the field just in case a previous value was entered and the markup not cleared from the page
             searchField.value = "";
 

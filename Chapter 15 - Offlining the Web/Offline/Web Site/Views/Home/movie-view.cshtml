@@ -35,14 +35,14 @@
                     <li>
                         <label class="input-label" for="ReviewerEMail">E-Mail</label>
                         <input type="email" placeholder="Your E-Mail" id="ReviewerEMail" tabindex="2"
-                               name="ReviewerEMail"
+                               name="ReviewerEMail" required
                                autocomplete="off" autocorrect="off" title="Please Enter Your E-Mail" />
                     </li>
                     <li>
                         <label class="input-label" for="ReviewerPhone">Phone</label>
                         <input type="tel" placeholder="Phone Number" id="ReviewerPhone" tabindex="3"
-                               autocomplete="off" autocorrect="off" placeholder="\d{3}[\-]\d{3}[\-]\d{4}"
-                               name="ReviewerPhone" title="###-###-####" />
+                               pattern="\(\d\d\d\) ?\d\d\d-\d\d\d\d" title="(###) ###-####"
+                               required name="ReviewerPhone"/>
                     </li>
                     <li>
                         <label class="input-label" for="ReviewText">Review</label>

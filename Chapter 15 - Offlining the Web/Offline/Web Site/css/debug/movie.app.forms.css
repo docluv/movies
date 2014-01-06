@@ -30,11 +30,11 @@ textarea {
     height: 48px;
 }
 
-    textarea:invalid, input:invalid {
+    textarea:required, input:required {
         background-color: #dfdfdf;
     }
 
-    textarea:required, input:required {
+    textarea:invalid, input:invalid {
         border-width: 1px;
         border-color: #880606;
     }
@@ -57,14 +57,14 @@ textarea {
     color: #eee;
 }
 
-    ::-webkit-validation-bubble-message:before {
-        display: inline-block;
-        margin-right: 4px;
-        width: 16px;
-        height: 16px;
-        background: url(http://trac.webkit.org/export/90202/trunk/Source/WebCore/inspector/front-end/Images/errorMediumIcon.png);
-        content: "";
-    }
+::-webkit-validation-bubble-message:before {
+    display: inline-block;
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    background: url(http://movies.love2dev.com/img/errorMediumIcon.png);
+    content: "";
+}
 
 ::-webkit-validation-bubble-arrow {
     border-color: #444;
