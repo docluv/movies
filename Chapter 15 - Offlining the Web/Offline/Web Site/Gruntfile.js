@@ -37,7 +37,7 @@
                         //'css/debug/movie.app.news-view.css',
                       //  'css/debug/movie.app.profile-view.css',
                         'css/debug/movie.app.search-view.css',
-                        'css/debug/movie.app.theaters-view.css']
+                        'css/debug/movie.app.theater-view.css']
                 }
             }
         },

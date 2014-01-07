@@ -1,0 +1,4 @@
+﻿User-Agent: * 
+
+
+Sitemap: http://love2dev.com/sitemap.xml

@@ -88,6 +88,8 @@
 
                 mv.setupMQLs.call(that, mv);
 
+                mv.bindValidation();
+
                 that.setupPanorama(".panorama-container", { maxWidth: smallBreakpoint });
 
                 document.reviewForm.onsubmit = mv.reviewSubmit;
@@ -108,6 +110,40 @@
                 });
 
             }
+
+        },
+
+        logInvalidState: function(e){
+
+            console.info("id: " + e.target.id + "\r\n" +
+                        "valid: " + e.target.validity.valid + "\r\n" +
+                        "patternMismatch: " + e.target.validity.patternMismatch + "\r\n" +
+                        "rangeOverflow: " + e.target.validity.rangeOverflow + "\r\n" +
+                        "rangeUnderflow: " + e.target.validity.rangeUnderflow + "\r\n" +
+                        "typeMismatch: " + e.target.validity.typeMismatch + "\r\n" +
+                        "stepMismatch: " + e.target.validity.stepMismatch + "\r\n" +
+                        "tooLong: " + e.target.validity.tooLong + "\r\n" +
+                        "valueMissing: " + e.target.validity.valueMissing + "\r\n" +
+                        "customError: " + e.target.validity.customError + "\r\n" +
+                        "validationMessage : " + e.target.validationMessage + "\r\n");
+        },
+
+        bindValidation: function () {
+
+            var that = this,
+                formInputs = document.querySelectorAll("input, textarea");
+
+            [].forEach.call(formInputs, function (el) {
+
+                el.addEventListener('invalid', function (e) {
+                    that.logInvalidState(e)
+                }, false);
+
+                el.addEventListener('blur', function (e) {
+                    that.logInvalidState(e)
+                }, false);
+
+            });
 
         },
 

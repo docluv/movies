@@ -153,6 +153,7 @@
     <Content Include="IEconfig.xml" />
     <Content Include="img\back.png" />
     <Content Include="img\camera.png" />
+    <Content Include="img\errorMediumIcon.png" />
     <Content Include="img\home.png" />
     <Content Include="img\largetile.png" />
     <Content Include="img\map.png" />
