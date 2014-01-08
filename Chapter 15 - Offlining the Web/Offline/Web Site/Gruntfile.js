@@ -72,7 +72,7 @@
                 'js/debug/movie.app.search-view.js',
                 'js/debug/movie.app.privacy-view.js',
                 'js/debug/movie.app.search-view.js',
-                'js/debug/movie.app.theaters-view.js',
+                'js/debug/movie.app.theater-view.js',
                 'js/debug/movie.app.bootstrap.js'
                 ],
                 dest: 'js/applib.js'

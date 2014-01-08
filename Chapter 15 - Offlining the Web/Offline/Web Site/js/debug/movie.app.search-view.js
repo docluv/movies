@@ -33,7 +33,6 @@
 
             var that = this,
                 md = that.movieData,
-                sv = that.searchView,
                 value = term || document.getElementById("searchTerm").value;
 
             if (value !== "") {
