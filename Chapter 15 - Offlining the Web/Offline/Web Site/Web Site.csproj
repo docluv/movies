@@ -175,6 +175,7 @@
     <Content Include="js\debug\movie.app.maps-view.js" />
     <Content Include="js\debug\movie.app.movie-view.js" />
     <Content Include="js\debug\movie.app.movies-view.js" />
+    <Content Include="js\debug\movie.app.notfound-view.js" />
     <Content Include="js\debug\movie.app.privacy-view.js" />
     <Content Include="js\debug\movie.app.reviews-view.js" />
     <Content Include="js\debug\movie.app.search-view.js" />
@@ -222,7 +223,9 @@
     <Content Include="touch-icon-ipad.png" />
     <Content Include="touch-icon-iphone-retina.png" />
     <Content Include="touch-icon-iphone.png" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

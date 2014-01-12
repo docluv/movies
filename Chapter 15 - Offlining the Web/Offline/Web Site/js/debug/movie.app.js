@@ -161,7 +161,7 @@
 
         setMainTitle: function (title) {
 
-            this.mainTitle.textContent = title.toLowerCase();
+            this.mainTitle.textContent = document.title = title.toLowerCase();
         },
 
         bindBackButton: function () {

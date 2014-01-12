@@ -89,21 +89,3 @@
     <h2>Sorry No News Available</h2>{{/articles}}
 </script>
 
-
-<script id="NYTReviewsTemplate" type="text/x-mustache-template">
-    {{#results}}
-    <article>
-        <header>
-            <a href="{{link.url}}"><h3>{{display_title}}</h3></a>
-            <div class="review-by-line">
-                <div class="review-reviewer">{{byline}}</div>
-                <div class="review-pub-date">{{publication_date}}</div>
-            </div>
-            <img src="{{multimedia.resource.src}}" class="review-reviewer" alt="" />
-        </header>
-        <div class="review-summary">{{summary_short}}</div>
-    </article>
-    {{/results}}
-    {{^results}}
-    <h2>Sorry No Reviews Available</h2>{{/results}}
-</script>

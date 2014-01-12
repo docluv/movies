@@ -18,7 +18,7 @@ body {
     -ms-content-zooming: none;
     overflow-x: hidden;
     background-color: #7b359a;
-    background: url( '../../img/purple-bkg.jpg') no-repeat center center fixed;
+    background: url( '../../img/purple-bkg.jpg');
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
@@ -43,7 +43,6 @@ a, a:visited {
 h1, h2, h3 {
     margin: 0;
 }
-
 
 h1, .view-title {
     margin: 15px 0 0 40px;
@@ -77,7 +76,6 @@ h4, .panel-small-title {
     line-height: 1.1429;
 }
 
-
 .site-header {
     position: absolute;
     top: 0;
@@ -85,7 +83,6 @@ h4, .panel-small-title {
     left: 0;
     height: 80px;
 }
-
 
 .win-backbutton {
     float: left;
@@ -125,7 +122,6 @@ h4, .panel-small-title {
     bottom: 35px;
 }
 
-
 .content-pane {
     position: absolute;
     top: 0px;
@@ -155,7 +151,6 @@ h4, .panel-small-title {
     text-align: center;
 }
 
-
 .full-text a{
     text-decoration:underline;
     font-weight:500;
@@ -166,13 +161,11 @@ h4, .panel-small-title {
     margin:0 20px;
 }
 
-
 .no-results {
     width: 50%;
     margin: 3em auto;
     font-size: 2em;
 }
-
 
 @media screen and (max-width: 320px) {
     @-ms-viewport { width: 320px; }
@@ -181,7 +174,6 @@ h4, .panel-small-title {
     /* CSS for 320px width snapped layout goes here */
 
 }
-
 
 @media (min-width: 600px) {
 
@@ -210,7 +202,6 @@ h4, .panel-small-title {
     }
 }
 
-
 @media (min-width:800px) {
 
     .main-content {
@@ -236,13 +227,6 @@ h4, .panel-small-title {
         padding-bottom: 2pt;
     }
 }
-
-/*@media (min-width:1024px) {
-
-    .view-title {
-        width: 300px;
-    }
-}*/
 
 @media (min-width:1100px) {
 
