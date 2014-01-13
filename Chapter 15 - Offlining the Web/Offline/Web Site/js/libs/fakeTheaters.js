@@ -148,7 +148,7 @@
                 i = 0, pos;
 
             for (; i < mockTheaters.length; i++) {
-                
+
                 pos = that.getRandomPoistion(latitude, longitude);
 
                 mockTheaters[i].latitude = pos.latitude;

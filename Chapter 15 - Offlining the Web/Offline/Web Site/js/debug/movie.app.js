@@ -155,7 +155,7 @@
         movieTypes: {
             "Opening": "Opening",
             "TopBoxOffice": "Top Box Office",
-            "CommingSoon": "Comming Soon",
+            "ComingSoon": "Comming Soon",
             "InTheaters": "In Theaters"
         },
 
