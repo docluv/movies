@@ -66,21 +66,26 @@
 
             var that = this,
                 md = that.movieData,
-                hv = that.homeView;
+                hv = that.homeView,
+                 //originally had 50. This is too many because it caused up to 100 movie poster
+                 //image downloads when the application is launched. 10 should be enough for the 
+                 //home effect. Also changed to a variable to get minification benefit and easier
+                 //maintenance.
+                count = 10;
 
-            md.InTheatersMovies.call(md, 50, 1, function (data) {
+            md.InTheatersMovies.call(md, count, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".top-box-list", data);
             });
 
-            md.OpeningMovies.call(md, 50, 1, function (data) {
+            md.OpeningMovies.call(md, count, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".opening-movie-list", data);
             });
 
-            md.TopBoxOfficeMovies.call(md, 50, 1, function (data) {
+            md.TopBoxOfficeMovies.call(md, count, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".movies-near-me-list", data);
             });
 
-            md.ComingSoonMovies.call(md, 50, 1, function (data) {
+            md.ComingSoonMovies.call(md, count, 1, function (data) {
                 hv.renderHomeMovies.call(that, ".coming-soon-list", data);
             });
 
@@ -103,13 +108,6 @@
 
         unload: function () {
             this.homeView.isVisible = false;
-
-            //if (this.panorama) {
-
-            //    this.panorama.destroy();
-            //    this.panorama = undefined;
-
-            //}
         },
 
         renderHomeMovies: function (target, data) {

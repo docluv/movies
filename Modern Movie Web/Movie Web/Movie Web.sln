@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPAHelper", "..\..\..\SPAHelper\SPAHelper\SPAHelper.csproj", "{909666FF-501B-405F-BEFA-1CBDF60A10B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web Site", "..\Web\Web Site\Web Site.csproj", "{9E4B987A-388B-4E4C-A4D4-DD0AB14FDD82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Movie Web", "..\Web\Web Site\Movie Web.csproj", "{9E4B987A-388B-4E4C-A4D4-DD0AB14FDD82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
