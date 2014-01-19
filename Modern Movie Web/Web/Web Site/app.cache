@@ -1,12 +1,12 @@
 ﻿CACHE MANIFEST
-# version 0.01
+# version 0.02
 
 #images
 
 img/purple-bkg.jpg
 
 #css
-css/site.min.css?v=.1
+css/site.min.css
 
 #js
 
