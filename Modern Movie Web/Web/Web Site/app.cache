@@ -1,5 +1,5 @@
 ﻿CACHE MANIFEST
-# version 0.02
+# version 0.03
 
 #images
 
@@ -20,6 +20,6 @@ http://api.rottentomatoes.com/api/public/v1.0/
 
 FALLBACK:
 
-http://content9.flixster.com/movie/*.jpg /img/offline-poster.png
+#http://content9.flixster.com/movie/*.jpg /img/offline-poster.png
 
 
