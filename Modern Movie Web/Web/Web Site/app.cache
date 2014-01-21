@@ -1,8 +1,11 @@
 ﻿CACHE MANIFEST
-# version 0.03
+# version 0.05
+
+CACHE:
+
 
 #images
-
+favicon.ico
 img/purple-bkg.jpg
 
 #css
@@ -16,7 +19,9 @@ js/applib.js
 NETWORK:
 #http://example.com/api/
 
-http://api.rottentomatoes.com/api/public/v1.0/
+#http://api.rottentomatoes.com/api/public/v1.0/
+
+*
 
 FALLBACK:
 

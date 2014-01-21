@@ -168,7 +168,7 @@
             }
 
             // if there's a TTL that's expired, flush this item
-            if (ttl && ttl < +new Date()) {
+            if (!ttl || ttl < +new Date()) {
                 localStorage.removeItem(cacheKey);
                 localStorage.removeItem(cacheKey + 'cachettl');
                 ttl = 'expired';
