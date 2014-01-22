@@ -52,13 +52,13 @@
                 md = that.movieData,
                 mv = this.movieView;
 
-            md.loadMovieDetails.call(md, params.id, function (data) {
+            md.loadMovieDetails.call(md, params.id, function (movie) {
 
-                if (!data) {
+                if (!movie) {
                     return;
                 }
 
-                mv.renderMovieDetails.call(that, data);
+                mv.renderMovieDetails.call(that, movie);
 
             });
 

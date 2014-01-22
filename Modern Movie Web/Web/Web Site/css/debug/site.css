@@ -24,10 +24,13 @@ body {
     font-size: 13px;
     font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', "sans-serif";
     line-height: 1.231;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
+
 }
 
 /*http://www.sitepoint.com/html5-main-element/  */
