@@ -18,6 +18,7 @@ public ActionResult Index()
     var model = new MoviesModel();
 
     HttpContext.Response.Cache.SetLastModified(DateTime.UtcNow);
+    HttpContext.Response.AddHeader("X-UA-Compatible", "IE-edge");
 
     if (SpaHelper.HasEscapeFragment())
     {
