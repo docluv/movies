@@ -52,6 +52,8 @@
                 md = that.movieData,
                 mv = this.movieView;
 
+            mv.isVisible = true;
+
             md.loadMovieDetails.call(md, params.id, function (movie) {
 
                 if (!movie) {
@@ -62,6 +64,11 @@
 
             });
 
+        },
+
+
+        unload: function () {
+            this.movieView.isVisible = false;
         },
 
         renderMovieDetails: function (data) {
@@ -176,6 +183,7 @@
         mql610: undefined,
         mql820: undefined,
         mql1024: undefined,
+        isVisible: false,
 
         //toying with the idea to refactor this into a common method.
         setupMQLs: function (mv) {
@@ -188,13 +196,17 @@
 
                 mv.mql610.addListener(function (e) {
 
-                    if (e.matches) {
-                        mv.renderMiniTablet.call(that);
-                    } else {
-                        mv.renderSmallScreen.call(that);
-                    }
+                    if (this.movieView.isVisible) {
 
-                    mv.setMoviePoster(window.innerWidth);
+                        if (e.matches) {
+                            mv.renderMiniTablet.call(that);
+                        } else {
+                            mv.renderSmallScreen.call(that);
+                        }
+
+                        mv.setMoviePoster(window.innerWidth);
+
+                    }
 
                 });
 
@@ -206,14 +218,17 @@
 
                 mv.mql820.addListener(function (e) {
 
-                    if (e.matches) {
-                        mv.renderFullScreen.call(that);
-                    } else {
-                        mv.renderMiniTablet.call(that);
+                    if (this.movieView.isVisible) {
+
+                        if (e.matches) {
+                            mv.renderFullScreen.call(that);
+                        } else {
+                            mv.renderMiniTablet.call(that);
+                        }
+
+                        mv.setMoviePoster(window.innerWidth);
+
                     }
-
-                    mv.setMoviePoster(window.innerWidth);
-
                 });
 
             }
@@ -224,8 +239,11 @@
 
                 mv.mql1024.addListener(function () {
 
-                    mv.setMoviePoster(window.innerWidth);
+                    if (this.movieView.isVisible) {
 
+                        mv.setMoviePoster(window.innerWidth);
+
+                    }
                 });
 
             }
