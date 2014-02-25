@@ -232,9 +232,6 @@
     -webkit-transform: translateX(0);
     transform: translateX(0);
     animation-duration: .65s;
-    /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -moz-visibility:hidden is used. */
-    /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -moz-visibility:hidden is used. */
-    /* Needed to work around an iOS 3.1 bug that causes listview thumbs to disappear when -webkit-visibility:hidden is used. */
 }
 
     .flip.out {

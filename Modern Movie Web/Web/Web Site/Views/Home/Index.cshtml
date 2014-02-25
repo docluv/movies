@@ -40,8 +40,48 @@ else
 
     </script>
 
-    <title>@Model.Title</title>
+    <meta content="on" http-equiv="cleartype">
     <meta http-equiv="content-language" content="us-en">
+
+    <title>@Model.Title</title>
+
+    @if (!Html.HasEscapeFragment())
+    {
+        if (HttpContext.Current.IsDebuggingEnabled)
+        {
+            <link href="css/debug/site.css" rel="stylesheet">
+            <link href="css/debug/movie-grid.css" rel="stylesheet">
+            <link href="css/debug/animations.css" rel="stylesheet">
+            <link href="css/debug/touch.css" rel="stylesheet">
+            <link href="css/debug/panorama.css" rel="stylesheet">
+            <link href="css/debug/toolbar.css" rel="stylesheet">
+            <link href="css/debug/movie.app.forms.css" rel="stylesheet">
+            <link href="css/debug/movie.app.nav.css" rel="stylesheet">
+            <link href="css/debug/movie.app.home-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.movie-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.movies-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.search-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.theater-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.maps-view.css" rel="stylesheet">
+            <link href="css/debug/movie.app.social.css" rel="stylesheet">
+
+        }
+        else
+        {
+            <link href="css/site.min.css" rel="stylesheet">
+        }
+
+    }
+    else
+    {
+        <link href="css/core/movie.app.core.css" rel="stylesheet">
+
+    }
+
+    @if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+    {
+        <link href="css/debug/add2home.css" rel="stylesheet">
+    }
 
     <meta content="@Model.Description" name="description">
     <meta content="Chris Love" name="author">
@@ -87,49 +127,6 @@ else
     <meta content="name=Search;action-uri=#!search;icon-uri=./favicon.ico" name="msapplication-task">
 
     <meta name="google-site-verification" content="[verification key goes here]" />
-
-    <meta content="on" http-equiv="cleartype">
-
-    @if (!Html.HasEscapeFragment())
-    {
-        if (HttpContext.Current.IsDebuggingEnabled)
-        {
-            <link href="css/debug/site.css" rel="stylesheet">
-            <link href="css/debug/movie-grid.css" rel="stylesheet">
-            <link href="css/debug/animations.css" rel="stylesheet">
-            <link href="css/debug/touch.css" rel="stylesheet">
-            <link href="css/debug/panorama.css" rel="stylesheet">
-            <link href="css/debug/toolbar.css" rel="stylesheet">
-            <link href="css/debug/movie.app.forms.css" rel="stylesheet">
-            <link href="css/debug/movie.app.nav.css" rel="stylesheet">
-
-            <link href="css/debug/movie.app.account-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.home-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.movie-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.movies-view.css" rel="stylesheet">
-            @*<link href="css/debug/movie.app.reviews-view.css" rel="stylesheet">*@
-            <link href="css/debug/movie.app.search-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.theater-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.maps-view.css" rel="stylesheet">
-            <link href="css/debug/movie.app.social.css" rel="stylesheet">
-
-        }
-        else
-        {
-            <link href="css/site.min.css" rel="stylesheet">
-        }
-
-    }
-    else
-    {
-        <link href="css/core/movie.app.core.css" rel="stylesheet">
-        
-    }
-
-    @if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
-    {
-        <link href="css/debug/add2home.css" rel="stylesheet">
-    }
 
 </head>
 <body>

@@ -3,7 +3,7 @@
 ;
 
 (function (window, undefined) {
-   
+
     "use strict";
 
     var _gaq = _gaq || undefined;
@@ -70,7 +70,7 @@
             return this;
         },
 
-        version: "0.0.4",
+        version: "0.0.5",
 
         bp: undefined,
 
@@ -291,13 +291,13 @@
             }
         },
 
-        pushGA: function (path) {
+pushGA: function (path) {
 
-            //if Google Analytics available, then push the path
-            if (_gaq !== undefined) {
-                _gaq.push(['_trackPageview', path]);
-            }
-        },
+    //if Google Analytics available, then push the path
+    if (_gaq !== undefined) {
+        _gaq.push(['_trackPageview', path]);
+    }
+},
 
         swapView: function () {
 
@@ -323,8 +323,6 @@
             }
 
             route = that.matchRouteByPath(path);
-            anim = that.getAnimation(route);
-            that.animation = anim;
 
             if (route !== undefined) {
 
@@ -338,39 +336,54 @@
 
                     if (currentView) {
 
-                        if (that.hasAnimations() && anim) {
+                        if (that.hasAnimations()) {
 
-                            currentView.addEventListener(
+                            anim = that.getAnimation(route);
+                            that.animation = anim;
+
+                            if (anim) {
+
+                                currentView.addEventListener(
+                                    that.transitionend[that.cssPrefix("animation")], function (e) {
+                                        that.endSwapAnimation.call(that, oldRoute, route);
+                                        currentView = undefined;
+                                    });
+
+                                //modify once addClass supports array of classes
+                                $(currentView).addClass("animated out " + anim)
+                                    .removeClass("in");
+
+                                $(newView).addClass(settings.currentClass +
+                                    " animated " + anim + " in");
+
+                            } else {
+
+                                $(newView).addClass(settings.currentClass);
+                                that.endSwapAnimation.call(that, oldRoute, route);
+                            }
+
+                        }
+
+                    } else {
+
+                        if (settings.intoAnimation) {
+
+                            newView.addEventListener(
                                 that.transitionend[that.cssPrefix("animation")], function (e) {
-                                    that.endSwapAnimation.call(that, oldRoute);
+                                    that.endSwapAnimation.call(that, oldRoute, route);
                                     currentView = undefined;
                                 });
 
-                            //modify once addClass supports array of classes
-                            $(currentView).addClass("animated out " + anim)
-                                .removeClass("in");
+                            $(newView).addClass(settings.currentClass +
+                                " animated " + anim + " in");
 
-                            //currentView.classList.add("animated");
-                            //currentView.classList.add("out");
-                            //currentView.classList.add(anim);
-                            //currentView.classList.remove("in");
+                        }else{
 
-                        } else {
-                          //  that.endSwapAnimation.call(that, undefined, currentView, newView, oldRoute);
+                            $(newView).addClass(settings.currentClass);
+                            that.endSwapAnimation.call(that, oldRoute, route);
                         }
 
                     }
-
-                    //newView.addEventListener(
-                    //            that.transitionend[that.cssPrefix("animation")], function (e) {
-                    //                that.endSwapAnimation.call(that, oldRoute);
-                    //            });
-
-//                    newView.addEventListener();
-
-
-                    $(newView).addClass(settings.currentClass +
-                        " animated " + anim + " in");
 
                     that.setDocumentTitle(route);
 
@@ -400,12 +413,12 @@
 
         },
 
-        endSwapAnimation: function (route) {
+        endSwapAnimation: function (route, newRoute) {
             //currentView, newView, 
             var that = this,
 //                $view = $(view),
                 currentView = document.querySelector(".current.out"),
-                newView = document.querySelector(".current.in"),
+                newView = document.getElementById(newRoute.viewId),
                 parent,
                 anim = that.animation;
 
@@ -413,23 +426,15 @@
                 that.makeCallback(route, "unload");
             }
 
-
-            //$(currentView).removeClass(that.settings.currentClass + " " +
-            //                            anim + " out ");
-
             if (newView.classList.contains("in")) {
                 newView.classList.remove("in");
                 newView.classList.remove(anim);
-            } 
+            }
 
             if (currentView && that.bp && currentView.parentNode) {
 
                 parent = currentView.parentNode
                 parent.removeChild(currentView);
-
-//                    view = undefined;
-
-         //       }
 
             }
 
@@ -603,6 +608,7 @@
             autoSetTitle: true,
             parseDOM: true,
             initView: true,
+            intoAnimation: true,
             viewTransition: "slide",
             asyncUrl: undefined
         }
