@@ -3,7 +3,7 @@ movies
 
 Source Code for my High Performance Single Page Web Applications book, http://amzn.to/1b0twcm.
 
-The source code has 4 web projects included. The first 3 correlat to chapters 2, 3 and 5 in the book. These chapters concern responsive web design techniques. The largest portion of the source code is the code for the actual demonstration application, http://movies.spawebbook.com.
+The source code has 4 web projects included. The first 3 correlate to chapters 2, 3 and 5 in the book. These chapters concern responsive web design techniques. The largest portion of the source code is the code for the actual demonstration application, http://movies.spawebbook.com.
 
 
 This is an example Single Page Application using the libraries and principles I have learned and created since 2010. My libraries include:
@@ -40,4 +40,4 @@ The book contains 20 chapters for an estimated 395 pages. The Chapters are as fo
 19. Prepare for Production Using GruntJS
 20. Offlining the Web
 
-
+The book is $9.99 USD and is currently available only on Amazon. I hope to soon have it available on Barnes and Noble and directly. Sorry no printed copies are in the works.
