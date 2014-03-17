@@ -3,9 +3,9 @@
 (function (window, undefined) {
 
     "use strict";
-  
 
-movieApp.fn.setPosterSrc = function (posterSelector) {
+
+    movieApp.fn.setPosterSrc = function (posterSelector) {
 
         var i = 0,
             moviePoster,

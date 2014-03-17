@@ -291,13 +291,13 @@
             }
         },
 
-pushGA: function (path) {
+        pushGA: function (path) {
 
-    //if Google Analytics available, then push the path
-    if (_gaq !== undefined) {
-        _gaq.push(['_trackPageview', path]);
-    }
-},
+            //if Google Analytics available, then push the path
+            if (_gaq !== undefined) {
+                _gaq.push(['_trackPageview', path]);
+            }
+        },
 
         swapView: function () {
 
@@ -377,7 +377,7 @@ pushGA: function (path) {
                             $(newView).addClass(settings.currentClass +
                                 " animated " + anim + " in");
 
-                        }else{
+                        } else {
 
                             $(newView).addClass(settings.currentClass);
                             that.endSwapAnimation.call(that, oldRoute, route);

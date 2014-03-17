@@ -22,7 +22,7 @@ body {
     color: #fff;
     letter-spacing: 0.02em;
     font-size: 13px;
-    font-family: 'Segoe UI', 'Segoe WP', 'Open Sans', 'Lucida Grande', "sans-serif";
+    font-family: "Segoe UI","Segoe WP","Open Sans","Lucida Grande",sans-serif;
     line-height: 1.231;
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -30,7 +30,6 @@ body {
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
-
 }
 
 /*http://www.sitepoint.com/html5-main-element/  */
@@ -108,13 +107,6 @@ h4, .panel-small-title {
     display: block;
 }
 
-/* neat trick, but only works on windows wink wink wink*/
-/*.win-backbutton::before {
-        font-family: "Segoe UI Symbol";
-        font-weight: normal;
-        content: "\E0D5"; /* Can Only be used with ::before & ::after */
-/*vertical-align: 50%;
-}*/
 
  .main-content {
     position: absolute;
