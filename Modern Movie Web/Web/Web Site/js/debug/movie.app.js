@@ -80,10 +80,9 @@
             that.tmpl = that.settings.tmpl || Mustache;
 
             that.movieData = that.settings.movieData || movieData(
-                RottenTomatoes({ data: data }),
+                RottenTomatoes({ data: rqData() }),
                 fakeTheaters()
             );
-
 
             that.compileTemplates();
 

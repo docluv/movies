@@ -50,15 +50,19 @@
     {
         <a href="@Html.SPALink("movies/Opening")">
             <h3 class="panel-title">opening movies</h3>
+            @*Generate Movie List Here by Connecting to Rotten Tomatoes API on the Server*@
         </a>
         <a href="@Html.SPALink("movies/TopBoxOffice")">
             <h3 class="panel-title">top box office</h3>
+            @*Generate Movie List Here by Connecting to Rotten Tomatoes API on the Server*@
         </a>
         <a href="@Html.SPALink("movies/ComingSoon")">
             <h3 class="panel-title">coming soon</h3>
+            @*Generate Movie List Here by Connecting to Rotten Tomatoes API on the Server*@
         </a>
         <a href="@Html.SPALink("movies/InTheaters")">
             <h3 class="panel-title">near me</h3>
+            @*Generate Movie List Here by Connecting to Rotten Tomatoes API on the Server*@
         </a>
         @RenderPage("_MovieList.cshtml")
     }

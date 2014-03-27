@@ -66,7 +66,6 @@
 
         },
 
-
         unload: function () {
             this.movieView.isVisible = false;
         },
@@ -196,7 +195,7 @@
 
                 mv.mql610.addListener(function (e) {
 
-                    if (this.movieView.isVisible) {
+                    if (mv.isVisible) {
 
                         if (e.matches) {
                             mv.renderMiniTablet.call(that);
@@ -218,7 +217,7 @@
 
                 mv.mql820.addListener(function (e) {
 
-                    if (this.movieView.isVisible) {
+                    if (mv.isVisible) {
 
                         if (e.matches) {
                             mv.renderFullScreen.call(that);
@@ -405,6 +404,9 @@
             ele.st.style.position = "";
             ele.st.style.left = "";
 
+            ele.cn.style.position = "";
+            ele.cn.style.left = "";
+
             ele.sr.style.position = "";
             ele.sr.style.left = "";
             ele.sr.style.top = "";
@@ -424,6 +426,8 @@
             qs(showTimes).style.display = "block";
             qs(reviewPanel).style.display = "block";
             qs(castNames).style.display = "block";
+
+            this.panorama.resizePanorama();
 
         },
 
@@ -449,6 +453,8 @@
             panelWrapper.style.width = "";
             panelWrapper.style.height = "";
             panelWrapper.style.left = "";
+
+            this.panorama.resizePanorama();
         },
 
         renderFullScreen: function () {
@@ -458,6 +464,8 @@
             qs(showTimes).style.display = "block";
             qs(reviewPanel).style.display = "";
             qs(castNames).style.display = "block";
+
+            this.panorama.resizePanorama();
 
         },
 

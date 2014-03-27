@@ -137,7 +137,6 @@ else
         <nav class="main-nav" role="navigation">
             <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
             <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-            @*<a href="@Html.SPALink("reviews")" role="menuitem" class="reviews-nav"><span class="nav-icon reviews-icon"></span><span class="nav-text">Reviews</span></a>*@
             <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
             <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
             <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
@@ -178,10 +177,6 @@ else
                 @RenderPage("views/theater-view.cshtml")
                     break;
 
-                    @*case "reviews":
-                        @RenderPage("views/reviews-view.cshtml")
-                            break;*@
-
                 case "privacy":
                 @RenderPage("views/privacy-view.cshtml")
                     break;
@@ -213,7 +208,6 @@ else
         @SPARenderPage("views/movies-view.cshtml")
         @SPARenderPage("views/movie-view.cshtml")
         @SPARenderPage("views/maps-view.cshtml")
-        @*@SPARenderPage("views/reviews-view.cshtml")*@
         @SPARenderPage("views/search-view.cshtml")
         @SPARenderPage("views/theater-view.cshtml")
         @SPARenderPage("views/about-view.cshtml")
@@ -231,7 +225,7 @@ else
 
         if (HttpContext.Current.IsDebuggingEnabled)
         {
-            <script src="@Href("~/js/libs/dollarbill.min.js?v=.01")"></script>
+            <script src="@Href("~/js/libs/dollarbill.min.js")"></script>
             <script src="@Href("~/js/libs/backpack.js")"></script>
             <script src="@Href("~/js/libs/reqwest.min.js")"></script>
             <script src="@Href("~/js/libs/rqdata.js")"></script>
@@ -245,6 +239,7 @@ else
             <script src="@Href("~/js/libs/toolbar.js")"></script>
 
             <script src="@Href("~/js/debug/movie.app.js")"></script>
+        
             <script src="@Href("~/js/debug/ui/movie.app.grid.js")"></script>
 
             <script src="@Href("~/js/debug/views/movie.app.home-view.js")"></script>
@@ -257,6 +252,7 @@ else
             <script src="@Href("~/js/debug/views/movie.app.about-view.js")"></script>
             <script src="@Href("~/js/debug/views/movie.app.social-view.js")"></script>
             <script src="@Href("~/js/debug/views/movie.app.notfound-view.js")"></script>
+        
             <script src="@Href("~/js/debug/movie.app.bootstrap.js")"></script>
 
         }

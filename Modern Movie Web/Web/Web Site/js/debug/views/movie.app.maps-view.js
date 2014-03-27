@@ -7,79 +7,79 @@
 
     movieApp.fn.mapsView = {
 
-onload: function () {
+        onload: function () {
 
-    var that = this,
-        mv = that.mapsView;
+            var that = this,
+                mv = that.mapsView;
 
-    that.setMainTitle("theaters near you");
+            that.setMainTitle("theaters near you");
 
-    $().loadScript("bing-map-script", "http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0", function () {
+            $().loadScript("bing-map-script", "http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0", function () {
 
                 mv.loadNearbyTheaters.call(that);
 
             }, "head");
 
-},
+        },
 
-loadNearbyTheaters: function () {
+        loadNearbyTheaters: function () {
 
-    var that = this,
-        mv = that.mapsView,
-        map, i, theaters = [],
-        key = "Ai2HABTSdPR3baDe6yPjFDNRac3RsbaFMjUb2d-OjlQd8o3vO2DcqRxBpDgRTuUD";
+            var that = this,
+                mv = that.mapsView,
+                map, i, theaters = [],
+                key = "Ai2HABTSdPR3baDe6yPjFDNRac3RsbaFMjUb2d-OjlQd8o3vO2DcqRxBpDgRTuUD";
 
-    if (navigator.geolocation) {
+            if (navigator.geolocation) {
 
-        navigator.geolocation.getCurrentPosition(function (position) {
+                navigator.geolocation.getCurrentPosition(function (position) {
 
-            map = new Microsoft.Maps.Map(document.getElementById('nearbyMap'), {
-                credentials: key,
-                center: new Microsoft.Maps.Location(position.coords.latitude,
-                                                    position.coords.longitude),
-                mapTypeId: Microsoft.Maps.MapTypeId.road,
-                showScalebar: false,
-                showDashboard: false,
-                zoom: 12
-            });
+                    map = new Microsoft.Maps.Map(document.getElementById('nearbyMap'), {
+                        credentials: key,
+                        center: new Microsoft.Maps.Location(position.coords.latitude,
+                                                            position.coords.longitude),
+                        mapTypeId: Microsoft.Maps.MapTypeId.road,
+                        showScalebar: false,
+                        showDashboard: false,
+                        zoom: 12
+                    });
 
-            theaters = that.movieData.nearbyTheaters(position.coords.latitude,
-                                                    position.coords.longitude);
+                    theaters = that.movieData.nearbyTheaters(position.coords.latitude,
+                                                            position.coords.longitude);
 
-            //loop thorugh and place 10 random pushpins to represent theaters on the map
-            for (i = 0; i < theaters.length; i++) {
-                mv.AddPushpin.call(that, map, theaters[i]);
+                    //loop thorugh and place 10 random pushpins to represent theaters on the map
+                    for (i = 0; i < theaters.length; i++) {
+                        mv.AddPushpin.call(that, map, theaters[i]);
+                    }
+
+                    //add fake theater load
+
+                });
+
             }
 
-            //add fake theater load
+        },
 
-        });
+        AddPushpin: function (map, theater) {
 
-    }
+            var that = this,
+                mv = that.mapsView,
+                  shape,
+                  pin = new Microsoft.Maps.Pushpin({
+                      latitude: theater.latitude,
+                      longitude: theater.longitude
+                  });
 
-},
+            // Add a handler to the pushpin drag
+            Microsoft.Maps.Events.addHandler(pin, 'click', function () {
+                mv.goToTheaterFromMap(theater.name);
+            });
 
-AddPushpin: function (map, theater) {
+            map.entities.push(pin);
+        },
 
-    var that = this,
-        mv = that.mapsView,
-          shape,
-          pin = new Microsoft.Maps.Pushpin({
-              latitude: theater.latitude,
-              longitude: theater.longitude
-          });
-
-    // Add a handler to the pushpin drag
-    Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-        mv.goToTheaterFromMap(theater.name);
-    });
-
-    map.entities.push(pin);
-},
-
-goToTheaterFromMap: function (theaterName) {
-    window.location.hash = "#!theater/" + theaterName;
-},
+        goToTheaterFromMap: function (theaterName) {
+            window.location.hash = "#!theater/" + theaterName;
+        },
 
     };
 

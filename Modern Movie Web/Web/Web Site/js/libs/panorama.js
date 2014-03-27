@@ -491,37 +491,37 @@
 
         bigHeaderTrans: 0,
 
-settings: {
-    panoramaSelector: ".panorama-panels",
-    container: ".panorama-container",
-    singleColumnSelector: ".single-panel",
-    doubleColumnSelector: ".double-panel",
-    speed: 150,     //speed of each slide animation
-    //    easing: 'swing', //easing effect for the slide animation
+        settings: {
+            panoramaSelector: ".panorama-panels",
+            container: ".panorama-container",
+            singleColumnSelector: ".single-panel",
+            doubleColumnSelector: ".double-panel",
+            speed: 150,     //speed of each slide animation
+            //    easing: 'swing', //easing effect for the slide animation
 
-    windowWidth: window.innerWidth,
-    panelWidth: window.innerWidth,
-    panelHeight: window.innerHeight,
+            windowWidth: window.innerWidth,
+            panelWidth: window.innerWidth,
+            panelHeight: window.innerHeight,
 
-    peekWidth: 35,
+            peekWidth: 35,
 
-    easing: "ease-in-out",
+            easing: "ease-in-out",
 
-    // This are for wings - To Come later
-    nextScroll: ".panorama-next",
-    prevScroll: ".panorama-prev",
-    navWrapper: ".panorama-navigation",
-    showPrevNext: false, //do this when no touch available
+            // This are for wings - To Come later
+            nextScroll: ".panorama-next",
+            prevScroll: ".panorama-prev",
+            navWrapper: ".panorama-navigation",
+            showPrevNext: false, //do this when no touch available
 
-    headerSlide: .2,
-    bigHeaderLeft: 0,
+            headerSlide: .2,
+            bigHeaderLeft: 0,
 
-    headerStyle: ".panorama-header",
-    headerPanelStyle: ".panorama-panel-header",
-    headerHeight: 40,
+            headerStyle: ".panorama-header",
+            headerPanelStyle: ".panorama-panel-header",
+            headerHeight: 40,
 
-    bottomMargin: 35
-}
+            bottomMargin: 35
+        }
 
     };
 

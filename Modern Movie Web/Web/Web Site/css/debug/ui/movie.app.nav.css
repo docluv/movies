@@ -18,7 +18,7 @@
 /* Start Hamburger */
 .hamburger-nav {
     display: none;
-    width: 100px;
+    width: 120px;
     height: 40px;
     margin: 10px 5px;
     line-height: 26pt;
@@ -142,7 +142,7 @@
     }
 
     .view-title {
-        width: calc(100% - 220px);
+        width: calc(100% - 270px);
     }
 }
 
