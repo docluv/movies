@@ -43,8 +43,9 @@
       <HintPath>..\..\Movie Web\packages\Glimpse.1.6.1\lib\net45\Glimpse.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="SPAHelper">
-      <HintPath>..\..\..\..\SPAHelper\SPAHelper\bin\Release\SPAHelper.dll</HintPath>
+    <Reference Include="SPAHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\SPAHelper.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -156,3 +156,7 @@ $RECYCLE.BIN/
 .DS_Store
 
 /Modern Movie Web/Offline/Web Site/Views/Home/reviews-view.cshtml
+/Modern Movie Web/Web/Web Site/node_modules
+/Modern Movie Web/Web/Web Site/packages
+/Modern Movie Web/Movie Web/packages
+/Modern Movie Web/node_modules
