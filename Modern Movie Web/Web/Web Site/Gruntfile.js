@@ -21,10 +21,11 @@
                 },
                 files: {
                     'css/site.min.css': [
-                        'css/debug/site.css',
-                        'css/debug/animations.css',
-                        'css/debug/ui/*.css',
-                        'css/debug/views/*.css',
+                        'css/dev/site.css',
+                        'css/dev/animations.css',
+                        'css/dev/touch.css',
+                        'css/dev/ui/*.css',
+                        'css/dev/views/*.css',
                     ]
                 }
             }

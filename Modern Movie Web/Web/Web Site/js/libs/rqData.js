@@ -5,7 +5,9 @@
 
 (function (window, undefined) {
 
-        "use strict";
+    "use strict";
+
+    var cachettl = "-cachettl";
     
     var rqData = function (customSettings) {
 
@@ -71,7 +73,7 @@
                 cacheKey = options.cacheKey ||
                          options.url.replace(/jQuery.*/, '') + options.type +
                          (options.data ? that.serialize(options.data) : ""),
-                ttl = ls.getItem(cacheKey + '-cachettl');
+                ttl = ls.getItem(cacheKey + cachettl);
 
             value = that.getExistingData({
                 isCacheValid: options.isCacheValid,
@@ -140,14 +142,14 @@
 
                 // store timestamp
                 if (!ttl || ttl === 'expired') {
-                    ls.setItem(cacheKey + 'cachettl', +new Date() + 1000 * 60 * 60 * hourstl);
+                    ls.setItem(cacheKey + cachettl, +new Date() + 1000 * 60 * 60 * hourstl);
                 }
 
             } catch (e) {
 
                 // Remove any incomplete data that may have been saved before the exception was caught
                 ls.removeItem(cacheKey);
-                ls.removeItem(cacheKey + 'cachettl');
+                ls.removeItem(cacheKey + cachettl);
 
                 if (options.cacheError) {
                     options.cacheError(e, cacheKey, strdata);
@@ -170,7 +172,7 @@
             // if there's a TTL that's expired, flush this item
             if (!ttl || ttl < +new Date()) {
                 localStorage.removeItem(cacheKey);
-                localStorage.removeItem(cacheKey + 'cachettl');
+                localStorage.removeItem(cacheKey + cachettl);
                 ttl = 'expired';
             }
 
