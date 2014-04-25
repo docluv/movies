@@ -42,7 +42,6 @@
 
 .panel-v-scroll {
     -moz-overflow-scrolling: touch;
-    touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     overflow-style: none;
@@ -50,6 +49,7 @@
     -ms-scroll-snap-type: proximity;
     -ms-scroll-translation: vertical-to-horizontal;
     -ms-touch-action: pan-y;
+    touch-action: pan-y;
     overflow-scrolling: touch;
     overflow: hidden;
     overflow-x: hidden;
@@ -63,8 +63,8 @@
     margin: auto;
 }
 
-.large-text{
-    font-size:1.1em;
+.large-text {
+    font-size: 1.1em;
 }
 
 @media (min-width:600px) {
@@ -84,10 +84,10 @@
         margin: auto;
     }
 
-    
-.large-text{
-    font-size:1.6em;
-}
+
+    .large-text {
+        font-size: 1.6em;
+    }
 }
 
 @media(min-width: 1024px) {

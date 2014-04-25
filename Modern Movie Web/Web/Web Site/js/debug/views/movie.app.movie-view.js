@@ -238,7 +238,7 @@
 
                 mv.mql1024.addListener(function () {
 
-                    if (this.movieView.isVisible) {
+                    if (mv.isVisible) {
 
                         mv.setMoviePoster(window.innerWidth);
 
