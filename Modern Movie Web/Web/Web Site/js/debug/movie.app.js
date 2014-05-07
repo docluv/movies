@@ -74,7 +74,7 @@
 
             var that = this;
 
-            that.settings = $().extend({}, that.settings, customSettings);
+            that.settings = $.extend({}, that.settings, customSettings);
 
             that.bp = that.settings.bp || backpack();
             that.tmpl = that.settings.tmpl || Mustache;
@@ -174,6 +174,8 @@
 
         },
 
+        $scope: undefined, //Angular has popularized this naming convention, so why not 'barrow it' :P
+
         bp: undefined,
         tmpl: undefined,
 
@@ -267,7 +269,7 @@
         setupPanorama: function (target, settings) {
 
             target = target || ".panorama-container";
-            settings = $().extend({
+            settings = $.extend({
                 maxHeight: Number.MAX_VALUE,
                 maxWidth: Number.MAX_VALUE
             }, settings);
@@ -276,7 +278,7 @@
                 pCont = document.querySelector(target);
 
             that.panorama = panorama(pCont,
-                                $().extend(settings, {
+                                $.extend(settings, {
                                     speed: 600,
                                     headerHeight: 80,
                                     peekWidth: 50

@@ -13,7 +13,7 @@
 
         var that = new rqData.fn.init();
 
-        that.settings = $().extend({}, that.settings, customSettings);
+        that.settings = $.extend({}, that.settings, customSettings);
 
         return that;
 
@@ -203,7 +203,7 @@
 
         getJSONP: function (url, ajaxSettings) {
 
-            var ajaxOptions = $().extend({},
+            var ajaxOptions = $.extend({},
                     this.ajaxSettings,
                     ajaxSettings, {
                         "url": url,
@@ -218,7 +218,7 @@
 
         getData: function (url, ajaxSettings) {
 
-            var ajaxOptions = $().extend({},
+            var ajaxOptions = $.extend({},
                                 this.ajaxSettings,
                                 ajaxSettings, { "url": url });
 
@@ -233,7 +233,7 @@
 
         postData: function (options) {
 
-            var ajaxOptions = $().extend({},
+            var ajaxOptions = $.extend({},
                             this.ajaxSettings,
                             { type: "POST" },
                             options.ajaxSettings,

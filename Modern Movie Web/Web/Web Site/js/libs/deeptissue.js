@@ -29,11 +29,9 @@
                 this.node = [node];
             }
 
-            var $$ = $();
+            this.settings = $.extend({}, this.settings, customSettings);
 
-            this.settings = $$.extend({}, this.settings, customSettings);
-
-            this.support = $$.buildVendorNames();
+            this.support = $.buildVendorNames();
 
             this.touchType = window.navigator.msPointerEnabled ? "pointer" :
                                 "ontouchstart" in window ? "touch" : "mouse";
@@ -65,7 +63,7 @@
             return this;
         },
 
-        version: "0.0.6",
+        version: "0.0.7",
 
         hasMouse: "",
         touchType: "",
@@ -88,7 +86,7 @@
 
                     el.addEventListener("gesturestart", function (evt) {
 
-                    //    evt.preventDefault();
+                        //    evt.preventDefault();
 
                     });
 
@@ -250,8 +248,8 @@
         processSwipe: function (el, e, settings, m) {
 
             var that = this;
-                //horizontal = false,
-                //vertical = false;
+            //horizontal = false,
+            //vertical = false;
 
             m = m || {};
 
@@ -367,7 +365,7 @@
             var el = e.target,
                 settings = this.settings;
 
-        //    e.preventDefault();
+            //    e.preventDefault();
 
             // console.info("gesture Change \r\n" +
             //              el.hasAttribute(settings.rotateIndicator) + "\r\n");
@@ -407,7 +405,8 @@
             };
         },
 
-        setupIndicator: function (callback, callbackName, threshold, threshholdName, indicator) {
+        setupIndicator: function (callback, callbackName, threshold,
+                                    threshholdName, indicator) {
 
             var that = this,
                 settings = that.settings;
@@ -564,17 +563,17 @@
 
                 var moveHandler = function (evt) {
 
-               //     evt.preventDefault();
+                    //     evt.preventDefault();
                     that.touchMoveHandler.call(that, evt, el, settings);
                 },
                     endHandler = function (evt) {
 
-      //                  evt.preventDefault();
+                        //                  evt.preventDefault();
                         that.endTouchHandler.call(that, evt, el, settings);
                     },
                     startHandler = function (evt) {
 
-                  //      evt.preventDefault();
+                        //      evt.preventDefault();
                         that.startTouchHandler.call(that, evt, el, settings);
                     };
 
@@ -583,20 +582,20 @@
                 el.addEventListener(that.touchEnd, endHandler);
                 el.addEventListener(that.touchCancel, endHandler);
 
-                el.addEventListener("mouseout", endHandler);
-                el.addEventListener("mouseup", endHandler);
+                //el.addEventListener("mouseout", endHandler);
+                //el.addEventListener("mouseup", endHandler);
 
                 el.addEventListener(that.touchEnd, function () {
                     // console.info("touchEnd");
                 });
 
-                el.addEventListener("mouseout", function () {
-                    // console.info("mouseout");
-                });
+                //el.addEventListener("mouseout", function () {
+                //    // console.info("mouseout");
+                //});
 
-                el.addEventListener("mouseup", function () {
-                    // console.info("mouseup");
-                });
+                //el.addEventListener("mouseup", function () {
+                //    // console.info("mouseup");
+                //});
 
                 el.addEventListener(that.touchCancel, function () {
                     // console.info("touchCancel");
@@ -606,13 +605,13 @@
                     // console.info("touchOut");
                 });
 
-                if (that.hasMouse) {
+                //if (that.hasMouse) {
 
-                    el.addEventListener("mousedown", startHandler);
-                    el.addEventListener("mousemove", moveHandler);
-                    el.addEventListener("mouseup", endHandler);
+                //    el.addEventListener("mousedown", startHandler);
+                //    el.addEventListener("mousemove", moveHandler);
+                //    el.addEventListener("mouseup", endHandler);
 
-                }
+                //}
 
             });
 
@@ -622,10 +621,6 @@
 
             var that = this;
             settings = this.settings;
-
-          //  evt.preventDefault();
-
-            // console.info("touch start");
 
             if (el.hasAttribute(settings.moveIndicator)) {
 
@@ -683,8 +678,6 @@
             var that = this;
             settings = this.settings;
 
-        //    evt.preventDefault();
-
             if (el.hasAttribute(settings.moveTouchInitial)) {
                 el.setAttribute(settings.moveTouchEnded, "true");
             }
@@ -737,7 +730,7 @@
             var that = this;
             settings = this.settings;
 
-         //   evt.preventDefault();
+            //   evt.preventDefault();
 
             if (el.hasAttribute(settings.moveIndicator)) {
 
@@ -919,7 +912,7 @@
 
             var //that = this,
                 settings = this.settings;
-                //tl = document.querySelector(".touch-log");
+            //tl = document.querySelector(".touch-log");
 
             if (callback) {
                 settings.doubleTapCallback = callback;
@@ -983,7 +976,7 @@
         preventTapHoldContext: function (elm) {
 
             elm.addEventListener("contextmenu", function (e) {
-              //  e.preventDefault();    // Disables system menu
+                //  e.preventDefault();    // Disables system menu
             }, false);
 
         },
@@ -1016,7 +1009,7 @@
 
             var that = this;
 
-          //  evt.preventDefault();
+            //  evt.preventDefault();
 
             // // console.info("evt.detail - " + evt.detail);
 

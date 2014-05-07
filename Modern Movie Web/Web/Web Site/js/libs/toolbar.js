@@ -36,11 +36,10 @@ callback: function(){} //gets executed when the item is selected
         }
 
         var that = new toolbar.fn.init(),
-            $$ = $(),
-            settings = that.settings =
-                        $$.extend({}, that.settings, customSettings);
+             settings = that.settings =
+                        $.extend({}, that.settings, customSettings);
 
-        that.support = $$.buildVendorNames();
+        that.support = $.buildVendorNames();
         that.support.transitionEnd =
                             that.eventNames[that.support.transition] || null;
 

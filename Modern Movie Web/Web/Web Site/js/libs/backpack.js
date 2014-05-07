@@ -8,7 +8,7 @@
 
         var that = new backpack.fn.init(customSettings);
 
-        that.settings = $().extend({}, that.settings, customSettings);
+        that.settings = $.extend({}, that.settings, customSettings);
 
         return that;
     };
@@ -28,7 +28,7 @@
 
             var i, temp,
                 t = document.querySelectorAll("script[type='" + this.settings.templateType + "']"),
-                templates = $().parseLocalStorage("templates");
+                templates = $.parseLocalStorage("templates");
 
             for (i = 0; i < t.length; i++) {
 
@@ -111,9 +111,9 @@
         //keep
         storeViewInfo: function (viewInfo) {
 
-            viewInfo = $().extend({}, this.pageSettings, viewInfo);
+            viewInfo = $.extend({}, this.pageSettings, viewInfo);
 
-            localStorage.setItem(viewInfo.pageId,
+            localStorage.setItem(this.settings.appName + "-" + viewInfo.pageId,
                             JSON.stringify(viewInfo));
 
         },
@@ -121,7 +121,7 @@
         //keep
         getViewData: function (viewId) {
 
-            var viewData = localStorage[viewId],
+            var viewData = localStorage[this.settings.appName + "-" + viewId],
                 view;
 
             if (!viewData) {
@@ -131,7 +131,7 @@
                 if (view) {
 
                     this.saveViewToStorage(view);
-                    viewData = window.localStorage[viewId];
+                    viewData = window.localStorage[this.settings.appName + "-" + viewId];
                 }
             }
 
@@ -146,7 +146,8 @@
             defaultTitle: "A Really Cool SPA App",
             deferredTimeKey: "lastDeferredTime",
             templateType: "text/x-mustache-template",
-            currentClass: "current"
+            currentClass: "current",
+            appName: ""
         },
 
         pageSettings: {

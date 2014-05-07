@@ -15,7 +15,7 @@
 
         var that = new RottenTomatoes.fn.init(customSettings);
 
-        that.settings = $().extend({}, that.settings, customSettings);
+        that.settings = $.extend({}, that.settings, customSettings);
 
 
         //for a lightweight library with an extend method see my dollarbill repository

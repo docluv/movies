@@ -13,7 +13,28 @@
 
         var that = new spa.fn.init();
 
-        that.settings = $().extend({}, that.settings, customSettings);
+        that.settings = $.extend({}, that.settings, customSettings);
+
+        if (that.settings.AppContext) {
+            that.$rootScope = that.settings.AppContext;
+        } else {
+
+            var spaApp = document.querySelector("[spa-app]");
+
+            if (spaApp) {
+
+                that.$rootScope = window[spaApp.getAttribute("spa-app")];
+
+            } else {
+                console.error("Must have an application context defined");
+
+                throw {
+                    name: "SPA Error",
+                    message: "Must have an application context defined"
+                };
+            }
+
+        }
 
         that.bp = that.settings.bp || backpack();
 
@@ -70,16 +91,24 @@
             return this;
         },
 
-        version: "0.0.5",
+        version: "0.0.6",
 
         bp: undefined,
+
+        //barrowing naming conventions from Angular
+        //This is like renaming a brand with a bad reputation,
+        //maintaining and using the context (this) properly
+        //is confusing for many developers new to JavaScript.
+        //Changing the name abstracts the mind from associating
+        //the name to something they perceive as annoying.
+        $rootScope: undefined,
+        $scope: undefined,
 
         setupRoutes: function () {
 
             var that = this,
                 settings = that.settings,
-                $$ = $(),
-                routes = $$.extend($$.parseLocalStorage("routes") || {}, settings.routes),
+                routes = $.extend($.parseLocalStorage("routes") || {}, settings.routes),
                 i = 0, rawPath, view, route, viewId,
                 Views = document.querySelectorAll(settings.viewSelector);
 
@@ -124,8 +153,12 @@
                         view.getAttribute("data-transition") :
                         ""),
                 paramValues: {},
-                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : undefined), //"load" + viewId),
-                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : undefined)//"unload" + viewId)
+                beforeonload: (view.hasAttribute("spa-beforeonload") ? view.getAttribute("spa-beforeonload") : undefined),
+                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : undefined),
+                afteronload: (view.hasAttribute("spa-afteronload") ? view.getAttribute("spa-afteronload") : undefined),
+                beforeunload: (view.hasAttribute("spa-beforeunload") ? view.getAttribute("spa-beforeunload") : undefined),
+                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : undefined),
+                afterunload: (view.hasAttribute("spa-afterunload") ? view.getAttribute("spa-afterunload") : undefined)
             };
 
         },
@@ -336,6 +369,8 @@
 
                     if (currentView) {
 
+                        that.makeCallback(oldRoute, "beforeunload");
+
                         if (that.hasAnimations()) {
 
                             anim = that.getAnimation(route);
@@ -388,7 +423,9 @@
                     that.setDocumentTitle(route);
 
                     if (route) {
+                        that.makeCallback(route, "beforeonload");
                         that.makeCallback(route, "onload");
+                        that.makeCallback(route, "afteronload");
                     }
 
                 }
@@ -416,14 +453,14 @@
         endSwapAnimation: function (route, newRoute) {
             //currentView, newView, 
             var that = this,
-//                $view = $(view),
                 currentView = document.querySelector(".current.out"),
                 newView = document.getElementById(newRoute.viewId),
                 parent,
                 anim = that.animation;
 
             if (route) {
-                that.makeCallback(route, "unload");
+                that.makeCallback(route, "unload");                
+                that.makeCallback(route, "afterunload");
             }
 
             if (newView.classList.contains("in")) {
@@ -472,21 +509,21 @@
         makeCallback: function (route, action) {
 
             var that = this,
+                $rootScope = that.$rootScope,
                 settings = that.settings,
                 a, cbPaths, callback;
 
+            console.info("making " + action + " callback");
+
             if (action && !route[action]) {
 
-                var ctx = settings.appContext;
+                if ($rootScope) {
 
-                if (settings.appContext) {
-
-                    if (ctx[route.viewModule] && ctx[route.viewModule][action]) {
-                        ctx[route.viewModule][action].call(ctx, route.paramValues || {});
+                    if ($rootScope[route.viewModule] && $rootScope[route.viewModule][action]) {
+                        $rootScope[route.viewModule][action].call($rootScope, route.paramValues || {});
                     }
 
                 }
-
 
                 return;
             }

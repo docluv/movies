@@ -25,7 +25,7 @@
 
         var that = new panorama.fn.init(container, customSettings);
 
-        that.settings = $().extend({}, that.settings, customSettings);
+        that.settings = $.extend({}, that.settings, customSettings);
         that.buildVendorNames();
 
         that.setupElements(container);
@@ -91,17 +91,16 @@
 
         buildVendorNames: function () {
 
-            var that = this,
-                $$ = $();
+            var that = this;
 
             that.div = document.createElement('div');
 
             // Check for the browser's transitions support.
-            that.support.transition = $$.getVendorPropertyName('transition');
-            that.support.transitionDelay = $$.getVendorPropertyName('transitionDelay');
-            that.support.transform = $$.getVendorPropertyName('transform');
-            that.support.transformOrigin = $$.getVendorPropertyName('transformOrigin');
-            that.support.transform3d = $$.checkTransform3dSupport();
+            that.support.transition = $.getVendorPropertyName('transition');
+            that.support.transitionDelay = $.getVendorPropertyName('transitionDelay');
+            that.support.transform = $.getVendorPropertyName('transform');
+            that.support.transformOrigin = $.getVendorPropertyName('transformOrigin');
+            that.support.transform3d = $.checkTransform3dSupport();
 
             // Avoid memory leak in IE.
             that.div = null;

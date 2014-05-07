@@ -10,7 +10,7 @@ else
     @:<html lang="en" manifest="app.cache">
     }
 }
-<head>
+<head >
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -130,142 +130,142 @@ else
     <meta name="google-site-verification" content="[verification key goes here]" />
 
 </head>
-<body>
-    <header class="site-header" role="banner">
-        <span class="win-backbutton"><span class="back-btn"></span></span>
-        <h1 class="view-title">@Model.Title</h1>
-        <nav class="main-nav" role="navigation">
-            <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
-            <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
-            <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
-            <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
-            <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
-            <a href="@Html.SPALink("privacy")" role="menuitem" class="privacy-nav"><span class="nav-icon privacy-icon"></span><span class="nav-text">Privacy</span></a>
-        </nav>
-        <span class="hamburger-nav">
-            <span class="hamburger-bar-wrapper">
-                <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
-            </span>
-            <span class="hamburger-bar-text">menu</span>
-        </span>
-    </header>
-    <main class="main-content" role="main">
+      <body spa-app="movie">
+          <header class="site-header" role="banner">
+              <span class="win-backbutton"><span class="back-btn"></span></span>
+              <h1 class="view-title">@Model.Title</h1>
+              <nav class="main-nav" role="navigation">
+                  <a href="@Html.SPALink("")" role="menuitem" class="home-nav"><span class="nav-icon home-icon"></span><span class="nav-text">Home</span></a>
+                  <a href="@Html.SPALink("maps")" role="menuitem" class="maps-nav"><span class="nav-icon maps-icon"></span><span class="nav-text">Map</span></a>
+                  <a href="@Html.SPALink("search")" role="menuitem" class="search-nav"><span class="nav-icon search-icon"></span><span class="nav-text">Search</span></a>
+                  <a href="@Html.SPALink("social")" role="menuitem" class="social-nav"><span class="nav-icon social-icon"></span><span class="nav-text">Social</span></a>
+                  <a href="@Html.SPALink("about")" role="menuitem" class="about-nav"><span class="nav-icon about-icon"></span><span class="nav-text">About</span></a>
+                  <a href="@Html.SPALink("privacy")" role="menuitem" class="privacy-nav"><span class="nav-icon privacy-icon"></span><span class="nav-text">Privacy</span></a>
+              </nav>
+              <span class="hamburger-nav">
+                  <span class="hamburger-bar-wrapper">
+                      <span class="hamburger-bar"></span><span class="hamburger-bar"></span><span class="hamburger-bar"></span>
+                  </span>
+                  <span class="hamburger-bar-text">menu</span>
+              </span>
+          </header>
+          <main class="main-content" role="main">
 
-        @if (Html.HasEscapeFragment())
-        {
+              @if (Html.HasEscapeFragment())
+              {
 
-            switch (Model.MainRoute.ToLower())
-            {
+                  switch (Model.MainRoute.ToLower())
+                  {
 
-                case "":
-                    @RenderPage("views/home-view.cshtml")
-                    break;
+                      case "":
+                          @RenderPage("views/home-view.cshtml")
+                          break;
 
-                case "movies":
-                @RenderPage("views/movies-view.cshtml")
-                    break;
+                      case "movies":
+                      @RenderPage("views/movies-view.cshtml")
+                          break;
 
-                case "movie":
-                @RenderPage("views/movie-view.cshtml")
-                    break;
+                      case "movie":
+                      @RenderPage("views/movie-view.cshtml")
+                          break;
 
-                case "about":
-                @RenderPage("views/about-view.cshtml")
-                    break;
+                      case "about":
+                      @RenderPage("views/about-view.cshtml")
+                          break;
 
-                case "theater":
-                @RenderPage("views/theater-view.cshtml")
-                    break;
+                      case "theater":
+                      @RenderPage("views/theater-view.cshtml")
+                          break;
 
-                case "privacy":
-                @RenderPage("views/privacy-view.cshtml")
-                    break;
+                      case "privacy":
+                      @RenderPage("views/privacy-view.cshtml")
+                          break;
 
-                case "search":
-                @RenderPage("views/search-view.cshtml")
-                    break;
+                      case "search":
+                      @RenderPage("views/search-view.cshtml")
+                          break;
 
-                case "social":
-                @RenderPage("views/social-view.cshtml")
-                    break;
+                      case "social":
+                      @RenderPage("views/social-view.cshtml")
+                          break;
 
-                default:
-                @RenderPage("views/notFound.cshtml")
-                    break;
-            }
-        }
+                      default:
+                      @RenderPage("views/notFound.cshtml")
+                          break;
+                  }
+              }
 
-    </main>
-    <footer class="toolbar">
-        <nav class="toolbar-top-menu"></nav>
-        <nav class="toolbar-sub-menu"></nav>
-    </footer>
+          </main>
+          <footer class="toolbar">
+              <nav class="toolbar-top-menu"></nav>
+              <nav class="toolbar-sub-menu"></nav>
+          </footer>
 
-    @if (!Html.HasEscapeFragment())
-    {
+          @if (!Html.HasEscapeFragment())
+          {
 
-        @SPARenderPage("views/home-view.cshtml")
-        @SPARenderPage("views/movies-view.cshtml")
-        @SPARenderPage("views/movie-view.cshtml")
-        @SPARenderPage("views/maps-view.cshtml")
-        @SPARenderPage("views/search-view.cshtml")
-        @SPARenderPage("views/theater-view.cshtml")
-        @SPARenderPage("views/about-view.cshtml")
-        @SPARenderPage("views/social-view.cshtml")
-        @SPARenderPage("views/privacy-view.cshtml")
-        @SPARenderPage("views/notfound-view.cshtml")
-        @SPARenderPage("templates/_templates.cshtml")
+              @SPARenderPage("views/home-view.cshtml")
+              @SPARenderPage("views/movies-view.cshtml")
+              @SPARenderPage("views/movie-view.cshtml")
+              @SPARenderPage("views/maps-view.cshtml")
+              @SPARenderPage("views/search-view.cshtml")
+              @SPARenderPage("views/theater-view.cshtml")
+              @SPARenderPage("views/about-view.cshtml")
+              @SPARenderPage("views/social-view.cshtml")
+              @SPARenderPage("views/privacy-view.cshtml")
+              @SPARenderPage("views/notfound-view.cshtml")
+              @SPARenderPage("templates/_templates.cshtml")
 
-    }
+          }
 
-    <script id="bing-map-script" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+          <script id="bing-map-script" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 
-    @if (!Html.HasEscapeFragment())
-    {
+          @if (!Html.HasEscapeFragment())
+          {
 
-        if (HttpContext.Current.IsDebuggingEnabled)
-        {
-            <script src="@Href("~/js/libs/dollarbill.min.js")"></script>
-            <script src="@Href("~/js/libs/backpack.js")"></script>
-            <script src="@Href("~/js/libs/reqwest.min.js")"></script>
-            <script src="@Href("~/js/libs/rqdata.js")"></script>
-            <script src="@Href("~/js/libs/rottentomatoes.js")"></script>
-            <script src="@Href("~/js/libs/fakeTheaters.js")"></script>
-            <script src="@Href("~/js/libs/movie-data.js")"></script>
-            <script src="@Href("~/js/libs/mustache.js")"></script>
-            <script src="@Href("~/js/libs/spa.js")"></script>
-            <script src="@Href("~/js/libs/deeptissue.js")"></script>
-            <script src="@Href("~/js/libs/panorama.js")"></script>
-            <script src="@Href("~/js/libs/toolbar.js")"></script>
+              if (HttpContext.Current.IsDebuggingEnabled)
+              {
+                  <script src="@Href("~/js/libs/dollarbill.min.js")"></script>
+                  <script src="@Href("~/js/libs/backpack.js")"></script>
+                  <script src="@Href("~/js/libs/reqwest.min.js")"></script>
+                  <script src="@Href("~/js/libs/rqdata.js")"></script>
+                  <script src="@Href("~/js/libs/rottentomatoes.js")"></script>
+                  <script src="@Href("~/js/libs/fakeTheaters.js")"></script>
+                  <script src="@Href("~/js/libs/movie-data.js")"></script>
+                  <script src="@Href("~/js/libs/mustache.js")"></script>
+                  <script src="@Href("~/js/libs/spa.js")"></script>
+                  <script src="@Href("~/js/libs/deeptissue.js")"></script>
+                  <script src="@Href("~/js/libs/panorama.js")"></script>
+                  <script src="@Href("~/js/libs/toolbar.js")"></script>
 
-            <script src="@Href("~/js/debug/movie.app.js")"></script>
-        
-            <script src="@Href("~/js/debug/ui/movie.app.grid.js")"></script>
+                  <script src="@Href("~/js/debug/movie.app.js")"></script>
 
-            <script src="@Href("~/js/debug/views/movie.app.home-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.maps-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.search-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.theater-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.movie-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.movies-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.privacy-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.about-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.social-view.js")"></script>
-            <script src="@Href("~/js/debug/views/movie.app.notfound-view.js")"></script>
-        
-            <script src="@Href("~/js/debug/movie.app.bootstrap.js")"></script>
+                  <script src="@Href("~/js/debug/ui/movie.app.grid.js")"></script>
 
-        }
-        else
-        {
-            <script src="@Href("~/js/applib.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.home-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.maps-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.search-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.theater-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.movie-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.movies-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.privacy-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.about-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.social-view.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.app.notfound-view.js")"></script>
 
-            if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
-            {
-                <script src="@Href("~/js/libs/add2home.js")" async="async"></script>
-            }
-        }
-    }
+                  <script src="@Href("~/js/debug/movie.app.bootstrap.js")"></script>
 
-</body>
+              }
+              else
+              {
+                  <script src="@Href("~/js/applib.js")"></script>
+
+                  if (Request.UserAgent.ToLower().Contains("ipad") || Request.UserAgent.ToLower().Contains("iphone"))
+                  {
+                      <script src="@Href("~/js/libs/add2home.js")" async="async"></script>
+                  }
+              }
+          }
+
+      </body>
 </html>
