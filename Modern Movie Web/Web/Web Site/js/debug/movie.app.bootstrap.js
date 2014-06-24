@@ -16,7 +16,7 @@ window.applicationCache.addEventListener('updateready', function (e) {
 
 var bp = backpack(),
     data = rqData(),
-    movie //This would be equivalent to $rootScope in Angular;
+    movie; //This would be equivalent to $rootScope in Angular;
 
 movieApp.fn.privacyView = privacyView(data);
 

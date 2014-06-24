@@ -22,7 +22,7 @@
             return this;
         },
 
-        version: "0.0.2",
+        version: "0.0.3",
 
         getTemplates: function (remove) {
 
@@ -97,11 +97,11 @@
 
             return {
                 pageId: ve.id,
-                viewTitle: (ve.hasAttribute("data-title") ?
-                                ve.getAttribute("data-title") :
+                viewTitle: (ve.hasAttribute("spa-title") ?
+                                ve.getAttribute("spa-title") :
                                 this.settings.defaultTitle),
-                tranistion: (ve.hasAttribute("data-transition") ?
-                                ve.getAttribute("data-transition") :
+                tranistion: (ve.hasAttribute("spa-transition") ?
+                                ve.getAttribute("spa-transition") :
                                 ""), //need a nice way to define the default animation
                 content: ve.outerHTML
             };

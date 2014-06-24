@@ -48,7 +48,7 @@
         version: "0.0.1",
 
         rtRoot: "http://api.rottentomatoes.com/api/public/v1.0/",
-        apiKey: "q7g5vgxauv72mgvghgtbpdbc",
+        apiKey: "fghr8zjnazt4w7fuza4se7wp",
         defaultPageLimit: 12,
 
         data: undefined,

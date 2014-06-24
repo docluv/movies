@@ -119,7 +119,7 @@
                 if (view.hasAttributes() && view.hasAttribute("id")) {
 
                     viewId = view.getAttribute("id");
-                    rawPath = (view.hasAttribute("data-route") ? view.getAttribute("data-route") : "");
+                    rawPath = (view.hasAttribute("spa-route") ? view.getAttribute("spa-route") : "");
 
                     route = that.createRoute(viewId, rawPath, view);
                     routes[route.path] = route;
@@ -143,21 +143,21 @@
             //need to check for duplicate path
             return {
                 viewId: viewId,
-                viewModule: (view.hasAttribute("data-module") ? view.getAttribute("data-viewId") :
+                viewModule: (view.hasAttribute("spa-module") ? view.getAttribute("spa-viewId") :
                         viewId),
                 path: rawPath.split("\\:")[0],
                 params: rawPath.split("\\:").slice(1),
-                title: (view.hasAttribute("data-title") ? view.getAttribute("data-title") :
+                title: (view.hasAttribute("spa-title") ? view.getAttribute("spa-title") :
                         this.settings.defaultTitle),
-                transition: (view.hasAttribute("data-transition") ?
-                        view.getAttribute("data-transition") :
+                transition: (view.hasAttribute("spa-transition") ?
+                        view.getAttribute("spa-transition") :
                         ""),
                 paramValues: {},
                 beforeonload: (view.hasAttribute("spa-beforeonload") ? view.getAttribute("spa-beforeonload") : undefined),
-                onload: (view.hasAttribute("data-onload") ? view.getAttribute("data-onload") : undefined),
+                onload: (view.hasAttribute("spa-onload") ? view.getAttribute("spa-onload") : undefined),
                 afteronload: (view.hasAttribute("spa-afteronload") ? view.getAttribute("spa-afteronload") : undefined),
                 beforeunload: (view.hasAttribute("spa-beforeunload") ? view.getAttribute("spa-beforeunload") : undefined),
-                unload: (view.hasAttribute("data-unload") ? view.getAttribute("data-unload") : undefined),
+                unload: (view.hasAttribute("spa-unload") ? view.getAttribute("spa-unload") : undefined),
                 afterunload: (view.hasAttribute("spa-afterunload") ? view.getAttribute("spa-afterunload") : undefined)
             };
 
@@ -369,7 +369,7 @@
 
                     if (currentView) {
 
-                        that.makeCallback(oldRoute, "beforeunload");
+                        that.makeViewCallback(oldRoute, "beforeunload");
 
                         if (that.hasAnimations()) {
 
@@ -423,9 +423,9 @@
                     that.setDocumentTitle(route);
 
                     if (route) {
-                        that.makeCallback(route, "beforeonload");
-                        that.makeCallback(route, "onload");
-                        that.makeCallback(route, "afteronload");
+                        that.makeViewCallback(route, "beforeonload");
+                        that.makeViewCallback(route, "onload");
+                        that.makeViewCallback(route, "afteronload");
                     }
 
                 }
@@ -459,8 +459,8 @@
                 anim = that.animation;
 
             if (route) {
-                that.makeCallback(route, "unload");                
-                that.makeCallback(route, "afterunload");
+                that.makeViewCallback(route, "unload");                
+                that.makeViewCallback(route, "afterunload");
             }
 
             if (newView.classList.contains("in")) {
@@ -506,14 +506,14 @@
 
         },
 
-        makeCallback: function (route, action) {
+        makeViewCallback: function (route, action) {
 
             var that = this,
                 $rootScope = that.$rootScope,
                 settings = that.settings,
                 a, cbPaths, callback;
 
-            console.info("making " + action + " callback");
+     //       console.info("making " + action + " callback");
 
             if (action && !route[action]) {
 

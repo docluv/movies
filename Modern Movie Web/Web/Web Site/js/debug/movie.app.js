@@ -145,7 +145,7 @@
 
         },
 
-        version: "0.0.2",
+        version: "0.0.3",
 
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 
@@ -205,7 +205,7 @@
         },
 
         mergeData: function (targetSelector, templateName, data) {
-
+            
             if ((typeof targetSelector !== "string") ||
                (typeof templateName !== "string") ||
                 (data === undefined || data === null)) {

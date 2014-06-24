@@ -39,8 +39,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Glimpse.Core">
-      <HintPath>..\..\Movie Web\packages\Glimpse.1.6.1\lib\net45\Glimpse.Core.dll</HintPath>
+    <Reference Include="Glimpse.AspNet">
+      <HintPath>packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Glimpse.1.8.5\lib\net45\Glimpse.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Glimpse.Mvc4">
+      <HintPath>packages\Glimpse.Mvc4.1.5.3\lib\net40\Glimpse.Mvc4.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SPAHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -117,6 +124,7 @@
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -284,10 +292,7 @@
     <Content Include="Views\Home\Views\privacy-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\_MovieListItem.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_MovieList.cshtml" />
+    <Content Include="Views\Home\Templates\_MovieListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Views\social-view.cshtml" />
