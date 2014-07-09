@@ -56,15 +56,15 @@ else
             <link href="css/dev/ui/movie-grid.css" rel="stylesheet">
             <link href="css/dev/ui/panorama.css" rel="stylesheet">
             <link href="css/dev/ui/toolbar.css" rel="stylesheet">
-            <link href="css/dev/ui/movie.app.forms.css" rel="stylesheet">
-            <link href="css/dev/ui/movie.app.nav.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.home.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.movie.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.movies.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.search.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.theater.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.maps.css" rel="stylesheet">
-            <link href="css/dev/views/movie.app.social.css" rel="stylesheet">
+            <link href="css/dev/ui/forms.css" rel="stylesheet">
+            <link href="css/dev/ui/nav.css" rel="stylesheet">
+            <link href="css/dev/views/home.css" rel="stylesheet">
+            <link href="css/dev/views/movie.css" rel="stylesheet">
+            <link href="css/dev/views/movies.css" rel="stylesheet">
+            <link href="css/dev/views/search.css" rel="stylesheet">
+            <link href="css/dev/views/theater.css" rel="stylesheet">
+            <link href="css/dev/views/maps.css" rel="stylesheet">
+            <link href="css/dev/views/social.css" rel="stylesheet">
 
         }
         else
@@ -75,7 +75,7 @@ else
     }
     else
     {
-        <link href="css/core/movie.app.core.css" rel="stylesheet">
+        <link href="css/core/core.css" rel="stylesheet">
 
     }
 
@@ -158,35 +158,35 @@ else
                   {
 
                       case "":
-                          @RenderPage("views/home-view.cshtml")
+                          @RenderPage("views/home.cshtml")
                           break;
 
                       case "movies":
-                      @RenderPage("views/movies-view.cshtml")
+                      @RenderPage("views/movies.cshtml")
                           break;
 
                       case "movie":
-                      @RenderPage("views/movie-view.cshtml")
+                      @RenderPage("views/movie.cshtml")
                           break;
 
                       case "about":
-                      @RenderPage("views/about-view.cshtml")
+                      @RenderPage("views/about.cshtml")
                           break;
 
                       case "theater":
-                      @RenderPage("views/theater-view.cshtml")
+                      @RenderPage("views/theater.cshtml")
                           break;
 
                       case "privacy":
-                      @RenderPage("views/privacy-view.cshtml")
+                      @RenderPage("views/privacy.cshtml")
                           break;
 
                       case "search":
-                      @RenderPage("views/search-view.cshtml")
+                      @RenderPage("views/search.cshtml")
                           break;
 
                       case "social":
-                      @RenderPage("views/social-view.cshtml")
+                      @RenderPage("views/social.cshtml")
                           break;
 
                       default:
@@ -204,16 +204,16 @@ else
           @if (!Html.HasEscapeFragment())
           {
 
-              @SPARenderPage("views/home-view.cshtml")
-              @SPARenderPage("views/movies-view.cshtml")
-              @SPARenderPage("views/movie-view.cshtml")
-              @SPARenderPage("views/maps-view.cshtml")
-              @SPARenderPage("views/search-view.cshtml")
-              @SPARenderPage("views/theater-view.cshtml")
-              @SPARenderPage("views/about-view.cshtml")
-              @SPARenderPage("views/social-view.cshtml")
-              @SPARenderPage("views/privacy-view.cshtml")
-              @SPARenderPage("views/notfound-view.cshtml")
+              @SPARenderPage("views/home.cshtml")
+              @SPARenderPage("views/movies.cshtml")
+              @SPARenderPage("views/movie.cshtml")
+              @SPARenderPage("views/maps.cshtml")
+              @SPARenderPage("views/search.cshtml")
+              @SPARenderPage("views/theater.cshtml")
+              @SPARenderPage("views/about.cshtml")
+              @SPARenderPage("views/social.cshtml")
+              @SPARenderPage("views/privacy.cshtml")
+              @SPARenderPage("views/notfound.cshtml")
               @SPARenderPage("templates/_templates.cshtml")
 
           }
@@ -234,24 +234,29 @@ else
                   <script src="@Href("~/js/libs/movie-data.js")"></script>
                   <script src="@Href("~/js/libs/mustache.js")"></script>
                   <script src="@Href("~/js/libs/spa.js")"></script>
+                  <script src="@Href("~/js/libs/class.js")"></script>
+                  <script src="@Href("~/js/libs/view.js")"></script>
+                  <script src="@Href("~/js/libs/listView.js")"></script>
+                  <script src="@Href("~/js/libs/formView.js")"></script>
+    
                   <script src="@Href("~/js/libs/deeptissue.js")"></script>
                   <script src="@Href("~/js/libs/panorama.js")"></script>
                   <script src="@Href("~/js/libs/toolbar.js")"></script>
 
                   <script src="@Href("~/js/debug/movie.app.js")"></script>
 
-                  <script src="@Href("~/js/debug/ui/movie.app.grid.js")"></script>
+                  <script src="@Href("~/js/debug/ui/grid.js")"></script>
 
-                  <script src="@Href("~/js/debug/views/movie.app.home.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.maps.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.search.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.theater.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.movie.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.movies.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.privacy.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.about.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.social.js")"></script>
-                  <script src="@Href("~/js/debug/views/movie.app.notfound.js")"></script>
+                  <script src="@Href("~/js/debug/views/home.js")"></script>
+                  <script src="@Href("~/js/debug/views/maps.js")"></script>
+                  <script src="@Href("~/js/debug/views/search.js")"></script>
+                  <script src="@Href("~/js/debug/views/theater.js")"></script>
+                  <script src="@Href("~/js/debug/views/movie.js")"></script>
+                  <script src="@Href("~/js/debug/views/movies.js")"></script>
+                  <script src="@Href("~/js/debug/views/privacy.js")"></script>
+                  <script src="@Href("~/js/debug/views/about.js")"></script>
+                  <script src="@Href("~/js/debug/views/social.js")"></script>
+                  <script src="@Href("~/js/debug/views/notfound.js")"></script>
 
                   <script src="@Href("~/js/debug/movie.app.bootstrap.js")"></script>
 

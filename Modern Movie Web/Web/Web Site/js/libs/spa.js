@@ -11,7 +11,8 @@
     // Define a local copy of deferred
     var spa = function (customSettings) {
 
-        var that = new spa.fn.init();
+        var that = new spa.fn.init(),
+            appName = "";
 
         that.settings = $.extend({}, that.settings, customSettings);
 
@@ -23,7 +24,13 @@
 
             if (spaApp) {
 
-                that.$rootScope = window[spaApp.getAttribute("spa-app")];
+                appName = window[spaApp.getAttribute("spa-app")];
+
+                if (typeof appName === "function") {
+                    appName = appName();
+                }
+
+                that.$rootScope = appName;
 
             } else {
                 console.error("Must have an application context defined");
@@ -103,6 +110,7 @@
         //the name to something they perceive as annoying.
         $rootScope: undefined,
         $scope: undefined,
+        $oldScope: undefined,
 
         setupRoutes: function () {
 
@@ -343,6 +351,8 @@
                 path = hashFragment.split(":")[0],
                 currentView = document.querySelectorAll("." + settings.currentClass);
 
+            that.$oldScope = that.$scope;
+
             if (currentView.length) {
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
                 that.removeExtraViews(currentView);
@@ -359,6 +369,20 @@
 
             if (route !== undefined) {
 
+                if (that.$rootScope[route.viewId] &&
+                    typeof that.$rootScope[route.viewId] === "function") {
+
+                    that.$scope = new that.$rootScope[route.viewId](that.$rootScope);
+
+                } else if (that.$rootScope[route.viewId] &&
+                    typeof that.$rootScope[route.viewId] === "object") {
+
+                    that.$scope = new that.$rootScope[route.viewId];
+
+                } else {
+                    return;
+                }
+
                 that.pushGA(path);
 
                 that.ensureViewAvailable(currentView, route.viewId);
@@ -369,7 +393,9 @@
 
                     if (currentView) {
 
-                        that.makeViewCallback(oldRoute, "beforeunload");
+                        //that.makeViewCallback(oldRoute, "beforeunload");
+
+                        that.makeViewCallback1(that.$oldScope, "beforeunload");
 
                         if (that.hasAnimations()) {
 
@@ -423,9 +449,14 @@
                     that.setDocumentTitle(route);
 
                     if (route) {
-                        that.makeViewCallback(route, "beforeonload");
-                        that.makeViewCallback(route, "onload");
-                        that.makeViewCallback(route, "afteronload");
+
+                        //that.makeViewCallback(route, "beforeonload");
+                        //that.makeViewCallback(route, "onload");
+                        //that.makeViewCallback(route, "afteronload");
+
+                        that.makeViewCallback1(that.$scope, "beforeonload");
+                        that.makeViewCallback1(that.$scope, "onload");
+                        that.makeViewCallback1(that.$scope, "afteronload");
                     }
 
                 }
@@ -459,8 +490,8 @@
                 anim = that.animation;
 
             if (route) {
-                that.makeViewCallback(route, "unload");                
-                that.makeViewCallback(route, "afterunload");
+                that.makeViewCallback1(that.$oldScope, "unload");
+                that.makeViewCallback1(that.$oldScope, "afterunload");
             }
 
             if (newView.classList.contains("in")) {
@@ -506,6 +537,15 @@
 
         },
 
+        makeViewCallback1: function (scope, action, params) {
+
+            if (scope && scope[action]) {
+                scope[action].call(scope, params || {});
+            }
+
+
+        },
+
         makeViewCallback: function (route, action) {
 
             var that = this,
@@ -513,7 +553,7 @@
                 settings = that.settings,
                 a, cbPaths, callback;
 
-     //       console.info("making " + action + " callback");
+            //       console.info("making " + action + " callback");
 
             if (action && !route[action]) {
 

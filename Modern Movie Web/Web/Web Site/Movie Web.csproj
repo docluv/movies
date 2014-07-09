@@ -143,15 +143,15 @@
     <Content Include="css\dev\animations.css" />
     <Content Include="css\dev\ui\movie-grid.css" />
     <Content Include="css\dev\ui\movie.app.forms.css" />
-    <Content Include="css\dev\views\movie.app.home.css" />
-    <Content Include="css\dev\views\movie.app.maps.css" />
-    <Content Include="css\dev\views\movie.app.movie.css" />
-    <Content Include="css\dev\views\movie.app.movies.css" />
+    <Content Include="css\dev\views\home.css" />
+    <Content Include="css\dev\views\maps.css" />
+    <Content Include="css\dev\views\movie.css" />
+    <Content Include="css\dev\views\movies.css" />
     <Content Include="css\dev\ui\movie.app.nav.css" />
-    <Content Include="css\dev\views\movie.app.profile.css" />
-    <Content Include="css\dev\views\movie.app.search.css" />
-    <Content Include="css\dev\views\movie.app.social.css" />
-    <Content Include="css\dev\views\movie.app.theater.css" />
+    <Content Include="css\dev\views\profile.css" />
+    <Content Include="css\dev\views\search.css" />
+    <Content Include="css\dev\views\social.css" />
+    <Content Include="css\dev\views\theater.css" />
     <Content Include="css\dev\ui\panorama.css" />
     <Content Include="css\dev\site.css" />
     <Content Include="css\dev\ui\toolbar.css" />
@@ -178,24 +178,27 @@
     <Content Include="img\smalltile.png" />
     <Content Include="img\widetile.png" />
     <Content Include="js\applib.js" />
-    <Content Include="js\debug\views\movie.app.about.js" />
+    <Content Include="js\debug\views\about.js" />
     <Content Include="js\debug\movie.app.bootstrap.js" />
     <Content Include="js\debug\ui\movie.app.grid.js" />
-    <Content Include="js\debug\views\movie.app.home.js" />
+    <Content Include="js\debug\views\home.js" />
     <Content Include="js\debug\movie.app.js" />
-    <Content Include="js\debug\views\movie.app.maps.js" />
-    <Content Include="js\debug\views\movie.app.movie.js" />
-    <Content Include="js\debug\views\movie.app.movies.js" />
-    <Content Include="js\debug\views\movie.app.notfound.js" />
-    <Content Include="js\debug\views\movie.app.privacy.js" />
-    <Content Include="js\debug\views\movie.app.search.js" />
-    <Content Include="js\debug\views\movie.app.social.js" />
-    <Content Include="js\debug\views\movie.app.theater.js" />
+    <Content Include="js\debug\views\maps.js" />
+    <Content Include="js\debug\views\movie.js" />
+    <Content Include="js\debug\views\movies.js" />
+    <Content Include="js\debug\views\notfound.js" />
+    <Content Include="js\debug\views\privacy.js" />
+    <Content Include="js\debug\views\search.js" />
+    <Content Include="js\debug\views\social.js" />
+    <Content Include="js\debug\views\theater.js" />
     <Content Include="js\libs\add2home.js" />
     <Content Include="js\libs\backpack.js" />
+    <Content Include="js\libs\class.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
     <Content Include="js\libs\fakeTheaters.js" />
+    <Content Include="js\libs\formView.js" />
+    <Content Include="js\libs\listView.js" />
     <Content Include="js\libs\movie-data.js" />
     <Content Include="js\libs\mustache.js" />
     <Content Include="js\libs\panorama.header.js" />
@@ -206,6 +209,7 @@
     <Content Include="js\libs\rqData.js" />
     <Content Include="js\libs\spa.js" />
     <Content Include="js\libs\toolbar.js" />
+    <Content Include="js\libs\view.js" />
     <Content Include="js\specs\beautify-html.js" />
     <Content Include="js\specs\core\moveiApp.core.html" />
     <Content Include="js\specs\core\moveiApp.core.Tests.js" />
@@ -253,25 +257,25 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\notfound-view.cshtml" />
+    <Content Include="Views\Home\Views\notfound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\maps-view.cshtml" />
+    <Content Include="Views\Home\Views\maps.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\reviews-view.cshtml" />
+    <Content Include="Views\Home\Views\reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\search-view.cshtml" />
+    <Content Include="Views\Home\Views\search.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\theater-view.cshtml" />
+    <Content Include="Views\Home\Views\theater.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\movie-view.cshtml" />
+    <Content Include="Views\Home\Views\movie.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\movies-view.cshtml" />
+    <Content Include="Views\Home\Views\movies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Templates\_templates.cshtml" />
@@ -289,19 +293,19 @@
     <Content Include="js\mocks\theaters.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\privacy-view.cshtml" />
+    <Content Include="Views\Home\Views\privacy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Templates\_MovieListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\social-view.cshtml" />
+    <Content Include="Views\Home\Views\social.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\home-view.cshtml" />
+    <Content Include="Views\Home\Views\home.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\about-view.cshtml" />
+    <Content Include="Views\Home\Views\about.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
