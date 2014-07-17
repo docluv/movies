@@ -27,12 +27,12 @@
                 t = t[0];
             }
 
-            //if (that.templates[templateName]) {
-            //    requestAnimationFrame(function () {
-            //        t.innerHTML = that.templates[templateName](data);
-            //    });
-            //    //t.innerHTML = that.templates[templateName](data);
-            //}
+            if (that.rootScope.templates[templateName]) {
+                requestAnimationFrame(function () {
+                    t.innerHTML = that.rootScope.templates[templateName](data);
+                });
+                //t.innerHTML = that.templates[templateName](data);
+            }
 
         }
 

@@ -45,7 +45,7 @@
 
 
         //I think this is just good practice ;)
-        version: "0.0.1",
+        version: "0.0.2",
 
         rtRoot: "http://api.rottentomatoes.com/api/public/v1.0/",
         apiKey: "fghr8zjnazt4w7fuza4se7wp",
@@ -96,15 +96,15 @@
 
             var that = this,
                 url = that.rtRoot + "movies/" + id + ".json?apikey=" + that.apiKey,
-                    success = function(movie){
-                    
+                    success = function (movie) {
+
                         if (callback) {
 
                             movie = that.setMoviePoster(movie)[0];
 
                             callback(movie);
                         }
-                    
+
                     };
 
             return that.data.getJSONP(url, {
@@ -193,11 +193,44 @@
             var that = this,
                 url = that.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
                     that.apiKey + "&page_limit=" +
-                        (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1);
+                        (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1),
+
+                success = function (data) {
+
+                    callback(that.fixPosters(data));
+
+                };
 
             return that.data.getJSONP(url, {
-                success: callback
+                success: success
             });
+
+        },
+
+        fixPosters: function (data) {
+
+            if (!data) {
+                return;
+            }
+
+            if (!data.movies.length) {
+                data = [data.movies];
+            }
+
+            for (var i = 0; i < data.movies.length; i++) {
+
+                var movie = data.movies[i];
+
+                movie.posters.profile = movie.posters.profile.replace("_tmb", "_pro");
+
+                movie.posters.original = movie.posters.original.replace("_tmb", "_ori");
+
+                movie.posters.detailed = movie.posters.detailed.replace("_tmb", "_det");
+
+                data.movies[i] = movie;
+            }
+
+            return data;
 
         }
 
