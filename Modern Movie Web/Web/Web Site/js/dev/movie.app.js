@@ -60,9 +60,9 @@
         ]
     };
 
-    var movieApp = function (customSettings) {
+    var movieApp = function (config) {
 
-        return new movieApp.fn.init(customSettings);
+        return new movieApp.fn.init(config);
 
     };
 
@@ -70,19 +70,21 @@
 
         constructor: movieApp,
 
-        init: function (customSettings) {
+        init: function (config) {
 
             var that = this;
 
-            that.settings = $.extend({}, that.settings, customSettings);
+            that.settings = $.extend({}, that.settings, config.settings);
 
-            that.bp = that.settings.bp || backpack();
-            that.tmpl = that.settings.tmpl || Mustache;
+            that.parseServices(config.services);
 
-            that.movieData = that.settings.movieData || movieData(
-                RottenTomatoes({ data: rqData() }),
-                fakeTheaters()
-            );
+            //that.bp = that.settings.bp || backpack();
+            //that.tmpl = that.settings.tmpl || Mustache;
+
+            //that.movieData = that.settings.movieData || movieData(
+            //    RottenTomatoes({ data: rqData() }),
+            //    fakeTheaters()
+            //);
 
             that.compileTemplates();
 
@@ -145,7 +147,21 @@
 
         },
 
-        version: "0.0.3",
+        version: "0.5.0",
+
+        parseServices: function (services) {
+
+            for (var service in services) {
+
+                if (typeof services[service] === "function") {
+                    this[service] = new services[service]();
+                } else {
+                    this[service] = services[service];
+                }
+
+            }
+
+        },
 
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 

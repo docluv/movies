@@ -16,6 +16,15 @@
 
         that.settings = $.extend({}, that.settings, customSettings);
 
+        if (!that.settings.viewEngine) {
+            throw {
+                "Name": "SPA Exception",
+                "Description": "You must designate a viewEngine"
+            };
+        }
+
+        that.viewEngine = that.settings.viewEngine;
+
         if (that.settings.AppContext) {
             that.$rootScope = that.settings.AppContext;
         } else {
@@ -101,6 +110,8 @@
         version: "0.0.6",
 
         bp: undefined,
+
+        viewEngine: undefined,
 
         //barrowing naming conventions from Angular
         //This is like renaming a brand with a bad reputation,

@@ -18,14 +18,14 @@
 
             that.isVisible = true;
 
-            that.rootScope.setupPanorama();
-            that.rootScope.setMainTitle("Modern Web Movies");
+            //that.rootScope.setupPanorama();
+            //that.rootScope.setMainTitle("Modern Web Movies");
 
-            that.loadMovies.call(that);
+            //that.loadMovies.call(that);
 
-            requestAnimationFrame(function () {
-                that.rootScope.panorama.resizePanorama();
-            });
+            //requestAnimationFrame(function () {
+            //    that.rootScope.panorama.resizePanorama();
+            //});
 
             //hv.setupMQLs.call(that, hv);
 

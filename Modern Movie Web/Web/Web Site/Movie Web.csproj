@@ -184,14 +184,17 @@
     <Content Include="js\dev\views\home.js" />
     <Content Include="js\dev\movie.app.js" />
     <Content Include="js\dev\views\maps.js" />
+    <Content Include="js\dev\views\movie.app.view.js" />
     <Content Include="js\dev\views\movie.js" />
     <Content Include="js\dev\views\movies.js" />
+    <Content Include="js\dev\views\movieView.js" />
     <Content Include="js\dev\views\notfound.js" />
     <Content Include="js\dev\views\privacy.js" />
     <Content Include="js\dev\views\search.js" />
     <Content Include="js\dev\views\social.js" />
     <Content Include="js\dev\views\theater.js" />
     <Content Include="js\libs\add2home.js" />
+    <Content Include="js\libs\ajax.data.js" />
     <Content Include="js\libs\backpack.js" />
     <Content Include="js\libs\class.js" />
     <Content Include="js\libs\deeptissue.js" />
@@ -201,6 +204,7 @@
     <Content Include="js\libs\listView.js" />
     <Content Include="js\libs\movie-data.js" />
     <Content Include="js\libs\mustache.js" />
+    <Content Include="js\libs\mustacheViewEngine.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
@@ -208,6 +212,7 @@
     <Content Include="js\libs\rottentomatoes.js" />
     <Content Include="js\libs\rqData.js" />
     <Content Include="js\libs\spa.js" />
+    <Content Include="js\libs\spaApp.js" />
     <Content Include="js\libs\toolbar.js" />
     <Content Include="js\libs\view.js" />
     <Content Include="js\specs\beautify-html.js" />

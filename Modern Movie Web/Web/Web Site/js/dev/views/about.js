@@ -4,6 +4,10 @@
 
     movieApp.fn.aboutView = View.extend({
 
+        init: function () {
+            this._super.apply(this, arguments);
+        },
+
         onload: function () {
             
             console.log("load about");
@@ -14,10 +18,7 @@
 
             console.log("unload about");
 
-        },
-
-        $rootScope: undefined,
-        params: undefined,
+        }
 
     });
 

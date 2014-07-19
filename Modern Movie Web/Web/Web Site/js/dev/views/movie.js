@@ -49,18 +49,18 @@
             }
 
             var that = this,
-                md = that.movieData,
-                mv = this.movieView;
+                md = that.rootScope.movieData;
+//                mv = this.movieView;
 
-            mv.isVisible = true;
+            that.isVisible = true;
 
-            md.loadMovieDetails.call(md, params.id, function (movie) {
+            that.loadMovieDetails.call(md, params.id, function (movie) {
 
                 if (!movie) {
                     return;
                 }
 
-                mv.renderMovieDetails.call(that, movie);
+                that.renderMovieDetails(movie);
 
             });
 
@@ -79,8 +79,7 @@
                     window.location.hash = "#!404";
                 }
 
-                var that = this,
-                    mv = that.movieView,
+                var that = this
                     width = window.innerWidth;
 
                 that.mergeData(detailPanel, "movieDetailsPosterTemplate", data);
@@ -90,28 +89,28 @@
 
                 that.setMainTitle(data.title);
 
-                mv.bindPanelTitles.call(that);
+                that.bindPanelTitles();
 
-                mv.setupMQLs.call(that, mv);
+                that.setupMQLs();
 
-                mv.bindValidation();
+                that.bindValidation();
 
                 that.setupPanorama(".panorama-container", { maxWidth: smallBreakpoint });
 
-                document.reviewForm.onsubmit = mv.reviewSubmit;
+                document.reviewForm.onsubmit = that.reviewSubmit;
 
                 //setup the initial layout
                 requestAnimationFrame(function () {
 
                     if (width < smallBreakpoint) {
-                        mv.renderSmallScreen.call(that);
+                        that.renderSmallScreen();
                     } else if (width >= smallBreakpoint && width <= miniBreakpoint) {
-                        mv.renderMiniTablet.call(that);
+                        that.renderMiniTablet();
                     } else {
-                        mv.renderFullScreen.call(that);
+                        mv.renderFullScreen();
                     }
 
-                    mv.setMoviePoster();
+                    that.setMoviePoster();
 
                 });
 
@@ -185,25 +184,25 @@
         isVisible: false,
 
         //toying with the idea to refactor this into a common method.
-        setupMQLs: function (mv) {
+        setupMQLs: function () {
 
             var that = this;
 
-            if (!mv.mql610) {
+            if (!that.mql610) {
 
-                mv.mql610 = window.matchMedia("(min-width: 610px)");
+                that.mql610 = window.matchMedia("(min-width: 610px)");
 
-                mv.mql610.addListener(function (e) {
+                that.mql610.addListener(function (e) {
 
-                    if (mv.isVisible) {
+                    if (that.isVisible) {
 
                         if (e.matches) {
-                            mv.renderMiniTablet.call(that);
+                            that.renderMiniTablet();
                         } else {
-                            mv.renderSmallScreen.call(that);
+                            that.renderSmallScreen();
                         }
 
-                        mv.setMoviePoster(window.innerWidth);
+                        that.setMoviePoster(window.innerWidth);
 
                     }
 
@@ -211,36 +210,36 @@
 
             }
 
-            if (!mv.mql820) {
+            if (!that.mql820) {
 
-                mv.mql820 = window.matchMedia("(min-width: 820px)");
+                that.mql820 = window.matchMedia("(min-width: 820px)");
 
-                mv.mql820.addListener(function (e) {
+                that.mql820.addListener(function (e) {
 
-                    if (mv.isVisible) {
+                    if (that.isVisible) {
 
                         if (e.matches) {
-                            mv.renderFullScreen.call(that);
+                            that.renderFullScreen();
                         } else {
-                            mv.renderMiniTablet.call(that);
+                            that.renderMiniTablet();
                         }
 
-                        mv.setMoviePoster(window.innerWidth);
+                        that.setMoviePoster(window.innerWidth);
 
                     }
                 });
 
             }
 
-            if (!mv.mql1024) {
+            if (!that.mql1024) {
 
-                mv.mql1024 = window.matchMedia("(min-width: 1024px)");
+                that.mql1024 = window.matchMedia("(min-width: 1024px)");
 
-                mv.mql1024.addListener(function () {
+                that.mql1024.addListener(function () {
 
-                    if (mv.isVisible) {
+                    if (that.isVisible) {
 
-                        mv.setMoviePoster(window.innerWidth);
+                        that.setMoviePoster(window.innerWidth);
 
                     }
                 });
@@ -260,7 +259,7 @@
                 var width = window.innerWidth;
 
                 if (width > smallBreakpoint && width < miniBreakpoint) {
-                    that.movieView.displayDescription();
+                    that.displayDescription();
                 }
 
             });
@@ -271,7 +270,7 @@
 
                 if (width > smallBreakpoint && width < miniBreakpoint) {
 
-                    that.movieView.displayCastNames();
+                    that.displayCastNames();
 
                 }
 
@@ -283,7 +282,7 @@
 
                 if (width > smallBreakpoint && width < miniBreakpoint) {
 
-                    that.movieView.displayShowtimes();
+                    that.displayShowtimes();
 
                 }
 
@@ -291,7 +290,7 @@
 
             deeptissue(showReview).tap(function (e) {
 
-                that.movieView.displayReview.call(that);
+                that.displayReview();
 
             });
 
@@ -311,18 +310,18 @@
 
             document.getElementById("ReviewerName").focus();
 
-            if (!that.movieView.boundCancel) {
+            if (!that.boundCancel) {
 
                 deeptissue(".review-cancel").tap(function (e) {
 
                     e.stopPropagation();
                     e.preventDefault();
 
-                    that.movieView.hideReview();
+                    that.hideReview();
 
                 });
 
-                that.movieView.boundCancel = true;
+                that.boundCancel = true;
             }
 
         },
@@ -419,7 +418,7 @@
 
         renderSmallScreen: function () {
 
-            this.movieView.clearMiniTablet();
+            this.clearMiniTablet();
 
             qs(showReview).style.display = "none";
 

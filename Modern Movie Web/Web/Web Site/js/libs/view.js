@@ -1,6 +1,8 @@
-﻿
+﻿;
 
 (function () {
+
+    "use strict";
 
     var View = Class.extend({
 
@@ -34,8 +36,18 @@
                 //t.innerHTML = that.templates[templateName](data);
             }
 
-        }
+        },
 
+        version: "0.5.0",
+
+        noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
+
+        mainTitle: document.querySelector(".view-title"),
+
+        setMainTitle: function (title) {
+
+            this.mainTitle.textContent = document.title = title.toLowerCase();
+        }
 
     });
 
