@@ -14,27 +14,29 @@
 
         mergeData: function (targetSelector, templateName, data) {
 
-            if ((typeof targetSelector !== "string") ||
-               (typeof templateName !== "string") ||
-                (data === undefined || data === null)) {
-                console.error("missing argument in mergeData");
-                return;
-            }
+            this.rootScope.viewEngine.mergeData(targetSelector, templateName, data);
 
-            var that = this,
-                t = document.querySelector(targetSelector);
+            //if ((typeof targetSelector !== "string") ||
+            //   (typeof templateName !== "string") ||
+            //    (data === undefined || data === null)) {
+            //    console.error("missing argument in mergeData");
+            //    return;
+            //}
 
-            //verify it is a single node.
-            if (t.length && t.length > 0) {
-                t = t[0];
-            }
+            //var that = this,
+            //    t = document.querySelector(targetSelector);
 
-            if (that.rootScope.viewEngine.getViews()[templateName]) {
-                requestAnimationFrame(function () {
-                    t.innerHTML = that.rootScope.templates[templateName](data);
-                });
-                //t.innerHTML = that.templates[templateName](data);
-            }
+            ////verify it is a single node.
+            //if (t.length && t.length > 0) {
+            //    t = t[0];
+            //}
+
+            //if (that.rootScope.viewEngine.getViews()[templateName]) {
+            //    requestAnimationFrame(function () {
+            //        t.innerHTML = that.rootScope.templates[templateName](data);
+            //    });
+            //    //t.innerHTML = that.templates[templateName](data);
+            //}
 
         },
 

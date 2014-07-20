@@ -99,7 +99,7 @@
 
             that.viewEngine = config.viewEngine;
             
-            that.viewEngine.compileViews(that.bp.getTemplates(true));
+            that.viewEngine.compileViews();
 
             toolbar(".toolbar", {
                 menuItems: menuItems

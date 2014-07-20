@@ -39,21 +39,20 @@
         parseViews: function (remove) {
 
             var that = this,
-                i, temp,
-                views = {},
-                t = document.querySelectorAll("script[type='" + this.settings.templateType + "']");
+                i, temp, viewMarkup,
+                views = $.parseLocalStorage(that.appPrefix + "views"),
+                t = document.querySelectorAll("script[type='" + that.templateType + "']");
 
             if (remove === undefined) {
                 remove = true; //default setting
             }
 
-            that.setViews($.parseLocalStorage(that.appPrefix + "views"));
-
             for (i = 0; i < t.length; i++) {
 
                 temp = t[i];
+                viewMarkup = temp.innerHTML.replace(/(\r\n|\n|\r)/gm, "");
 
-                that.setView(temp.id, temp.innerHTML.replace(/(\r\n|\n|\r)/gm, ""));
+                views[temp.id] = viewMarkup;
 
                 if (remove) {
 
@@ -64,15 +63,10 @@
 
             }
 
-            views = that.getViews();
+            that.setViews(views);
 
-            if (!typeof views === "string") {
-                views = JSON.stringify(views);
-            }
+            localStorage.setItem(that.appPrefix + "views", JSON.stringify(views));
 
-            localStorage.setItem(that.appPrefix + "views", views);
-
-            that.views = views;
         },
 
         getView: function (viewId) {
@@ -85,9 +79,7 @@
 
         setView: function (viewId, view) {
 
-            if (typeof view === "function") {
-                this.views[viewId] = view;
-            } else {
+            if (typeof view === "string") {
                 this.views[viewId] = Mustache.compile(view);
             }
 
@@ -95,7 +87,8 @@
 
         setViews: function (views) {
 
-            var that = this;
+            var that = this,
+                view;
 
             for (view in views) {
                 that.setView(view, views[view]);
@@ -120,8 +113,6 @@
                     views[i] = Mustache.compile(views[i]);
                 }
             }
-
-            that.addViews(views);
 
         },
 
@@ -188,11 +179,11 @@
                 t = t[0];
             }
 
-            if (that.templates[templateName]) {
+            if (that.views[templateName]) {
 
                 requestAnimationFrame(function () {
 
-                    t.innerHTML = that.templates[templateName](data);
+                    t.innerHTML = that.views[templateName](data);
 
                 });
 
