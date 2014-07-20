@@ -6,7 +6,7 @@
 
     "use strict";
 
-    movieApp.fn.movieAppView = View.extend({
+    var movieAppView = View.extend({
 
         init: function () {
             this._super.apply(this, arguments);
@@ -124,5 +124,8 @@
         },
 
     });
+
+
+    return (window.movieAppView = movieAppView);
 
 }(window));

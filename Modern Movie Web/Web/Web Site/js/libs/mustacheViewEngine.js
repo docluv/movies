@@ -9,9 +9,9 @@
         var that = new mustacheViewEngine.fn.init();
 
 
-        if (!that.templateService) {
-            console.error("must define a template service provider");
-        }
+        //if (!that.templateService) {
+        //    console.error("must define a template service provider");
+        //}
 
         return that;
     };
@@ -32,8 +32,9 @@
         $rootScope: undefined,
         templateService: undefined,
         templateType: "text/x-mustache-template",
+        appPrefix: "mustacheApp-",
 
-        views: [],
+        views: {},
 
         parseViews: function (remove) {
 
@@ -42,14 +43,17 @@
                 views = {},
                 t = document.querySelectorAll("script[type='" + this.settings.templateType + "']");
 
-            that.setTemplates($.parseLocalStorage("templates"));
+            if (remove === undefined) {
+                remove = true; //default setting
+            }
+
+            that.setViews($.parseLocalStorage(that.appPrefix + "views"));
 
             for (i = 0; i < t.length; i++) {
 
                 temp = t[i];
 
-                that.setTemplate(temp.id,
-                                    temp.innerHTML.replace(/(\r\n|\n|\r)/gm, ""));
+                that.setView(temp.id, temp.innerHTML.replace(/(\r\n|\n|\r)/gm, ""));
 
                 if (remove) {
 
@@ -66,8 +70,9 @@
                 views = JSON.stringify(views);
             }
 
-            localStorage.setItem("templates", views);
+            localStorage.setItem(that.appPrefix + "views", views);
 
+            that.views = views;
         },
 
         getView: function (viewId) {
@@ -93,7 +98,7 @@
             var that = this;
 
             for (view in views) {
-                that.setTemplate(view, views[view]);
+                that.setView(view, views[view]);
             }
 
         },
@@ -103,14 +108,51 @@
             var that = this,
                 i;
 
+            if (views === undefined || views.length === 0) {
+                that.parseViews();
+                views = that.getViews();
+            }
+
             for (i in views) {
                 if (typeof views[i] === "function") {
-                    that.views[i] = views[i];
+                    views[i] = views[i];
                 } else {
-                    that.views[i] = Mustache.compile(views[i]);
+                    views[i] = Mustache.compile(views[i]);
                 }
             }
 
+            that.addViews(views);
+
+        },
+
+        addViews: function (views) {
+    
+            var that = this,
+                name, copy;
+
+            for (name in views) {
+                //  src = target[name];
+                copy = views[name];
+
+                // Prevent never-ending loop
+                if (that.views === copy) {
+                    continue;
+                }
+
+                if (copy !== undefined) {
+                    that.views[name] = copy;
+                }
+            }
+
+            that.saveViews();
+
+        },
+
+        saveViews: function () {
+
+            var that = this;
+
+            localStorage.setItem(that.appPrefix + "views", that.views);
 
         },
 
@@ -121,21 +163,6 @@
         removeView: function (key) {
 
             delete this.views[key];
-
-        },
-
-        compileTemplates: function (templates) {
-
-            var that = this,
-                i;
-
-            for (i in templates) {
-                if (typeof templates[i] === "function") {
-                    that.templates[i] = templates[i];
-                } else {
-                    that.templates[i] = Mustache.compile(templates[i]);
-                }
-            }
 
         },
 

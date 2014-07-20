@@ -78,15 +78,28 @@
 
             that.parseServices(config.services);
 
-            //that.bp = that.settings.bp || backpack();
-            //that.tmpl = that.settings.tmpl || Mustache;
+            if (!that.bp) {
+                that.bp = backpack();
+            }
 
-            //that.movieData = that.settings.movieData || movieData(
-            //    RottenTomatoes({ data: rqData() }),
-            //    fakeTheaters()
-            //);
+            if (!that.movieData) {
+                that.movieData = that.settings.movieData || movieData(
+                    RottenTomatoes({ data: rqData() }),
+                    fakeTheaters()
+                );
+            }
 
-            that.compileTemplates();
+
+            if (!config.viewEngine) {
+                throw {
+                    "Name": "SPA Exception",
+                    "Description": "You must designate a viewEngine"
+                };
+            }
+
+            that.viewEngine = config.viewEngine;
+            
+            that.viewEngine.compileViews(that.bp.getTemplates(true));
 
             toolbar(".toolbar", {
                 menuItems: menuItems
@@ -110,6 +123,9 @@
 
             return that;
         },
+
+
+        viewEngine: undefined,
 
         setupHamburger: function () {
 
@@ -192,23 +208,10 @@
 
         $scope: undefined, //Angular has popularized this naming convention, so why not 'barrow it' :P
 
-        bp: undefined,
-        tmpl: undefined,
+        //bp: undefined,
+        //tmpl: undefined,
 
-        movieData: undefined,
-
-        templates: {},
-        compileTemplates: function () {
-
-            var that = this,
-                i,
-                t = that.bp.getTemplates(true);
-
-            for (i in t) {
-                this.templates[i] = that.tmpl.compile(t[i]);
-            }
-
-        },
+        //movieData: undefined,
 
         showLoading: function (targetSelector) {
 
@@ -219,33 +222,7 @@
             document.querySelector(targetSelector)
                     .innerHTML = "<img class='ajax-loading' src='http://images.professionalaspnet.com/ajax-loader.gif'/>";
         },
-
-        mergeData: function (targetSelector, templateName, data) {
-            
-            if ((typeof targetSelector !== "string") ||
-               (typeof templateName !== "string") ||
-                (data === undefined || data === null)) {
-                console.error("missing argument in mergeData");
-                return;
-            }
-
-            var that = this,
-                t = document.querySelector(targetSelector);
-
-            //verify it is a single node.
-            if (t.length && t.length > 0) {
-                t = t[0];
-            }
-
-            if (that.templates[templateName]) {
-                requestAnimationFrame(function () {
-                    t.innerHTML = that.templates[templateName](data);
-                });
-                //t.innerHTML = that.templates[templateName](data);
-            }
-
-        },
-
+        
         resizeEvents: {},
 
         setMoviePanelWidth: function (target, length) {

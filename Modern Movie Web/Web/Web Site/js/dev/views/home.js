@@ -6,7 +6,7 @@
 
     "use strict";
 
-    movieApp.fn.homeView = View.extend({
+    movieApp.fn.homeView = movieAppView.extend({
 
         init: function (rootScope) {
             this._super(rootScope);
@@ -18,10 +18,10 @@
 
             that.isVisible = true;
 
-            //that.rootScope.setupPanorama();
-            //that.rootScope.setMainTitle("Modern Web Movies");
+            that.setupPanorama();
+            that.setMainTitle("Modern Web Movies");
 
-            //that.loadMovies.call(that);
+            that.loadMovies();
 
             //requestAnimationFrame(function () {
             //    that.rootScope.panorama.resizePanorama();

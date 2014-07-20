@@ -29,7 +29,7 @@
                 t = t[0];
             }
 
-            if (that.rootScope.templates[templateName]) {
+            if (that.rootScope.viewEngine.getViews()[templateName]) {
                 requestAnimationFrame(function () {
                     t.innerHTML = that.rootScope.templates[templateName](data);
                 });

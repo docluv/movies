@@ -17,8 +17,9 @@ window.applicationCache.addEventListener('updateready', function (e) {
 var bp = backpack(),
     data = rqData(),
     movie = movieApp({
+        "viewEngine": mustacheViewEngine(),
         services: {
-            bp: bp, //remove
+            bp: bp, 
             tmpl: Mustache, //remove
             movieData: movieData(
                 RottenTomatoes({ data: data }),
