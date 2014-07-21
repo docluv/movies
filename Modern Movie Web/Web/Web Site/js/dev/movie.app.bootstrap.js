@@ -21,7 +21,7 @@ var bp = backpack(),
         services: {
             bp: bp, 
             tmpl: Mustache, //remove
-            movieData: movieData(
+            dataProvider: movieData(
                 RottenTomatoes({ data: data }),
                 fakeTheaters()
             )

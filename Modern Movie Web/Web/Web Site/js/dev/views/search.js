@@ -5,26 +5,26 @@
 
     "use strict";
 
-    movieApp.fn.searchView = View.extend({
+    movieApp.fn.searchView = gridView.extend({
 
 
         onload: function (params) {
 
             var that = this,
-                sv = that.searchView,
-                searchField = document.getElementById("searchTerm");
+                searchField = document.getElementById("searchTerm"),
+                movieSearch = document.querySelector("[name=movieSearch]");
 
             //clear the field just in case a previous value was entered and the markup not cleared from the page
             searchField.value = "";
 
-            document.movieSearch.addEventListener("keypress", function (e) {
-                sv.searchKeyCheck.call(that, e);
+            movieSearch.addEventListener("keypress", function (e) {
+                that.searchKeyCheck(e);
             });
 
             searchField.addEventListener("focus", that.manageSearchIcons);
             searchField.addEventListener("blur", that.manageSearchIcons);
 
-            sv.searchForMovies.call(that, params.term);
+            that.searchForMovies(params.term);
 
             that.setMainTitle("Search");
 
@@ -33,12 +33,12 @@
         searchForMovies: function (term) {
 
             var that = this,
-                md = that.movieData,
+                md = that.rootScope.dataProvider,
                 value = term || document.getElementById("searchTerm").value;
 
             if (value !== "") {
 
-                md.SearchMovies.call(md, that.settings.SearchCount, 1, value, function (data) {
+                md.SearchMovies(that.rootScope.settings.SearchCount, 1, value, function (data) {
 
                     if (data && data.total > 0 && data.movies) {
 
@@ -74,7 +74,6 @@
             e = e || event;
 
             var that = this,
-                sv = that.searchView,
                 target = e.target || e.srcElement,
                 txtArea = /textarea/i.test((target).tagName),
                 key = e.keyCode || e.which || e.charCode || 0,
@@ -84,13 +83,13 @@
                 return false;
             }
 
-            sv.manageSearchIcons.call(that);
+            that.manageSearchIcons();
 
             if (key === 13) {
 
                 e.preventDefault();
 
-                sv.searchForMovies.call(that);
+                that.searchForMovies();
 
             }
 

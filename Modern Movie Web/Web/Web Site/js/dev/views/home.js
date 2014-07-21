@@ -6,7 +6,7 @@
 
     "use strict";
 
-    movieApp.fn.homeView = movieAppView.extend({
+    movieApp.fn.homeView = gridView.extend({
 
         init: function (rootScope) {
             this._super(rootScope);
@@ -68,7 +68,7 @@
         loadMovies: function () {
 
             var that = this,
-                md = that.rootScope.movieData,
+                md = that.rootScope.dataProvider,
                  //originally had 50. This is too many because it caused up to 100 movie poster
                  //image downloads when the application is launched. 10 should be enough for the 
                  //home effect. Also changed to a variable to get minification benefit and easier
@@ -99,10 +99,10 @@
 
                 var that = this;
 
-                that.rootScope.setPosterSrc.call(that, ".opening-movie-list .movie-grid-poster");
-                that.rootScope.setPosterSrc.call(that, ".top-box-list .movie-grid-poster");
-                that.rootScope.setPosterSrc.call(that, ".coming-soon-list .movie-grid-poster");
-                that.rootScope.setPosterSrc.call(that, ".movies-near-me-list .movie-grid-poster");
+                that.setPosterSrc(".opening-movie-list .movie-grid-poster");
+                that.setPosterSrc(".top-box-list .movie-grid-poster");
+                that.setPosterSrc(".coming-soon-list .movie-grid-poster");
+                that.setPosterSrc(".movies-near-me-list .movie-grid-poster");
 
             }
 
@@ -132,6 +132,3 @@
 
 }(window));
 
-
-
-;

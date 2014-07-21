@@ -12,7 +12,6 @@
             this._super.apply(this, arguments);
         },
 
-
         noResults: "<div class='no-results'>Sorry There are No Results Available</div>",
 
         mainTitle: document.querySelector(".view-title"),

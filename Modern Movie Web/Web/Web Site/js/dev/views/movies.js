@@ -3,19 +3,18 @@
 
 (function (window, undefined) {
 
-    movieApp.fn.moviesView = View.extend({
+    movieApp.fn.moviesView = gridView.extend({
 
         onload: function (params) {
 
             var that = this,
-                md = that.movieData,
-                mv = that.moviesView,
+                md = that.rootScope.dataProvider,
                 movieType = params.movieType || "TopBoxOffice";
 
-            mv.isVisible = true;
+            that.isVisible = true;
 
             md[movieType + "Movies"].call(md, 50, 1, function (data) {
-                mv.renderMovies.call(that, data);
+                that.renderMovies.call(that, data);
             });
 
             that.setMainTitle(that.movieTypes[movieType]);
@@ -36,7 +35,7 @@
 
             that.setMoviePanelWidth(".movie-poster-div", data.movies.length);
 
-            that.moviesView.setupMQLs.call(that, data.movies.length);
+            that.setupMQLs.call(that, data.movies.length);
 
             that.mergeData(".movie-poster-div", "MoviePosterGridTemplate", data);
 
@@ -47,28 +46,27 @@
 
         setupMQLs: function (length) {
 
-            var that = this,
-                mlv = that.moviesView;
+            var that = this;
 
-            if (!mlv.mql600) {
+            if (!that.mql600) {
 
-                mlv.mql600 = window.matchMedia("(min-width: 600px)");
+                that.mql600 = window.matchMedia("(min-width: 600px)");
 
-                mlv.mql600.addListener(function () {
+                that.mql600.addListener(function () {
 
-                    mlv.updateLayout.call(that, length);
+                    that.updateLayout(length);
 
                 });
 
             }
 
-            if (!mlv.mql1024) {
+            if (!that.mql1024) {
 
-                mlv.mql1024 = window.matchMedia("(min-width: 1024px)");
+                that.mql1024 = window.matchMedia("(min-width: 1024px)");
 
-                mlv.mql1024.addListener(function () {
+                that.mql1024.addListener(function () {
 
-                    mlv.updateLayout.call(that, length);
+                    that.updateLayout(length);
 
                 });
 
@@ -80,7 +78,7 @@
 
             var that = this;
 
-            if (that.moviesView.isVisible) {
+            if (that.isVisible) {
 
                 that.setMoviePanelWidth(".movie-poster-div", length);
                 that.setPosterSrc(".movie-grid-poster");
@@ -90,7 +88,7 @@
         },
 
         unload: function () {
-            this.moviesView.isVisible = false;
+            this.isVisible = false;
         }
 
     });

@@ -181,6 +181,7 @@
     <Content Include="js\dev\views\about.js" />
     <Content Include="js\dev\movie.app.bootstrap.js" />
     <Content Include="js\dev\ui\movie.app.grid.js" />
+    <Content Include="js\dev\views\gridView.js" />
     <Content Include="js\dev\views\home.js" />
     <Content Include="js\dev\movie.app.js" />
     <Content Include="js\dev\views\maps.js" />

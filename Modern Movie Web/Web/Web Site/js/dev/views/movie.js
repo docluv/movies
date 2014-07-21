@@ -39,7 +39,7 @@
 
     };
 
-    movieApp.fn.movieView = View.extend({
+    movieApp.fn.movieView = movieAppView.extend({
         
         onload: function (params) {
 
@@ -49,12 +49,12 @@
             }
 
             var that = this,
-                md = that.rootScope.movieData;
+                md = that.rootScope.dataProvider;
 //                mv = this.movieView;
 
             that.isVisible = true;
 
-            that.loadMovieDetails.call(md, params.id, function (movie) {
+            md.loadMovieDetails(params.id, function (movie) {
 
                 if (!movie) {
                     return;
@@ -79,7 +79,7 @@
                     window.location.hash = "#!404";
                 }
 
-                var that = this
+                var that = this,
                     width = window.innerWidth;
 
                 that.mergeData(detailPanel, "movieDetailsPosterTemplate", data);
@@ -107,7 +107,7 @@
                     } else if (width >= smallBreakpoint && width <= miniBreakpoint) {
                         that.renderMiniTablet();
                     } else {
-                        mv.renderFullScreen();
+                        that.renderFullScreen();
                     }
 
                     that.setMoviePoster();
@@ -458,7 +458,7 @@
 
         renderFullScreen: function () {
 
-            this.movieView.clearMiniTablet();
+            this.clearMiniTablet();
 
             qs(showTimes).style.display = "block";
             qs(reviewPanel).style.display = "";

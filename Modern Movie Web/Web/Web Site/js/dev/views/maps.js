@@ -5,19 +5,18 @@
 
     "use strict";
 
-    movieApp.fn.movieView = View.extend({
+    movieApp.fn.mapsView = View.extend({
 
 
         onload: function () {
 
-            var that = this,
-                mv = that.mapsView;
+            var that = this;
 
             that.setMainTitle("theaters near you");
 
             $().loadScript("bing-map-script", "http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0", function () {
 
-                mv.loadNearbyTheaters.call(that);
+                that.loadNearbyTheaters();
 
             }, "head");
 
@@ -26,7 +25,6 @@
         loadNearbyTheaters: function () {
 
             var that = this,
-                mv = that.mapsView,
                 map, i, theaters = [],
                 key = "Ai2HABTSdPR3baDe6yPjFDNRac3RsbaFMjUb2d-OjlQd8o3vO2DcqRxBpDgRTuUD";
 
@@ -44,12 +42,12 @@
                         zoom: 12
                     });
 
-                    theaters = that.movieData.nearbyTheaters(position.coords.latitude,
+                    theaters = that.rootScope.dataProvider.nearbyTheaters(position.coords.latitude,
                                                             position.coords.longitude);
 
                     //loop thorugh and place 10 random pushpins to represent theaters on the map
                     for (i = 0; i < theaters.length; i++) {
-                        mv.AddPushpin.call(that, map, theaters[i]);
+                        that.AddPushpin(map, theaters[i]);
                     }
 
                     //add fake theater load
@@ -63,7 +61,6 @@
         AddPushpin: function (map, theater) {
 
             var that = this,
-                mv = that.mapsView,
                   shape,
                   pin = new Microsoft.Maps.Pushpin({
                       latitude: theater.latitude,
@@ -72,7 +69,7 @@
 
             // Add a handler to the pushpin drag
             Microsoft.Maps.Events.addHandler(pin, 'click', function () {
-                mv.goToTheaterFromMap(theater.name);
+                that.goToTheaterFromMap(theater.name);
             });
 
             map.entities.push(pin);

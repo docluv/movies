@@ -12,13 +12,12 @@
         onload: function (params) {
 
             var that = this,
-                tv = that.theaterView,
                 msdate = ".movie-showtime-date";
 
             that.setMainTitle(decodeURIComponent(params.theaterName));
 
-            that.movieData.InTheatersMovies(50, 1, function (data) {
-                tv.renderTheaterMovies.call(that, data);
+            that.rootScope.dataProvider.InTheatersMovies(50, 1, function (data) {
+                that.renderTheaterMovies(data);
             });
 
             deeptissue(msdate).tap(function (e) {
@@ -29,8 +28,8 @@
                 e.currentTarget.classList.add("selected");
 
                 //load "new" movie showtimes
-                that.movieData.InTheatersMovies(50, 1, function (data) {
-                    tv.renderTheaterMovies.call(that, data);
+                that.rootScope.dataProvider.InTheatersMovies(50, 1, function (data) {
+                    that.renderTheaterMovies(data);
                 });
 
             });
@@ -42,9 +41,7 @@
                 return;
             }
 
-            var that = this;
-
-            that.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate", data);
+            this.mergeData(".movie-showtimes-wrapper", "MovieStartTimesTemplate", data);
 
             document.querySelector(".movie-showtimes-scroller").scrollTop = 0;
         },

@@ -100,7 +100,11 @@
 
                         if (callback) {
 
-                            movie = that.setMoviePoster(movie)[0];
+                            movie = {
+                                movies: [movie]
+                            }
+
+                            movie = that.setMoviePoster(movie).movies[0];
 
                             callback(movie);
                         }
@@ -145,15 +149,17 @@
 
         setMoviePoster: function (movies) {
 
-            if (!movies.length) {  //rude detection for nodeList
-                //    movies = movies;
-                //} else {
-                movies = [movies];
-            }
+            //if (!movies.length) {  //rude detection for nodeList
+            //    //    movies = movies;
+            //    //} else {
+            //    movies = [movies];
+            //}
 
-            for (var i = 0; i < movies.length; i++) {
+            movies = this.fixMoviesPosters(movies);
 
-                movies[i].poster = movies[i].posters.profile;
+            for (var i = 0; i < movies.movies.length; i++) {
+
+                movies.movies[i].poster = movies.movies[i].posters.profile;
 
             }
 
@@ -165,7 +171,7 @@
             var that = this;
 
             if (data.total > 0 || data.movies.length > 1) {
-                data.movies = that.setMoviePoster(data.movies);
+                data = that.setMoviePoster(data);
             }
 
             if (callback) {
@@ -181,6 +187,9 @@
             var that = this;
 
             return this.getRottenTomatoes(listName, pageLimit, page, function (data) {
+
+                data = that.fixMoviesPosters(data);
+
                 that.MoviesCallback.call(that, data, callback);
             });
 
@@ -193,21 +202,25 @@
             var that = this,
                 url = that.rtRoot + "lists/movies/" + listName + ".json?apikey=" +
                     that.apiKey + "&page_limit=" +
-                        (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1),
+                        (pageLimit || that.defaultPageLimit) + "&page=" + (page || 1)
+            //        ,
+            //success = function (data) {
 
-                success = function (data) {
+            //    callback(that.fixPosters(data));
 
-                    callback(that.fixPosters(data));
-
-                };
+            //};
+            ;
 
             return that.data.getJSONP(url, {
-                success: success
+                success: callback
             });
 
         },
 
-        fixPosters: function (data) {
+        fixMoviesPosters: function (data) {
+
+            var that = this,
+                i = 0
 
             if (!data) {
                 return;
@@ -217,20 +230,27 @@
                 data = [data.movies];
             }
 
-            for (var i = 0; i < data.movies.length; i++) {
-
-                var movie = data.movies[i];
-
-                movie.posters.profile = movie.posters.profile.replace("_tmb", "_pro");
-
-                movie.posters.original = movie.posters.original.replace("_tmb", "_ori");
-
-                movie.posters.detailed = movie.posters.detailed.replace("_tmb", "_det");
-
-                data.movies[i] = movie;
+            for (i = 0; i < data.movies.length; i++) {
+                data.movies[i] = that.fixPosters(data.movies[i]);
             }
 
             return data;
+        },
+
+
+        fixPosters: function (movie) {
+
+            if (!movie) {
+                return;
+            }
+
+            movie.posters.profile = movie.posters.profile.replace("_tmb", "_pro");
+
+            movie.posters.original = movie.posters.original.replace("_tmb", "_ori");
+
+            movie.posters.detailed = movie.posters.detailed.replace("_tmb", "_det");
+
+            return movie;
 
         }
 

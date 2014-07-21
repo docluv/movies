@@ -354,7 +354,7 @@
 
             that.$oldScope = that.$scope;
 
-            if (currentView.length) {
+            if (currentView.length && currentView.length > 1) {
                 //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
                 that.removeExtraViews(currentView);
             }
@@ -455,9 +455,9 @@
                         //that.makeViewCallback(route, "onload");
                         //that.makeViewCallback(route, "afteronload");
 
-                        that.makeViewCallback1(that.$scope, "beforeonload");
-                        that.makeViewCallback1(that.$scope, "onload");
-                        that.makeViewCallback1(that.$scope, "afteronload");
+                        that.makeViewCallback1(that.$scope, "beforeonload", route.paramValues);
+                        that.makeViewCallback1(that.$scope, "onload", route.paramValues);
+                        that.makeViewCallback1(that.$scope, "afteronload", route.paramValues);
                     }
 
                 }
