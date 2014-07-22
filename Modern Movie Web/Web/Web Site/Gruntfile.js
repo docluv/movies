@@ -56,7 +56,8 @@
                   'js/libs/toolbar.js',
 
                 'js/dev/movie.app.js',
-                'js/dev/libs/*.js',
+                'js/dev/libs/movie.app.view*.js',
+                'js/dev/libs/gridView.js',
                 'js/dev/ui/*.js',
                 'js/dev/views/*.js',
                 'js/dev/movie.app.bootstrap.js'
