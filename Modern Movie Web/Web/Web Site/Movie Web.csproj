@@ -181,14 +181,13 @@
     <Content Include="js\dev\views\about.js" />
     <Content Include="js\dev\movie.app.bootstrap.js" />
     <Content Include="js\dev\ui\movie.app.grid.js" />
-    <Content Include="js\dev\views\gridView.js" />
+    <Content Include="js\dev\libs\gridView.js" />
     <Content Include="js\dev\views\home.js" />
     <Content Include="js\dev\movie.app.js" />
     <Content Include="js\dev\views\maps.js" />
-    <Content Include="js\dev\views\movie.app.view.js" />
+    <Content Include="js\dev\libs\movie.app.view.js" />
     <Content Include="js\dev\views\movie.js" />
     <Content Include="js\dev\views\movies.js" />
-    <Content Include="js\dev\views\movieView.js" />
     <Content Include="js\dev\views\notfound.js" />
     <Content Include="js\dev\views\privacy.js" />
     <Content Include="js\dev\views\search.js" />

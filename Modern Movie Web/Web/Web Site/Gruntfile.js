@@ -56,6 +56,7 @@
                   'js/libs/toolbar.js',
 
                 'js/dev/movie.app.js',
+                'js/dev/libs/*.js',
                 'js/dev/ui/*.js',
                 'js/dev/views/*.js',
                 'js/dev/movie.app.bootstrap.js'
