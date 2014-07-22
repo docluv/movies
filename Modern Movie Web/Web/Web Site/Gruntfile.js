@@ -57,7 +57,7 @@
 
                 'js/dev/movie.app.js',
                 'js/dev/ui/*.js',
-                'js/debug/views/*.js',
+                'js/dev/views/*.js',
                 'js/dev/movie.app.bootstrap.js'
                 ],
                 dest: 'js/applib.js'
