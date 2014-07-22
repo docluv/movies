@@ -55,10 +55,10 @@
                   'js/libs/panorama.js',
                   'js/libs/toolbar.js',
 
-                'js/debug/movie.app.js',
-                'js/debug/ui/*.js',
+                'js/dev/movie.app.js',
+                'js/dev/ui/*.js',
                 'js/debug/views/*.js',
-                'js/debug/movie.app.bootstrap.js'
+                'js/dev/movie.app.bootstrap.js'
                 ],
                 dest: 'js/applib.js'
             }
