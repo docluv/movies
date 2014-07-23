@@ -23,11 +23,11 @@
 
             that.loadMovies();
 
-            //requestAnimationFrame(function () {
-            //    that.rootScope.panorama.resizePanorama();
-            //});
+            requestAnimationFrame(function () {
+                that.panorama.resizePanorama();
+            });
 
-            //hv.setupMQLs.call(that, hv);
+            that.setupMQLs();
 
         },
 
@@ -35,29 +35,29 @@
         mql1024: undefined,
         isVisible: false,
 
-        setupMQLs: function (hv) {
+        setupMQLs: function () {
 
             var that = this;
 
-            if (!hv.mql600) {
+            if (!that.mql600) {
 
-                hv.mql600 = window.matchMedia("(min-width: 600px)");
+                that.mql600 = window.matchMedia("(min-width: 600px)");
 
-                hv.mql600.addListener(function (e) {
+                that.mql600.addListener(function (e) {
 
-                    hv.updateMoviePosters.call(that, e);
+                    that.updateMoviePosters(e);
 
                 });
 
             }
 
-            if (!hv.mql1024) {
+            if (!that.mql1024) {
 
-                hv.mql1024 = window.matchMedia("(min-width: 1024px)");
+                that.mql1024 = window.matchMedia("(min-width: 1024px)");
 
-                hv.mql1024.addListener(function (e) {
+                that.mql1024.addListener(function (e) {
 
-                    hv.updateMoviePosters.call(that, e);
+                    that.updateMoviePosters(e);
 
                 });
 
@@ -75,27 +75,27 @@
                  //maintenance.
                 count = 10;
 
-            md.InTheatersMovies.call(md, count, 1, function (data) {
-                that.renderHomeMovies.call(that, ".top-box-list", data);
+            md.InTheatersMovies(count, 1, function (data) {
+                that.renderHomeMovies(".top-box-list", data);
             });
 
-            md.OpeningMovies.call(md, count, 1, function (data) {
-                that.renderHomeMovies.call(that, ".opening-movie-list", data);
+            md.OpeningMovies(count, 1, function (data) {
+                that.renderHomeMovies(".opening-movie-list", data);
             });
 
-            md.TopBoxOfficeMovies.call(md, count, 1, function (data) {
-                that.renderHomeMovies.call(that, ".movies-near-me-list", data);
+            md.TopBoxOfficeMovies(count, 1, function (data) {
+                that.renderHomeMovies(".movies-near-me-list", data);
             });
 
-            md.ComingSoonMovies.call(md, count, 1, function (data) {
-                that.renderHomeMovies.call(that, ".coming-soon-list", data);
+            md.ComingSoonMovies(count, 1, function (data) {
+                that.renderHomeMovies(".coming-soon-list", data);
             });
 
         },
 
         updateMoviePosters: function (e) {
 
-            if (this.homeView.isVisible) {
+            if (this.isVisible) {
 
                 var that = this;
 

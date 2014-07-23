@@ -100,6 +100,8 @@
 
                         if (callback) {
 
+                            movie = that.mergeInFakeShowtimes(movie);
+
                             movie = {
                                 movies: [movie]
                             }
@@ -115,6 +117,27 @@
                 success: success
             });
 
+        },
+
+        mergeInFakeShowtimes: function (movie) {
+
+            var showtimes = [{ "theater": "The Mystic", "showtimes": ["12:20", "3:05", "5:45", "7:50", "10:10"] },
+                                { "theater": "The Marquee", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] },
+                                { "theater": "The Pantagees", "showtimes": ["12:05", "2:35", "4:45", "6:50", "8:10", "10:45"] }], i = 0;
+
+            if (movie.length != undefined) {
+
+                for (i = 0; i < movie.length - 1; i++) {
+
+                    movie[i].showtimes = showtimes;
+
+                }
+
+            } else {
+                movie.showtimes = showtimes;
+            }
+
+            return movie;
         },
 
         storeMoviesInStorage: function (movies) {
@@ -190,7 +213,7 @@
 
                 data = that.fixMoviesPosters(data);
 
-                that.MoviesCallback.call(that, data, callback);
+                that.MoviesCallback(data, callback);
             });
 
         },

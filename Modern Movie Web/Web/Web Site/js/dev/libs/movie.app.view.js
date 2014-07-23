@@ -23,17 +23,6 @@
             "InTheaters": "In Theaters"
         },
 
-        bindBackButton: function () {
-
-            deeptissue(document.querySelector(".win-backbutton"))
-                .tap(function () {
-
-                    window.history.back(1);
-
-                });
-
-        },
-
         setMoviePanelWidth: function (target, length) {
 
             target = target || ".movie-poster-div";

@@ -3,12 +3,13 @@
 
 (function (window, undefined) {
 
-    var movieData = function (movieSrc, theaterSrc) {
+    var movieData = function (services) {
 
         var that = new movieData.fn.init();
 
-        that.movieSrc = movieSrc;
-        that.theaterSrc = theaterSrc;
+        that.parseServices(services);
+        //that.movieSrc = movieSrc;
+        //that.theaterSrc = theaterSrc;
 
         return that;
     };
@@ -24,6 +25,46 @@
 
         version: "0.0.1",
 
+        parseServices: function (services) {
+
+            var that = this;
+
+            for (var service in services) {
+
+                if (typeof services[service] === "function") {
+                    that[service] = new services[service]();
+                } else {
+                    that[service] = services[service];
+                }
+
+                for (var prop in that[service]) {
+
+                    if (prop != "init" && prop != "constructor" &&
+                        typeof that[service][prop] === "function") {
+
+                        that.addProviderAlias(service, prop);
+                        //that[prop] = function () {
+                        //    that[service][prop].apply(that[service], arguments);
+                        //}
+
+                    }
+
+                }
+
+            }
+
+        },
+
+        addProviderAlias: function(service, prop){
+
+            this[prop] = function () {
+                this[service][prop].apply(this[service], arguments);
+            }
+
+        }
+
+
+/*
         movieSrc: undefined,
         theaterSrc: undefined,
 
@@ -113,6 +154,8 @@
 
         },
 
+        
+
         mergeInFakeShowtimes: function (movie) {
 
             var showtimes = [{ "theater": "The Mystic", "showtimes": ["12:20", "3:05", "5:45", "7:50", "10:10"] },
@@ -134,6 +177,7 @@
             return movie;
         }
 
+        */
     };
 
 

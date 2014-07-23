@@ -28,7 +28,6 @@ test("Verify We Have movieApp with expected members", function () {
     isFunction(movieApp.fn.compileTemplates, "compileTemplates function should exist");
     isFunction(movieApp.fn.showLoading, "showLoading function should exist");
     isFunction(movieApp.fn.mergeData, "mergeData function should exist");
-    ok(movieApp.fn.resizeEvents, "resizeEvents should exist");
     isFunction(movieApp.fn.setMoviePanelWidth, "setMoviePanelWidth function should exist");
     equal(movieApp.fn.panorama, undefined, "panorama should exist");
     ok(movieApp.fn.hasTouch, "hasTouch function should exist");

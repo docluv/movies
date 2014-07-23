@@ -19,12 +19,12 @@ var bp = backpack(),
     movie = movieApp({
         "viewEngine": mustacheViewEngine(),
         services: {
-            bp: bp, 
+            bp: bp,
             tmpl: Mustache, //remove
-            dataProvider: movieData(
-                RottenTomatoes({ data: data }),
-                fakeTheaters()
-            )
+            dataProvider: movieData({
+                RottenTomatoes: RottenTomatoes({ data: data }),
+                fakeTheaters: fakeTheaters()
+            })
         }
     });
 
