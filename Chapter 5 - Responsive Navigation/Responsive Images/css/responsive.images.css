@@ -1,0 +1,50 @@
+﻿.movie-poster-wrapper {
+    width: 54px;
+    height: 80px;
+}
+
+
+.movie-poster {
+    background-image: url('../img/11178082_tmb.jpg');
+    width: 54px;
+    height: 80px;
+}
+
+
+@media (min-width: 320px) {
+
+    .movie-poster-wrapper {
+        display: block;
+    }
+}
+
+
+
+@media (min-width: 800px) {
+
+    .movie-poster-wrapper {
+        width: 180px;
+        height: 267px;
+    }
+
+    .movie-poster {
+        background-image: url('../img/11178082_det.jpg');
+        width: 180px;
+        height: 267px;
+    }
+}
+
+
+@media (min-width: 1100px) {
+
+    .movie-poster-wrapper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .movie-poster {
+        background-image: url('../img/11178082_ori.jpg');
+        width: 1688px;
+        height: 2500px;
+    }
+}
