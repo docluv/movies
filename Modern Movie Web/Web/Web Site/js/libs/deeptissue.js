@@ -33,7 +33,7 @@
 
             this.support = $.buildVendorNames();
 
-            this.touchType = window.navigator.msPointerEnabled ? "pointer" :
+            this.touchType = window.navigator.pointerEnabled ? "pointer" :
                                 "ontouchstart" in window ? "touch" : "mouse";
 
             this.hasMouse = ("ontouchstart" in window && "onmousedown" in window);

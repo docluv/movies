@@ -1,15 +1,15 @@
 ﻿{
-  "name": "Modern-Web-Movies",
-  "version": "0.1.0",
-    "author" : "Chris Love",
-    "private" : true,
-  "devDependencies": {
-		"grunt" :                       "~0.4.*",
-		"grunt-contrib-cssmin":         "*",
-		"grunt-contrib-qunit":         "*",
-		"grunt-contrib-jshint":         "*",
-		"grunt-contrib-uglify":         "*",
-		"matchdep":                     "*"
+    "name": "Modern-Web-Movies",
+    "version": "0.1.0",
+    "author": "Chris Love",
+    "private": true,
+    "devDependencies": {
+        "grunt": "~0.4.*",
+        "grunt-contrib-cssmin": "*",
+        "grunt-contrib-qunit": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-uglify": "*",
+        "matchdep": "*"
 
-  }
+    }
 }
