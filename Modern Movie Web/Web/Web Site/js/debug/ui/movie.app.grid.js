@@ -21,18 +21,22 @@
             if (i === 0 && curWidth >= oriBreakPoint) {
 
                 moviePoster.src = moviePoster.src
+                                    .replace("tmb", "ori")
                                     .replace("pro", "ori")
                                     .replace("det", "ori");
 
             } else if (curWidth >= detBreakPoint) {
 
                 moviePoster.src = moviePoster.src
+                                    .replace("tmb", "det")
                                     .replace("pro", "det")
                                     .replace("ori", "det");
 
             } else {
-                moviePoster.src = moviePoster.src.replace("ori", "pro")
-                                                    .replace("det", "pro");
+                moviePoster.src = moviePoster.src
+                                                .replace("tmb", "pro")
+                                                .replace("ori", "pro")
+                                                .replace("det", "pro");
             }
 
         }

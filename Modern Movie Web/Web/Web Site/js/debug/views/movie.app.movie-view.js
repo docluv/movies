@@ -481,12 +481,14 @@
             if (width > largebreakpoint) {
 
                 poster.src = poster.src
+                                    .replace("tmb", "ori")
                                     .replace("pro", "ori")
                                     .replace("det", "ori");
 
             } else {
 
                 poster.src = poster.src
+                                    .replace("tmb", "det")
                                     .replace("pro", "det")
                                     .replace("ori", "det");
 
