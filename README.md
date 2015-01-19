@@ -1,6 +1,8 @@
 movies
 ======
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/docluv/movies?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Source Code for my High Performance Single Page Web Applications book, http://amzn.to/1b0twcm.
 
 The source code has 4 web projects included. The first 3 correlate to chapters 2, 3 and 5 in the book. These chapters concern responsive web design techniques. The largest portion of the source code is the code for the actual demonstration application, http://movies.spawebbook.com.
