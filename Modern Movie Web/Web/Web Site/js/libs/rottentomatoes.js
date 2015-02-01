@@ -134,7 +134,7 @@
                             that.apiKey + "jsonp";
 
                 ls.setItem(cacheKey, JSON.stringify(movie));
-                ls.setItem(cacheKey + 'cachettl', +new Date() //forces it to return ticks
+                ls.setItem(cacheKey + '-cachettl', +new Date() //forces it to return ticks
                             + 1000 * 60 * 60 * 72); //ms * seconds * minutes * hours to add to current time in ticks
                 //72 represents 3 days, which is a magic #
                 //you can adjust this number to suit your needs, but movie information rarely changes so a long

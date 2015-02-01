@@ -20,6 +20,12 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -167,33 +173,44 @@
     <Content Include="img\smalltile.png" />
     <Content Include="img\widetile.png" />
     <Content Include="js\applib.js" />
-    <Content Include="js\debug\views\movie.app.about-view.js" />
-    <Content Include="js\debug\movie.app.bootstrap.js" />
-    <Content Include="js\debug\ui\movie.app.grid.js" />
-    <Content Include="js\debug\views\movie.app.home-view.js" />
-    <Content Include="js\debug\movie.app.js" />
-    <Content Include="js\debug\views\movie.app.maps-view.js" />
-    <Content Include="js\debug\views\movie.app.movie-view.js" />
-    <Content Include="js\debug\views\movie.app.movies-view.js" />
-    <Content Include="js\debug\views\movie.app.notfound-view.js" />
-    <Content Include="js\debug\views\movie.app.privacy-view.js" />
-    <Content Include="js\debug\views\movie.app.search-view.js" />
-    <Content Include="js\debug\views\movie.app.social-view.js" />
-    <Content Include="js\debug\views\movie.app.theater-view.js" />
+    <Content Include="js\dev\controllers\movie.app.about-view.js" />
+    <Content Include="js\dev\movie.app.bootstrap.js" />
+    <Content Include="js\dev\ui\movie.app.grid.js" />
+    <Content Include="js\dev\controllers\movie.app.home-view.js" />
+    <Content Include="js\dev\movie.app.js" />
+    <Content Include="js\dev\controllers\movie.app.maps-view.js" />
+    <Content Include="js\dev\controllers\movie.app.movie-view.js" />
+    <Content Include="js\dev\controllers\movie.app.movies-view.js" />
+    <Content Include="js\dev\controllers\movie.app.notfound-view.js" />
+    <Content Include="js\dev\controllers\movie.app.privacy-view.js" />
+    <Content Include="js\dev\controllers\movie.app.search-view.js" />
+    <Content Include="js\dev\controllers\movie.app.social-view.js" />
+    <Content Include="js\dev\controllers\movie.app.theater-view.js" />
     <Content Include="js\libs\add2home.js" />
     <Content Include="js\libs\backpack.js" />
+    <Content Include="js\libs\class.js" />
+    <Content Include="js\libs\controller.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
     <Content Include="js\libs\fakeTheaters.js" />
+    <Content Include="js\libs\l2Storagecache.js" />
     <Content Include="js\libs\movie-data.js" />
     <Content Include="js\libs\mustache.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
     <Content Include="js\libs\reqwest.min.js" />
+    <Content Include="js\libs\rivets.binders.js" />
+    <Content Include="js\libs\rivets.formatters.js" />
+    <Content Include="js\libs\rivets.js" />
+    <Content Include="js\libs\rivets.min.js" />
+    <Content Include="js\libs\rivets.view.engine.js" />
     <Content Include="js\libs\rottentomatoes.js" />
     <Content Include="js\libs\rqData.js" />
+    <Content Include="js\libs\rqHTTP.js" />
     <Content Include="js\libs\spa.js" />
+    <Content Include="js\libs\spa.min.js" />
+    <Content Include="js\libs\spapm.js" />
     <Content Include="js\libs\toolbar.js" />
     <Content Include="js\specs\beautify-html.js" />
     <Content Include="js\specs\core\moveiApp.core.html" />
@@ -234,6 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="js\dev\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -291,6 +309,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Views\about-view.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\libs\rivets.min.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="js\libs\spa.min.js.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
