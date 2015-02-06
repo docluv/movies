@@ -13,7 +13,7 @@
             options: {
                 browser: true
             },
-            files: ['Gruntfile.js', 'js/debug/*.js', 'js/libs/*.js']
+            files: ['Gruntfile.js', 'js/dev/*.js', 'js/libs/*.js']
         },
         cssmin: {
             sitecss: {
@@ -45,14 +45,16 @@
                 'js/libs/backpack.js',
                 'js/libs/deeptissue.js',
                 'js/libs/toolbar.js',
-                'js/libs/mustache.js',
+                'js/libs/rivits.js',
                 'js/libs/panorama.js',
+				'js/libs/class.js',
                 'js/libs/spa.js',
                 'js/libs/rqData.js',
-                'js/debug/movie.app.js',
-                'js/debug/ui/*.js',
-                'js/debug/views/*.js',
-                'js/debug/movie.app.bootstrap.js'
+                'js/dev/movie.app.js',
+                'js/dev/services/*.js',
+                'js/dev/ui/*.js',
+                'js/dev/controllers/*.js',
+                'js/dev/movie.app.bootstrap.js'
                 ],
                 dest: 'js/applib.js'
             }

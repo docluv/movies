@@ -175,6 +175,7 @@
     <Content Include="js\applib.js" />
     <Content Include="js\dev\controllers\movie.app.about-view.js" />
     <Content Include="js\dev\movie.app.bootstrap.js" />
+    <Content Include="js\dev\services\dataService.js" />
     <Content Include="js\dev\ui\movie.app.grid.js" />
     <Content Include="js\dev\controllers\movie.app.home-view.js" />
     <Content Include="js\dev\movie.app.js" />
@@ -192,10 +193,9 @@
     <Content Include="js\libs\controller.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
-    <Content Include="js\libs\fakeTheaters.js" />
+    <Content Include="js\dev\services\fakeTheaters.js" />
     <Content Include="js\libs\l2Storagecache.js" />
-    <Content Include="js\libs\movie-data.js" />
-    <Content Include="js\libs\mustache.js" />
+    <Content Include="js\dev\services\movie-data.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
@@ -205,7 +205,7 @@
     <Content Include="js\libs\rivets.js" />
     <Content Include="js\libs\rivets.min.js" />
     <Content Include="js\libs\rivets.view.engine.js" />
-    <Content Include="js\libs\rottentomatoes.js" />
+    <Content Include="js\dev\services\rottentomatoes.js" />
     <Content Include="js\libs\rqData.js" />
     <Content Include="js\libs\rqHTTP.js" />
     <Content Include="js\libs\spa.js" />
@@ -251,7 +251,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="js\dev\services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -260,25 +259,25 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\notfound-view.cshtml" />
+    <Content Include="Views\Home\Views\notfound.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\maps-view.cshtml" />
+    <Content Include="Views\Home\Views\maps.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\reviews-view.cshtml" />
+    <Content Include="Views\Home\Views\reviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\search-view.cshtml" />
+    <Content Include="Views\Home\Views\search.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\theater-view.cshtml" />
+    <Content Include="Views\Home\Views\theater.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\movie-view.cshtml" />
+    <Content Include="Views\Home\Views\movie.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\movies-view.cshtml" />
+    <Content Include="Views\Home\Views\movies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Templates\_templates.cshtml" />
@@ -296,19 +295,19 @@
     <Content Include="js\mocks\theaters.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\privacy-view.cshtml" />
+    <Content Include="Views\Home\Views\privacy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Templates\_MovieListItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\social-view.cshtml" />
+    <Content Include="Views\Home\Views\social.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\home-view.cshtml" />
+    <Content Include="Views\Home\Views\home.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\about-view.cshtml" />
+    <Content Include="Views\Home\Views\about.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="js\libs\rivets.min.js.map" />

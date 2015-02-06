@@ -21,9 +21,8 @@ var bp = backpack(),
 movieApp.fn.privacyView = privacyView(data);
 
 movie = movieApp({
-    bp: bp,
-    tmpl: Mustache,
-    movieData: movieData(
+	"viewEngine": rivetsVE,
+	movieData: movieData(
         RottenTomatoes({ data: data }),
         fakeTheaters()
     )
@@ -31,7 +30,7 @@ movie = movieApp({
 
 _spa = spa({
     "appContext": movie,
-    "bp": bp,
+    "viewEngine": rivetsVE,
     "defaultPage": "homeview",
     "viewWrapper": "#main",
     "viewTransition": "slide",
