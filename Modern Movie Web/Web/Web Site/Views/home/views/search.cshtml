@@ -1,0 +1,25 @@
+<script id="search"
+        class="spa-view"
+        spa-transition="slide"
+        spa-view-id=".spa-view-search"
+        spa-route="search/:term"
+        type='text/x-mustache-template'>
+
+    <section class="spa-view-search">
+
+        <form action="/search" name="movieSearch">
+            <div class="searchBox">
+                <input id="searchTerm" class="search" spellcheck="true" autocapitalize="off"
+                       autofocus="" name="searchTerm" placeholder="search term" results="5" type="search" />
+                <span class="search-input-icon"></span>
+            </div>
+        </form>
+
+        <div class="xy-scroller-wrapper">
+            <div class="movie-poster-div movie-poster-grid">
+            </div>
+        </div>
+
+    </section>
+
+</script>

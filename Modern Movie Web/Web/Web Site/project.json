@@ -1,0 +1,169 @@
+﻿{
+	"webroot": "wwwroot",
+	"version": "1.0.0-*",
+	"dependencies": {
+		"Microsoft.AspNet.Mvc": "6.0.0-beta3",
+		"Microsoft.AspNet.Diagnostics": "1.0.0-beta3",
+		"Microsoft.AspNet.Diagnostics.Entity": "7.0.0-beta3",
+		"Microsoft.AspNet.Identity.EntityFramework": "3.0.0-beta3",
+		"Microsoft.AspNet.Security.Cookies": "1.0.0-beta3",
+		"Microsoft.AspNet.Server.IIS": "1.0.0-beta3",
+		"Microsoft.AspNet.Server.WebListener": "1.0.0-beta3",
+		"Microsoft.AspNet.StaticFiles": "1.0.0-beta3",
+		"Microsoft.Framework.ConfigurationModel.Json": "1.0.0-beta3",
+		"Microsoft.Framework.CodeGenerators.Mvc": "1.0.0-beta3",
+		"Microsoft.Framework.Logging": "1.0.0-beta3",
+		"Microsoft.Framework.Logging.Console": "1.0.0-beta3"
+	},
+	"commands": {
+		"web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.WebListener --server.urls http://localhost:5000",
+		"gen": "Microsoft.Framework.CodeGeneration",
+		"ef": "EntityFramework.Commands"
+	},
+	"frameworks": {
+		"aspnet50": { },
+		"aspnetcore50": { }
+	},
+	"exclude": [
+		"wwwroot",
+		"node_modules",
+		"bower_components"
+	],
+	"bundleExclude": [
+		"node_modules",
+		"bower_components",
+		"**.kproj",
+		"**.user",
+		"**.vspscc"
+	],
+	"scripts": {
+		"postrestore": [ "npm install" ],
+		"prepare": [ "grunt bower:install" ]
+	},
+	"love2spa": {
+		"spaApp": {
+			"Name": "SPAMovies",
+			"LongName":  "SPA Movies",
+			"Description": "An Example High Performance Single Page Web Application",
+			"ViewEngine": "MUSTACHE"
+		},
+		"spaServices": {
+			"simpleAJAX": "0.0.1",
+			"simpleTemplate": "0.0.1",
+			"toobarJS": "0.0.1",
+			"l2Storagecache": "0.0.1"
+		},
+		"spaControllers": [
+			{
+				"name": "movieController",
+				"parent": "spaController"
+			},
+			{
+				"name": "movieAuthenticatedController",
+				"parent": "movieController"
+			}
+		],
+		"spaViews": [
+			{
+				"Name": "home",
+				"spaViewId": "spa-view-home",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "SPA Movie Application",
+				"spaRoute": "",
+				"controller": "movieController"
+			},
+			{
+				"Name": "NotFound",
+				"spaViewId": "spa-view-404",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Movie Not Found",
+				"spaRoute": "404",
+				"controller": "movieController"
+			},
+			{
+				"Name": "About",
+				"spaViewId": "spa-view-about",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "About SPA Movies",
+				"spaRoute": "about",
+				"controller": "movieController"
+			},
+			{
+				"Name": "maps",
+				"spaViewId": "spa-view-maps",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Theater Map",
+				"spaRoute": "maps",
+				"controller": "movieController"
+			},
+			{
+				"Name": "movie",
+				"spaViewId": "spa-view-movie",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Movie",
+				"spaRoute": "movie/:id/:title",
+				"controller": "movieController"
+			},
+			{
+				"Name": "movies",
+				"spaViewId": "spa-view-movies",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Movies :movieType",
+				"spaRoute": "movies/:movieType",
+				"controller": "movieController"
+			},
+			{
+				"Name": "privacy",
+				"spaViewId": "spa-view-privacy",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Workout",
+				"spaRoute": "privacy",
+				"controller": "movieController"
+			},
+			{
+				"Name": "reviews",
+				"spaViewId": "spa-view-reviews",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "movie reviews",
+				"spaRoute": "reviews",
+				"controller": "movieController"
+			},
+			{
+				"Name": "search",
+				"spaViewId": "spa-view-search",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Search Movies",
+				"spaRoute": "search/:term",
+				"controller": "movieController"
+			},
+			{
+				"Name": "social",
+				"spaViewId": "spa-view-social",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "social",
+				"spaRoute": "social",
+				"controller": "movieController"
+			},
+			{
+				"Name": "theaters",
+				"spaViewId": "spa-view-theaters",
+				"spaTransition": "slide",
+				"spaLayout": "movie-layout",
+				"spaTitle": "Theaters",
+				"spaRoute": "theater/:theaterName",
+				"controller": "movieController"
+			}
+		]
+
+	}
+}
