@@ -4,657 +4,754 @@
 
 (function (window, undefined) {
 
-    "use strict";
+	"use strict";
 
-    var _gaq = _gaq || undefined;
+	//constants
+	var leadingDot = ".",
+		spaLayout = ".spa-layout",
+		oldRoute = undefined;
 
-    // Define a local copy of deferred
-    var spa = function (customSettings) {
+	// Define a local copy of deferred
+	var SPA = function (customSettings) {
 
-        var that = new spa.fn.init();
+		var spa = new SPA.fn.init(),
+			appName = "",
+			AppContext;
 
-        that.settings = $.extend({}, that.settings, customSettings);
+		spa.settings = $.extend({}, spa.settings, customSettings);
 
-        if (that.settings.AppContext) {
-            that.$rootScope = that.settings.AppContext;
-        } else {
+		if (spa.settings.AppContext) {
+			spa.$context = spa.settings.AppContext;
+		} else {
 
-            var spaApp = document.querySelector("[spa-app]");
+			var spaApp = document.querySelector("[spa-app]");
 
-            if (spaApp) {
+			if (spaApp) {
 
-                that.$rootScope = window[spaApp.getAttribute("spa-app")];
+				appName = window[spaApp.getAttribute("spa-app")];
 
-            } else {
-                console.error("Must have an application context defined");
+				if (typeof appName === "function") {
+					appName = appName();
+				}
 
-                throw {
-                    name: "SPA Error",
-                    message: "Must have an application context defined"
-                };
-            }
+				spa.$context = appName;
 
-        }
+			} else {
+				console.error("Must have an application context defined");
 
-        that.bp = that.settings.bp || backpack();
+				throw new ReferenceError("Must have an application context defined");
+			}
 
-        that.titleElement = document.querySelector(that.settings.titleSelector);
+		}
 
-        if (that.settings.parseDOM) {
+		window.addEventListener("DOMContentLoaded", function () {
 
-            that.setupRoutes(that.settings.viewSelector);
+			//cannot assume backpack anymore
+			spa.viewEngine = spa.settings.viewEngine;
+			spa.pm = spa.settings.pm;
 
-        }
+			spa.analytics = spa.settings.analytics;
 
-        window.addEventListener("hashchange", function () {
+			spa.titleElement = document.querySelector(spa.settings.titleSelector);
 
-            that.swapView();
+			if (spa.settings.parseDOM) {
 
-        });
+				spa.pm.setupRoutes(document.querySelectorAll(".spa-view"));
 
-        if (that.getParameterByName(that.settings.forceReload)) {
+				spa.viewEngine.parseViews();
 
-            window.location.replace(window.location.href.split("?")[0] + "#!" +
-                    that.getParameterByName(that.settings.forceReload));
-            return that;
+			}
 
-        } else if (that.settings.initView) {
-            that.swapView();
-        }
 
-        /*
+			window.addEventListener("hashchange", function () {
 
-        //decided to shelve this for the time being. Will complete this functionality
-        //after the book is published
+				spa.swapView();
 
-        if (that.settings.asyncUrl && typeof that.settings.asyncUrl === "string") {
+			});
 
-            document.addEventListener("DOMContentLoaded", function () {
+			if (spa.getParameterByName(spa.settings.forceReload)) {
 
-                e.target.removeEventListener(e.type, arguments.callee);
+				window.location.replace(window.location.href.split("?")[0] + "#!" +
+					spa.getParameterByName(spa.settings.forceReload));
+				return spa;
 
-                that.loadAsyncContent.call(that, that.settings.asyncUrl);
-            });
-        }
+			} else if (spa.settings.initView) {
+				spa.swapView();
+			}
 
-        */
+		});
 
-        return that;
+		/*
 
-    };
+		//decided to shelve this for the time being. Will complete this functionality
+		//after the book is published
 
-    spa.fn = spa.prototype = {
+		if (spa.settings.asyncUrl && typeof spa.settings.asyncUrl === "string") {
 
-        constructor: spa,
+			document.addEventListener("DOMContentLoaded", function () {
 
-        init: function () {
-            return this;
-        },
+				e.target.removeEventListener(e.type, arguments.callee);
 
-        version: "0.0.6",
+				spa.loadAsyncContent.call(spa, spa.settings.asyncUrl);
+			});
+		}
 
-        bp: undefined,
+		*/
 
-        //barrowing naming conventions from Angular
-        //This is like renaming a brand with a bad reputation,
-        //maintaining and using the context (this) properly
-        //is confusing for many developers new to JavaScript.
-        //Changing the name abstracts the mind from associating
-        //the name to something they perceive as annoying.
-        $rootScope: undefined,
-        $scope: undefined,
+		return spa;
 
-        setupRoutes: function () {
+	};
 
-            var that = this,
-                settings = that.settings,
-                routes = $.extend($.parseLocalStorage("routes") || {}, settings.routes),
-                i = 0, rawPath, view, route, viewId,
-                Views = document.querySelectorAll(settings.viewSelector);
+	SPA.fn = SPA.prototype = {
 
-            for (; i < Views.length; i++) {
+		constructor: SPA,
 
-                view = Views[i];
+		init: function () {
+			return this;
+		},
 
-                if (view.hasAttributes() && view.hasAttribute("id")) {
+		version: "0.1.2",
 
-                    viewId = view.getAttribute("id");
-                    rawPath = (view.hasAttribute("spa-route") ? view.getAttribute("spa-route") : "");
+		viewEngine: undefined,
 
-                    route = that.createRoute(viewId, rawPath, view);
-                    routes[route.path] = route;
+		$context: undefined,
+		$controller: undefined,
+		$oldController: undefined,
+		oldRoute: undefined,
 
-                }
+		matchRouteByPath: function (path, routes) {
 
-            }
+			if (!routes) {
+				routes = this.pm.getRoutes();
+			}
 
-            that.settings.routes = routes;
+			var key, route, params, i,
+				paramValues = {},
+				search;
 
-            localStorage.setItem("routes", JSON.stringify(routes));
+			//routes is an object so we can match the path to the route as it will be a property name.
+			if (routes.hasOwnProperty(path)) {
+				return routes[path];
+			}
 
-            if (that.bp && (that.getParameterByName("_escaped_fragment_") === "")) {
-                that.bp.updateViews(settings.viewSelector);
-            }
+			for (key in routes) {
 
-        },
+				if (routes.hasOwnProperty(key)) {
 
-        createRoute: function (viewId, rawPath, view) {
+					route = routes[key];
 
-            //need to check for duplicate path
-            return {
-                viewId: viewId,
-                viewModule: (view.hasAttribute("spa-module") ? view.getAttribute("spa-viewId") :
-                        viewId),
-                path: rawPath.split("\\:")[0],
-                params: rawPath.split("\\:").slice(1),
-                title: (view.hasAttribute("spa-title") ? view.getAttribute("spa-title") :
-                        this.settings.defaultTitle),
-                transition: (view.hasAttribute("spa-transition") ?
-                        view.getAttribute("spa-transition") :
-                        ""),
-                paramValues: {},
-                beforeonload: (view.hasAttribute("spa-beforeonload") ? view.getAttribute("spa-beforeonload") : undefined),
-                onload: (view.hasAttribute("spa-onload") ? view.getAttribute("spa-onload") : undefined),
-                afteronload: (view.hasAttribute("spa-afteronload") ? view.getAttribute("spa-afteronload") : undefined),
-                beforeunload: (view.hasAttribute("spa-beforeunload") ? view.getAttribute("spa-beforeunload") : undefined),
-                unload: (view.hasAttribute("spa-unload") ? view.getAttribute("spa-unload") : undefined),
-                afterunload: (view.hasAttribute("spa-afterunload") ? view.getAttribute("spa-afterunload") : undefined)
-            };
+					search = new RegExp('\\b' + route.path + '\\b', 'gi');
 
-        },
+					if (route.path !== "" &&
+						path.search(search) === 0) {
 
-        matchRouteByPath: function (path, routes) {
+						//use regular expression here to pull just the 1st instace
+						params = path.replace(route.path, "")
+							//.split("\\")
+							.split("/")
+							.slice(1); //the first item will be empty
 
-            if (!routes) {
-                routes = this.settings.routes;
-            }
+						for (i = 0; i < params.length; i++) {
+							paramValues[route.params[i]] = params[i];
+						}
 
-            var key, route, params, i,
-                    paramValues = {},
-                    search;
+						route.paramValues = paramValues;
 
-            //routes is an object so we can match the path to the route as it will be a property name.
-            if (routes.hasOwnProperty(path)) {
-                return routes[path];
-            }
+						break;
+					} else {
+						route = undefined;
+					}
 
-            for (key in routes) {
+				}
 
-                if (routes.hasOwnProperty(key)) {
+			}
 
-                    route = routes[key];
+			return route;
+		},
 
-                    search = new RegExp('\\b' + route.path + '\\b', 'gi');
+		matchRouteById: function (id, routes) {
 
-                    if (route.path !== "" &&
-                        path.search(search) === 0) {
+			if (!routes) {
+				routes = this.pm.getRoutes();
+			}
 
-                        params = path.replace(route.path, "")
-                                    .split("/")
-                                    .slice(1); //the first item will be empty
+			var route;
 
-                        for (i = 0; i < params.length; i++) {
-                            paramValues[route.params[i]] = params[i];
-                        }
+			for (route in routes) {
+				if (routes[route].viewId === id) {
+					return routes[route];
+				}
+			}
 
-                        route.paramValues = paramValues;
+		},
 
-                        break;
-                    } else {
-                        route = undefined;
-                    }
+		//  newView: undefined, //placeholder for new view
+		//  currentView: undefined, //placeholder for current view before a swap
+		animation: undefined,
 
-                }
+		getParameterByName: function (name) {
 
-            }
+			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 
-            return route;
-        },
+			var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+				results = regex.exec(location.search);
 
-        matchRouteById: function (id, routes) {
+			return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+		},
 
-            if (!routes) {
-                routes = this.settings.routes;
-            }
+		getVendorPropertyName: function (prop) {
 
-            var route;
+			var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
+				vendorProp, i,
+				prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
 
-            for (route in routes) {
-                if (routes[route].viewId === id) {
-                    return routes[route];
-                }
-            }
+			if (prop in this.div.style) {
+				return prop;
+			}
 
-            //for (var i = 0; i < routes.length; i++) {
+			for (i = 0; i < prefixes.length; ++i) {
 
-            //    if (routes[i].viewId === id) {
-            //        return route[i];
-            //    }
+				vendorProp = prefixes[i] + prop_;
 
-            //}
+				if (vendorProp in this.div.style) {
+					return vendorProp;
+				}
 
-        },
+			}
+		},
 
-        //  newView: undefined, //placeholder for new view
-        //  currentView: undefined, //placeholder for current view before a swap
-        animation: undefined,
+		transitionend: {
+			'animation': 'animationend',
+			'webkitAnimation': 'webkitAnimationEnd',
+			'MozAnimation': 'animationend',
+			'OAnimation': 'oAnimationEnd'
+		},
 
-        getParameterByName: function (name) {
+		// re-purposed helper
+		cssPrefix: function (suffix) {
 
-            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+			if (!suffix) {
+				return '';
+			}
 
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
+			var i, len, parts, prefixes,
+				bodyStyle = document.body.style;
 
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        },
+			if (suffix.indexOf('-') >= 0) {
 
-        getVendorPropertyName: function (prop) {
+				parts = ('' + suffix).split('-');
 
-            var prefixes = ['Moz', 'Webkit', 'O', 'ms'],
-                vendorProp, i,
-                prop_ = prop.charAt(0).toUpperCase() + prop.substr(1);
+				for (i = 1, len = parts.length; i < len; i++) {
+					parts[i] = parts[i].substr(0, 1).toUpperCase() + parts[i].substr(1);
+				}
+				suffix = parts.join('');
+			}
 
-            if (prop in this.div.style) {
-                return prop;
-            }
+			if (suffix in bodyStyle) {
+				return suffix;
+			}
 
-            for (i = 0; i < prefixes.length; ++i) {
+			suffix = suffix.substr(0, 1).toUpperCase() + suffix.substr(1);
 
-                vendorProp = prefixes[i] + prop_;
+			prefixes = ['webkit', 'Moz', 'ms', 'O'];
 
-                if (vendorProp in this.div.style) {
-                    return vendorProp;
-                }
+			for (i = 0, len = prefixes.length; i < len; i++) {
+				if (prefixes[i] + suffix in bodyStyle) {
+					return prefixes[i] + suffix;
+				}
+			}
 
-            }
-        },
+			return "";
+		},
 
-        transitionend: {
-            'animation': 'animationend',
-            'webkitAnimation': 'webkitAnimationEnd',
-            'MozAnimation': 'animationend',
-            'OAnimation': 'oAnimationEnd'
-        },
+		removeExtraViews: function (currentView) {
 
-        // repurposed helper
-        cssPrefix: function (suffix) {
+			if (currentView) {
 
-            if (!suffix) { return ''; }
+				var length = currentView.length;
 
-            var i, len, parts, prefixes,
-                bodyStyle = document.body.style;
+				while (length > 1) {
 
-            if (suffix.indexOf('-') >= 0) {
+					length--;
+					currentView[length]
+						.parentNode.removeChild(currentView[length]);
+				}
 
-                parts = ('' + suffix).split('-');
+			}
 
-                for (i = 1, len = parts.length; i < len; i++) {
-                    parts[i] = parts[i].substr(0, 1).toUpperCase() + parts[i].substr(1);
-                }
-                suffix = parts.join('');
-            }
+			return currentView[0];
 
-            if (suffix in bodyStyle) {
-                return suffix;
-            }
+		},
 
-            suffix = suffix.substr(0, 1).toUpperCase() + suffix.substr(1);
+		pushView: function (path) {
 
-            prefixes = ['webkit', 'Moz', 'ms', 'O'];
+			var spa = this;
 
-            for (i = 0, len = prefixes.length; i < len; i++) {
-                if (prefixes[i] + suffix in bodyStyle) {
-                    return prefixes[i] + suffix;
-                }
-            }
+			if (spa.analytics) {
+				spa.analytics.pushView(['_trackPageview', path]);
+			}
 
-            return "";
-        },
+		},
 
-        removeExtraViews: function (currentView) {
+		getHashPath: function () {
 
-            var length = currentView.length;
+			var hashFragment = (window.location.hash !== "#") ? window.location.hash.replace("#!", "") : "";
 
-            while (length > 1) {
+			hashFragment = hashFragment.split(":")[0];
+			hashFragment = hashFragment.replace(new RegExp("\\\\$"), "");
 
-                length--;
-                currentView[length]
-                        .parentNode.removeChild(currentView[length]);
-            }
-        },
+			return hashFragment;
 
-        pushGA: function (path) {
+		},
 
-            //if Google Analytics available, then push the path
-            if (_gaq !== undefined) {
-                _gaq.push(['_trackPageview', path]);
-            }
-        },
+		getClassSelector: function (className) {
+			return leadingDot + className;
+		},
 
-        swapView: function () {
+		getOldRoute: function (oldViewId) {
 
-            var that = this,
-                settings = that.settings,
-                route, oldRoute, anim,
-                hash = window.location.hash, newView,
-                hasEscapeFragment = that.getParameterByName("_escaped_fragment_"),
-                hashFragment = (hash !== "#") ? hash.replace("#!", "") : "",
-                path = hashFragment.split(":")[0],
-                currentView = document.querySelectorAll("." + settings.currentClass);
+			if (oldViewId) {
+				return this.matchRouteById(oldViewId);
+			}
 
-            if (currentView.length) {
-                //adding this because I found myself sometimes tapping items to launch a new view before the animation was complete.
-                that.removeExtraViews(currentView);
-            }
+			return undefined;
 
-            //convert nodelist to a single node
-            currentView = currentView[0];
+		},
 
-            if (currentView && currentView.id) {
-                oldRoute = that.matchRouteById(currentView.id);
-            }
+		getController: function (route) {
 
-            route = that.matchRouteByPath(path);
+			var spa = this,
+				controller = spa.$context[route.viewId];
 
-            if (route !== undefined) {
+			if (controller && typeof controller === "function") {
 
-                that.pushGA(path);
+				controller = new controller(spa.$context, route);
 
-                that.ensureViewAvailable(currentView, route.viewId);
+				return controller;
 
-                newView = document.getElementById(route.viewId);
+			} else if (controller && typeof controller === "object") {
 
-                if (newView) {
+				controller = new controller;
 
-                    if (currentView) {
+				controller.response = route;
 
-                        that.makeViewCallback(oldRoute, "beforeunload");
+				return controller;
 
-                        if (that.hasAnimations()) {
+			} else {
+				return;
+			}
 
-                            anim = that.getAnimation(route);
-                            that.animation = anim;
 
-                            if (anim) {
+		},
 
-                                currentView.addEventListener(
-                                    that.transitionend[that.cssPrefix("animation")], function (e) {
-                                        that.endSwapAnimation.call(that, oldRoute, route);
-                                        currentView = undefined;
-                                    });
+		getExistingView: function (newLayout) {
 
-                                //modify once addClass supports array of classes
-                                $(currentView).addClass("animated out " + anim)
-                                    .removeClass("in");
+			var spa = this
+			view = document.querySelector("." + spa.settings.currentLayoutClass);
 
-                                $(newView).addClass(settings.currentClass +
-                                    " animated " + anim + " in");
+			if (!view) {
+				view = document.querySelector("." + spa.settings.currentViewClass);
+			}
 
-                            } else {
+			return view;
 
-                                $(newView).addClass(settings.currentClass);
-                                that.endSwapAnimation.call(that, oldRoute, route);
-                            }
+		},
 
-                        }
+		swapView: function () {
 
-                    } else {
+			var spa = this,
+				settings = spa.settings,
+				anim, childView,
+				oldViewId = undefined,
+				newView, newLayout, currentView, oldLayout, oldView,
+				hasEscapeFragment = spa.getParameterByName("_escaped_fragment_"),
+				path = spa.getHashPath(),
+				route = spa.matchRouteByPath(path);
 
-                        if (settings.intoAnimation) {
+			if (!route || hasEscapeFragment !== "") {
+				window.location.hash = "#!" + settings.NotFoundRoute;
+				return;
+			}
 
-                            newView.addEventListener(
-                                that.transitionend[that.cssPrefix("animation")], function (e) {
-                                    that.endSwapAnimation.call(that, oldRoute, route);
-                                    currentView = undefined;
-                                });
+			//get current layout
+			oldLayout = document.querySelectorAll(leadingDot + settings.layoutClass);
 
-                            $(newView).addClass(settings.currentClass +
-                                " animated " + anim + " in");
+			//get current childview
+			oldView = document.querySelectorAll(leadingDot + settings.currentViewClass);
 
-                        } else {
+			if (oldLayout && oldLayout.length > 0) {
 
-                            $(newView).addClass(settings.currentClass);
-                            that.endSwapAnimation.call(that, oldRoute, route);
-                        }
+				oldLayout = spa.removeExtraViews(oldLayout);
 
-                    }
+			}
 
-                    that.setDocumentTitle(route);
+			if (oldView && oldView.length > 0) {
 
-                    if (route) {
-                        that.makeViewCallback(route, "beforeonload");
-                        that.makeViewCallback(route, "onload");
-                        that.makeViewCallback(route, "afteronload");
-                    }
+				oldView = spa.removeExtraViews(oldView);
+				oldViewId = (oldView) ? oldView.id : undefined;
 
-                }
+			}
 
-            } else if (hasEscapeFragment === "") { //Goto 404 handler
+			if (oldView.length === 0) {
+				oldView = undefined;
+			}
 
-                window.location.hash = "#!" + settings.NotFoundRoute;
+			if (spa.oldRoute === path) {
+				// the view is not changing so just get out
+				return;
+			}
 
-            } else {//should only get here is this is an escapefragemented url for the spiders
-                newView = $(settings.viewSelector).addClass(settings.currentClass);
-            }
+			if (oldLayout) {
 
-        },
+				if (oldLayout.length !== undefined) {
+					if (oldLayout.length === 0) {
+						oldLayout = undefined;
+					} else {
+						oldLayout = oldLayout[0];
+					}
+				}
 
-        getAnimation: function (route) {
+				if (oldLayout && oldLayout.getAttribute("spa-layout") !== route.layout) {
 
-            if (!route) {
-                return this.settings.viewTransition;
-            }
+					oldView = oldLayout;
 
-            return this.animations[route.transition] || this.settings.viewTransition;
+				}
 
-        },
+			}
 
-        endSwapAnimation: function (route, newRoute) {
-            //currentView, newView, 
-            var that = this,
-                currentView = document.querySelector(".current.out"),
-                newView = document.getElementById(newRoute.viewId),
-                parent,
-                anim = that.animation;
+			spa.$oldController = spa.$controller;
 
-            if (route) {
-                that.makeViewCallback(route, "unload");                
-                that.makeViewCallback(route, "afterunload");
-            }
+			spa.$controller = spa.getController(route);
 
-            if (newView.classList.contains("in")) {
-                newView.classList.remove("in");
-                newView.classList.remove(anim);
-            }
+			if (!spa.$controller) {
 
-            if (currentView && that.bp && currentView.parentNode) {
+				//need a default controller option here
+				return;
+			}
 
-                parent = currentView.parentNode
-                parent.removeChild(currentView);
+			//analytics
+			spa.pushView(path);
 
-            }
+			//append new view with any layout to the DOM, after the existing view + layout
+			newView = spa.stampView(oldView, route);
 
-        },
+			anim = spa.getAnimation(route);
+			spa.animation = anim;
 
-        //make sure the view is actually available, this relies on backpack to supply the markup and inject it into the DOM
-        ensureViewAvailable: function (currentView, newViewId) {
-            //must have backpack or something similar that implements its interface
-            if (this.bp) {
+			if (newView) {
 
-                var view = this.bp.getViewData(newViewId),
-                    newView, loc;
+				if (oldView) {
 
-                if (view) {
-                    newView = this.createFragment(view.content);
-                } else {
-                    loc = window.location.href.split("#!");
-                    window.location.replace(loc[0] + "?" +
-                        this.settings.forceReload + "=" + loc[1]);
-                }
+					spa.makeViewCallback(spa.$oldController, "beforeunload");
 
-                if (currentView) {
-                    currentView.parentNode
-                                .insertBefore(newView, currentView);
-                } else {
-                    document.querySelector(this.settings.mainWrappperSelector)
-                                .appendChild(newView);
-                }
+					if (spa.hasAnimations()) {
 
-            }
-            //else assume the view is already in the markup
+						if (anim) {
 
-        },
+							oldView.addEventListener(
+								spa.transitionend[spa.cssPrefix("animation")], function (e) {
+									spa.endSwapAnimation(spa.oldRoute, route, oldView);
+									currentView = undefined;
+								});
 
-        makeViewCallback: function (route, action) {
+							//                            modify once addClass supports array of classes
+							$(oldView).addClass("animated out " + anim)
+								.removeClass("in");
 
-            var that = this,
-                $rootScope = that.$rootScope,
-                settings = that.settings,
-                a, cbPaths, callback;
+							$(newView).addClass(settings.currentViewClass +
+								" show animated " + anim + " in");
 
-     //       console.info("making " + action + " callback");
+							$(spaLayout).addClass("show");
 
-            if (action && !route[action]) {
+						} else {
 
-                if ($rootScope) {
+							$(newView).addClass(settings.currentViewClass);
+							$(spaLayout).addClass("show");
+							spa.endSwapAnimation(spa.oldRoute, route, oldView);
+						}
 
-                    if ($rootScope[route.viewModule] && $rootScope[route.viewModule][action]) {
-                        $rootScope[route.viewModule][action].call($rootScope, route.paramValues || {});
-                    }
+					}
 
-                }
+				} else {
 
-                return;
-            }
+					//this is probably the initial load
 
-            cbPaths = route[action].split(".");
+					if (settings.intoAnimation) {
 
-            callback = window[cbPaths[0]];
+						newView.addEventListener(
+							spa.transitionend[spa.cssPrefix("animation")], function (e) {
+								spa.endSwapAnimation.call(spa, spa.oldRoute, route, currentView);
+								currentView = undefined;
+							});
 
-            for (a = 1; a < cbPaths.length; a++) {
+						$(newView).addClass(settings.currentViewClass +
+							" show animated " + anim + " in");
+						$(spaLayout).addClass("show");
 
-                if (a === 1) {
-                    that = callback;
-                }
+					} else {
 
-                callback = callback[cbPaths[a]];
-            }
+						$(newView).addClass(settings.currentViewClass + " show");
+						spa.endSwapAnimation.call(spa, spa.oldRoute, route, currentView);
+						$(spaLayout).addClass("show");
+					}
 
-            if (callback) {
-                callback.call(that, route.paramValues || {});
-            }
+				}
 
-        },
+				spa.setDocumentTitle(route);
 
-        setDocumentTitle: function (route) {
+				if (route && spa.$controller) {
 
-            var title = route.title, i;
+					spa.makeViewCallback(spa.$controller, "beforeonload", route);
+					spa.makeViewCallback(spa.$controller, "onload", route);
+					spa.makeViewCallback(spa.$controller, "afteronload", route);
+				}
 
-            if (title === "") {
-                return;
-            }
+			}
 
-            for (i = 0; i < route.params.length; i++) {
-                title = title.replace(":" +
-                                    route.params[i],
-                                    route.paramValues[route.params[i]]);
-            }
+			spa.oldRoute = path;
+		},
+		
+		getAnimation: function (route) {
 
-            document.title = title;
+			if (!route) {
+				return this.settings.viewTransition;
+			}
 
-        },
+			return this.animations[route.transition] || this.settings.viewTransition;
 
-        createFragment: function (htmlStr) {
+		},
 
-            var frag = document.createDocumentFragment(),
-                temp = document.createElement("div");
+		endSwapAnimation: function (route, newRoute, currentView) {
+			//currentView, newView, 
+			var spa = this,
+//                currentView = document.querySelector(leadingDot + spa.settings.currentViewClass + ".out"),
+				newView = document.getElementById(newRoute.viewId),
+				parent,
+				anim = spa.animation;
 
-            temp.innerHTML = htmlStr;
+			if (route) {
+				spa.makeViewCallback(spa.$oldController, "unload");
+				spa.makeViewCallback(spa.$oldController, "afterunload");
+			}
 
-            while (temp.firstChild) {
-                frag.appendChild(temp.firstChild);
-            }
+			if (newView && newView.classList.contains("in")) {
+				newView.classList.remove("in");
+				newView.classList.remove(anim);
+			}
 
-            return frag;
-        },
+			if (currentView && spa.viewEngine && currentView.parentNode) {
 
-        hasAnimations: function () {
+				parent = currentView.parentNode
+				parent.removeChild(currentView);
 
-            var animation = false,
-                elm = document.createElement("div"),
-                animationstring = 'animation',
-                keyframeprefix = '',
-                domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
-                pfx = '', i = 0;
+			}
 
-            if (elm.style.animationName) { animation = true; }
+		},
 
-            if (animation === false) {
-                for (i = 0; i < domPrefixes.length; i++) {
-                    if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
-                        pfx = domPrefixes[i];
-                        animationstring = pfx + 'Animation';
-                        keyframeprefix = '-' + pfx.toLowerCase() + '-';
-                        animation = true;
-                        break;
-                    }
-                }
-            }
+		//make sure the view is actually available, this relies on backpack to supply the markup and inject it into the DOM
+		stampView: function (currentView, route) {
 
-            return animation;
+			/*
+			 * if layout then
+			 *  see if layout already available
+			 *      if layout exist then
+			 *          stamp in spa-child-view placeholder
+			 *      else
+			 *          create fragment with layout then stamp in new layout
+			 *          stamp full view + layout in main-content
+			 * else
+			 *      stamp in main-content placeholder
+			 * 
+			 */
 
-        },
+			//todo:refactor this method later
+			//should return layout if layout is new. got to make sure show is added to both layout and view elements
 
-        storeAsyncContent: function (content) {
+			var spa = this,
+				view,
+				currentLayout,
+				newView, loc;
 
-            this.bp.updateViewsFromFragment(this.settings.viewSelector, content);
-        },
+			if (spa.viewEngine) {
 
-        /*
+				view = spa.viewEngine.getView(route.viewId);
 
-        loadAsyncContent: function (url, callback) {
+				if (view) {
 
-            callback = callback || this.storeAsyncContent;
+					newView = spa.createFragment(view);
 
-            var oReq = new XMLHttpRequest();
+				} else {
 
-            oReq.onload = callback;
-            oReq.open("get", url, true);
-            oReq.send();
-        },
-        */
+					//make it call the server to recycle the load process 
+					//because it looks like
+					//the view cache has been compromised.
+					//todo:find a way to warn the user before this happens.
+					loc = window.location.href.split("#!");
+					window.location.replace(loc[0] + "?" +
+						spa.settings.forceReload + "=" + loc[1]);
 
-        //array of animations. The names match the CSS class so make sure you have the CSS for this animation or you will be dissapointed.
-        animations: {
-            "slide": "slide",
-            "fade": "fade",
-            "flip": "flip"
-        },
+				}
 
-        settings: {
-            routes: [],
-            viewSelector: ".content-pane",
-            currentClass: "current",
-            mainWrappperSelector: "main",
-            NotFoundView: "nofoundView",
-            NotFoundRoute: "404",
-            defaultTitle: "A Single Page Application with Routes",
-            titleSelector: ".view-title",
-            forceReload: "_force_reload_",
-            autoSetTitle: true,
-            parseDOM: true,
-            initView: true,
-            intoAnimation: true,
-            viewTransition: "slide",
-            asyncUrl: undefined
-        }
+				if (route.layout) {
 
-    };
+					currentLayout = document.querySelector("[spa-layout='" + route.layout + "']");
 
-    // Give the init function the spa prototype for later instantiation
-    spa.fn.init.prototype = spa.fn;
+					if (currentLayout) {
 
-    return (window.spa = spa);
+						loc = currentLayout.querySelector(spa.settings.layOutPlaceholder);
+
+						if (currentView && !currentView.classList.contains("spa-layout")) {
+							loc.insertBefore(newView, currentView);
+						} else {
+							loc.appendChild(newView);
+						}
+
+
+					} else {
+
+						currentLayout = spa.viewEngine.getView(route.layout);
+
+						if (currentLayout) {
+
+							currentLayout = spa.createFragment(currentLayout);
+							loc = document.querySelector(spa.settings.mainWrappperSelector);
+							loc.appendChild(currentLayout);
+
+							currentLayout = document.querySelector("[spa-layout='" + route.layout + "']");
+						}
+
+						loc = currentLayout.querySelector(spa.settings.layOutPlaceholder);
+
+						loc.appendChild(newView);
+
+					}
+
+				} else {
+
+					loc = document.querySelector(spa.settings.mainWrappperSelector);
+
+					if (currentView) {
+						loc.insertBefore(newView, currentView);
+					} else {
+						loc.appendChild(newView);
+					}
+
+				}
+
+
+			}
+
+			return document.querySelector(route.spaViewId);
+
+		},
+
+		makeViewCallback: function (controller, action, params) {
+
+			if (controller && controller[action]) {
+				controller[action].call(controller, params || {});
+			}
+
+		},
+
+
+		setDocumentTitle: function (route) {
+
+			var title = route.title,
+				i;
+
+			if (title === "") {
+				return;
+			}
+
+			for (i = 0; i < route.params.length; i++) {
+				title = title.replace(":" +
+					route.params[i],
+					route.paramValues[route.params[i]]);
+			}
+
+			document.title = title;
+
+		},
+
+		createFragment: function (htmlStr) {
+
+			var frag = document.createDocumentFragment(),
+				temp = document.createElement("div");
+
+			temp.innerHTML = htmlStr;
+
+			while (temp.firstChild) {
+				frag.appendChild(temp.firstChild);
+			}
+
+			return frag;
+		},
+
+		hasAnimations: function () {
+
+			var animation = false,
+				elm = document.createElement("div"),
+				animationstring = 'animation',
+				keyframeprefix = '',
+				domPrefixes = 'Webkit Moz O ms Khtml'.split(' '),
+				pfx = '',
+				i = 0;
+
+			if (elm.style.animationName) {
+				animation = true;
+			}
+
+			if (animation === false) {
+				for (i = 0; i < domPrefixes.length; i++) {
+					if (elm.style[domPrefixes[i] + 'AnimationName'] !== undefined) {
+						pfx = domPrefixes[i];
+						animationstring = pfx + 'Animation';
+						keyframeprefix = '-' + pfx.toLowerCase() + '-';
+						animation = true;
+						break;
+					}
+				}
+			}
+
+			return animation;
+
+		},
+
+		//array of animations. The names match the CSS class so make sure you have the CSS for this animation or you will be dissapointed.
+		animations: {
+			"slide": "slide",
+			"fade": "fade",
+			"flip": "flip"
+		},
+
+		settings: {
+			routes: [],
+			viewSelector: ".spa-view", //"[type='text/x-Rivets-template']", 
+			currentViewClass: "spa-current-view",
+			currentLayoutClass: "spa-current-layout",
+			layoutClass: "spa-layout",
+			layOutPlaceholder: ".spa-child-view",
+			viewClass: "spa-view",
+			mainWrappperSelector: ".main-content",
+			NotFoundView: "nofoundView",
+			NotFoundRoute: "404",
+			defaultTitle: "A Single Page Application with Routes",
+			titleSelector: ".view-title",
+			forceReload: "_force_reload_",
+			autoSetTitle: true,
+			parseDOM: true,
+			initView: true,
+			transitionFullLayout: true,
+			intoAnimation: true,
+			viewTransition: "slide",
+			asyncUrl: undefined
+		}
+
+	};
+
+	// Give the init function the spa prototype for later instantiation
+	SPA.fn.init.prototype = SPA.fn;
+
+	return (window.SPA = SPA);
 
 })(window);

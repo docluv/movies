@@ -138,19 +138,22 @@
     <Content Include="css\dev\animations.css" />
     <Content Include="css\dev\ui\movie-grid.css" />
     <Content Include="css\dev\ui\movie.app.forms.css" />
-    <Content Include="css\dev\views\movie.app.home-view.css" />
-    <Content Include="css\dev\views\movie.app.maps-view.css" />
-    <Content Include="css\dev\views\movie.app.movie-view.css" />
-    <Content Include="css\dev\views\movie.app.movies-view.css" />
+    <Content Include="css\dev\views\About.css" />
+    <Content Include="css\dev\views\home.css" />
+    <Content Include="css\dev\views\maps.css" />
     <Content Include="css\dev\ui\movie.app.nav.css" />
-    <Content Include="css\dev\views\movie.app.profile-view.css" />
-    <Content Include="css\dev\views\movie.app.search-view.css" />
-    <Content Include="css\dev\views\movie.app.social.css" />
-    <Content Include="css\dev\views\movie.app.theater-view.css" />
     <Content Include="css\dev\ui\panorama.css" />
     <Content Include="css\dev\site.css" />
     <Content Include="css\dev\ui\toolbar.css" />
     <Content Include="css\dev\touch.css" />
+    <Content Include="css\dev\views\movie.css" />
+    <Content Include="css\dev\views\movies.css" />
+    <Content Include="css\dev\views\NotFound.css" />
+    <Content Include="css\dev\views\privacy.css" />
+    <Content Include="css\dev\views\reviews.css" />
+    <Content Include="css\dev\views\search.css" />
+    <Content Include="css\dev\views\social.css" />
+    <Content Include="css\dev\views\theaters.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />
@@ -172,34 +175,41 @@
     <Content Include="img\search.png" />
     <Content Include="img\smalltile.png" />
     <Content Include="img\widetile.png" />
-    <Content Include="js\applib.js" />
-    <Content Include="js\debug\views\movie.app.about-view.js" />
-    <Content Include="js\debug\movie.app.bootstrap.js" />
-    <Content Include="js\debug\ui\movie.app.grid.js" />
-    <Content Include="js\debug\views\movie.app.home-view.js" />
-    <Content Include="js\debug\movie.app.js" />
-    <Content Include="js\debug\views\movie.app.maps-view.js" />
-    <Content Include="js\debug\views\movie.app.movie-view.js" />
-    <Content Include="js\debug\views\movie.app.movies-view.js" />
-    <Content Include="js\debug\views\movie.app.notfound-view.js" />
-    <Content Include="js\debug\views\movie.app.privacy-view.js" />
-    <Content Include="js\debug\views\movie.app.search-view.js" />
-    <Content Include="js\debug\views\movie.app.social-view.js" />
-    <Content Include="js\debug\views\movie.app.theater-view.js" />
+    <Content Include="js\dev\controllers\About.js" />
+    <Content Include="js\dev\controllers\home.js" />
+    <Content Include="js\dev\controllers\maps.js" />
+    <Content Include="js\dev\controllers\movie.js" />
+    <Content Include="js\dev\controllers\movieAuthenticatedController.js" />
+    <Content Include="js\dev\controllers\movieController.js" />
+    <Content Include="js\dev\controllers\movies.js" />
+    <Content Include="js\dev\controllers\NotFound.js" />
+    <Content Include="js\dev\controllers\privacy.js" />
+    <Content Include="js\dev\controllers\search.js" />
+    <Content Include="js\dev\controllers\social.js" />
+    <Content Include="js\dev\controllers\theaters.js" />
+    <Content Include="js\dev\movie.app.bootstrap.js" />
+    <Content Include="js\dev\movie.app.js" />
     <Content Include="js\libs\add2home.js" />
     <Content Include="js\libs\backpack.js" />
+    <Content Include="js\libs\class.js" />
+    <Content Include="js\libs\controller.js" />
     <Content Include="js\libs\deeptissue.js" />
     <Content Include="js\libs\dollarbill.min.js" />
     <Content Include="js\libs\fakeTheaters.js" />
+    <Content Include="js\libs\l2Storagecache.js" />
     <Content Include="js\libs\movie-data.js" />
     <Content Include="js\libs\mustache.js" />
+    <Content Include="js\libs\mustacheViewEngine.js" />
     <Content Include="js\libs\panorama.header.js" />
     <Content Include="js\libs\panorama.js" />
     <Content Include="js\libs\reqwest.js" />
     <Content Include="js\libs\reqwest.min.js" />
     <Content Include="js\libs\rottentomatoes.js" />
     <Content Include="js\libs\rqData.js" />
+    <Content Include="js\libs\rqHTTP.js" />
     <Content Include="js\libs\spa.js" />
+    <Content Include="js\libs\spa.min.js" />
+    <Content Include="js\libs\spapm.js" />
     <Content Include="js\libs\toolbar.js" />
     <Content Include="js\specs\beautify-html.js" />
     <Content Include="js\specs\core\moveiApp.core.html" />
@@ -240,33 +250,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="js\dev\services\" />
+    <Folder Include="js\dev\ui\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\notfound-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\maps-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\reviews-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\search-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\theater-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\movie-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\movies-view.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Templates\_templates.cshtml" />
@@ -284,19 +275,25 @@
     <Content Include="js\mocks\theaters.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\privacy-view.cshtml" />
+    <Content Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Templates\_MovieListItem.cshtml" />
+    <Content Include="js\libs\spa.min.js.map" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\social-view.cshtml" />
+    <Content Include="Views\Home\Views\About.cshtml" />
+    <Content Include="Views\Home\Views\home.cshtml" />
+    <Content Include="Views\Home\Views\maps.cshtml" />
+    <Content Include="Views\Home\Views\movie.cshtml" />
+    <Content Include="Views\Home\Views\movies.cshtml" />
+    <Content Include="Views\Home\Views\NotFound.cshtml" />
+    <Content Include="Views\Home\Views\privacy.cshtml" />
+    <Content Include="Views\Home\Views\search.cshtml" />
+    <Content Include="Views\Home\Views\social.cshtml" />
+    <Content Include="Views\Home\Views\theaters.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Views\home-view.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\Views\about-view.cshtml" />
+    <Content Include="Views\Home\Layouts\Movie.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -316,7 +313,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52658/</IISUrl>
+          <IISUrl>http://localhost:52670/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

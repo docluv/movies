@@ -2,7 +2,7 @@
 ;
 
 //Example JavaScript Module based on the jQuery pattern
-//It is wrapped within an anymous enclosure
+//It is wrapped within an anonymous enclosure
 (function (window, undefined) {
 
     "use strict";
@@ -45,7 +45,7 @@
 
 
         //I think this is just good practice ;)
-        version: "0.0.1",
+        version: "0.0.3",
 
         rtRoot: "http://api.rottentomatoes.com/api/public/v1.0/",
         apiKey: "fghr8zjnazt4w7fuza4se7wp",
@@ -151,7 +151,15 @@
                 movies = [movies];
             }
 
+            var posterRoot = "http://content6.flixster.com/movie";
+
             for (var i = 0; i < movies.length; i++) {
+
+                //this is a quick hack cuz they are not providing posters anymore
+                movies[i].posters.thumbnail = posterRoot + movies[i].posters.thumbnail.split("movie")[1];
+                movies[i].posters.detailed = posterRoot + movies[i].posters.detailed.split("movie")[1];
+                movies[i].posters.profile = posterRoot + movies[i].posters.profile.split("movie")[1];
+                movies[i].posters.original = posterRoot + movies[i].posters.original.split("movie")[1];
 
                 movies[i].poster = movies[i].posters.profile;
 
