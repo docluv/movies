@@ -10,9 +10,11 @@
     list-style-type: none;
     margin: 10px;
     width: 80px;
+    float: left;
     overflow: hidden;
     background: transparent;
     text-align: center;
+    height: 160px;
 }
 
 .movie-grid-poster {

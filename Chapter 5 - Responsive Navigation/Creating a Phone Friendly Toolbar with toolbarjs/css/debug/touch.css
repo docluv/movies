@@ -1,12 +1,12 @@
 .x-scroller-wrapper, .y-scroller-wrapper {
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch;
-    -moz-overflow-scrolling:touch;
-    overflow-scrolling:touch;
+    -moz-overflow-scrolling: touch;
+    overflow-scrolling: touch;
     overflow-style: none;
     -ms-scroll-chaining: none;
     -ms-scroll-snap-type: proximity;
-    -ms-scroll-translation: vertical-to-horizontal; 
+    -ms-scroll-translation: vertical-to-horizontal;
     overflow: auto;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -43,5 +43,15 @@
         width: 100%;
         padding-right: 0;
         height: 100%;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        position: absolute;
     }
+
+    .panel-selector{
+        display:none;
+    }
+
 }
